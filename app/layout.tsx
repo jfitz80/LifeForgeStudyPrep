@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 
+const siteUrl = `https://${siteConfig.domain}`;
+
 export const metadata: Metadata = {
   title: siteConfig.seo.title,
   description: siteConfig.seo.description,
@@ -9,10 +11,10 @@ export const metadata: Metadata = {
     title: siteConfig.seo.title,
     description: siteConfig.seo.description,
     type: 'website',
-    url: 'https://example.com',
+    url: siteUrl,
     siteName: siteConfig.brandName
   },
-  metadataBase: new URL('https://example.com')
+  metadataBase: new URL(siteUrl)
 };
 
 export default function RootLayout({

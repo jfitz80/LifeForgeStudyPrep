@@ -19,7 +19,11 @@ export default function ThanksPage() {
         </a>
 
         <p className="mt-6 text-sm text-slate-600">
-          Ready for the full prep pack? Get the {siteConfig.productName} for {siteConfig.price}.
+          Ready for more? Get the {siteConfig.productName}.
+        </p>
+        <p className="mt-2 text-sm text-slate-600">
+          <span className="mr-2 text-slate-400 line-through">{siteConfig.regularPriceDisplay}</span>
+          <span className="font-semibold text-slate-900">{siteConfig.launchPriceDisplay} launch price</span>
         </p>
         <a
           href={siteConfig.checkoutUrl}
@@ -27,7 +31,7 @@ export default function ThanksPage() {
           rel="noopener noreferrer"
           className="mt-3 inline-flex items-center justify-center rounded-lg bg-brand-700 px-5 py-3 text-sm font-semibold text-white"
         >
-          Download the Study Guide
+          Get the Study Guide
         </a>
 
         <div className="mt-8">

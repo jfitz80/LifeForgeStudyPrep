@@ -1,0 +1,216 @@
+import Parser from 'rss-parser';
+import { Prisma } from '@prisma/client';
+import { db } from '@/lib/db';
+import { NEWS_ENGINE_CONFIG, NEWS_FEED_SOURCES } from './config';
+import { buildEditorial, buildTags, sanitizeExcerpt } from './editorial';
+import { isRelevant, getRelevanceScore } from './relevance';
+import { toSlug } from './slug';
+
+type FeedItem = {
+  title?: string;
+  link?: string;
+  isoDate?: string;
+  pubDate?: string;
+  contentSnippet?: string;
+  content?: string;
+  creator?: string;
+  author?: string;
+  enclosure?: { url?: string };
+};
+
+const parser = new Parser<Record<string, never>, FeedItem>({
+  timeout: 10000,
+  headers: {
+    'User-Agent': 'LifeForgeNewsBot/1.0'
+  }
+});
+
+function sanitizeXmlEntities(xml: string) {
+  // Escape raw ampersands that are not valid entities.
+  return xml.replace(/&(?!(?:amp|lt|gt|quot|apos|#[0-9]+|#x[0-9A-Fa-f]+);)/g, '&amp;');
+}
+
+async function parseFeedWithFallback(url: string) {
+  try {
+    return await parser.parseURL(url);
+  } catch {
+    const response = await fetch(url, {
+      headers: { 'User-Agent': 'LifeForgeNewsBot/1.0' },
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`Feed request failed (${response.status}) for ${url}`);
+    }
+
+    const raw = await response.text();
+    const sanitized = sanitizeXmlEntities(raw);
+    return parser.parseString(sanitized);
+  }
+}
+
+async function upsertSources() {
+  for (const source of NEWS_FEED_SOURCES) {
+    await db.newsSource.upsert({
+      where: { slug: source.slug },
+      update: {
+        name: source.name,
+        type: source.type,
+        feedUrl: source.feedUrl,
+        homepageUrl: source.homepageUrl,
+        isActive: source.isActive,
+        requiresReview: source.requiresReview,
+        priority: source.priority
+      },
+      create: {
+        name: source.name,
+        slug: source.slug,
+        type: source.type,
+        feedUrl: source.feedUrl,
+        homepageUrl: source.homepageUrl,
+        isActive: source.isActive,
+        requiresReview: source.requiresReview,
+        priority: source.priority
+      }
+    });
+  }
+}
+
+function safeDate(item: FeedItem) {
+  const raw = item.isoDate ?? item.pubDate;
+  if (!raw) return new Date();
+  const parsed = new Date(raw);
+  return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
+function dedupeSlug(base: string, fallback: string) {
+  const clean = toSlug(base || fallback);
+  return clean || `news-${Date.now()}`;
+}
+
+export async function ingestNewsJob() {
+  await upsertSources();
+
+  const job = await db.ingestionJob.create({
+    data: { startedAt: new Date() }
+  });
+
+  let itemsFetched = 0;
+  let itemsAccepted = 0;
+  let itemsCreated = 0;
+  let itemsRejected = 0;
+  let failedItems = 0;
+
+  try {
+    const sources = await db.newsSource.findMany({
+      where: { isActive: true },
+      orderBy: [{ priority: 'desc' }, { createdAt: 'asc' }]
+    });
+
+    for (const source of sources) {
+      let feed;
+      try {
+        feed = await parseFeedWithFallback(source.feedUrl);
+      } catch {
+        failedItems += 1;
+        continue;
+      }
+
+      const list = (feed.items ?? []).slice(0, NEWS_ENGINE_CONFIG.maxItemsPerSource);
+
+      for (const item of list) {
+        itemsFetched += 1;
+        const title = item.title?.trim() ?? '';
+        const canonicalUrl = item.link?.trim() ?? '';
+        if (!title || !canonicalUrl) {
+          itemsRejected += 1;
+          continue;
+        }
+
+        const excerpt = sanitizeExcerpt(item.contentSnippet ?? item.content ?? '');
+        if (!isRelevant(title, excerpt)) {
+          itemsRejected += 1;
+          continue;
+        }
+
+        const relevanceScore = getRelevanceScore(title, excerpt);
+        const editorial = buildEditorial(title, excerpt);
+        const tags = buildTags(title, excerpt);
+
+        const slugBase = dedupeSlug(title, canonicalUrl);
+        const uniqueSlug = `${slugBase}-${safeDate(item).getTime().toString().slice(-6)}`;
+
+        const status = source.requiresReview || NEWS_ENGINE_CONFIG.manualReviewDefault ? 'PENDING' : 'APPROVED';
+
+        const payload: Prisma.NewsArticleCreateInput = {
+          title,
+          slug: uniqueSlug,
+          canonicalUrl,
+          author: item.creator ?? item.author ?? null,
+          publishedAt: safeDate(item),
+          excerpt,
+          imageUrl: item.enclosure?.url ?? null,
+          summary: editorial.summary,
+          whyItMatters: editorial.whyItMatters,
+          whoItAffects: editorial.whoItAffects,
+          llqpAngle: editorial.llqpAngle,
+          status,
+          isFeatured: false,
+          relevanceScore,
+          tagsJson: JSON.stringify(tags),
+          attributionLabel: source.name,
+          source: { connect: { id: source.id } }
+        };
+
+        try {
+          await db.newsArticle.create({ data: payload });
+          itemsAccepted += 1;
+          itemsCreated += 1;
+        } catch (error) {
+          failedItems += 1;
+          if (!(error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002')) {
+            throw error;
+          }
+        }
+
+        if (itemsCreated >= NEWS_ENGINE_CONFIG.maxArticlesPerRun) break;
+      }
+
+      if (itemsCreated >= NEWS_ENGINE_CONFIG.maxArticlesPerRun) break;
+    }
+
+    await db.ingestionJob.update({
+      where: { id: job.id },
+      data: {
+        finishedAt: new Date(),
+        status: 'SUCCESS',
+        itemsFetched,
+        itemsAccepted,
+        itemsCreated,
+        itemsRejected,
+        failedItems,
+        detailsJson: JSON.stringify({ sources: NEWS_FEED_SOURCES.map((s) => s.slug) })
+      }
+    });
+
+    return { ok: true, jobId: job.id, itemsFetched, itemsCreated };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown ingestion error';
+
+    await db.ingestionJob.update({
+      where: { id: job.id },
+      data: {
+        finishedAt: new Date(),
+        status: 'FAILED',
+        itemsFetched,
+        itemsAccepted,
+        itemsCreated,
+        itemsRejected,
+        failedItems,
+        errorMessage: message
+      }
+    });
+
+    return { ok: false, jobId: job.id, error: message };
+  }
+}

@@ -9,7 +9,16 @@ export default function Footer() {
           © {new Date().getFullYear()} {siteConfig.brandName}. All rights reserved.
         </p>
         <div className="flex flex-wrap gap-4">
-          <Link href="/disclaimer" className="hover:text-slate-900">
+          <Link href={siteConfig.legalUrls.privacy} className="hover:text-slate-900">
+            Privacy
+          </Link>
+          <Link href={siteConfig.legalUrls.terms} className="hover:text-slate-900">
+            Terms
+          </Link>
+          <Link href={siteConfig.legalUrls.refundPolicy} className="hover:text-slate-900">
+            Refund Policy
+          </Link>
+          <Link href={siteConfig.legalUrls.disclaimer} className="hover:text-slate-900">
             Disclaimer
           </Link>
           <a href={`mailto:${siteConfig.supportEmail}`} className="hover:text-slate-900">
@@ -18,8 +27,8 @@ export default function Footer() {
         </div>
       </div>
       <div className="mx-auto max-w-6xl px-4 pb-8 text-xs text-slate-500 sm:px-6 lg:px-8">
-        This is independent educational material and is not affiliated with official exam bodies. Use of this material does
-        not guarantee exam success.
+        LifeForge Insurance Prep is an independent educational resource and is not affiliated with any regulator, licensing
+        body, or exam provider.
       </div>
     </footer>
   );

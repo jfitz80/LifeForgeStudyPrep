@@ -1,85 +1,100 @@
 export const siteConfig = {
   brandName: 'LifeForge Insurance Prep',
-  productName: 'LLQP Life Insurance Pass Guide',
-  price: '$39',
+  tagline: 'Empowering Future Advisors',
+  domain: 'lifeforgeprep.com',
+  productName: 'Life Insurance Licensing Question Bank',
+  launchPrice: 19,
+  regularPrice: 29,
+  launchPriceDisplay: '$19',
+  regularPriceDisplay: '$29',
   checkoutUrl: 'https://example-checkout-link.com',
   supportEmail: 'support@lifeforgeprep.com',
+  legalUrls: {
+    privacy: '/privacy',
+    terms: '/terms',
+    refundPolicy: '/refund-policy',
+    disclaimer: '/disclaimer'
+  },
   seo: {
-    title: 'LifeForge Insurance Prep | LLQP Life Insurance Pass Guide',
+    title: 'LifeForge Insurance Prep | Life Insurance Licensing Question Bank ($19 Launch)',
     description:
-      'Pass the LLQP Life Insurance exam with a streamlined, scenario-focused study guide, practice questions, and clear explanations.'
+      '200+ exam-style life insurance licensing questions with clear explanations and scenario-based practice. Especially helpful for LLQP Life Insurance candidates.'
   }
 } as const;
 
+// Admin note: review GST/HST obligations and checkout tax handling before launch.
+
 export const heroCopy = {
-  headline: 'Pass the LLQP Life Insurance Exam with Confidence',
+  headline: 'Pass Your Life Insurance Licensing Exam With Confidence',
   subheadline:
-    'A streamlined, scenario-focused study guide with clear explanations, exam-style practice questions, and common traps explained.',
+    'Practice with realistic exam-style questions designed for future advisors. Especially helpful for candidates preparing for the Canadian LLQP Life Insurance module.',
   bullets: [
-    'Covers the full Life Insurance LLQP curriculum',
-    'Practice questions + explanations',
-    'Designed for studying at night in short sessions'
+    '200+ exam-style questions',
+    'Clear explanations',
+    'Scenario-based practice',
+    'Built for life insurance licensing exam candidates',
+    'Especially helpful for LLQP Life Insurance candidates'
   ],
-  primaryCta: 'Download the Study Guide',
-  secondaryCta: 'Get 50 Free Practice Questions'
+  primaryCta: 'Start Practicing Questions',
+  secondaryCta: 'Get the Study Guide'
 } as const;
 
 export const insideGuideItems = [
-  'Chapter-by-chapter summaries',
-  'Exam traps & common mistakes',
-  'Scenario questions with explanations',
-  'Quick review checklists'
+  '200+ exam-style questions',
+  'Scenario-based practice with explanations',
+  'Core life insurance concepts for licensing prep',
+  'Quick review checklists for focused study'
 ] as const;
 
 export const faqItems = [
   {
     question: 'What is included?',
     answer:
-      'You get a digital PDF study guide with chapter summaries, scenario-based examples, practice questions with explanations, and quick review checklists.'
+      'You get digital access to the Life Insurance Licensing Question Bank with 200+ exam-style questions, clear explanations, and scenario-based practice designed to support exam prep.'
   },
   {
-    question: 'Is this official / affiliated?',
+    question: 'Is this an official LLQP resource?',
     answer:
-      'No. This is an independent study resource and is not affiliated with or endorsed by any regulator, insurer, or official LLQP provider.'
+      'No. LifeForge Insurance Prep is an independent study resource and is not affiliated with any regulator, licensing body, or exam provider.'
   },
   {
-    question: 'Will this guarantee I pass?',
+    question: 'Does this guarantee I will pass?',
     answer:
-      'No. No study aid can guarantee a pass. Your result depends on your preparation, exam readiness, and compliance with your official curriculum requirements.'
+      'No. This product is designed to support study and practice, but exam success depends on the learner and their overall preparation.'
   },
   {
-    question: 'Is this for Life Insurance only?',
+    question: 'Is this only for LLQP candidates?',
     answer:
-      'Yes. This version is focused on the Life Insurance LLQP track and is designed to support that module specifically.'
+      'It is especially helpful for LLQP Life Insurance candidates, but many questions cover broader life insurance licensing concepts.'
+  },
+  {
+    question: 'Who is this for?',
+    answer:
+      'It is built for future advisors preparing for life insurance licensing exams, especially candidates studying for the LLQP Life Insurance module.'
+  },
+  {
+    question: 'Can I share the PDF or question bank?',
+    answer:
+      'No. Access is for personal individual use only and may not be copied, redistributed, or resold.'
+  },
+  {
+    question: 'What is your refund policy?',
+    answer:
+      'Digital product sales are generally final, but support is available for duplicate purchases or technical issues. Contact support and we will review your case promptly.'
   },
   {
     question: 'How do I access the download?',
     answer:
-      'After checkout, you receive instant access to the PDF download link on the confirmation screen and by email from the checkout provider.'
+      'After checkout, you receive immediate access details on-screen and by email from the checkout provider.'
   },
   {
     question: 'Can I use it on mobile?',
     answer:
-      'Yes. The PDF works on phones, tablets, and desktop devices. You can read it in any standard PDF app.'
-  },
-  {
-    question: 'Refund policy?',
-    answer:
-      'Placeholder policy: if you have a technical issue accessing your file, contact support within 7 days and we will resolve access or issue a refund where appropriate.'
+      'Yes. The materials are designed to be usable on phones, tablets, and desktop devices.'
   },
   {
     question: 'How often is it updated?',
     answer:
-      'The guide is reviewed periodically for clarity and relevance. Major updates are announced on the product page and delivered to recent customers when applicable.'
-  },
-  {
-    question: 'Can I share it?',
-    answer:
-      'No. Your purchase is for personal, individual use only and may not be redistributed, reposted, or shared.'
-  },
-  {
-    question: 'Who is it for?',
-    answer:
-      'It is built for LLQP candidates who want a focused review format, especially busy learners balancing work and evening study sessions.'
+      'The question bank is reviewed periodically for clarity and relevance. Updates may be released as content improvements are made.'
   }
 ] as const;

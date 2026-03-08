@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { heroCopy } from '@/config/site';
+import { heroCopy, siteConfig } from '@/config/site';
 
 type FormStatus = 'idle' | 'loading' | 'error';
 
@@ -50,10 +51,8 @@ export default function LeadForm() {
   return (
     <section id="free-questions" className="bg-slate-50 py-14 sm:py-16">
       <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white px-4 py-8 shadow-sm sm:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{heroCopy.secondaryCta}</h2>
-        <p className="mt-3 text-slate-600">
-          Enter your email to get a free starter set delivered and start practicing today.
-        </p>
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{heroCopy.primaryCta}</h2>
+        <p className="mt-3 text-slate-600">Enter your email to get free sample questions delivered and start practicing today.</p>
 
         <form className="mt-6 grid gap-3 sm:grid-cols-3" onSubmit={handleSubmit} noValidate>
           <div className="sm:col-span-1">
@@ -95,6 +94,15 @@ export default function LeadForm() {
             </button>
           </div>
         </form>
+
+        <p className="mt-4 text-xs leading-6 text-slate-500">
+          By requesting the free questions, you agree to receive exam prep emails from LifeForge Insurance Prep. You can
+          unsubscribe at any time. See our{' '}
+          <Link href={siteConfig.legalUrls.privacy} className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900">
+            Privacy Policy
+          </Link>
+          .
+        </p>
 
         {status === 'error' && (
           <p className="mt-3 text-sm font-medium text-red-600" role="status" aria-live="polite">

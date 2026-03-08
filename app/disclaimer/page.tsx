@@ -3,7 +3,7 @@ import { siteConfig } from '@/config/site';
 
 export const metadata = {
   title: `Disclaimer | ${siteConfig.brandName}`,
-  description: 'Legal disclaimer for independent LLQP study material.'
+  description: 'Independent exam prep disclaimer for LifeForge Insurance Prep.'
 };
 
 export default function DisclaimerPage() {
@@ -13,20 +13,24 @@ export default function DisclaimerPage() {
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">Disclaimer</h1>
         <div className="mt-6 space-y-4 text-sm leading-7 text-slate-700 sm:text-base">
           <p>
-            {siteConfig.brandName} and the {siteConfig.productName} are independent educational resources. They are not
-            affiliated with, endorsed by, or sponsored by any regulator, licensing body, insurer, or official LLQP provider.
+            {siteConfig.brandName} is an independent exam prep resource. It is not affiliated with any regulator, licensing
+            body, exam administrator, insurer, or textbook publisher.
           </p>
           <p>
-            This material is provided for study support and informational purposes only. It does not replace official course
-            content, legal guidance, or regulatory requirements.
+            All content is original educational support material created to help candidates practice core life insurance
+            licensing concepts. This site does not provide leaked exam questions or unauthorized exam content.
           </p>
           <p>
-            No guarantee is made that any user will pass an exam. Outcomes depend on each learner&apos;s preparation, current
-            standards, and exam conditions.
+            Materials are provided for educational purposes only and are not a substitute for official curriculum,
+            regulatory guidance, or legal advice.
           </p>
           <p>
-            Users are responsible for confirming all current exam requirements, compliance obligations, and eligibility rules
-            from official sources in their jurisdiction.
+            No guarantee is made that any user will pass an exam. Outcomes depend on each learner&apos;s preparation,
+            current exam standards, and test performance.
+          </p>
+          <p>
+            Users are responsible for verifying current exam requirements and compliance obligations in their own
+            jurisdiction.
           </p>
         </div>
 
