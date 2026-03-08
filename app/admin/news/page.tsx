@@ -31,16 +31,19 @@ export default async function AdminNewsPage() {
             <p className="mt-2 text-sm text-slate-600">Review pending articles, manage sources, pin featured stories, and track job logs.</p>
           </div>
           <div className="flex gap-2">
-            <form action="/api/news/ingest" method="POST">
-              <button className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700">
-                Run Ingestion Job
-              </button>
-            </form>
             <Link href="/news" className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-white">
               View News Hub
             </Link>
           </div>
         </header>
+
+        <section className="rounded-xl border border-slate-200 bg-white p-4">
+          <h2 className="text-base font-bold text-slate-900">Run ingestion</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Ingestion API is disabled in hosted builds. Run this command locally to fetch new articles:
+          </p>
+          <pre className="mt-3 overflow-x-auto rounded-lg bg-slate-900 px-3 py-2 text-xs text-slate-100">npm run news:ingest</pre>
+        </section>
 
         <section>
           <h2 className="mb-3 text-xl font-bold text-slate-900">Article Review Queue</h2>
