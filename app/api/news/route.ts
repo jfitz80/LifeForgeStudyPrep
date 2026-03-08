@@ -1,17 +1,26 @@
 import { NextResponse } from 'next/server';
-import { getNewsHubData } from '@/lib/news/queries';
 
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q')?.trim() ?? '';
 
-  const data = await getNewsHubData(query || undefined);
+  try {
+    const { getNewsHubData } = await import('@/lib/news/queries');
+    const data = await getNewsHubData(query || undefined);
 
-  return NextResponse.json({
-    featured: data.featured,
-    items: data.items,
-    count: data.items.length
-  });
+    return NextResponse.json({
+      featured: data.featured,
+      items: data.items,
+      count: data.items.length
+    });
+  } catch {
+    return NextResponse.json({
+      featured: [],
+      items: [],
+      count: 0
+    });
+  }
 }
