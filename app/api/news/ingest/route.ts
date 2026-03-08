@@ -1,12 +1,19 @@
 import { NextResponse } from 'next/server';
-import { ingestNewsJob } from '@/lib/news/ingest';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function POST() {
-  const result = await ingestNewsJob();
+  try {
+    const { ingestNewsJob } = await import('@/lib/news/ingest');
+    const result = await ingestNewsJob();
 
-  if (!result.ok) {
-    return NextResponse.json(result, { status: 500 });
+    if (!result.ok) {
+      return NextResponse.json(result, { status: 500 });
+    }
+
+    return NextResponse.json(result, { status: 200 });
+  } catch {
+    return NextResponse.json({ ok: false, error: 'News ingest failed.' }, { status: 500 });
   }
-
-  return NextResponse.json(result, { status: 200 });
 }
