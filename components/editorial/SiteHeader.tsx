@@ -31,6 +31,9 @@ export default function SiteHeader() {
                 {item.label}
               </a>
             ))}
+            <Link href="/news" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+              News
+            </Link>
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
@@ -68,6 +71,9 @@ export default function SiteHeader() {
                   {item.label}
                 </a>
               ))}
+              <Link href="/news" className="text-sm font-medium text-slate-700" onClick={() => setMenuOpen(false)}>
+                News
+              </Link>
               <a
                 href={siteConfig.checkoutUrl}
                 target="_blank"

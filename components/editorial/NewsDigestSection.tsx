@@ -1,7 +1,8 @@
+import Link from 'next/link';
 import { digestTags } from '@/config/home';
 
 type DigestItem = {
-  id: string;
+  slug: string;
   title: string;
   summary: string;
   publishedAtLabel: string;
@@ -19,9 +20,9 @@ export default function NewsDigestSection({ items }: { items: readonly DigestIte
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">This Week in Life Insurance</h2>
             <p className="mt-2 text-sm text-slate-600">Latest headlines with concise summaries and practical context.</p>
           </div>
-          <a href="#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
-            Get digest by email
-          </a>
+          <Link href="/news" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
+            Open full news hub
+          </Link>
         </div>
 
         <div className="mb-4 flex flex-wrap gap-2">
@@ -34,7 +35,7 @@ export default function NewsDigestSection({ items }: { items: readonly DigestIte
 
         <div className="grid gap-4 lg:grid-cols-2">
           {items.map((item) => (
-            <article key={item.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <article key={item.slug} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
               <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
                 <span>{item.publishedAtLabel}</span>
                 <span>•</span>
@@ -44,9 +45,9 @@ export default function NewsDigestSection({ items }: { items: readonly DigestIte
               <h3 className="mt-3 text-lg font-bold text-slate-900">{item.title}</h3>
               <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
               <div className="mt-4 flex gap-4">
-                <a href="#industry-insights" className="text-sm font-semibold text-brand-700 hover:text-brand-900">
-                  Read related insight
-                </a>
+                <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-brand-700 hover:text-brand-900">
+                  Read analysis
+                </Link>
                 <a href="#knowledge-hub" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
                   Explore core topics
                 </a>
