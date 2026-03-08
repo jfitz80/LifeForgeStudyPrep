@@ -1,3 +1,5 @@
+import { siteConfig } from '@/config/site';
+
 export default function HeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-slate-50 via-white to-white">
@@ -12,8 +14,13 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#industry-insights" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-700">
-              Explore Insights
+            <a
+              href={siteConfig.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-700"
+            >
+              Buy Exam Prep - {siteConfig.launchPriceDisplay}
             </a>
             <a
               href="#news-digest"
@@ -26,13 +33,18 @@ export default function HeroSection() {
 
         <div className="lg:col-span-4">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Weekly Focus</p>
-            <h2 className="mt-3 text-xl font-bold text-slate-900">This Week in Life Insurance</h2>
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Exam Prep Offer</p>
+            <h2 className="mt-3 text-xl font-bold text-slate-900">Life Insurance Exam Aid</h2>
             <p className="mt-2 text-sm leading-7 text-slate-600">
-              Coverage shifts, claims trends, product updates, and regulation changes distilled into a digest you can use in minutes.
+              Scenario-based practice and clear explanations designed to help you prepare faster and more confidently.
             </p>
-            <a href="#news-digest" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
-              View current digest →
+            <a
+              href={siteConfig.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900"
+            >
+              Get instant access →
             </a>
           </div>
         </div>

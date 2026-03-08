@@ -21,9 +21,7 @@ export default function SiteHeader() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-3">
           <Link href="/" className="min-w-0">
-            <p className="truncate text-sm font-semibold tracking-tight text-slate-900 sm:text-base">
-              {siteConfig.brandName}
-            </p>
+            <p className="truncate text-sm font-semibold tracking-tight text-slate-900 sm:text-base">{siteConfig.brandName}</p>
             <p className="hidden text-xs text-slate-500 sm:block">{siteConfig.tagline}</p>
           </Link>
 
@@ -36,8 +34,13 @@ export default function SiteHeader() {
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <a href="#newsletter-signup" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700">
-              Subscribe
+            <a
+              href={siteConfig.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+            >
+              Buy Exam Prep - {siteConfig.launchPriceDisplay}
             </a>
           </div>
 
@@ -65,8 +68,14 @@ export default function SiteHeader() {
                   {item.label}
                 </a>
               ))}
-              <a href="#newsletter-signup" className="text-sm font-medium text-slate-700" onClick={() => setMenuOpen(false)}>
-                Subscribe
+              <a
+                href={siteConfig.checkoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-slate-900"
+                onClick={() => setMenuOpen(false)}
+              >
+                Buy Exam Prep - {siteConfig.launchPriceDisplay}
               </a>
             </div>
           </div>
