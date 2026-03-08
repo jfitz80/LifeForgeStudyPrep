@@ -3,11 +3,23 @@
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { heroCopy, siteConfig } from '@/config/site';
+import { siteConfig } from '@/config/site';
 
 type FormStatus = 'idle' | 'loading' | 'error';
 
-export default function LeadForm() {
+type LeadFormProps = {
+  sectionId?: string;
+  heading?: string;
+  description?: string;
+  submitLabel?: string;
+};
+
+export default function LeadForm({
+  sectionId = 'free-questions',
+  heading = 'Get free life insurance practice questions',
+  description = 'Enter your email to get free sample questions delivered and start practicing today.',
+  submitLabel = 'Get Free Questions'
+}: LeadFormProps) {
   const router = useRouter();
   const [status, setStatus] = useState<FormStatus>('idle');
   const [error, setError] = useState('');
@@ -49,10 +61,10 @@ export default function LeadForm() {
   }
 
   return (
-    <section id="free-questions" className="bg-slate-50 py-14 sm:py-16">
+    <section id={sectionId} className="bg-slate-50 py-14 sm:py-16">
       <div className="mx-auto max-w-4xl rounded-2xl border border-slate-200 bg-white px-4 py-8 shadow-sm sm:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{heroCopy.primaryCta}</h2>
-        <p className="mt-3 text-slate-600">Enter your email to get free sample questions delivered and start practicing today.</p>
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{heading}</h2>
+        <p className="mt-3 text-slate-600">{description}</p>
 
         <form className="mt-6 grid gap-3 sm:grid-cols-3" onSubmit={handleSubmit} noValidate>
           <div className="sm:col-span-1">
@@ -90,14 +102,14 @@ export default function LeadForm() {
               disabled={status === 'loading'}
               className="w-full rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {status === 'loading' ? 'Submitting...' : 'Get Free Questions'}
+              {status === 'loading' ? 'Submitting...' : submitLabel}
             </button>
           </div>
         </form>
 
         <p className="mt-4 text-xs leading-6 text-slate-500">
-          By requesting the free questions, you agree to receive exam prep emails from LifeForge Insurance Prep. You can
-          unsubscribe at any time. See our{' '}
+          By requesting updates, you agree to receive emails from LifeForge Insurance Prep. You can unsubscribe at any time.
+          See our{' '}
           <Link href={siteConfig.legalUrls.privacy} className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900">
             Privacy Policy
           </Link>
