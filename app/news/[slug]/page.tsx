@@ -5,17 +5,75 @@ import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
 import { getNewsBySlug, newsItems } from '@/data/news';
 import { siteConfig } from '@/config/site';
+import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 type Props = {
   params: { slug: string };
 };
 
+type ArticleView = {
+  title: string;
+  summary: string;
+  publishedAtLabel: string;
+  source: string;
+  whatItMeans: string;
+  llqpAngle: string;
+  keyPoints: string[];
+};
+
+function fromStatic(slug: string): ArticleView | null {
+  const item = getNewsBySlug(slug);
+  if (!item) return null;
+
+  return {
+    title: item.title,
+    summary: item.summary,
+    publishedAtLabel: item.publishedAtLabel,
+    source: item.source,
+    whatItMeans: item.whatItMeans,
+    llqpAngle: item.llqpAngle,
+    keyPoints: item.keyPoints
+  };
+}
+
+async function fromLive(slug: string): Promise<ArticleView | null> {
+  try {
+    const { getNewsArticleBySlug } = await import('@/lib/news/queries');
+    const article = await getNewsArticleBySlug(slug);
+    if (!article) return null;
+
+    return {
+      title: article.title,
+      summary: article.summary,
+      publishedAtLabel: new Date(article.publishedAt).toLocaleDateString(),
+      source: article.source.name,
+      whatItMeans: article.whyItMatters,
+      llqpAngle:
+        article.llqpAngle ||
+        'Use this topic to practice policy interpretation, claims reasoning, and client communication in scenario-based exam questions.',
+      keyPoints: [article.summary, article.whoItAffects, article.whyItMatters].filter(Boolean).slice(0, 3)
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function getArticle(slug: string): Promise<ArticleView | null> {
+  if (isLiveNewsEnabled()) {
+    const live = await fromLive(slug);
+    if (live) return live;
+  }
+
+  return fromStatic(slug);
+}
+
 export function generateStaticParams() {
+  if (isLiveNewsEnabled()) return [];
   return newsItems.map((item) => ({ slug: item.slug }));
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const item = getNewsBySlug(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const item = await getArticle(params.slug);
 
   if (!item) {
     return { title: 'News Analysis | LifeForge Insurance Prep' };
@@ -27,8 +85,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function NewsArticlePage({ params }: Props) {
-  const item = getNewsBySlug(params.slug);
+export default async function NewsArticlePage({ params }: Props) {
+  const item = await getArticle(params.slug);
   if (!item) notFound();
 
   return (

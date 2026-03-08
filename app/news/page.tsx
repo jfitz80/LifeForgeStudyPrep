@@ -4,13 +4,78 @@ import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
 import { digestTags } from '@/config/home';
 import { newsItems } from '@/data/news';
+import { isLiveNewsEnabled } from '@/lib/news/runtime';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Life Insurance News Digest | LifeForge Insurance Prep',
   description: 'Weekly life insurance digest with clear summaries, practical implications, and exam-prep relevance.'
 };
 
-export default function NewsHubPage() {
+type HubItem = {
+  id?: string;
+  slug: string;
+  title: string;
+  summary: string;
+  publishedAtLabel: string;
+  source: string;
+  tag: string;
+};
+
+function mapStaticItems(): HubItem[] {
+  return newsItems.map((item) => ({
+    slug: item.slug,
+    title: item.title,
+    summary: item.summary,
+    publishedAtLabel: item.publishedAtLabel,
+    source: item.source,
+    tag: item.tag
+  }));
+}
+
+async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[] }> {
+  if (!isLiveNewsEnabled()) {
+    return { mode: 'static', items: mapStaticItems() };
+  }
+
+  try {
+    const { getNewsHubData } = await import('@/lib/news/queries');
+    const data = await getNewsHubData();
+
+    const mapped: HubItem[] = data.items.map((item) => {
+      let tag = 'Market Watch';
+      try {
+        const parsed = JSON.parse(item.tagsJson || '[]') as string[];
+        if (parsed[0]) tag = parsed[0].replace(/^./, (m) => m.toUpperCase());
+      } catch {
+        // ignore
+      }
+
+      return {
+        id: item.id,
+        slug: item.slug,
+        title: item.title,
+        summary: item.summary,
+        publishedAtLabel: new Date(item.publishedAt).toLocaleDateString(),
+        source: item.source.name,
+        tag
+      };
+    });
+
+    if (!mapped.length) {
+      return { mode: 'static', items: mapStaticItems() };
+    }
+
+    return { mode: 'live', items: mapped };
+  } catch {
+    return { mode: 'static', items: mapStaticItems() };
+  }
+}
+
+export default async function NewsHubPage() {
+  const { mode, items } = await getHubItems();
+
   return (
     <>
       <SiteHeader />
@@ -22,6 +87,7 @@ export default function NewsHubPage() {
             <p className="mt-3 max-w-3xl text-slate-600">
               Practical life insurance headlines and analysis for consumers, licensing candidates, and professionals.
             </p>
+            <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
           </header>
 
           <div className="mb-6 flex flex-wrap gap-2">
@@ -33,8 +99,8 @@ export default function NewsHubPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            {newsItems.map((item) => (
-              <article key={item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            {items.map((item) => (
+              <article key={item.id ?? item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
                   <span>{item.publishedAtLabel}</span>
                   <span>•</span>
@@ -47,7 +113,7 @@ export default function NewsHubPage() {
                   <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-brand-700 hover:text-brand-900">
                     Read analysis
                   </Link>
-                  <a href="#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
+                  <a href="/#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
                     Get weekly digest
                   </a>
                 </div>
