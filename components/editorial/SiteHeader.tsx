@@ -33,26 +33,12 @@ export default function SiteHeader() {
                 {item.label}
               </a>
             ))}
-            <Link href="/news" className="text-sm font-medium text-slate-600 hover:text-slate-900">
-              Latest News
-            </Link>
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <form action="/news" method="GET" className="flex items-center gap-2">
-              <label htmlFor="site-search" className="sr-only">
-                Search articles or topics
-              </label>
-              <input
-                id="site-search"
-                name="q"
-                placeholder="Search articles or topics"
-                className="w-56 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
-              />
-              <button type="submit" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700">
-                Search
-              </button>
-            </form>
+            <a href="#newsletter-signup" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700">
+              Subscribe
+            </a>
           </div>
 
           <button
@@ -79,24 +65,9 @@ export default function SiteHeader() {
                   {item.label}
                 </a>
               ))}
-              <Link href="/news" className="text-sm font-medium text-slate-700" onClick={() => setMenuOpen(false)}>
-                Latest News
-              </Link>
-
-              <form action="/news" method="GET" className="mt-1 flex items-center gap-2">
-                <label htmlFor="site-search-mobile" className="sr-only">
-                  Search articles or topics
-                </label>
-                <input
-                  id="site-search-mobile"
-                  name="q"
-                  placeholder="Search articles or topics"
-                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
-                />
-                <button type="submit" className="rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700">
-                  Go
-                </button>
-              </form>
+              <a href="#newsletter-signup" className="text-sm font-medium text-slate-700" onClick={() => setMenuOpen(false)}>
+                Subscribe
+              </a>
             </div>
           </div>
         )}

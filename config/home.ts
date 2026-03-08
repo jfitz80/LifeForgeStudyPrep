@@ -65,6 +65,41 @@ export const featuredContent = [
 
 export const digestTags = ['Regulation', 'Product Trends', 'Carriers', 'Consumer Impact', 'Market Watch'] as const;
 
+export const digestPreviewItems = [
+  {
+    id: 'digest-1',
+    title: 'Carrier pricing updates continue to reshape term product comparisons',
+    summary: 'Several carriers are refining pricing tiers, making side-by-side term comparisons more important for advisors and consumers.',
+    publishedAtLabel: 'This week',
+    source: 'LifeForge Editorial Digest',
+    tag: 'Product Trends'
+  },
+  {
+    id: 'digest-2',
+    title: 'Claims communication remains a key consumer pain point',
+    summary: 'Clear guidance around grace periods, contestability, and documentation can reduce avoidable confusion at claim time.',
+    publishedAtLabel: 'This week',
+    source: 'LifeForge Editorial Digest',
+    tag: 'Consumer Impact'
+  },
+  {
+    id: 'digest-3',
+    title: 'Regulatory watch: disclosure clarity and suitability conversations in focus',
+    summary: 'Ongoing regulatory attention highlights the importance of accurate needs analysis and documented recommendation rationale.',
+    publishedAtLabel: 'This week',
+    source: 'LifeForge Editorial Digest',
+    tag: 'Regulation'
+  },
+  {
+    id: 'digest-4',
+    title: 'Underwriting modernization: digital intake expands but human review stays critical',
+    summary: 'Digital workflows are improving speed, yet nuanced risk assessment still depends on strong advisor case preparation.',
+    publishedAtLabel: 'This week',
+    source: 'LifeForge Editorial Digest',
+    tag: 'Market Watch'
+  }
+] as const;
+
 export const knowledgeCategories = [
   'Life Insurance Basics',
   'Term vs Whole Life',

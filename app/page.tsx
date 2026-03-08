@@ -9,9 +9,7 @@ import IndustryInsightsSection from '@/components/editorial/IndustryInsightsSect
 import ReturnValueSection from '@/components/editorial/ReturnValueSection';
 import NewsletterSection from '@/components/editorial/NewsletterSection';
 import SiteFooter from '@/components/editorial/SiteFooter';
-import { getNewsHubData } from '@/lib/news/queries';
-
-export const dynamic = 'force-dynamic';
+import { digestPreviewItems } from '@/config/home';
 
 export const metadata: Metadata = {
   title: 'LifeForge Insurance Prep | Life Insurance News, Knowledge, and Insights',
@@ -19,10 +17,7 @@ export const metadata: Metadata = {
     'A trusted destination for life insurance education, weekly digest updates, and industry insights for consumers, learners, and professionals.'
 };
 
-export default async function HomePage() {
-  const { items } = await getNewsHubData();
-  const digestItems = items.slice(0, 6);
-
+export default function HomePage() {
   return (
     <>
       <SiteHeader />
@@ -30,7 +25,7 @@ export default async function HomePage() {
         <HeroSection />
         <CredibilityStrip />
         <FeaturedGrid />
-        <NewsDigestSection items={digestItems} />
+        <NewsDigestSection items={digestPreviewItems} />
         <KnowledgeHubSection />
         <IndustryInsightsSection />
         <ReturnValueSection />

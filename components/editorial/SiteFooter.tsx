@@ -4,7 +4,7 @@ import { siteConfig } from '@/config/site';
 const footerLinks = [
   { label: 'About', href: '/' },
   { label: 'Knowledge Hub', href: '/#knowledge-hub' },
-  { label: 'News Digest', href: '/news' },
+  { label: 'News Digest', href: '/#news-digest' },
   { label: 'Industry Insights', href: '/#industry-insights' },
   { label: 'Exam Prep', href: '/#exam-prep' },
   { label: 'Contact', href: `mailto:${siteConfig.supportEmail}` },

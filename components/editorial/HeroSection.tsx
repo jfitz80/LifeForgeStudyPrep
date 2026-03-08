@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 export default function HeroSection() {
   return (
     <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-slate-50 via-white to-white">
@@ -17,12 +15,12 @@ export default function HeroSection() {
             <a href="#industry-insights" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-700">
               Explore Insights
             </a>
-            <Link
-              href="/news"
+            <a
+              href="#news-digest"
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
             >
               Read Latest Digest
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -33,9 +31,9 @@ export default function HeroSection() {
             <p className="mt-2 text-sm leading-7 text-slate-600">
               Coverage shifts, claims trends, product updates, and regulation changes distilled into a digest you can use in minutes.
             </p>
-            <Link href="/news" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
+            <a href="#news-digest" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
               View current digest →
-            </Link>
+            </a>
           </div>
         </div>
       </div>
