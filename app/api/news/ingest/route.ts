@@ -4,16 +4,14 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST() {
-  try {
-    const { ingestNewsJob } = await import('@/lib/news/ingest');
-    const result = await ingestNewsJob();
-
-    if (!result.ok) {
-      return NextResponse.json(result, { status: 500 });
-    }
-
-    return NextResponse.json(result, { status: 200 });
-  } catch {
-    return NextResponse.json({ ok: false, error: 'News ingest failed.' }, { status: 500 });
-  }
+  // NOTE: Disabled in hosted builds to avoid DB-coupled build/runtime failures.
+  // Run ingestion locally via: npm run news:ingest
+  // TODO: Re-enable with a production database + secret-protected webhook endpoint.
+  return NextResponse.json(
+    {
+      ok: false,
+      error: 'News ingestion endpoint is disabled in this deployment. Run `npm run news:ingest` locally.'
+    },
+    { status: 501 }
+  );
 }
