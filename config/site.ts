@@ -3,11 +3,11 @@ export const siteConfig = {
   tagline: 'Empowering Future Advisors',
   domain: 'lifeforgeprep.com',
   productName: 'Life Insurance Licensing Question Bank',
-  launchPrice: 19,
+  launchPrice: 8.99,
   regularPrice: 29,
-  launchPriceDisplay: '$19',
+  launchPriceDisplay: '$8.99',
   regularPriceDisplay: '$29',
-  checkoutUrl: 'https://example-checkout-link.com',
+  checkoutUrl: 'https://payhip.com/b/xwfO6',
   supportEmail: 'support@lifeforgeprep.com',
   legalUrls: {
     privacy: '/privacy',
@@ -16,9 +16,9 @@ export const siteConfig = {
     disclaimer: '/disclaimer'
   },
   seo: {
-    title: 'LifeForge Insurance Prep | Life Insurance Licensing Question Bank ($19 Launch)',
+    title: 'LifeForge Insurance Prep | Life Insurance News, Knowledge, and Insights',
     description:
-      '200+ exam-style life insurance licensing questions with clear explanations and scenario-based practice. Especially helpful for LLQP Life Insurance candidates.'
+      'Trusted life insurance education, digest-style news updates, and practical industry insight for consumers, learners, and professionals.'
   }
 } as const;
 
