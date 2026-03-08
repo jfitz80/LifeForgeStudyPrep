@@ -1,5 +1,9 @@
 import { db } from '@/lib/db';
 
+function slugBase(slug: string) {
+  return slug.replace(/-\d{6}$/, '');
+}
+
 export async function getNewsHubData(search?: string) {
   try {
     const where = {
@@ -39,8 +43,28 @@ export async function getNewsHubData(search?: string) {
 
 export async function getNewsArticleBySlug(slug: string) {
   try {
-    return await db.newsArticle.findFirst({
+    const exactApproved = await db.newsArticle.findFirst({
       where: { slug, status: 'APPROVED' },
+      include: { source: true }
+    });
+
+    if (exactApproved) return exactApproved;
+
+    const base = slugBase(slug);
+
+    const relatedApproved = await db.newsArticle.findFirst({
+      where: {
+        status: 'APPROVED',
+        slug: { startsWith: base }
+      },
+      include: { source: true },
+      orderBy: [{ publishedAt: 'desc' }, { updatedAt: 'desc' }]
+    });
+
+    if (relatedApproved) return relatedApproved;
+
+    return await db.newsArticle.findFirst({
+      where: { slug },
       include: { source: true }
     });
   } catch {

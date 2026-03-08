@@ -26,7 +26,6 @@ const parser = new Parser<Record<string, never>, FeedItem>({
 });
 
 function sanitizeXmlEntities(xml: string) {
-  // Escape raw ampersands that are not valid entities.
   return xml.replace(/&(?!(?:amp|lt|gt|quot|apos|#[0-9]+|#x[0-9A-Fa-f]+);)/g, '&amp;');
 }
 
@@ -46,6 +45,53 @@ async function parseFeedWithFallback(url: string) {
     const raw = await response.text();
     const sanitized = sanitizeXmlEntities(raw);
     return parser.parseString(sanitized);
+  }
+}
+
+function normalizeUrl(raw?: string | null) {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('//')) return `https:${trimmed}`;
+
+  try {
+    const url = new URL(trimmed);
+    if (!url.protocol.startsWith('http')) return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+async function resolvePublisherUrl(rawUrl: string) {
+  const normalized = normalizeUrl(rawUrl);
+  if (!normalized) return null;
+
+  try {
+    const parsed = new URL(normalized);
+    if (!parsed.hostname.includes('news.google.com')) {
+      return normalized;
+    }
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 7000);
+
+    try {
+      const response = await fetch(normalized, {
+        method: 'GET',
+        redirect: 'follow',
+        signal: controller.signal,
+        headers: { 'User-Agent': 'LifeForgeNewsBot/1.0' }
+      });
+
+      const finalUrl = normalizeUrl(response.url);
+      return finalUrl ?? normalized;
+    } finally {
+      clearTimeout(timer);
+    }
+  } catch {
+    return normalized;
   }
 }
 
@@ -121,7 +167,9 @@ export async function ingestNewsJob() {
       for (const item of list) {
         itemsFetched += 1;
         const title = item.title?.trim() ?? '';
-        const canonicalUrl = item.link?.trim() ?? '';
+        const resolvedUrl = await resolvePublisherUrl(item.link ?? '');
+        const canonicalUrl = resolvedUrl ?? '';
+
         if (!title || !canonicalUrl) {
           itemsRejected += 1;
           continue;

@@ -9,11 +9,14 @@
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "news:ingest": "tsx scripts/run-news-ingest.ts"
+    "news:ingest": "tsx scripts/run-news-ingest.ts",
+    "news:refresh-editorial": "tsx scripts/refresh-news-editorial.ts",
+    "knowledge:build": "tsx scripts/build-knowledge-index.ts"
   },
   "dependencies": {
     "@prisma/client": "5.18.0",
     "next": "14.2.33",
+    "pdf-parse": "1.1.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "rss-parser": "3.13.0"
