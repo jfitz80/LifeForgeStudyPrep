@@ -53,6 +53,19 @@ export const faqItems = [
     answer:
       "Digital product sales are generally final, but support is available for duplicate purchases or technical access issues.",
   },
+  export const insideGuideItems = [
+    "Chapter-by-chapter summaries",
+    "Exam traps & common mistakes",
+    "Scenario questions with explanations",
+    "Quick review checklists",
+  ];
+  
+  export const howItWorksSteps = [
+    "Download instantly",
+    "Study with checklists + scenarios",
+    "Test yourself with practice questions",
+  ];
+  
 ];
 
 
