@@ -1,7 +1,13 @@
 export const siteConfig = {
   brandName: "LifeForge Insurance Prep",
   productName: "Life Insurance Exam Question Bank",
+
+  regularPrice: 29,
+  launchPrice: 8.99,
+  regularPriceDisplay: "$29",
+  launchPriceDisplay: "$8.99",
   price: "$8.99",
+
   checkoutUrl: "https://payhip.com/b/xwfO6",
   supportEmail: "support@lifeforgeprep.com",
 
@@ -12,3 +18,4 @@ export const siteConfig = {
       "Life insurance licensing exam prep with realistic exam-style questions, clear explanations, and scenario-based practice. Especially helpful for LLQP candidates.",
   },
 };
+
