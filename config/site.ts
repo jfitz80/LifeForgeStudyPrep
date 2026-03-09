@@ -1,5 +1,6 @@
 export const siteConfig = {
   brandName: "LifeForge Insurance Prep",
+  tagline: "Empowering Future Advisors",
   productName: "Life Insurance Exam Question Bank",
 
   regularPrice: 29,
