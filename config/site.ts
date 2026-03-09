@@ -27,6 +27,36 @@ export const siteConfig = {
   },
 };
 
+export const heroCopy = {
+  eyebrow: "LifeForge Insurance Prep",
+  tagline: "Empowering Future Advisors",
+  headline: "Pass Your Life Insurance Licensing Exam With Confidence",
+  subheadline:
+    "Practice with realistic exam-style questions designed for future advisors. Especially helpful for candidates preparing for the Canadian LLQP Life Insurance module.",
+  bullets: [
+    "200+ exam-style questions",
+    "Clear explanations",
+    "Scenario-based practice",
+    "Especially helpful for LLQP candidates",
+  ],
+  primaryCta: "Start Practicing Questions",
+  secondaryCta: "Get the Study Guide",
+  trustLine: "Independent exam prep resource. Instant digital access.",
+};
+
+export const insideGuideItems = [
+  "Chapter-by-chapter summaries",
+  "Exam traps & common mistakes",
+  "Scenario questions with explanations",
+  "Quick review checklists",
+];
+
+export const howItWorksSteps = [
+  "Download instantly",
+  "Study with checklists + scenarios",
+  "Test yourself with practice questions",
+];
+
 export const faqItems = [
   {
     question: "Is this an official LLQP resource?",
@@ -55,15 +85,17 @@ export const faqItems = [
   },
 ];
 
-export const insideGuideItems = [
-  "Chapter-by-chapter summaries",
-  "Exam traps & common mistakes",
-  "Scenario questions with explanations",
-  "Quick review checklists",
-];
+export const sampleQuestion = {
+  heading: "Question Most Candidates Get Wrong",
+  question:
+    "A policyholder dies during the grace period after missing a premium payment. What happens?",
+  answers: [
+    "A. Claim denied",
+    "B. Policy cancelled",
+    "C. Death benefit paid minus unpaid premium",
+    "D. Policy must be reinstated",
+  ],
+  reveal:
+    "Correct answer: C — the death benefit is paid, but the unpaid premium is deducted.",
+};
 
-export const howItWorksSteps = [
-  "Download instantly",
-  "Study with checklists + scenarios",
-  "Test yourself with practice questions",
-];
