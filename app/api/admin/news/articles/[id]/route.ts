@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,8 +11,13 @@ type Payload = {
   isFeatured?: boolean;
 };
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
+export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
+    const { id } = await context.params;
     const body = (await request.json()) as Payload;
 
     const updates: { status?: ArticleStatus; isFeatured?: boolean } = {};
@@ -32,7 +37,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     const { db } = await import('@/lib/db');
 
     const article = await db.newsArticle.update({
-      where: { id: params.id },
+      where: { id },
       data: updates
     });
 
@@ -41,3 +46,4 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     return NextResponse.json({ error: 'Unable to update article.' }, { status: 500 });
   }
 }
+

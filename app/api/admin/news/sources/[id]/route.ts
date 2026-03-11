@@ -1,7 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
 
 type Payload = {
   isActive?: boolean;
@@ -9,8 +13,9 @@ type Payload = {
   priority?: number;
 };
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
+    const { id } = await context.params;
     const body = (await request.json()) as Payload;
 
     const data: {
@@ -30,7 +35,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     const { db } = await import('@/lib/db');
 
     const source = await db.newsSource.update({
-      where: { id: params.id },
+      where: { id },
       data
     });
 
