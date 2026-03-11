@@ -49,16 +49,23 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
         const parsed = JSON.parse(item.tagsJson || '[]') as string[];
         if (parsed[0]) tag = parsed[0].replace(/^./, (m) => m.toUpperCase());
       } catch {
-        // ignore
+        // ignore malformed tagsJson
       }
+
+      const publishedAtLabel = item.publishedAt
+        ? new Date(item.publishedAt).toLocaleDateString()
+        : new Date(item.createdAt).toLocaleDateString();
+
+      const sourceName =
+        (item as { source?: { name?: string | null } }).source?.name || 'LifeForge News';
 
       return {
         id: item.id,
         slug: item.slug,
         title: item.title,
         summary: item.summary,
-        publishedAtLabel: new Date(item.publishedAt).toLocaleDateString(),
-        source: item.source.name,
+        publishedAtLabel,
+        source: sourceName,
         tag
       };
     });
@@ -68,7 +75,8 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
     }
 
     return { mode: 'live', items: mapped };
-  } catch {
+  } catch (error) {
+    console.error('news hub live fetch failed:', error);
     return { mode: 'static', items: mapStaticItems() };
   }
 }
