@@ -5,21 +5,22 @@ function slugBase(slug: string) {
 }
 
 export async function getNewsHubData(search?: string) {
-  try {
-    const where = {
-      status: 'APPROVED',
-      ...(search
-        ? {
-            OR: [
-              { title: { contains: search } },
-              { summary: { contains: search } },
-              { excerpt: { contains: search } },
-              { whyItMatters: { contains: search } }
-            ]
-          }
-        : {})
-    };
+  const where = {
+    status: 'APPROVED' as const,
+    publishedAt: { not: null as null | Date },
+    ...(search
+      ? {
+          OR: [
+            { title: { contains: search, mode: 'insensitive' as const } },
+            { summary: { contains: search, mode: 'insensitive' as const } },
+            { excerpt: { contains: search, mode: 'insensitive' as const } },
+            { whyItMatters: { contains: search, mode: 'insensitive' as const } }
+          ]
+        }
+      : {})
+  };
 
+  try {
     const [featured, items] = await Promise.all([
       db.newsArticle.findMany({
         where: { ...where, isFeatured: true },
@@ -35,9 +36,13 @@ export async function getNewsHubData(search?: string) {
       })
     ]);
 
-    return { featured, items };
-  } catch {
-    return { featured: [], items: [] };
+    return {
+      featured: featured.length ? featured : items.slice(0, 3),
+      items
+    };
+  } catch (error) {
+    console.error('getNewsHubData failed:', error);
+    throw error;
   }
 }
 
@@ -67,7 +72,8 @@ export async function getNewsArticleBySlug(slug: string) {
       where: { slug },
       include: { source: true }
     });
-  } catch {
+  } catch (error) {
+    console.error('getNewsArticleBySlug failed:', error);
     return null;
   }
 }
@@ -75,12 +81,17 @@ export async function getNewsArticleBySlug(slug: string) {
 export async function getRelatedNews(slug: string) {
   try {
     return await db.newsArticle.findMany({
-      where: { slug: { not: slug }, status: 'APPROVED' },
+      where: {
+        slug: { not: slug },
+        status: 'APPROVED',
+        publishedAt: { not: null }
+      },
       include: { source: true },
       orderBy: [{ isFeatured: 'desc' }, { publishedAt: 'desc' }],
       take: 4
     });
-  } catch {
+  } catch (error) {
+    console.error('getRelatedNews failed:', error);
     return [];
   }
 }
@@ -98,7 +109,8 @@ export async function getAdminNewsData() {
     ]);
 
     return { articles, sources, jobs };
-  } catch {
+  } catch (error) {
+    console.error('getAdminNewsData failed:', error);
     return { articles: [], sources: [], jobs: [] };
   }
 }
