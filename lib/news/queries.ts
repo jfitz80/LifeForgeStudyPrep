@@ -6,18 +6,18 @@ function slugBase(slug: string) {
 
 export async function getNewsHubData(search?: string) {
   const where = search
-  ? {
-      status: 'APPROVED' as const,
-      OR: [
-        { title: { contains: search, mode: 'insensitive' as const } },
-        { summary: { contains: search, mode: 'insensitive' as const } },
-        { excerpt: { contains: search, mode: 'insensitive' as const } },
-        { whyItMatters: { contains: search, mode: 'insensitive' as const } }
-      ]
-    }
-  : {
-      status: 'APPROVED' as const
-    };
+    ? {
+        status: 'APPROVED' as const,
+        OR: [
+          { title: { contains: search, mode: 'insensitive' as const } },
+          { summary: { contains: search, mode: 'insensitive' as const } },
+          { excerpt: { contains: search, mode: 'insensitive' as const } },
+          { whyItMatters: { contains: search, mode: 'insensitive' as const } }
+        ]
+      }
+    : {
+        status: 'APPROVED' as const
+      };
 
   try {
     const [featured, items] = await Promise.all([
@@ -82,8 +82,7 @@ export async function getRelatedNews(slug: string) {
     return await db.newsArticle.findMany({
       where: {
         slug: { not: slug },
-        status: 'APPROVED',
-        publishedAt: { not: null }
+        status: 'APPROVED'
       },
       include: { source: true },
       orderBy: [{ isFeatured: 'desc' }, { publishedAt: 'desc' }],
