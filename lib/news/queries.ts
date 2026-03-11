@@ -5,20 +5,19 @@ function slugBase(slug: string) {
 }
 
 export async function getNewsHubData(search?: string) {
-  const where = {
-    status: 'APPROVED' as const,
-    publishedAt: { not: null as null | Date },
-    ...(search
-      ? {
-          OR: [
-            { title: { contains: search, mode: 'insensitive' as const } },
-            { summary: { contains: search, mode: 'insensitive' as const } },
-            { excerpt: { contains: search, mode: 'insensitive' as const } },
-            { whyItMatters: { contains: search, mode: 'insensitive' as const } }
-          ]
-        }
-      : {})
-  };
+  const where = search
+  ? {
+      status: 'APPROVED' as const,
+      OR: [
+        { title: { contains: search, mode: 'insensitive' as const } },
+        { summary: { contains: search, mode: 'insensitive' as const } },
+        { excerpt: { contains: search, mode: 'insensitive' as const } },
+        { whyItMatters: { contains: search, mode: 'insensitive' as const } }
+      ]
+    }
+  : {
+      status: 'APPROVED' as const
+    };
 
   try {
     const [featured, items] = await Promise.all([
