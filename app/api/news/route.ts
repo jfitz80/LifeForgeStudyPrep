@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!isLiveNewsEnabled()) {
     const staticItems = newsItems.filter((item) => {
       if (!query) return true;
-      return (`${item.title} ${item.summary} ${item.tag}`).toLowerCase().includes(query);
+      return `${item.title} ${item.summary} ${item.tag}`.toLowerCase().includes(query);
     });
 
     return NextResponse.json({
@@ -33,7 +33,8 @@ export async function GET(request: Request) {
       items: data.items,
       count: data.items.length
     });
-  } catch {
+  } catch (error) {
+    console.error('api/news failed:', error);
     return NextResponse.json({
       mode: 'fallback',
       featured: newsItems.slice(0, 2),

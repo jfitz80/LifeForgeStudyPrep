@@ -15,34 +15,27 @@ export async function getNewsHubData(search?: string) {
           { whyItMatters: { contains: search, mode: 'insensitive' as const } }
         ]
       }
-    : {
-        status: 'APPROVED' as const
-      };
+    : { status: 'APPROVED' as const };
 
-  try {
-    const [featured, items] = await Promise.all([
-      db.newsArticle.findMany({
-        where: { ...where, isFeatured: true },
-        include: { source: true },
-        orderBy: [{ publishedAt: 'desc' }],
-        take: 3
-      }),
-      db.newsArticle.findMany({
-        where,
-        include: { source: true },
-        orderBy: [{ publishedAt: 'desc' }],
-        take: 120
-      })
-    ]);
+  const [featured, items] = await Promise.all([
+    db.newsArticle.findMany({
+      where: { ...where, isFeatured: true },
+      include: { source: true },
+      orderBy: [{ publishedAt: 'desc' }],
+      take: 3
+    }),
+    db.newsArticle.findMany({
+      where,
+      include: { source: true },
+      orderBy: [{ publishedAt: 'desc' }],
+      take: 120
+    })
+  ]);
 
-    return {
-      featured: featured.length ? featured : items.slice(0, 3),
-      items
-    };
-  } catch (error) {
-    console.error('getNewsHubData failed:', error);
-    throw error;
-  }
+  return {
+    featured: featured.length ? featured : items.slice(0, 3),
+    items
+  };
 }
 
 export async function getNewsArticleBySlug(slug: string) {
@@ -51,20 +44,14 @@ export async function getNewsArticleBySlug(slug: string) {
       where: { slug, status: 'APPROVED' },
       include: { source: true }
     });
-
     if (exactApproved) return exactApproved;
 
     const base = slugBase(slug);
-
     const relatedApproved = await db.newsArticle.findFirst({
-      where: {
-        status: 'APPROVED',
-        slug: { startsWith: base }
-      },
+      where: { status: 'APPROVED', slug: { startsWith: base } },
       include: { source: true },
       orderBy: [{ publishedAt: 'desc' }, { updatedAt: 'desc' }]
     });
-
     if (relatedApproved) return relatedApproved;
 
     return await db.newsArticle.findFirst({
@@ -80,10 +67,7 @@ export async function getNewsArticleBySlug(slug: string) {
 export async function getRelatedNews(slug: string) {
   try {
     return await db.newsArticle.findMany({
-      where: {
-        slug: { not: slug },
-        status: 'APPROVED'
-      },
+      where: { slug: { not: slug }, status: 'APPROVED' },
       include: { source: true },
       orderBy: [{ isFeatured: 'desc' }, { publishedAt: 'desc' }],
       take: 4

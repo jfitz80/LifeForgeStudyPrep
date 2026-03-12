@@ -7,6 +7,7 @@ import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: 'Life Insurance News Digest | LifeForge Insurance Prep',
@@ -57,7 +58,7 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
         : new Date(item.createdAt).toLocaleDateString();
 
       const sourceName =
-        (item as { source?: { name?: string | null } }).source?.name || 'LifeForge News';
+        (item as { source?: { name?: string | null } }).source?.name ?? 'LifeForge News';
 
       return {
         id: item.id,
@@ -71,7 +72,8 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
     });
 
     if (!mapped.length) {
-      return { mode: 'static', items: mapStaticItems() };
+      console.warn('news hub live returned 0 items; keeping live mode');
+      return { mode: 'live', items: [] };
     }
 
     return { mode: 'live', items: mapped };
