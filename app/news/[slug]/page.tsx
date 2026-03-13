@@ -31,12 +31,46 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
   const seen = new Set<string>();
   const points: string[] = [];
 
+  const clean = (s: string) =>
+    s
+      .replace(/\s+/g, ' ')
+      .replace(/\.+$/, '')
+      .trim();
+
   for (const part of parts) {
     if (!part) continue;
+
     const sentences = part
       .split(/(?<=[.!?])\s+/)
-      .map((s) => s.trim())
+      .map(clean)
       .filter(Boolean);
+
+    for (const sentence of sentences) {
+      const lower = sentence.toLowerCase();
+
+      // remove obvious repetitive boilerplate
+      if (
+        lower.startsWith('this can affect') ||
+        lower.startsWith('this headline highlights') ||
+        lower === clean(parts[0] || '').toLowerCase()
+      ) {
+        continue;
+      }
+
+      if (!seen.has(lower)) {
+        seen.add(lower);
+        points.push(sentence);
+      }
+
+      if (points.length >= 4) return points;
+    }
+  }
+
+  return points.length
+    ? points
+    : ['Key takeaway: review this update against policy structure, underwriting, and claims handling principles.'];
+}
+
 
     for (const sentence of sentences) {
       const normalized = sentence.toLowerCase();
