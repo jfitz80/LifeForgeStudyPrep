@@ -31,11 +31,7 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
   const seen = new Set<string>();
   const points: string[] = [];
 
-  const clean = (s: string) =>
-    s
-      .replace(/\s+/g, ' ')
-      .replace(/\.+$/, '')
-      .trim();
+  const clean = (s: string) => s.replace(/\s+/g, ' ').replace(/\.+$/, '').trim();
 
   for (const part of parts) {
     if (!part) continue;
@@ -48,7 +44,6 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
     for (const sentence of sentences) {
       const lower = sentence.toLowerCase();
 
-      // remove obvious repetitive boilerplate
       if (
         lower.startsWith('this can affect') ||
         lower.startsWith('this headline highlights') ||
@@ -69,20 +64,6 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
   return points.length
     ? points
     : ['Key takeaway: review this update against policy structure, underwriting, and claims handling principles.'];
-}
-
-
-    for (const sentence of sentences) {
-      const normalized = sentence.toLowerCase();
-      if (!seen.has(normalized)) {
-        seen.add(normalized);
-        points.push(sentence);
-      }
-      if (points.length >= 5) return points;
-    }
-  }
-
-  return points;
 }
 
 async function readSlug(params: Props['params']): Promise<string> {
