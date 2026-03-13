@@ -1,17 +1,19 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { cache } from 'react';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
 import { getNewsBySlug, newsItems } from '@/data/news';
 import { siteConfig } from '@/config/site';
+import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export const revalidate = 0;
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 type ArticleView = {
@@ -19,10 +21,40 @@ type ArticleView = {
   summary: string;
   publishedAtLabel: string;
   source: string;
+  originalUrl?: string;
   whatItMeans: string;
   llqpAngle: string;
   keyPoints: string[];
 };
+
+function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
+  const seen = new Set<string>();
+  const points: string[] = [];
+
+  for (const part of parts) {
+    if (!part) continue;
+    const sentences = part
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    for (const sentence of sentences) {
+      const normalized = sentence.toLowerCase();
+      if (!seen.has(normalized)) {
+        seen.add(normalized);
+        points.push(sentence);
+      }
+      if (points.length >= 5) return points;
+    }
+  }
+
+  return points;
+}
+
+async function readSlug(params: Props['params']): Promise<string> {
+  const resolved = await params;
+  return resolved.slug;
+}
 
 function fromStatic(slug: string): ArticleView | null {
   const item = getNewsBySlug(slug);
@@ -45,35 +77,51 @@ async function fromLive(slug: string): Promise<ArticleView | null> {
     const article = await getNewsArticleBySlug(slug);
     if (!article) return null;
 
+    const keyPoints = buildKeyPoints([
+      article.summary,
+      article.whoItAffects,
+      article.whyItMatters,
+      article.llqpAngle
+    ]);
+
     return {
       title: article.title,
       summary: article.summary,
       publishedAtLabel: new Date(article.publishedAt).toLocaleDateString(),
       source: article.source?.name ?? 'LifeForge News',
+      originalUrl: article.canonicalUrl ?? undefined,
       whatItMeans: article.whyItMatters,
       llqpAngle:
         article.llqpAngle ||
         'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.',
-      keyPoints: [article.summary, article.whoItAffects, article.whyItMatters].filter(Boolean).slice(0, 3)
+      keyPoints:
+        keyPoints.length > 0
+          ? keyPoints
+          : ['Review this update against policy structure, underwriting, and claims handling principles.']
     };
   } catch (error) {
-    console.error('news article live fetch failed:', slug, error);
+    console.error('news article live fetch failed:', { slug, error });
     return null;
   }
 }
 
-async function getArticle(slug: string): Promise<ArticleView | null> {
-  const live = await fromLive(slug);
-  if (live) return live;
+const getArticle = cache(async (slug: string): Promise<ArticleView | null> => {
+  if (isLiveNewsEnabled()) {
+    const live = await fromLive(slug);
+    if (live) return live;
+  }
+
   return fromStatic(slug);
-}
+});
 
 export function generateStaticParams() {
   return newsItems.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const item = await getArticle(params.slug);
+  const slug = await readSlug(params);
+  const item = await getArticle(slug);
+
   if (!item) return { title: 'News Analysis | LifeForge Insurance Prep' };
 
   return {
@@ -83,7 +131,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NewsArticlePage({ params }: Props) {
-  const item = await getArticle(params.slug);
+  const slug = await readSlug(params);
+  const item = await getArticle(slug);
   if (!item) notFound();
 
   return (
@@ -102,24 +151,37 @@ export default async function NewsArticlePage({ params }: Props) {
               {item.publishedAtLabel} · {item.source}
             </p>
 
+            {item.originalUrl?.startsWith('http') && (
+              <p className="mt-2">
+                <a
+                  href={item.originalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-semibold text-brand-700 hover:text-brand-900"
+                >
+                  Read original source
+                </a>
+              </p>
+            )}
+
             <p className="mt-6 text-lg leading-8 text-slate-700">{item.summary}</p>
 
-            <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+            <section id="key-points" className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
               <h2 className="text-lg font-bold text-slate-900">Key points digest</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
-                {item.keyPoints.map((point) => (
-                  <li key={point}>{point}</li>
+                {item.keyPoints.map((point, idx) => (
+                  <li key={`${idx}-${point.slice(0, 24)}`}>{point}</li>
                 ))}
               </ul>
             </section>
 
             <section className="mt-8 space-y-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <div id="policyholders" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
                 <h2 className="text-lg font-bold text-slate-900">What this means for policyholders</h2>
                 <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatItMeans}</p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <div id="exam-angle" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
                 <h2 className="text-lg font-bold text-slate-900">LLQP exam angle</h2>
                 <p className="mt-2 text-sm leading-7 text-slate-700">{item.llqpAngle}</p>
               </div>
@@ -147,7 +209,20 @@ export default async function NewsArticlePage({ params }: Props) {
             <p className="mt-2 text-sm text-slate-600">
               Get concise life insurance updates and practical explainers each week.
             </p>
-            <a href="/#newsletter-signup" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
+
+            <nav className="mt-4 space-y-2 text-sm">
+              <a href="#key-points" className="block font-semibold text-brand-700 hover:text-brand-900">
+                Jump to key points
+              </a>
+              <a href="#policyholders" className="block font-semibold text-brand-700 hover:text-brand-900">
+                What this means
+              </a>
+              <a href="#exam-angle" className="block font-semibold text-brand-700 hover:text-brand-900">
+                LLQP exam angle
+              </a>
+            </nav>
+
+            <a href="/#newsletter-signup" className="mt-5 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
               Join newsletter
             </a>
           </aside>
@@ -157,4 +232,3 @@ export default async function NewsArticlePage({ params }: Props) {
     </>
   );
 }
-
