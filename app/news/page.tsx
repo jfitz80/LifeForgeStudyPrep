@@ -109,30 +109,33 @@ export default async function NewsHubPage() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            {items.map((item) => (
-              <article key={item.id ?? item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                  <span>{item.publishedAtLabel}</span>
-                  <span>•</span>
-                  <span>{item.source}</span>
-                  <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">{item.tag}</span>
-                </div>
-                <h2 className="mt-3 text-xl font-bold text-slate-900">{item.title}</h2>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
-                <div className="mt-4 flex gap-4">
-                  <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-brand-700 hover:text-brand-900">
-                    Read analysis
-                  </Link>
-                  <a href="/#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
-                    Get weekly digest
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </main>
-      <SiteFooter />
-    </>
-  );
-}
+           {items.map((item) => (
+  <article key={item.id ?? item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+      <span>{item.publishedAtLabel}</span>
+      <span>•</span>
+      <span>{item.source}</span>
+      <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">{item.tag}</span>
+    </div>
+
+    <h2 className="mt-3 text-xl font-bold text-slate-900">{item.title}</h2>
+    <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
+
+    <div className="mt-4 flex flex-wrap gap-4">
+      <Link
+        href={`/news/${item.slug}`}
+        className="text-sm font-semibold text-brand-700 hover:text-brand-900"
+      >
+        Read analysis
+      </Link>
+
+      <a
+        href="/#newsletter-signup"
+        className="text-sm font-semibold text-slate-700 hover:text-slate-900"
+      >
+        Get weekly digest
+      </a>
+    </div>
+  </article>
+))}
+
