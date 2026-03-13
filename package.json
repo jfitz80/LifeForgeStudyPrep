@@ -8,7 +8,7 @@
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint",
-    "prisma:generate": "prisma generate",
+    "build": "prisma generate && next build",
     "prisma:migrate": "prisma migrate dev",
     "news:ingest": "tsx scripts/run-news-ingest.ts",
     "news:refresh-editorial": "tsx scripts/refresh-news-editorial.ts",
