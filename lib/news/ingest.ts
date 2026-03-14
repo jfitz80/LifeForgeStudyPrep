@@ -183,11 +183,9 @@ export async function ingestNewsJob() {
 
         const relevanceScore = getRelevanceScore(title, excerpt);
 
-        const editorial = buildEditorial({
-          title,
-          excerpt,
-          sourceName: source.name
-        });
+        const editorial = buildEditorial(title, excerpt);
+
+        
 
         const tags = buildTags(title, excerpt);
 
@@ -207,10 +205,14 @@ export async function ingestNewsJob() {
           imageUrl: item.enclosure?.url ?? null,
 
           summary: editorial.summary,
-          keyFactsJson: JSON.stringify(editorial.keyFacts), // added
-          whyItMatters: editorial.whyItMatters,
-          whoItAffects: editorial.impactConsumers,
-          llqpAngle: editorial.impactAdvisors,
+whyItMatters: editorial.whyItMatters,
+whoItAffects:
+  editorial.whoItAffects ||
+  'This can affect policyholders, applicants, beneficiaries, and advisors.',
+llqpAngle:
+  editorial.llqpAngle ||
+  'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.',
+
 
           status,
           isFeatured: false,
