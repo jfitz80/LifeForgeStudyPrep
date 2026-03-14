@@ -15,10 +15,12 @@ export default function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
   // navLinks are hash links; prepend /news explicitly without type-unsafe comparisons.
-  const links = useMemo<HeaderLink[]>(
-    () => [{ label: 'News Digest', href: '/news' }, ...navLinks.map((item) => ({ label: item.label, href: item.href }))],
-    []
-  );
+  const links = useMemo<HeaderLink[]>(() => {
+  const base = navLinks.map((item) => ({ label: item.label, href: item.href }));
+  const hasNewsDigest = base.some((item) => item.label.toLowerCase() === 'news digest');
+  return hasNewsDigest ? base : [{ label: 'News Digest', href: '/news' }, ...base];
+}, []);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
