@@ -17,25 +17,30 @@ export async function getNewsHubData(search?: string) {
       }
     : { status: 'APPROVED' as const };
 
-  const [featured, items] = await Promise.all([
-    db.newsArticle.findMany({
-      where: { ...where, isFeatured: true },
-      include: { source: true },
-      orderBy: [{ publishedAt: 'desc' }],
-      take: 3
-    }),
-    db.newsArticle.findMany({
-      where,
-      include: { source: true },
-      orderBy: [{ publishedAt: 'desc' }],
-      take: 120
-    })
-  ]);
+  try {
+    const [featured, items] = await Promise.all([
+      db.newsArticle.findMany({
+        where: { ...where, isFeatured: true },
+        include: { source: true },
+        orderBy: [{ publishedAt: 'desc' }],
+        take: 3
+      }),
+      db.newsArticle.findMany({
+        where,
+        include: { source: true },
+        orderBy: [{ publishedAt: 'desc' }],
+        take: 120
+      })
+    ]);
 
-  return {
-    featured: featured.length ? featured : items.slice(0, 3),
-    items
-  };
+    return {
+      featured: featured.length ? featured : items.slice(0, 3),
+      items
+    };
+  } catch (error) {
+    console.error('getNewsHubData failed:', error);
+    throw error;
+  }
 }
 
 export async function getNewsArticleBySlug(slug: string) {
@@ -46,20 +51,26 @@ export async function getNewsArticleBySlug(slug: string) {
     });
     if (exactApproved) return exactApproved;
 
+    const exactAnyStatus = await db.newsArticle.findFirst({
+      where: { slug },
+      include: { source: true }
+    });
+    if (exactAnyStatus) return exactAnyStatus;
+
     const base = slugBase(slug);
     const relatedApproved = await db.newsArticle.findFirst({
-      where: { status: 'APPROVED', slug: { startsWith: base } },
+      where: {
+        status: 'APPROVED',
+        OR: [{ slug: { equals: base } }, { slug: { startsWith: `${base}-` } }]
+      },
       include: { source: true },
       orderBy: [{ publishedAt: 'desc' }, { updatedAt: 'desc' }]
     });
     if (relatedApproved) return relatedApproved;
 
-    return await db.newsArticle.findFirst({
-      where: { slug },
-      include: { source: true }
-    });
+    return null;
   } catch (error) {
-    console.error('getNewsArticleBySlug failed:', error);
+    console.error('getNewsArticleBySlug failed:', { slug, error });
     return null;
   }
 }
@@ -73,7 +84,7 @@ export async function getRelatedNews(slug: string) {
       take: 4
     });
   } catch (error) {
-    console.error('getRelatedNews failed:', error);
+    console.error('getRelatedNews failed:', { slug, error });
     return [];
   }
 }
