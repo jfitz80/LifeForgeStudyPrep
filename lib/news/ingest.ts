@@ -182,13 +182,20 @@ export async function ingestNewsJob() {
         }
 
         const relevanceScore = getRelevanceScore(title, excerpt);
-        const editorial = buildEditorial(title, excerpt);
+
+        const editorial = buildEditorial({
+          title,
+          excerpt,
+          sourceName: source.name
+        });
+
         const tags = buildTags(title, excerpt);
 
         const slugBase = dedupeSlug(title, canonicalUrl);
         const uniqueSlug = `${slugBase}-${safeDate(item).getTime().toString().slice(-6)}`;
 
-        const status = source.requiresReview || NEWS_ENGINE_CONFIG.manualReviewDefault ? 'PENDING' : 'APPROVED';
+        const status =
+          source.requiresReview || NEWS_ENGINE_CONFIG.manualReviewDefault ? 'PENDING' : 'APPROVED';
 
         const payload: Prisma.NewsArticleCreateInput = {
           title,
@@ -198,10 +205,13 @@ export async function ingestNewsJob() {
           publishedAt: safeDate(item),
           excerpt,
           imageUrl: item.enclosure?.url ?? null,
+
           summary: editorial.summary,
+          keyFactsJson: JSON.stringify(editorial.keyFacts), // added
           whyItMatters: editorial.whyItMatters,
-          whoItAffects: editorial.whoItAffects,
-          llqpAngle: editorial.llqpAngle,
+          whoItAffects: editorial.impactConsumers,
+          llqpAngle: editorial.impactAdvisors,
+
           status,
           isFeatured: false,
           relevanceScore,
