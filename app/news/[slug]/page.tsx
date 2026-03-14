@@ -31,7 +31,12 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
   const seen = new Set<string>();
   const points: string[] = [];
 
-  const clean = (s: string) => s.replace(/\s+/g, ' ').replace(/\.+$/, '').trim();
+  const clean = (s: string) =>
+    s
+      .replace(/\s+/g, ' ')
+      .replace(/\.+$/, '')
+      .replace(/^[-•]\s*/, '')
+      .trim();
 
   for (const part of parts) {
     if (!part) continue;
@@ -45,9 +50,10 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
       const lower = sentence.toLowerCase();
 
       if (
+        sentence.length < 40 ||
         lower.startsWith('this can affect') ||
         lower.startsWith('this headline highlights') ||
-        lower === clean(parts[0] || '').toLowerCase()
+        lower.includes('practical life insurance topic')
       ) {
         continue;
       }
@@ -63,8 +69,9 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
 
   return points.length
     ? points
-    : ['Key takeaway: review this update against policy structure, underwriting, and claims handling principles.'];
+    : ['Review this update against policy terms, underwriting, claims handling, and client suitability.'];
 }
+
 
 async function readSlug(params: Props['params']): Promise<string> {
   const resolved = await params;
