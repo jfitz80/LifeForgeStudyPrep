@@ -5,11 +5,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { navLinks } from '@/config/home';
 import { siteConfig } from '@/config/site';
 
+type HeaderLink = {
+  label: string;
+  href: string;
+};
+
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const links = useMemo(() => navLinks, []);
+  // navLinks are hash links; prepend /news explicitly without type-unsafe comparisons.
+  const links = useMemo<HeaderLink[]>(
+    () => [{ label: 'News Digest', href: '/news' }, ...navLinks.map((item) => ({ label: item.label, href: item.href }))],
+    []
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -28,18 +37,21 @@ export default function SiteHeader() {
         <div className="flex h-16 items-center justify-between gap-3">
           <Link href="/" className="min-w-0">
             <p className="truncate text-sm font-bold tracking-tight text-[#2C3440] sm:text-base">{siteConfig.brandName}</p>
-            <p className="hidden text-xs text-[#6B7280] sm:block">{siteConfig.tagline ?? 'Insurance education & exam prep'}</p>
+            <p className="hidden text-xs text-[#6B7280] sm:block">
+              {siteConfig.tagline ?? 'Insurance education & exam prep'}
+            </p>
           </Link>
 
           <nav className="hidden items-center gap-6 lg:flex">
             {links.map((item) => (
-              <Link key={item.label} href={item.href} className="text-sm font-medium text-[#2C3440] hover:text-[#FA933A]">
+              <Link
+                key={`${item.label}-${item.href}`}
+                href={item.href}
+                className="text-sm font-medium text-[#2C3440] hover:text-[#FA933A]"
+              >
                 {item.label}
               </Link>
             ))}
-            <Link href="/news" className="text-sm font-medium text-[#2C3440] hover:text-[#FA933A]">
-              News Digest
-            </Link>
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
@@ -80,7 +92,7 @@ export default function SiteHeader() {
             <div className="flex flex-col gap-3">
               {links.map((item) => (
                 <Link
-                  key={item.label}
+                  key={`mobile-${item.label}-${item.href}`}
                   href={item.href}
                   className="text-sm font-medium text-[#2C3440]"
                   onClick={() => setMenuOpen(false)}
@@ -88,9 +100,6 @@ export default function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/news" className="text-sm font-medium text-[#2C3440]" onClick={() => setMenuOpen(false)}>
-                News Digest
-              </Link>
               <a
                 href={siteConfig.checkoutUrl}
                 target="_blank"

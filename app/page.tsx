@@ -1,39 +1,29 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/editorial/SiteHeader';
-import HeroSection from '@/components/editorial/HeroSection';
-import CredibilityStrip from '@/components/editorial/CredibilityStrip';
-import FeaturedGrid from '@/components/editorial/FeaturedGrid';
-import NewsDigestSection from '@/components/editorial/NewsDigestSection';
-import KnowledgeHubSection from '@/components/editorial/KnowledgeHubSection';
-import IndustryInsightsSection from '@/components/editorial/IndustryInsightsSection';
-import ReturnValueSection from '@/components/editorial/ReturnValueSection';
-import NewsletterSection from '@/components/editorial/NewsletterSection';
-import SiteFooter from '@/components/editorial/SiteFooter';
-import { newsItems } from '@/data/news';
 
 export const metadata: Metadata = {
-  title: 'LifeForge Insurance Prep | Life Insurance News, Knowledge, and Insights',
+  title: 'LifeForgePrep | Life Insurance Explained Clearly',
   description:
-    'A trusted destination for life insurance education, weekly digest updates, and industry insights for consumers, learners, and professionals.'
+    'News, guides, and practical insights to help you make informed life insurance decisions.'
 };
 
 export default function HomePage() {
-  const digestItems = newsItems.slice(0, 4);
-
   return (
     <>
       <SiteHeader />
-      <main>
-        <HeroSection />
-        <CredibilityStrip />
-        <FeaturedGrid />
-        <NewsDigestSection items={digestItems} />
-        <KnowledgeHubSection />
-        <IndustryInsightsSection />
-        <ReturnValueSection />
-        <NewsletterSection />
+      <main className="bg-[#F5F7FA]">
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2FAF9E]">
+            LIFE INSURANCE KNOWLEDGE HUB
+          </p>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">
+            Life Insurance Explained Clearly
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-[#4A5568]">
+            News, guides, and practical insights to help you make informed life insurance decisions.
+          </p>
+        </section>
       </main>
-      <SiteFooter />
     </>
   );
 }

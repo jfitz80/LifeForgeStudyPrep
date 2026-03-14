@@ -11,9 +11,8 @@ export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export const revalidate = 0;
 
-type RouteParams = { slug: string };
 type Props = {
-  params: RouteParams | Promise<RouteParams>;
+  params: Promise<{ slug: string }>;
 };
 
 type ArticleView = {
@@ -21,6 +20,7 @@ type ArticleView = {
   summary: string;
   publishedAtLabel: string;
   source: string;
+  originalUrl?: string;
   whatItMeans: string;
   llqpAngle: string;
   keyPoints: string[];
@@ -29,6 +29,31 @@ type ArticleView = {
 async function readSlug(params: Props['params']): Promise<string> {
   const resolved = await params;
   return resolved.slug;
+}
+
+function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
+  const seen = new Set<string>();
+  const points: string[] = [];
+
+  for (const part of parts) {
+    if (!part) continue;
+    const chunks = part
+      .split(/[.!?]\s+/)
+      .map((s) => s.trim().replace(/\s+/g, ' '))
+      .filter(Boolean);
+
+    for (const chunk of chunks) {
+      const key = chunk.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      points.push(chunk);
+      if (points.length >= 4) return points;
+    }
+  }
+
+  return points.length
+    ? points
+    : ['Review this update against policy design, underwriting, claims, and suitability principles.'];
 }
 
 function fromStatic(slug: string): ArticleView | null {
@@ -52,18 +77,23 @@ async function fromLive(slug: string): Promise<ArticleView | null> {
     const article = await getNewsArticleBySlug(slug);
     if (!article) return null;
 
+    const publishedAtLabel = article.publishedAt
+      ? new Date(article.publishedAt).toLocaleDateString()
+      : new Date(article.createdAt).toLocaleDateString();
+
     return {
       title: article.title,
       summary: article.summary,
-      publishedAtLabel: new Date(article.publishedAt).toLocaleDateString(),
+      publishedAtLabel,
       source: article.source?.name ?? 'LifeForge News',
-      whatItMeans: article.whyItMatters,
+      originalUrl: article.canonicalUrl ?? undefined,
+      whatItMeans:
+        article.whyItMatters ||
+        'This update may affect coverage expectations, policy comparisons, and claims decisions.',
       llqpAngle:
         article.llqpAngle ||
         'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.',
-      keyPoints: [article.summary, article.whoItAffects, article.whyItMatters]
-        .filter(Boolean)
-        .slice(0, 3)
+      keyPoints: buildKeyPoints([article.summary, article.whoItAffects, article.whyItMatters, article.llqpAngle])
     };
   } catch (error) {
     console.error('news article live fetch failed:', { slug, error });
@@ -120,6 +150,19 @@ export default async function NewsArticlePage({ params }: Props) {
               {item.publishedAtLabel} · {item.source}
             </p>
 
+            {item.originalUrl && (
+              <p className="mt-2">
+                <a
+                  href={item.originalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-semibold text-brand-700 hover:text-brand-900"
+                >
+                  Read original source
+                </a>
+              </p>
+            )}
+
             <p className="mt-6 text-lg leading-8 text-slate-700">{item.summary}</p>
 
             <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
@@ -153,7 +196,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
                 >
-                  Buy Exam Prep - {siteConfig.launchPriceDisplay}
+                  Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
                 </a>
               </div>
             </section>
