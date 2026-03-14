@@ -1,8 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
-import { navLinks } from '@/config/home';
+import { useEffect, useState } from 'react';
 import { siteConfig } from '@/config/site';
 
 type HeaderLink = {
@@ -10,17 +9,17 @@ type HeaderLink = {
   href: string;
 };
 
+const links: HeaderLink[] = [
+  { label: 'News', href: '/news' },
+  { label: 'Knowledge Hub', href: '/knowledge' },
+  { label: 'Exam Prep', href: '/exam-prep' },
+  { label: 'Tools', href: '/tools' },
+  { label: 'About', href: '/about' }
+];
+
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  // navLinks are hash links; prepend /news explicitly without type-unsafe comparisons.
-  const links = useMemo<HeaderLink[]>(() => {
-  const base = navLinks.map((item) => ({ label: item.label, href: item.href }));
-  const hasNewsDigest = base.some((item) => item.label.toLowerCase() === 'news digest');
-  return hasNewsDigest ? base : [{ label: 'News Digest', href: '/news' }, ...base];
-}, []);
-
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -49,7 +48,7 @@ export default function SiteHeader() {
               <Link
                 key={`${item.label}-${item.href}`}
                 href={item.href}
-                className="text-sm font-medium text-[#2C3440] hover:text-[#FA933A]"
+                className="text-sm font-medium text-[#2C3440] hover:text-[#2FAF9E]"
               >
                 {item.label}
               </Link>
@@ -59,7 +58,7 @@ export default function SiteHeader() {
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/news"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-[#2C3440] hover:border-[#FA933A] hover:text-[#FA933A]"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-[#2C3440] hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
               aria-label="Search news"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
