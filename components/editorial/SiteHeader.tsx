@@ -9,7 +9,7 @@ export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const links = useMemo(() => navLinks.filter((item) => item.href !== '/news'), []);
+  const links = useMemo(() => navLinks, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
