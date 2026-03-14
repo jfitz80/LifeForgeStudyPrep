@@ -12,7 +12,7 @@ const navItems = [
 ] as const;
 
 export default function HomeHeader() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -30,7 +30,7 @@ export default function HomeHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-[#4A5568] transition hover:text-[#2FAF9E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2 rounded-sm"
+              className="rounded-sm text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
             >
               {item.label}
             </Link>
@@ -50,22 +50,22 @@ export default function HomeHeader() {
         <button
           type="button"
           aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
           className="inline-flex items-center rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-[#1F2A44] md:hidden"
         >
           Menu
         </button>
       </div>
 
-      {open && (
+      {menuOpen && (
         <div className="border-t border-slate-200 bg-white md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
             {navItems.map((item) => (
               <Link
                 key={`mobile-${item.href}`}
                 href={item.href}
-                onClick={() => setOpen(false)}
+                onClick={() => setMenuOpen(false)}
                 className="text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E]"
               >
                 {item.label}
