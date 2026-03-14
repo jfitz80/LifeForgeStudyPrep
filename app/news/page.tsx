@@ -1,217 +1,167 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { cache } from 'react';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
-import { getNewsBySlug, newsItems } from '@/data/news';
-import { siteConfig } from '@/config/site';
+import { digestTags } from '@/config/home';
+import { newsItems } from '@/data/news';
+import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 export const dynamic = 'force-dynamic';
-export const dynamicParams = true;
 export const revalidate = 0;
 
-type Props = {
-  params: Promise<{ slug: string }>;
+export const metadata: Metadata = {
+  title: 'Life Insurance News Digest | LifeForge Insurance Prep',
+  description: 'Weekly life insurance digest with clear summaries, practical implications, and exam-prep relevance.'
 };
 
-type ArticleView = {
+type HubItem = {
+  id?: string;
+  slug: string;
   title: string;
   summary: string;
   publishedAtLabel: string;
   source: string;
-  originalUrl?: string;
-  whatItMeans: string;
-  llqpAngle: string;
-  keyPoints: string[];
+  tag: string;
 };
 
-function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
-  const seen = new Set<string>();
-  const points: string[] = [];
-
-  for (const part of parts) {
-    if (!part) continue;
-    const lines = part
-      .split(/[.!?]\s+/)
-      .map((s) => s.trim().replace(/\s+/g, ' '))
-      .filter(Boolean);
-
-    for (const line of lines) {
-      const normalized = line.toLowerCase();
-      if (seen.has(normalized)) continue;
-      seen.add(normalized);
-      points.push(line);
-      if (points.length >= 4) return points;
-    }
-  }
-
-  return points.length
-    ? points
-    : ['Review this update against policy design, underwriting, claims, and suitability principles.'];
-}
-
-async function readSlug(params: Props['params']): Promise<string> {
-  const resolved = await params;
-  return resolved.slug;
-}
-
-function fromStatic(slug: string): ArticleView | null {
-  const item = getNewsBySlug(slug);
-  if (!item) return null;
-
-  return {
+function mapStaticItems(): HubItem[] {
+  return newsItems.map((item) => ({
+    slug: item.slug,
     title: item.title,
     summary: item.summary,
     publishedAtLabel: item.publishedAtLabel,
     source: item.source,
-    whatItMeans: item.whatItMeans,
-    llqpAngle: item.llqpAngle,
-    keyPoints: item.keyPoints
-  };
+    tag: item.tag
+  }));
 }
 
-async function fromLive(slug: string): Promise<ArticleView | null> {
+function parseTag(raw: string | null | undefined): string {
+  if (!raw) return 'Market Watch';
   try {
-    const { getNewsArticleBySlug } = await import('@/lib/news/queries');
-    const article = await getNewsArticleBySlug(slug);
-    if (!article) return null;
+    const parsed = JSON.parse(raw) as string[];
+    const first = parsed?.[0]?.trim();
+    if (!first) return 'Market Watch';
+    return first.charAt(0).toUpperCase() + first.slice(1);
+  } catch {
+    return 'Market Watch';
+  }
+}
 
-    const publishedAtLabel = article.publishedAt
-      ? new Date(article.publishedAt).toLocaleDateString()
-      : new Date(article.createdAt).toLocaleDateString();
+async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubItem[]; items: HubItem[] }> {
+  if (!isLiveNewsEnabled()) {
+    const items = mapStaticItems();
+    return { mode: 'static', featured: items.slice(0, 3), items };
+  }
+
+  try {
+    const { getNewsHubData } = await import('@/lib/news/queries');
+    const data = await getNewsHubData();
+
+    const mapped: HubItem[] = data.items.map((item) => ({
+      id: item.id,
+      slug: item.slug,
+      title: item.title,
+      summary: item.summary,
+      publishedAtLabel: item.publishedAt
+        ? new Date(item.publishedAt).toLocaleDateString()
+        : new Date(item.createdAt).toLocaleDateString(),
+      source: item.source?.name ?? 'LifeForge News',
+      tag: parseTag(item.tagsJson)
+    }));
 
     return {
-      title: article.title,
-      summary: article.summary,
-      publishedAtLabel,
-      source: article.source?.name ?? 'LifeForge News',
-      originalUrl: article.canonicalUrl ?? undefined,
-      whatItMeans:
-        article.whyItMatters ||
-        'This update may affect coverage expectations, policy comparisons, and claims decisions.',
-      llqpAngle:
-        article.llqpAngle ||
-        'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.',
-      keyPoints: buildKeyPoints([article.summary, article.whoItAffects, article.whyItMatters, article.llqpAngle])
+      mode: 'live',
+      featured: mapped.slice(0, 3),
+      items: mapped
     };
   } catch (error) {
-    console.error('news article live fetch failed:', { slug, error });
-    return null;
+    console.error('news hub live fetch failed:', error);
+    const items = mapStaticItems();
+    return { mode: 'static', featured: items.slice(0, 3), items };
   }
 }
 
-const getArticle = cache(async (slug: string): Promise<ArticleView | null> => {
-  const live = await fromLive(slug);
-  if (live) return live;
-
-  console.warn('live article missing, using static fallback:', slug);
-  return fromStatic(slug);
-});
-
-export function generateStaticParams() {
-  return newsItems.map((item) => ({ slug: item.slug }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = await readSlug(params);
-  const item = await getArticle(slug);
-
-  if (!item) return { title: 'News Analysis | LifeForge Insurance Prep' };
-
-  return {
-    title: `${item.title} | LifeForge News Analysis`,
-    description: item.summary
-  };
-}
-
-export default async function NewsArticlePage({ params }: Props) {
-  const slug = await readSlug(params);
-  const item = await getArticle(slug);
-
-  if (!item) {
-    console.error('news article not found:', slug);
-    notFound();
-  }
+export default async function NewsHubPage() {
+  const { mode, featured, items } = await getHubItems();
 
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-white py-12">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8">
-          <article>
-            <Link href="/news" className="text-sm font-semibold text-brand-700 hover:text-brand-900">
-              ← Back to News Hub
-            </Link>
-
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{item.title}</h1>
-
-            <p className="mt-3 text-sm text-slate-500">
-              {item.publishedAtLabel} · {item.source}
+      <main className="min-h-screen bg-[#F5F7FA] py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <header className="mb-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LifeForge News Digest</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">This Week in Life Insurance</h1>
+            <p className="mt-3 max-w-3xl text-[#4A5568]">
+              Practical life insurance headlines with clear summaries, key implications, and exam-relevant context.
             </p>
+            <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
+          </header>
 
-            {item.originalUrl && (
-              <p className="mt-2">
-                <a
-                  href={item.originalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-semibold text-brand-700 hover:text-brand-900"
-                >
-                  Read original source
-                </a>
-              </p>
-            )}
+          <div className="mb-6 flex flex-wrap gap-2">
+            {digestTags.map((tag) => (
+              <span key={tag} className="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+                {tag}
+              </span>
+            ))}
+          </div>
 
-            <p className="mt-6 text-lg leading-8 text-slate-700">{item.summary}</p>
-
-            <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-bold text-slate-900">Key points digest</h2>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
-                {item.keyPoints.map((point, idx) => (
-                  <li key={`${idx}-${point.slice(0, 24)}`}>{point}</li>
+          {featured.length > 0 && (
+            <section className="mb-8">
+              <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Featured</h2>
+              <div className="grid gap-4 lg:grid-cols-3">
+                {featured.map((item) => (
+                  <article key={`featured-${item.id ?? item.slug}`} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                      <span>{item.publishedAtLabel}</span>
+                      <span>•</span>
+                      <span>{item.source}</span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-bold text-[#1F2A44]">{item.title}</h3>
+                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-slate-600">{item.summary}</p>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700">{item.tag}</span>
+                      <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                        Read analysis
+                      </Link>
+                    </div>
+                  </article>
                 ))}
-              </ul>
-            </section>
-
-            <section className="mt-8 space-y-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">What this means for policyholders</h2>
-                <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatItMeans}</p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">LLQP exam angle</h2>
-                <p className="mt-2 text-sm leading-7 text-slate-700">{item.llqpAngle}</p>
-              </div>
-
-              <div className="rounded-xl border border-slate-200 bg-brand-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">Need exam prep support?</h2>
-                <p className="mt-2 text-sm leading-7 text-slate-700">
-                  Get the Life Insurance Exam Aid with practical scenarios and clear explanations.
-                </p>
-                <a
-                  href={siteConfig.checkoutUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
-                >
-                  Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
-                </a>
               </div>
             </section>
-          </article>
+          )}
 
-          <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-24">
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Weekly digest</p>
-            <h3 className="mt-2 text-lg font-bold text-slate-900">Stay current without the noise</h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Get concise life insurance updates and practical explainers each week.
-            </p>
-            <a href="/#newsletter-signup" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
-              Join newsletter
-            </a>
-          </aside>
+          <section>
+            <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Latest</h2>
+            {items.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
+                No articles available right now. Please check back shortly.
+              </div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2">
+                {items.map((item) => (
+                  <article key={item.id ?? item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                      <span>{item.publishedAtLabel}</span>
+                      <span>•</span>
+                      <span>{item.source}</span>
+                      <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">{item.tag}</span>
+                    </div>
+                    <h3 className="mt-3 text-xl font-bold text-[#1F2A44]">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
+                    <div className="mt-4 flex gap-4">
+                      <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                        Read analysis
+                      </Link>
+                      <a href="/#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
+                        Get weekly digest
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       </main>
       <SiteFooter />

@@ -34,18 +34,22 @@ async function readSlug(params: Props['params']): Promise<string> {
 function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
   const seen = new Set<string>();
   const points: string[] = [];
+  const skipPrefixes = ['this can affect', 'this headline highlights'];
 
   for (const part of parts) {
     if (!part) continue;
+
     const chunks = part
       .split(/[.!?]\s+/)
       .map((s) => s.trim().replace(/\s+/g, ' '))
       .filter(Boolean);
 
     for (const chunk of chunks) {
-      const key = chunk.toLowerCase();
-      if (seen.has(key)) continue;
-      seen.add(key);
+      const lower = chunk.toLowerCase();
+      if (skipPrefixes.some((p) => lower.startsWith(p))) continue;
+      if (seen.has(lower)) continue;
+
+      seen.add(lower);
       points.push(chunk);
       if (points.length >= 4) return points;
     }
@@ -140,11 +144,11 @@ export default async function NewsArticlePage({ params }: Props) {
       <main className="min-h-screen bg-white py-12">
         <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:px-8">
           <article>
-            <Link href="/news" className="text-sm font-semibold text-brand-700 hover:text-brand-900">
+            <Link href="/news" className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
               ← Back to News Hub
             </Link>
 
-            <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{item.title}</h1>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">{item.title}</h1>
 
             <p className="mt-3 text-sm text-slate-500">
               {item.publishedAtLabel} · {item.source}
@@ -156,7 +160,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   href={item.originalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-brand-700 hover:text-brand-900"
+                  className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
                 >
                   Read original source
                 </a>
@@ -165,8 +169,8 @@ export default async function NewsArticlePage({ params }: Props) {
 
             <p className="mt-6 text-lg leading-8 text-slate-700">{item.summary}</p>
 
-            <section className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-bold text-slate-900">Key points digest</h2>
+            <section id="key-points" className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Key points digest</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
                 {item.keyPoints.map((point, idx) => (
                   <li key={`${idx}-${point.slice(0, 24)}`}>{point}</li>
@@ -175,18 +179,18 @@ export default async function NewsArticlePage({ params }: Props) {
             </section>
 
             <section className="mt-8 space-y-6">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">What this means for policyholders</h2>
+              <div id="policyholders" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                <h2 className="text-lg font-bold text-[#1F2A44]">What this means for policyholders</h2>
                 <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatItMeans}</p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">LLQP exam angle</h2>
+              <div id="exam-angle" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                <h2 className="text-lg font-bold text-[#1F2A44]">LLQP exam angle</h2>
                 <p className="mt-2 text-sm leading-7 text-slate-700">{item.llqpAngle}</p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-brand-50 p-5">
-                <h2 className="text-lg font-bold text-slate-900">Need exam prep support?</h2>
+              <div className="rounded-xl border border-slate-200 bg-[#F5F7FA] p-5">
+                <h2 className="text-lg font-bold text-[#1F2A44]">Need exam prep support?</h2>
                 <p className="mt-2 text-sm leading-7 text-slate-700">
                   Get the Life Insurance Exam Aid with practical scenarios and clear explanations.
                 </p>
@@ -194,7 +198,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   href={siteConfig.checkoutUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+                  className="mt-4 inline-flex rounded-lg bg-[#1F2A44] px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700"
                 >
                   Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
                 </a>
@@ -203,12 +207,25 @@ export default async function NewsArticlePage({ params }: Props) {
           </article>
 
           <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-24">
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Weekly digest</p>
-            <h3 className="mt-2 text-lg font-bold text-slate-900">Stay current without the noise</h3>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#2FAF9E]">Weekly digest</p>
+            <h3 className="mt-2 text-lg font-bold text-[#1F2A44]">Stay current without the noise</h3>
             <p className="mt-2 text-sm text-slate-600">
               Get concise life insurance updates and practical explainers each week.
             </p>
-            <a href="/#newsletter-signup" className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
+
+            <nav className="mt-4 space-y-2 text-sm">
+              <a href="#key-points" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                Jump to key points
+              </a>
+              <a href="#policyholders" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                What this means
+              </a>
+              <a href="#exam-angle" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                LLQP exam angle
+              </a>
+            </nav>
+
+            <a href="/#newsletter-signup" className="mt-5 inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
               Join newsletter
             </a>
           </aside>
