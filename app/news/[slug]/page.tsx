@@ -105,12 +105,11 @@ async function fromLive(slug: string): Promise<ArticleView | null> {
     const article = await getNewsArticleBySlug(slug);
     if (!article) return null;
 
-    const keyPoints = buildKeyPoints([
-      article.summary,
-      article.whoItAffects,
-      article.whyItMatters,
-      article.llqpAngle
-    ]);
+    const keyPoints = buildKeyPoints(
+  [article.summary, article.whoItAffects, article.whyItMatters, article.llqpAngle],
+  article.title
+);
+
 
     return {
       title: article.title,
