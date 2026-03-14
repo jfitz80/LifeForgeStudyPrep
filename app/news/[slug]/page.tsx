@@ -27,9 +27,16 @@ type ArticleView = {
   keyPoints: string[];
 };
 
-function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
+function buildKeyPoints(parts: Array<string | null | undefined>, title?: string): string[] {
   const seen = new Set<string>();
   const points: string[] = [];
+
+  const normalize = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
 
   const clean = (s: string) =>
     s
@@ -37,6 +44,8 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
       .replace(/\.+$/, '')
       .replace(/^[-•]\s*/, '')
       .trim();
+
+  const titleNorm = title ? normalize(title) : '';
 
   for (const part of parts) {
     if (!part) continue;
@@ -47,19 +56,16 @@ function buildKeyPoints(parts: Array<string | null | undefined>): string[] {
       .filter(Boolean);
 
     for (const sentence of sentences) {
-      const lower = sentence.toLowerCase();
+      const norm = normalize(sentence);
 
-      if (
-        sentence.length < 40 ||
-        lower.startsWith('this can affect') ||
-        lower.startsWith('this headline highlights') ||
-        lower.includes('practical life insurance topic')
-      ) {
-        continue;
-      }
+      if (!norm) continue;
+      if (titleNorm && norm === titleNorm) continue; // exact title duplicate
+      if (titleNorm && (norm.includes(titleNorm) || titleNorm.includes(norm))) continue; // near duplicate
+      if (sentence.length < 40) continue;
+      if (norm.startsWith('this can affect') || norm.startsWith('this headline highlights')) continue;
 
-      if (!seen.has(lower)) {
-        seen.add(lower);
+      if (!seen.has(norm)) {
+        seen.add(norm);
         points.push(sentence);
       }
 
