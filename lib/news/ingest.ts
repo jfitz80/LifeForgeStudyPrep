@@ -64,6 +64,30 @@ function normalizeUrl(raw?: string | null) {
   }
 }
 
+function normalizeSummary(text: string) {
+  return text
+    .replace(/\s+/g, ' ')
+    .replace(/\s([,.!?;:])/g, '$1')
+    .trim();
+}
+
+function isLowFitHeadline(title: string) {
+  const t = title.toLowerCase();
+
+  const blocked = [
+    'astrology',
+    'horoscope',
+    'celebrity',
+    'gossip',
+    'lottery',
+    'crypto price prediction',
+    'movie review',
+    'sports betting'
+  ];
+
+  return blocked.some((x) => t.includes(x));
+}
+
 async function resolvePublisherUrl(rawUrl: string) {
   const normalized = normalizeUrl(rawUrl);
   if (!normalized) return null;
@@ -175,6 +199,11 @@ export async function ingestNewsJob() {
           continue;
         }
 
+        if (isLowFitHeadline(title)) {
+          itemsRejected += 1;
+          continue;
+        }
+
         const excerpt = sanitizeExcerpt(item.contentSnippet ?? item.content ?? '');
         if (!isRelevant(title, excerpt)) {
           itemsRejected += 1;
@@ -182,11 +211,7 @@ export async function ingestNewsJob() {
         }
 
         const relevanceScore = getRelevanceScore(title, excerpt);
-
         const editorial = buildEditorial(title, excerpt);
-
-        
-
         const tags = buildTags(title, excerpt);
 
         const slugBase = dedupeSlug(title, canonicalUrl);
@@ -203,17 +228,16 @@ export async function ingestNewsJob() {
           publishedAt: safeDate(item),
           excerpt,
           imageUrl: item.enclosure?.url ?? null,
-
-          summary: editorial.summary,
-whyItMatters: editorial.whyItMatters,
-whoItAffects:
-  editorial.whoItAffects ||
-  'This can affect policyholders, applicants, beneficiaries, and advisors.',
-llqpAngle:
-  editorial.llqpAngle ||
-  'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.',
-
-
+          summary: normalizeSummary(editorial.summary),
+          whyItMatters: normalizeSummary(editorial.whyItMatters),
+          whoItAffects: normalizeSummary(
+            editorial.whoItAffects ||
+              'This can affect policyholders, applicants, beneficiaries, and advisors.'
+          ),
+          llqpAngle: normalizeSummary(
+            editorial.llqpAngle ||
+              'Use this topic to review policy terms, underwriting logic, claims handling, and client suitability in scenario-style questions.'
+          ),
           status,
           isFeatured: false,
           relevanceScore,
