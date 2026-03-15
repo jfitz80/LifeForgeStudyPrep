@@ -114,10 +114,7 @@ export default function HomePage() {
             <div className="relative mx-auto mt-6 flex w-full max-w-[520px] items-center justify-center lg:mt-0">
               <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#dfeceb]" />
 
-              <div className="absolute left-[6%] top-[28%] z-[3] h-[14px] w-[14px] rounded-full bg-[#33b8ad] opacity-90" />
-              <div className="absolute right-[8%] bottom-[16%] z-[3] h-[14px] w-[14px] rounded-full bg-[#33b8ad] opacity-90" />
-              <div className="absolute right-[14%] top-[47%] z-[3] h-[14px] w-[14px] rounded-full border-2 border-dashed border-[#33b8ad] bg-transparent opacity-90" />
-
+              
               <div className="relative z-[2] w-[72%] max-w-[340px]">
                 <Image
                   src="/brand/lifeforge-emblem.svg"
