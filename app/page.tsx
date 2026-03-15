@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import ShieldEmblem from '@/components/brand/ShieldEmblem';
 
+
+
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Explained Simply',
   description:
