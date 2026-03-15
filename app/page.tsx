@@ -23,7 +23,6 @@ const cards = [
     cta: 'Read More',
     href: '/news',
     iconBg: 'bg-[#24334E]',
-    ctaColor: 'text-[#1F2A44]',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="4" y="3" width="16" height="18" rx="2" />
@@ -39,7 +38,6 @@ const cards = [
     cta: 'View Guides',
     href: '/knowledge',
     iconBg: 'bg-[#2FA99C]',
-    ctaColor: 'text-[#2FA99C]',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 5h7a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H3z" />
@@ -53,7 +51,6 @@ const cards = [
     cta: 'Start Studying',
     href: '/exam-prep',
     iconBg: 'bg-[#355C8C]',
-    ctaColor: 'text-[#355C8C]',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="9" />
@@ -67,7 +64,6 @@ const cards = [
     cta: 'Try Now',
     href: '/tools',
     iconBg: 'bg-[#2FA99C]',
-    ctaColor: 'text-[#2FA99C]',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="5" y="3" width="14" height="18" rx="2" />
@@ -127,9 +123,7 @@ export default function HomePage() {
         <section className="relative overflow-hidden px-6 py-12 md:px-12 md:py-[72px]">
           <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
             <div className="flex flex-col justify-center">
-              <h1 className="text-5xl font-bold tracking-tight text-[#1F2A44] sm:text-6xl">
-                Life Insurance Explained Simply
-              </h1>
+              <h1 className="text-5xl font-bold tracking-tight text-[#1F2A44] sm:text-6xl">Life Insurance Explained Simply</h1>
               <p className="mt-6 max-w-xl text-2xl leading-relaxed text-[#33415d]">
                 Industry news, product insights, and guidance to help you make better insurance decisions.
               </p>
@@ -145,7 +139,6 @@ export default function HomePage() {
 
             <div className="relative mx-auto mt-6 flex w-full max-w-[520px] items-center justify-center lg:mt-0">
               <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#e6f4f2]" />
-
               <div className="relative z-[2] w-[72%] max-w-[340px]">
                 <Image
                   src="/brand/lifeforge-emblem.svg"
@@ -160,21 +153,28 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="mx-auto -mt-2 max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {cards.map((card) => (
-              <article key={card.title} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
-                <div className={`mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full ${card.iconBg}`}>
-                  <span className="h-[26px] w-[26px]">{card.icon}</span>
-                </div>
-                <h2 className="text-4xl font-semibold text-[#1F2A44]">{card.title}</h2>
-                <p className="mt-3 text-xl leading-9 text-[#4A5568]">{card.body}</p>
-                <Link href={card.href} className={`mt-4 inline-flex items-center gap-2 text-2xl font-semibold ${card.ctaColor}`}>
-                  {card.cta}
-                  <span aria-hidden>›</span>
-                </Link>
-              </article>
-            ))}
+        <section className="bg-gradient-to-b from-[#f7f9fb] to-white">
+          <div className="mx-auto -mt-2 max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {cards.map((card) => (
+                <article
+                  key={card.title}
+                  className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className={`mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full ${card.iconBg} transition duration-300 group-hover:scale-105`}>
+                    <span className="h-[30px] w-[30px]">{card.icon}</span>
+                  </div>
+
+                  <h2 className="mb-[10px] mt-[22px] text-4xl font-semibold text-[#1F2A44]">{card.title}</h2>
+                  <p className="mt-3 text-xl leading-9 text-[#4A5568]">{card.body}</p>
+
+                  <Link href={card.href} className="mt-4 inline-flex items-center gap-2 text-2xl font-semibold text-[#2FA99C] hover:underline">
+                    {card.cta}
+                    <span aria-hidden>›</span>
+                  </Link>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
