@@ -24,6 +24,14 @@ type HubItem = {
   tag: string;
 };
 
+type DailyBrief = {
+  title: string;
+  summary: string;
+  keyThemes: [string, string, string];
+  whyItMatters: string;
+  worthReading: HubItem[];
+};
+
 function mapStaticItems(): HubItem[] {
   return newsItems.map((item) => ({
     slug: item.slug,
@@ -45,6 +53,62 @@ function parseTag(raw: string | null | undefined): string {
   } catch {
     return 'Market Watch';
   }
+}
+
+function titleScore(title: string, tag: string): number {
+  const text = `${title} ${tag}`.toLowerCase();
+  let score = 0;
+  if (/(claims?|payout|beneficiar|denied|contestability)/.test(text)) score += 4;
+  if (/(underwriting|policy|premium|pricing|regulation)/.test(text)) score += 3;
+  if (/(ai|automation|insurtech|product|launch)/.test(text)) score += 2;
+  if (/(stock|profit|earnings|valuation)/.test(text)) score += 1;
+  return score;
+}
+
+function toTheme(tag: string): string {
+  const raw = tag.toLowerCase();
+  if (raw.includes('claim')) return 'Claims Trends';
+  if (raw.includes('underwrit')) return 'Underwriting Risk';
+  if (raw.includes('regulat')) return 'Regulatory Watch';
+  if (raw.includes('premium')) return 'Premium Pressure';
+  if (raw.includes('policy')) return 'Policy Terms';
+  if (raw.includes('market')) return 'Market Watch';
+  return 'Coverage Insights';
+}
+
+function buildDailyBrief(items: HubItem[]): DailyBrief {
+  const dateLabel = new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(new Date());
+
+  const ranked = [...items]
+    .sort((a, b) => titleScore(b.title, b.tag) - titleScore(a.title, a.tag))
+    .slice(0, 5);
+
+  const top = ranked[0];
+  const second = ranked[1];
+  const third = ranked[2];
+
+  const themes = Array.from(new Set(ranked.map((i) => toTheme(i.tag))));
+  while (themes.length < 3) themes.push('Client Impact');
+  const keyThemes: [string, string, string] = [themes[0], themes[1], themes[2]];
+
+  const summary = top
+    ? `${top.title} leads today’s brief with direct implications for advisors and policyholders. ${
+        second ? `${second.title} adds context on how market and product conditions are shifting.` : 'Recent coverage shows a mix of market and policy developments.'
+      } ${third ? `${third.title} is also worth reviewing for exam-relevant scenarios.` : 'These updates are useful for practical LLQP review.'}`
+    : 'Today’s coverage is light, but key stories still highlight claims, policy structure, and underwriting implications. Review the latest items for client-facing relevance.';
+
+  return {
+    title: `Daily Insurance Brief — ${dateLabel}`,
+    summary,
+    keyThemes,
+    whyItMatters:
+      'This helps you quickly prioritize high-signal stories that affect client advice, policy understanding, and LLQP exam judgment.',
+    worthReading: ranked
+  };
 }
 
 async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubItem[]; items: HubItem[] }> {
@@ -83,6 +147,7 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubIt
 
 export default async function NewsHubPage() {
   const { mode, featured, items } = await getHubItems();
+  const brief = buildDailyBrief(items);
 
   return (
     <>
@@ -97,6 +162,37 @@ export default async function NewsHubPage() {
             </p>
             <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
           </header>
+
+          <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Daily Brief</p>
+            <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">{brief.title}</h2>
+            <p className="mt-3 text-sm leading-7 text-slate-700">{brief.summary}</p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {brief.keyThemes.map((theme) => (
+                <span key={theme} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                  {theme}
+                </span>
+              ))}
+            </div>
+
+            <p className="mt-4 text-sm font-medium text-slate-800">{brief.whyItMatters}</p>
+
+            {brief.worthReading.length > 0 && (
+              <div className="mt-5">
+                <h3 className="text-sm font-semibold text-[#1F2A44]">Worth Reading Now</h3>
+                <ul className="mt-2 space-y-2">
+                  {brief.worthReading.map((item) => (
+                    <li key={`brief-${item.id ?? item.slug}`}>
+                      <Link href={`/news/${item.slug}`} className="text-sm text-[#2FAF9E] hover:text-[#1F2A44] hover:underline">
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
 
           <div className="mb-6 flex flex-wrap gap-2">
             {digestTags.map((tag) => (
