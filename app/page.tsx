@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import ShieldEmblem from '@/components/brand/ShieldEmblem';
-
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Explained Simply',
@@ -59,14 +57,11 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center gap-3">
-            <Image
-              src="/brand/lifeforgeprelogo.png"
-              alt="LifeForgePrep logo"
-              width={250}
-              height={52}
-              priority
-              className="h-12 w-auto"
-            />
+            <ShieldEmblem className="h-12 w-12" />
+            <span className="text-[42px] font-bold tracking-tight leading-none">
+              <span className="text-[#1F2A44]">LifeForge</span>
+              <span className="text-[#2FAF9E]">Prep</span>
+            </span>
           </Link>
 
           <nav className="hidden items-center gap-10 lg:flex">
@@ -110,13 +105,7 @@ export default function HomePage() {
             <div className="relative flex items-center justify-center">
               <div className="absolute -right-28 -top-8 h-[420px] w-[620px] rounded-[60%] bg-[#dfecef]" />
               <div className="relative">
-                <Image
-                  src="/brand/lifeforgeprelogo.png"
-                  alt="LifeForgePrep emblem"
-                  width={420}
-                  height={420}
-                  className="h-auto w-[320px] drop-shadow-sm sm:w-[380px]"
-                />
+                <ShieldEmblem className="h-auto w-[320px] drop-shadow-sm sm:w-[380px]" />
                 <div className="absolute -left-10 top-12 h-4 w-4 rounded-full bg-[#2FAF9E]" />
                 <div className="absolute -right-8 bottom-10 h-5 w-5 rounded-full bg-[#2FAF9E]" />
                 <div className="absolute -right-16 top-1/2 h-8 w-8 rounded-full border-2 border-dashed border-[#2FAF9E]" />
