@@ -88,7 +88,7 @@ export default function HomePage() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center gap-3">
             <Image
-              src="/brand/lifeforge-emblem.svg"
+              src="/brand/lifeforge-emblem.png"
               alt="LifeForgePrep emblem"
               width={48}
               height={48}
@@ -143,7 +143,7 @@ export default function HomePage() {
               <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#e6f4f2]" />
               <div className="relative z-[2] w-[72%] max-w-[340px]">
                 <Image
-                  src="/brand/lifeforge-emblem.svg"
+                  src="/brand/lifeforge-emblem.png"
                   alt="LifeForgePrep emblem"
                   width={340}
                   height={340}
