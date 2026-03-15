@@ -22,32 +22,64 @@ const cards = [
     body: 'Latest industry news and updates.',
     cta: 'Read More',
     href: '/news',
-    iconBg: 'bg-[#1F2A44]',
-    ctaColor: 'text-[#1F2A44]'
+    iconBg: 'bg-[#24334E]',
+    ctaColor: 'text-[#1F2A44]',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="3" width="16" height="18" rx="2" />
+        <line x1="8" y1="7" x2="16" y2="7" />
+        <line x1="8" y1="11" x2="16" y2="11" />
+        <line x1="8" y1="15" x2="13" y2="15" />
+      </svg>
+    )
   },
   {
     title: 'Knowledge Hub',
     body: 'Learn all about life insurance products.',
     cta: 'View Guides',
     href: '/knowledge',
-    iconBg: 'bg-[#2FAF9E]',
-    ctaColor: 'text-[#2FAF9E]'
+    iconBg: 'bg-[#2FA99C]',
+    ctaColor: 'text-[#2FA99C]',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 5h7a3 3 0 0 1 3 3v13a3 3 0 0 0-3-3H3z" />
+        <path d="M21 5h-7a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h7z" />
+      </svg>
+    )
   },
   {
     title: 'Exam Prep',
     body: 'Prepare for the LLQP certification exam.',
     cta: 'Start Studying',
     href: '/exam-prep',
-    iconBg: 'bg-[#315B93]',
-    ctaColor: 'text-[#315B93]'
+    iconBg: 'bg-[#355C8C]',
+    ctaColor: 'text-[#355C8C]',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <polyline points="9 12 11 14 15 10" />
+      </svg>
+    )
   },
   {
     title: 'Tools & Calculators',
     body: 'Calculate, compare & plan your coverage.',
     cta: 'Try Now',
     href: '/tools',
-    iconBg: 'bg-[#2FAF9E]',
-    ctaColor: 'text-[#2FAF9E]'
+    iconBg: 'bg-[#2FA99C]',
+    ctaColor: 'text-[#2FA99C]',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="3" width="14" height="18" rx="2" />
+        <line x1="8" y1="7" x2="16" y2="7" />
+        <line x1="8" y1="11" x2="8" y2="11" />
+        <line x1="12" y1="11" x2="12" y2="11" />
+        <line x1="16" y1="11" x2="16" y2="11" />
+        <line x1="8" y1="15" x2="8" y2="15" />
+        <line x1="12" y1="15" x2="12" y2="15" />
+        <line x1="16" y1="15" x2="16" y2="15" />
+      </svg>
+    )
   }
 ] as const;
 
@@ -112,9 +144,8 @@ export default function HomePage() {
             </div>
 
             <div className="relative mx-auto mt-6 flex w-full max-w-[520px] items-center justify-center lg:mt-0">
-              <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#dfeceb]" />
+              <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#e6f4f2]" />
 
-              
               <div className="relative z-[2] w-[72%] max-w-[340px]">
                 <Image
                   src="/brand/lifeforge-emblem.svg"
@@ -134,7 +165,7 @@ export default function HomePage() {
             {cards.map((card) => (
               <article key={card.title} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
                 <div className={`mb-5 inline-flex h-16 w-16 items-center justify-center rounded-full ${card.iconBg}`}>
-                  <span className="h-7 w-7 rounded-sm border-2 border-white" />
+                  <span className="h-[26px] w-[26px]">{card.icon}</span>
                 </div>
                 <h2 className="text-4xl font-semibold text-[#1F2A44]">{card.title}</h2>
                 <p className="mt-3 text-xl leading-9 text-[#4A5568]">{card.body}</p>
