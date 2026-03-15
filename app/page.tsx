@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import SiteFooter from '@/components/editorial/SiteFooter';
+
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Explained Simply',
@@ -221,6 +223,8 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+      <SiteFooter />
+
     </div>
   );
 }
