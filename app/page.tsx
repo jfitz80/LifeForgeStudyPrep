@@ -205,26 +205,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="text-lg font-semibold text-[#1F2A44]">COLOR PALETTE:</span>
-            {['#1F2A44', '#2FAF9E', '#6BC4B8', '#F5F7FA', '#4A5568'].map((color) => (
-              <div
-                key={color}
-                className={`inline-flex min-w-[140px] justify-center rounded-2xl border px-5 py-3 text-lg font-semibold ${
-                  color === '#F5F7FA' ? 'border-slate-300 text-[#1F2A44]' : 'border-transparent text-white'
-                }`}
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </div>
-            ))}
-          </div>
-        </section>
       </main>
       <SiteFooter />
-
     </div>
   );
 }
