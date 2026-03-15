@@ -92,10 +92,12 @@ export default function HomePage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-20">
+        <section className="relative overflow-hidden px-6 py-12 md:px-12 md:py-[72px]">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
             <div className="flex flex-col justify-center">
-              <h1 className="text-5xl font-bold tracking-tight text-[#1F2A44] sm:text-6xl">Life Insurance Explained Simply</h1>
+              <h1 className="text-5xl font-bold tracking-tight text-[#1F2A44] sm:text-6xl">
+                Life Insurance Explained Simply
+              </h1>
               <p className="mt-6 max-w-xl text-2xl leading-relaxed text-[#33415d]">
                 Industry news, product insights, and guidance to help you make better insurance decisions.
               </p>
@@ -109,20 +111,22 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="relative flex items-center justify-center">
-              <div className="absolute -right-28 -top-8 h-[420px] w-[620px] rounded-[60%] bg-[#dfecef]" />
-              <div className="relative">
+            <div className="relative mx-auto mt-6 flex w-full max-w-[520px] items-center justify-center lg:mt-0">
+              <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#dfeceb]" />
+
+              <div className="absolute left-[6%] top-[28%] z-[3] h-[14px] w-[14px] rounded-full bg-[#33b8ad] opacity-90" />
+              <div className="absolute right-[8%] bottom-[16%] z-[3] h-[14px] w-[14px] rounded-full bg-[#33b8ad] opacity-90" />
+              <div className="absolute right-[14%] top-[47%] z-[3] h-[14px] w-[14px] rounded-full border-2 border-dashed border-[#33b8ad] bg-transparent opacity-90" />
+
+              <div className="relative z-[2] w-[72%] max-w-[340px]">
                 <Image
                   src="/brand/lifeforge-emblem.svg"
                   alt="LifeForgePrep emblem"
-                  width={380}
-                  height={380}
-                  className="h-auto w-[320px] drop-shadow-sm sm:w-[380px]"
+                  width={340}
+                  height={340}
+                  className="block h-auto w-full"
                   priority
                 />
-                <div className="absolute -left-10 top-12 h-4 w-4 rounded-full bg-[#2FAF9E]" />
-                <div className="absolute -right-8 bottom-10 h-5 w-5 rounded-full bg-[#2FAF9E]" />
-                <div className="absolute -right-16 top-1/2 h-8 w-8 rounded-full border-2 border-dashed border-[#2FAF9E]" />
               </div>
             </div>
           </div>
