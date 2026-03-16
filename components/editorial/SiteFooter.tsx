@@ -18,7 +18,7 @@ const legal = [
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Use', href: '/terms' },
   { label: 'Disclaimer', href: '/disclaimer' },
-  { label: 'Contact', href: 'mailto:support@lifeforgeprep.com', external: true }
+  { label: 'Contact', href: 'mailto:support@lifeforgeprep.com' }
 ] as const;
 
 export default function SiteFooter() {
@@ -60,7 +60,7 @@ export default function SiteFooter() {
             <h4 className="text-lg font-semibold">Legal</h4>
             <div className="mt-3 space-y-2">
               {legal.map((item) =>
-                item.external ? (
+                item.href.startsWith('mailto:') ? (
                   <a key={item.label} href={item.href} className="block text-[#6BC4B8] hover:underline">
                     {item.label}
                   </a>
