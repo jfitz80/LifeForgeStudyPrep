@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import SiteFooter from '@/components/editorial/SiteFooter';
+import KnowledgeHubHomeSection from '@/components/knowledge/KnowledgeHubHomeSection';
 
 
 export const metadata: Metadata = {
@@ -179,6 +180,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <KnowledgeHubHomeSection />
 
         <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-gradient-to-r from-[#1F2A44] to-[#2f4d73] p-8 text-white shadow-sm">
