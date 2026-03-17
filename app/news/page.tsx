@@ -2,6 +2,12 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
+import {
+  classifyNewsCategory,
+  NewsCategoryVisual,
+  newsCategoryMeta,
+  type NewsCategoryKey
+} from '@/components/editorial/news-categories';
 import { digestTags } from '@/config/home';
 import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
@@ -31,6 +37,8 @@ type DailyBrief = {
   whyItMatters: string;
   worthReading: HubItem[];
 };
+
+type CategorizedHubItem = HubItem & { category: NewsCategoryKey };
 
 function mapStaticItems(): HubItem[] {
   return newsItems.map((item) => ({
@@ -76,6 +84,25 @@ function toTheme(tag: string): string {
   return 'Coverage Insights';
 }
 
+function normalizeHeadline(title: string): string {
+  return title
+    .toLowerCase()
+    .split(' - ')[0]
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function dedupeHubItems(items: HubItem[]): HubItem[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = normalizeHeadline(item.title);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function buildDailyBrief(items: HubItem[]): DailyBrief {
   const dateLabel = new Intl.DateTimeFormat('en-US', {
     month: 'long',
@@ -83,23 +110,26 @@ function buildDailyBrief(items: HubItem[]): DailyBrief {
     year: 'numeric'
   }).format(new Date());
 
-  const ranked = [...items]
-    .sort((a, b) => titleScore(b.title, b.tag) - titleScore(a.title, a.tag))
-    .slice(0, 5);
+  const ranked = [...items].sort((a, b) => titleScore(b.title, b.tag) - titleScore(a.title, a.tag));
 
-  const top = ranked[0];
-  const second = ranked[1];
-  const third = ranked[2];
+  const seen = new Set<string>();
+  const uniqueRanked = ranked.filter((item) => {
+    const key = normalizeHeadline(item.title);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
-  const themes = Array.from(new Set(ranked.map((i) => toTheme(i.tag))));
+  const shortlist = uniqueRanked.slice(0, 5);
+
+  const themes = Array.from(new Set(shortlist.map((i) => toTheme(i.tag))));
   while (themes.length < 3) themes.push('Client Impact');
   const keyThemes: [string, string, string] = [themes[0], themes[1], themes[2]];
 
-  const summary = top
-    ? `${top.title} leads today’s brief with direct implications for advisors and policyholders. ${
-        second ? `${second.title} adds context on how market and product conditions are shifting.` : 'Recent coverage shows a mix of market and policy developments.'
-      } ${third ? `${third.title} is also worth reviewing for exam-relevant scenarios.` : 'These updates are useful for practical LLQP review.'}`
-    : 'Today’s coverage is light, but key stories still highlight claims, policy structure, and underwriting implications. Review the latest items for client-facing relevance.';
+  const summary =
+    shortlist.length > 0
+      ? "Today's coverage centers on claim outcomes, policy interpretation, and shifting risk signals across the life insurance market. Advisors should focus on updates that affect claims expectations, underwriting conversations, and client suitability guidance. For LLQP prep, these stories reinforce practical exam scenarios around policy wording, claims handling, and risk assessment."
+      : 'Today’s coverage is light, but key stories still highlight claims, policy structure, and underwriting implications. Review the latest items for client-facing relevance.';
 
   return {
     title: `Daily Insurance Brief — ${dateLabel}`,
@@ -107,7 +137,7 @@ function buildDailyBrief(items: HubItem[]): DailyBrief {
     keyThemes,
     whyItMatters:
       'This helps you quickly prioritize high-signal stories that affect client advice, policy understanding, and LLQP exam judgment.',
-    worthReading: ranked
+    worthReading: shortlist
   };
 }
 
@@ -146,8 +176,15 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubIt
 }
 
 export default async function NewsHubPage() {
-  const { mode, featured, items } = await getHubItems();
-  const brief = buildDailyBrief(items);
+  const { mode, items } = await getHubItems();
+  const dedupedItems = dedupeHubItems(items);
+  const brief = buildDailyBrief(dedupedItems);
+  const categorized: CategorizedHubItem[] = dedupedItems.map((item) => ({
+    ...item,
+    category: classifyNewsCategory(item)
+  }));
+  const featuredStory = categorized[0];
+  const remaining = categorized.slice(1);
 
   return (
     <>
@@ -178,20 +215,6 @@ export default async function NewsHubPage() {
 
             <p className="mt-4 text-sm font-medium text-slate-800">{brief.whyItMatters}</p>
 
-            {brief.worthReading.length > 0 && (
-              <div className="mt-5">
-                <h3 className="text-sm font-semibold text-[#1F2A44]">Worth Reading Now</h3>
-                <ul className="mt-2 space-y-2">
-                  {brief.worthReading.map((item) => (
-                    <li key={`brief-${item.id ?? item.slug}`}>
-                      <Link href={`/news/${item.slug}`} className="text-sm text-[#2FAF9E] hover:text-[#1F2A44] hover:underline">
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </section>
 
           <div className="mb-6 flex flex-wrap gap-2">
@@ -202,55 +225,65 @@ export default async function NewsHubPage() {
             ))}
           </div>
 
-          {featured.length > 0 && (
+          {featuredStory && (
             <section className="mb-8">
-              <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Featured</h2>
-              <div className="grid gap-4 lg:grid-cols-3">
-                {featured.map((item) => (
-                  <article key={`featured-${item.id ?? item.slug}`} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+              <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Featured Story</h2>
+              <article className="grid gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md lg:grid-cols-[320px_minmax(0,1fr)]">
+                <NewsCategoryVisual category={featuredStory.category} />
+                <div>
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <span className={`rounded-full px-2.5 py-1 font-semibold ${newsCategoryMeta[featuredStory.category].badgeClass}`}>
+                      {newsCategoryMeta[featuredStory.category].label}
+                    </span>
+                    <span>{featuredStory.publishedAtLabel}</span>
+                    <span>•</span>
+                    <span>{featuredStory.source}</span>
+                  </div>
+                  <h3 className="mt-3 text-2xl font-bold leading-tight text-[#1F2A44]">{featuredStory.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">{featuredStory.summary}</p>
+                  <div className="mt-5">
+                    <Link
+                      href={`/news/${featuredStory.slug}`}
+                      className="inline-flex items-center text-sm font-semibold text-[#2FAF9E] transition hover:text-[#1F2A44]"
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            </section>
+          )}
+
+          <section>
+            <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Latest Stories</h2>
+            {remaining.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
+                No additional articles available right now. Please check back shortly.
+              </div>
+            ) : (
+              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                {remaining.map((item) => (
+                  <article
+                    key={item.id ?? item.slug}
+                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
+                  >
+                    <NewsCategoryVisual category={item.category} />
+                    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                      <span className={`rounded-full px-2.5 py-1 font-semibold ${newsCategoryMeta[item.category].badgeClass}`}>
+                        {newsCategoryMeta[item.category].label}
+                      </span>
                       <span>{item.publishedAtLabel}</span>
                       <span>•</span>
                       <span>{item.source}</span>
                     </div>
                     <h3 className="mt-3 text-lg font-bold text-[#1F2A44]">{item.title}</h3>
-                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-slate-600">{item.summary}</p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700">{item.tag}</span>
-                      <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
-                        Read analysis
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          )}
-
-          <section>
-            <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Latest</h2>
-            {items.length === 0 ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
-                No articles available right now. Please check back shortly.
-              </div>
-            ) : (
-              <div className="grid gap-4 md:grid-cols-2">
-                {items.map((item) => (
-                  <article key={item.id ?? item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                      <span>{item.publishedAtLabel}</span>
-                      <span>•</span>
-                      <span>{item.source}</span>
-                      <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">{item.tag}</span>
-                    </div>
-                    <h3 className="mt-3 text-xl font-bold text-[#1F2A44]">{item.title}</h3>
                     <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
-                    <div className="mt-4 flex gap-4">
+                    <div className="mt-4 flex items-center justify-between">
                       <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
-                        Read analysis
+                        Read more
                       </Link>
                       <a href="/#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
-                        Get weekly digest
+                        Weekly digest
                       </a>
                     </div>
                   </article>
