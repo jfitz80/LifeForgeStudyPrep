@@ -116,6 +116,7 @@ function calculateResult(input: FinderForm): FinderResult {
 
 export default function SmartCoverageFinder() {
   const [stepIndex, setStepIndex] = useState(0);
+  const [showResult, setShowResult] = useState(false);
   const [form, setForm] = useState<FinderForm>({
     age: '',
     annualIncome: '',
@@ -172,14 +173,20 @@ export default function SmartCoverageFinder() {
               inputMode="numeric"
               min={0}
               value={form[currentStep.key]}
-              onChange={(e) => setForm((prev) => ({ ...prev, [currentStep.key]: e.target.value }))}
+              onChange={(e) => {
+                setForm((prev) => ({ ...prev, [currentStep.key]: e.target.value }));
+                setShowResult(false);
+              }}
               className="mt-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-[#2FAF9E] focus:ring"
             />
           ) : (
             <select
               id={currentStep.key}
               value={form[currentStep.key]}
-              onChange={(e) => setForm((prev) => ({ ...prev, [currentStep.key]: e.target.value as 'yes' | 'no' }))}
+              onChange={(e) => {
+                setForm((prev) => ({ ...prev, [currentStep.key]: e.target.value as 'yes' | 'no' }));
+                setShowResult(false);
+              }}
               className="mt-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-[#2FAF9E] focus:ring"
             >
               <option value="">Select</option>
@@ -192,7 +199,13 @@ export default function SmartCoverageFinder() {
         <div className="mt-5 flex items-center justify-between">
           <button
             type="button"
-            onClick={() => setStepIndex((prev) => Math.max(0, prev - 1))}
+            onClick={() => {
+              if (showResult) {
+                setShowResult(false);
+                return;
+              }
+              setStepIndex((prev) => Math.max(0, prev - 1));
+            }}
             disabled={stepIndex === 0}
             className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-[#1F2A44] disabled:cursor-not-allowed disabled:opacity-40"
           >
@@ -201,11 +214,17 @@ export default function SmartCoverageFinder() {
 
           <button
             type="button"
-            onClick={() => setStepIndex((prev) => Math.min(steps.length - 1, prev + 1))}
-            disabled={!canContinue || isLastStep}
+            onClick={() => {
+              if (isLastStep) {
+                if (canContinue) setShowResult(true);
+                return;
+              }
+              setStepIndex((prev) => Math.min(steps.length - 1, prev + 1));
+            }}
+            disabled={!canContinue}
             className="rounded-lg bg-[#2FAF9E] px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Next
+            {isLastStep ? 'See result' : 'Next'}
           </button>
         </div>
       </section>
@@ -213,7 +232,7 @@ export default function SmartCoverageFinder() {
       <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
         <h3 className="text-lg font-bold text-[#1F2A44]">Coverage Recommendation</h3>
 
-        {result ? (
+        {result && showResult ? (
           <div className="mt-4 space-y-4 text-sm text-[#4A5568]">
             <div className="rounded-lg border border-[#D2ECE8] bg-[#F3FBF9] p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#1E887B]">Recommended Coverage</p>
