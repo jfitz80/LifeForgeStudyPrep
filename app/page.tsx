@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SiteFooter from '@/components/editorial/SiteFooter';
 import KnowledgeHubHomeSection from '@/components/knowledge/KnowledgeHubHomeSection';
+import NewsletterSignup from '@/components/home/NewsletterSignup';
 
 
 export const metadata: Metadata = {
@@ -183,31 +184,7 @@ export default function HomePage() {
 
         <KnowledgeHubHomeSection />
 
-        <section className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-r from-[#1F2A44] to-[#2f4d73] p-8 text-white shadow-sm">
-            <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-center">
-              <div>
-                <h3 className="text-5xl font-bold">Stay Informed with LifeForgePrep</h3>
-                <p className="mt-3 text-2xl text-slate-200">
-                  Get the latest life insurance news and expert tips delivered to your inbox.
-                </p>
-              </div>
-              <div>
-                <div className="flex overflow-hidden rounded-2xl bg-white">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full px-5 py-4 text-xl text-[#1F2A44] outline-none"
-                  />
-                  <button className="bg-[#2FAF9E] px-8 py-4 text-2xl font-semibold text-white hover:bg-[#26988a]">
-                    Subscribe
-                  </button>
-                </div>
-                <p className="mt-3 text-base text-slate-200">Your information is kept secure. Unsubscribe anytime.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <NewsletterSignup />
       </main>
       <SiteFooter />
     </div>
