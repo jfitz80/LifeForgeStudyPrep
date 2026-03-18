@@ -189,7 +189,7 @@ export default async function NewsHubPage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#F5F7FA] py-12">
+      <main className="min-h-screen bg-[#EEF2F6] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <header className="mb-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LifeForge News Digest</p>
