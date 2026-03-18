@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/config/site';
@@ -30,25 +31,33 @@ export default function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-slate-200/80 bg-[#F2F3F4]/95 backdrop-blur transition ${
+      className={`sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur transition ${
         scrolled ? 'shadow-sm' : ''
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-3">
-          <Link href="/" className="min-w-0">
-            <p className="truncate text-sm font-bold tracking-tight text-[#2C3440] sm:text-base">{siteConfig.brandName}</p>
-            <p className="hidden text-xs text-[#6B7280] sm:block">
-              {siteConfig.tagline ?? 'Insurance education & exam prep'}
-            </p>
+        <div className="flex h-20 items-center justify-between gap-3">
+          <Link href="/" className="inline-flex items-center gap-3">
+            <Image
+              src="/brand/lifeforge-emblem.png"
+              alt="LifeForgePrep emblem"
+              width={44}
+              height={44}
+              className="h-11 w-11"
+              priority
+            />
+            <span className="text-3xl font-bold tracking-tight leading-none">
+              <span className="text-[#1F2A44]">LifeForge</span>
+              <span className="text-[#2FAF9E]">Prep</span>
+            </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {links.map((item) => (
               <Link
                 key={`${item.label}-${item.href}`}
                 href={item.href}
-                className="text-sm font-medium text-[#2C3440] hover:text-[#2FAF9E]"
+                className="text-3xl font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
               >
                 {item.label}
               </Link>
@@ -58,10 +67,10 @@ export default function SiteHeader() {
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/news"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-[#2C3440] hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 text-[#1F2A44] hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
               aria-label="Search news"
             >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
@@ -70,7 +79,7 @@ export default function SiteHeader() {
               href={siteConfig.checkoutUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg bg-[#2C3440] px-3 py-2 text-sm font-semibold text-white hover:bg-slate-700"
+              className="rounded-xl bg-[#2C3440] px-4 py-2.5 text-3xl font-semibold text-white hover:bg-slate-700"
             >
               Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
             </a>
@@ -79,7 +88,7 @@ export default function SiteHeader() {
           <button
             type="button"
             aria-label="Toggle menu"
-            className="inline-flex items-center rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-[#2C3440] lg:hidden"
+            className="inline-flex items-center rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-[#1F2A44] lg:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
@@ -95,7 +104,7 @@ export default function SiteHeader() {
                 <Link
                   key={`mobile-${item.label}-${item.href}`}
                   href={item.href}
-                  className="text-sm font-medium text-[#2C3440]"
+                  className="text-sm font-medium text-[#1F2A44]"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
@@ -105,7 +114,7 @@ export default function SiteHeader() {
                 href={siteConfig.checkoutUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-[#2C3440]"
+                className="text-sm font-semibold text-[#1F2A44]"
                 onClick={() => setMenuOpen(false)}
               >
                 Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
