@@ -36,17 +36,17 @@ export default function SiteHeader() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-3">
-          <Link href="/" className="inline-flex items-center gap-3">
+        <div className="flex h-20 items-center justify-between gap-4">
+          <Link href="/" className="inline-flex min-w-0 items-center gap-2.5">
             <Image
               src="/brand/lifeforge-emblem.png"
               alt="LifeForgePrep emblem"
-              width={44}
-              height={44}
-              className="h-11 w-11"
+              width={40}
+              height={40}
+              className="h-10 w-10 shrink-0"
               priority
             />
-            <span className="text-3xl font-bold tracking-tight leading-none">
+            <span className="truncate text-[28px] font-bold leading-none tracking-tight sm:text-[34px]">
               <span className="text-[#1F2A44]">LifeForge</span>
               <span className="text-[#2FAF9E]">Prep</span>
             </span>
@@ -57,7 +57,7 @@ export default function SiteHeader() {
               <Link
                 key={`${item.label}-${item.href}`}
                 href={item.href}
-                className="text-3xl font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
+                className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
               >
                 {item.label}
               </Link>
@@ -70,7 +70,7 @@ export default function SiteHeader() {
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 text-[#1F2A44] hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
               aria-label="Search news"
             >
-              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.1">
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
@@ -79,7 +79,7 @@ export default function SiteHeader() {
               href={siteConfig.checkoutUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl bg-[#2C3440] px-4 py-2.5 text-3xl font-semibold text-white hover:bg-slate-700"
+              className="rounded-xl bg-[#2C3440] px-4 py-2.5 text-[18px] font-semibold text-white hover:bg-slate-700"
             >
               Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
             </a>
