@@ -124,36 +124,34 @@ export default function HomePage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden px-6 py-12 md:px-12 md:py-[72px]">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
-            <div className="flex flex-col justify-center">
-              <h1 className="text-5xl font-bold tracking-tight text-[#1F2A44] sm:text-6xl">Life Insurance Explained Simply</h1>
-              <p className="mt-6 max-w-xl text-2xl leading-relaxed text-[#33415d]">
-                Industry news, product insights, and guidance to help you make better insurance decisions.
-              </p>
-              <div className="mt-8">
-                <Link
-                  href="/knowledge"
-                  className="inline-flex items-center rounded-xl bg-[#2FAF9E] px-10 py-5 text-4xl font-semibold text-white shadow-[0_10px_24px_rgba(47,175,158,0.28)] hover:bg-[#26988a]"
-                >
-                  Get insights
-                </Link>
-              </div>
+        <section className="bg-[#1F2A44] px-6 py-16 md:px-12 md:py-20">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Advisor Career Path</p>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Interested in Becoming a Life Insurance Advisor?
+            </h1>
+            <p className="mt-5 max-w-4xl text-lg leading-8 text-slate-200 sm:text-xl">
+              Practice real exam-style questions, learn key concepts, and prepare for licensing exams in Canada and the United States.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/exam-prep"
+                className="inline-flex items-center rounded-xl bg-[#2FAF9E] px-6 py-3 text-base font-semibold text-white shadow-[0_10px_24px_rgba(47,175,158,0.28)] transition hover:bg-[#26988a]"
+              >
+                Start Free Practice
+              </Link>
+              <Link
+                href="/exam-prep"
+                className="inline-flex items-center rounded-xl border border-slate-300/70 bg-white px-6 py-3 text-base font-semibold text-[#1F2A44] transition hover:bg-slate-100"
+              >
+                Choose Your Exam Path
+              </Link>
             </div>
 
-            <div className="relative mx-auto mt-6 flex w-full max-w-[520px] items-center justify-center lg:mt-0">
-              <div className="absolute z-[1] aspect-[1.35/1] w-full max-w-[500px] rounded-[50%] bg-[#e6f4f2]" />
-              <div className="relative z-[2] w-[72%] max-w-[340px]">
-                <Image
-                  src="/brand/lifeforge-emblem.png"
-                  alt="LifeForgePrep emblem"
-                  width={340}
-                  height={340}
-                  className="block h-auto w-full"
-                  priority
-                />
-              </div>
-            </div>
+            <p className="mt-4 text-sm text-slate-300">
+              Trusted by LLQP candidates and career-switching professionals. Independent educational resource.
+            </p>
           </div>
         </section>
 
