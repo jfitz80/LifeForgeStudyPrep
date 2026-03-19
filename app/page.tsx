@@ -160,12 +160,15 @@ export default function HomePage() {
             <div className="grid gap-4 md:grid-cols-2">
               <article className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
                 <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#1F2A44]">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 6h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 18h16" />
-                    <path d="M8 6v6" />
-                    <path d="M11 6v6" />
+                  <svg viewBox="0 0 28 28" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="14" cy="14" r="13" fill="white" />
+                    <path d="M1 1h6v26H1z" fill="#D62828" />
+                    <path d="M21 1h6v26h-6z" fill="#D62828" />
+                    <path
+                      d="M14 8.2 15.1 10.4 17.6 9.9 16 12 18.2 13.3 15.7 14.1 16.4 16.8 14 15.4 11.6 16.8 12.3 14.1 9.8 13.3 12 12 10.4 9.9 12.9 10.4 14 8.2Z"
+                      fill="#D62828"
+                    />
+                    <circle cx="14" cy="14" r="13" stroke="#D1D5DB" />
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-[#1F2A44]">Canada</h2>
@@ -180,12 +183,20 @@ export default function HomePage() {
 
               <article className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
                 <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#355C8C]">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 12h18" />
-                    <path d="M12 3c3.5 2.8 3.5 14.2 0 18" />
-                    <path d="M12 3c-3.5 2.8-3.5 14.2 0 18" />
-                    <path d="M3 7.5h18" />
-                    <path d="M3 16.5h18" />
+                  <svg viewBox="0 0 28 28" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="14" cy="14" r="13" fill="white" />
+                    <path d="M1 4.5h26v3H1z" fill="#B22234" />
+                    <path d="M1 10.5h26v3H1z" fill="#B22234" />
+                    <path d="M1 16.5h26v3H1z" fill="#B22234" />
+                    <path d="M1 22.5h26v3H1z" fill="#B22234" />
+                    <path d="M1 1h13v12H1z" fill="#1F3B73" />
+                    <circle cx="5" cy="5" r="0.9" fill="white" />
+                    <circle cx="8" cy="7" r="0.9" fill="white" />
+                    <circle cx="11" cy="5" r="0.9" fill="white" />
+                    <circle cx="5" cy="9" r="0.9" fill="white" />
+                    <circle cx="9" cy="10" r="0.9" fill="white" />
+                    <circle cx="12" cy="8" r="0.9" fill="white" />
+                    <circle cx="14" cy="14" r="13" stroke="#D1D5DB" />
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-[#1F2A44]">United States</h2>
