@@ -4,6 +4,7 @@ import Link from 'next/link';
 import SiteFooter from '@/components/editorial/SiteFooter';
 import KnowledgeHubHomeSection from '@/components/knowledge/KnowledgeHubHomeSection';
 import NewsletterSignup from '@/components/home/NewsletterSignup';
+import WhatIsLlqpSection from '@/components/home/WhatIsLlqpSection';
 
 
 export const metadata: Metadata = {
@@ -220,6 +221,8 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        <WhatIsLlqpSection />
 
         <section className="bg-gradient-to-b from-[#f7f9fb] to-white">
           <div className="mx-auto -mt-2 max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
