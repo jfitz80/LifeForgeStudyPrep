@@ -202,7 +202,7 @@ export default function HomePage() {
                 <h2 className="text-2xl font-bold text-[#1F2A44]">United States</h2>
                 <p className="mt-2 text-base text-[#4A5568]">State Licensing Exam Prep</p>
                 <Link
-                  href="/exam-prep#us"
+                  href="/us-exam-prep"
                   className="mt-5 inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
                 >
                   Start US Exam Prep
