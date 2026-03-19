@@ -54,6 +54,19 @@ export default function ExamPrepPage() {
             </p>
           </header>
 
+          <section className="mt-8 rounded-2xl border border-[#D4E6E2] bg-[#EEF9F6] p-6 shadow-sm">
+            <h2 className="text-2xl font-bold text-[#1F2A44]">Not ready to commit yet?</h2>
+            <p className="mt-2 text-sm leading-7 text-[#315A55]">
+              Try a few free questions first and see how the platform works.
+            </p>
+            <a
+              href="/free-practice"
+              className="mt-4 inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+            >
+              Start Free Practice
+            </a>
+          </section>
+
           <section className="mt-8 grid gap-6 lg:grid-cols-2">
             <article className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
               <h2 className="text-2xl font-bold text-[#1F2A44]">Life Insurance Module</h2>
