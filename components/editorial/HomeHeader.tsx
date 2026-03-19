@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 const navItems = [
   { label: 'News', href: '/news' },
+  { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Tools', href: '/tools' },
@@ -30,7 +31,11 @@ export default function HomeHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-sm text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
+              className={
+                item.href === '/free-practice'
+                  ? 'rounded-md bg-[#E8F7F4] px-2.5 py-1 text-sm font-semibold text-[#1E887B] hover:bg-[#D9F1EC] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2'
+                  : 'rounded-sm text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2'
+              }
             >
               {item.label}
             </Link>
@@ -66,7 +71,11 @@ export default function HomeHeader() {
                 key={`mobile-${item.href}`}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E]"
+                className={
+                  item.href === '/free-practice'
+                    ? 'rounded-md bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B]'
+                    : 'text-sm font-medium text-[#4A5568] hover:text-[#2FAF9E]'
+                }
               >
                 {item.label}
               </Link>

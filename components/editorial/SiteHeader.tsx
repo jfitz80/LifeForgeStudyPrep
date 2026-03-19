@@ -12,6 +12,7 @@ type HeaderLink = {
 
 const links: HeaderLink[] = [
   { label: 'News', href: '/news' },
+  { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Tools', href: '/tools' },
@@ -57,7 +58,11 @@ export default function SiteHeader() {
               <Link
                 key={`${item.label}-${item.href}`}
                 href={item.href}
-                className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
+                className={
+                  item.href === '/free-practice'
+                    ? 'rounded-lg bg-[#E8F7F4] px-3 py-1.5 text-[17px] font-semibold text-[#1E887B] hover:bg-[#D9F1EC]'
+                    : 'text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]'
+                }
               >
                 {item.label}
               </Link>
@@ -104,7 +109,11 @@ export default function SiteHeader() {
                 <Link
                   key={`mobile-${item.label}-${item.href}`}
                   href={item.href}
-                  className="text-sm font-medium text-[#1F2A44]"
+                  className={
+                    item.href === '/free-practice'
+                      ? 'rounded-md bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B]'
+                      : 'text-sm font-medium text-[#1F2A44]'
+                  }
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}

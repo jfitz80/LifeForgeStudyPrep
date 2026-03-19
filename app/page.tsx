@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 const nav = [
   { label: 'News', href: '/news' },
+  { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Tools', href: '/tools' },
@@ -105,7 +106,15 @@ export default function HomePage() {
 
           <nav className="hidden items-center gap-10 lg:flex">
             {nav.map((item) => (
-              <Link key={item.href} href={item.href} className="text-3xl font-medium text-[#1F2A44] hover:text-[#2FAF9E]">
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  item.href === '/free-practice'
+                    ? 'rounded-lg bg-[#E8F7F4] px-3 py-1.5 text-xl font-semibold text-[#1E887B] hover:bg-[#D9F1EC]'
+                    : 'text-2xl font-medium text-[#1F2A44] hover:text-[#2FAF9E]'
+                }
+              >
                 {item.label}
               </Link>
             ))}
@@ -136,7 +145,7 @@ export default function HomePage() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/exam-prep"
+                href="/free-practice"
                 className="inline-flex items-center rounded-xl bg-[#2FAF9E] px-6 py-3 text-base font-semibold text-white shadow-[0_10px_24px_rgba(47,175,158,0.28)] transition hover:bg-[#26988a]"
               >
                 Start Free Practice
