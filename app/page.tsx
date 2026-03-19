@@ -155,6 +155,52 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="bg-[#F5F7FA] px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl">
+            <div className="grid gap-4 md:grid-cols-2">
+              <article className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#1F2A44]">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 6h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 18h16" />
+                    <path d="M8 6v6" />
+                    <path d="M11 6v6" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-[#1F2A44]">Canada</h2>
+                <p className="mt-2 text-base text-[#4A5568]">LLQP Exam Prep</p>
+                <Link
+                  href="/exam-prep"
+                  className="mt-5 inline-flex items-center rounded-lg bg-[#2FAF9E] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+                >
+                  Start LLQP Prep
+                </Link>
+              </article>
+
+              <article className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#355C8C]">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12h18" />
+                    <path d="M12 3c3.5 2.8 3.5 14.2 0 18" />
+                    <path d="M12 3c-3.5 2.8-3.5 14.2 0 18" />
+                    <path d="M3 7.5h18" />
+                    <path d="M3 16.5h18" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-[#1F2A44]">United States</h2>
+                <p className="mt-2 text-base text-[#4A5568]">State Licensing Exam Prep</p>
+                <Link
+                  href="/exam-prep#us"
+                  className="mt-5 inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+                >
+                  Start US Exam Prep
+                </Link>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-gradient-to-b from-[#f7f9fb] to-white">
           <div className="mx-auto -mt-2 max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
