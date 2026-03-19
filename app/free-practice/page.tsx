@@ -1,28 +1,28 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
-import SmartCoverageFinder from '@/components/tools/SmartCoverageFinder';
+import QuestionProgressionSystem from '@/components/free-practice/QuestionProgressionSystem';
 
 export const metadata: Metadata = {
   title: 'Free Practice | LifeForgePrep',
-  description: 'Practice exam-style questions and estimate coverage with LifeForge free tools.'
+  description: 'Practice exam-style questions and test your readiness before unlocking full access.'
 };
 
 export default function FreePracticePage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#F5F7FA] py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <header className="mb-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Free Practice</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Practice Before You Commit</h1>
-            <p className="mt-3 max-w-3xl text-[#4A5568]">
-              Use this free practice tool to test your understanding of core life insurance concepts and get practical recommendation guidance.
+      <main className="min-h-screen bg-[#0B1323] py-12">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <header className="mb-8 rounded-2xl border border-slate-700 bg-[#111A2D] p-7 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Free Practice</p>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Question Progression System</h1>
+            <p className="mt-3 max-w-3xl text-slate-300">
+              Complete 5 free exam-style questions one at a time, review instant explanations, and get a score breakdown by question type.
             </p>
           </header>
 
-          <SmartCoverageFinder />
+          <QuestionProgressionSystem />
         </div>
       </main>
       <SiteFooter />
