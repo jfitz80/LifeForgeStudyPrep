@@ -1,6 +1,10 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import BonusPracticeCapture from '@/components/free-practice/BonusPracticeCapture';
+import QuizProgressBar from '@/components/free-practice/QuizProgressBar';
+import QuizResultsCard from '@/components/free-practice/QuizResultsCard';
+import UpgradeCTA from '@/components/free-practice/UpgradeCTA';
 
 type QuestionType = 'concept' | 'scenario' | 'calculation';
 
@@ -30,75 +34,132 @@ const QUESTIONS: Question[] = [
   {
     id: 'q1',
     type: 'concept',
-    prompt: 'Which statement best describes the primary purpose of term life insurance?',
+    prompt: 'A client takes a policy loan from their permanent life insurance policy. Which is TRUE?',
     options: [
-      { id: 'a', label: 'A', text: 'To provide temporary income protection for a specific period' },
-      { id: 'b', label: 'B', text: 'To maximize long-term cash value accumulation only' },
-      { id: 'c', label: 'C', text: 'To guarantee investment returns above inflation' },
-      { id: 'd', label: 'D', text: 'To replace disability insurance coverage' }
+      { id: 'a', label: 'A', text: 'Always tax-free' },
+      { id: 'b', label: 'B', text: 'Taxable only at maturity' },
+      { id: 'c', label: 'C', text: 'May be taxable if it exceeds ACB' },
+      { id: 'd', label: 'D', text: 'No tax impact' }
     ],
-    correctOptionId: 'a',
-    explanation:
-      'Term life is designed for temporary protection needs, such as income replacement while dependents are financially reliant.'
+    correctOptionId: 'c',
+    explanation: 'Policy loans can trigger taxable consequences when values exceed adjusted cost basis thresholds.'
   },
   {
     id: 'q2',
     type: 'scenario',
-    prompt:
-      'A client has two young children, a large mortgage, and limited budget. Which recommendation is most suitable as a starting point?',
+    prompt: 'An applicant discloses a serious condition. What is MOST likely?',
     options: [
-      { id: 'a', label: 'A', text: 'High-premium whole life policy without needs analysis' },
-      { id: 'b', label: 'B', text: '20-year term coverage aligned to mortgage and child dependency years' },
-      { id: 'c', label: 'C', text: 'No coverage until income rises significantly' },
-      { id: 'd', label: 'D', text: 'Universal life with maximum optional riders by default' }
+      { id: 'a', label: 'A', text: 'Automatic decline' },
+      { id: 'b', label: 'B', text: 'Ignored' },
+      { id: 'c', label: 'C', text: 'Rated or excluded' },
+      { id: 'd', label: 'D', text: 'Standard issue' }
     ],
-    correctOptionId: 'b',
-    explanation:
-      'Suitability starts with core protection and affordability. Term coverage often fits temporary high-liability family needs.'
+    correctOptionId: 'c',
+    explanation: 'Serious disclosed conditions are typically assessed through underwriting and may lead to ratings or exclusions.'
   },
   {
     id: 'q3',
-    type: 'calculation',
-    prompt:
-      'If a client earns $90,000 annually, has $250,000 debt, and $100,000 savings, using a simple (10x income + debt - savings) rule, what is the estimated coverage need?',
+    type: 'concept',
+    prompt: 'Revocable beneficiary means:',
     options: [
-      { id: 'a', label: 'A', text: '$850,000' },
-      { id: 'b', label: 'B', text: '$1,050,000' },
-      { id: 'c', label: 'C', text: '$1,250,000' },
-      { id: 'd', label: 'D', text: '$900,000' }
+      { id: 'a', label: 'A', text: 'Cannot change' },
+      { id: 'b', label: 'B', text: 'Can change anytime' },
+      { id: 'c', label: 'C', text: 'Owns policy' },
+      { id: 'd', label: 'D', text: 'Permanent' }
     ],
     correctOptionId: 'b',
-    explanation:
-      '10 x $90,000 = $900,000. Add debt ($250,000) and subtract savings ($100,000) for an estimated $1,050,000 need.'
+    explanation: 'Revocable beneficiary designations can generally be changed by the policy owner.'
   },
   {
     id: 'q4',
-    type: 'scenario',
-    prompt:
-      'An applicant omits smoking history on the application. Which risk is most relevant during early policy years?',
+    type: 'concept',
+    prompt: 'Group life insurance coverage is usually:',
     options: [
-      { id: 'a', label: 'A', text: 'No impact if premiums were paid on time' },
-      { id: 'b', label: 'B', text: 'Potential claim dispute due to material misrepresentation' },
-      { id: 'c', label: 'C', text: 'Automatic conversion to disability coverage' },
-      { id: 'd', label: 'D', text: 'Guaranteed payout regardless of application disclosures' }
+      { id: 'a', label: 'A', text: 'Health-based' },
+      { id: 'b', label: 'B', text: 'Fixed' },
+      { id: 'c', label: 'C', text: 'Salary multiple' },
+      { id: 'd', label: 'D', text: 'Investment-based' }
     ],
-    correctOptionId: 'b',
-    explanation:
-      'Material misrepresentation can affect claim handling and policy enforceability, especially in contestability review periods.'
+    correctOptionId: 'c',
+    explanation: 'Employer-sponsored group life is commonly expressed as a multiple of employee salary.'
   },
   {
     id: 'q5',
-    type: 'concept',
-    prompt: 'What is the clearest difference between revocable and irrevocable beneficiary designations?',
+    type: 'calculation',
+    prompt: 'Which creates a taxable event?',
     options: [
-      { id: 'a', label: 'A', text: 'Revocable beneficiaries always receive tax-free proceeds; irrevocable do not' },
-      { id: 'b', label: 'B', text: 'Irrevocable designations may restrict owner changes without beneficiary consent' },
-      { id: 'c', label: 'C', text: 'Revocable beneficiaries cannot be individuals' },
-      { id: 'd', label: 'D', text: 'There is no practical legal difference' }
+      { id: 'a', label: 'A', text: 'Naming beneficiary' },
+      { id: 'b', label: 'B', text: 'Paying premiums' },
+      { id: 'c', label: 'C', text: 'Withdrawal' },
+      { id: 'd', label: 'D', text: 'Increasing benefit' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'Policy withdrawals can create taxable gains depending on adjusted cost basis and policy structure.'
+  },
+  {
+    id: 'q6',
+    type: 'calculation',
+    prompt: 'A withdrawal exceeds ACB. What happens?',
+    options: [
+      { id: 'a', label: 'A', text: 'No tax' },
+      { id: 'b', label: 'B', text: 'Fully tax-free' },
+      { id: 'c', label: 'C', text: 'Excess is taxable' },
+      { id: 'd', label: 'D', text: 'Only taxed at death' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'Amounts withdrawn above ACB are generally taxable under standard policy taxation treatment.'
+  },
+  {
+    id: 'q7',
+    type: 'concept',
+    prompt: 'What is the PRIMARY purpose of underwriting?',
+    options: [
+      { id: 'a', label: 'A', text: 'Maximize premiums' },
+      { id: 'b', label: 'B', text: 'Eliminate all risk' },
+      { id: 'c', label: 'C', text: 'Assess and classify risk' },
+      { id: 'd', label: 'D', text: 'Approve all applicants' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'Underwriting evaluates and classifies risk so coverage can be priced and structured appropriately.'
+  },
+  {
+    id: 'q8',
+    type: 'concept',
+    prompt: 'Irrevocable beneficiary means:',
+    options: [
+      { id: 'a', label: 'A', text: 'Can change anytime' },
+      { id: 'b', label: 'B', text: 'Requires consent to change' },
+      { id: 'c', label: 'C', text: 'Has no rights' },
+      { id: 'd', label: 'D', text: 'Only applies to group plans' }
     ],
     correctOptionId: 'b',
-    explanation:
-      'Irrevocable beneficiary status can limit policy-owner control, which is why designation choice must be intentional.'
+    explanation: 'Irrevocable beneficiaries usually must consent before ownership or beneficiary changes are made.'
+  },
+  {
+    id: 'q9',
+    type: 'scenario',
+    prompt: 'If policy loan interest is unpaid:',
+    options: [
+      { id: 'a', label: 'A', text: 'No effect' },
+      { id: 'b', label: 'B', text: 'Added to loan balance' },
+      { id: 'c', label: 'C', text: 'Waived' },
+      { id: 'd', label: 'D', text: 'Paid by insurer' }
+    ],
+    correctOptionId: 'b',
+    explanation: 'Unpaid loan interest is generally capitalized into the outstanding policy loan balance.'
+  },
+  {
+    id: 'q10',
+    type: 'scenario',
+    prompt: 'A client withdraws funds and policy collapses. What is MOST likely?',
+    options: [
+      { id: 'a', label: 'A', text: 'No tax consequence' },
+      { id: 'b', label: 'B', text: 'Only future premiums affected' },
+      { id: 'c', label: 'C', text: 'Gains may become taxable' },
+      { id: 'd', label: 'D', text: 'Death benefit increases' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'When policy values are distributed and coverage collapses, taxable gains may be triggered.'
   }
 ];
 
@@ -117,8 +178,6 @@ export default function QuestionProgressionSystem() {
   const current = QUESTIONS[index];
   const currentAnswer = answers.find((a) => a.questionId === current.id);
 
-  const progressPercent = Math.round(((index + (finished ? 1 : 0)) / total) * 100);
-
   const score = useMemo(() => answers.filter((a) => a.isCorrect).length, [answers]);
 
   const breakdown = useMemo(() => {
@@ -126,7 +185,7 @@ export default function QuestionProgressionSystem() {
     return types.map((type) => {
       const typeQuestions = QUESTIONS.filter((q) => q.type === type).length;
       const correct = answers.filter((a) => a.type === type && a.isCorrect).length;
-      return { type, correct, total: typeQuestions };
+      return { typeLabel: TYPE_LABEL[type], correct, total: typeQuestions };
     });
   }, [answers]);
 
@@ -162,31 +221,12 @@ export default function QuestionProgressionSystem() {
 
   if (finished) {
     return (
-      <section className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Free Practice Complete</p>
-        <h2 className="mt-2 text-3xl font-bold text-white">Your Score: {score}/{total}</h2>
-        <p className="mt-3 text-sm leading-7 text-slate-300">
-          Great progress. Review your breakdown, then continue practicing or unlock full access for deeper scenario sets and full exam simulations.
-        </p>
+      <section id="free-practice-quiz" className="scroll-mt-28">
+        <QuizResultsCard score={score} total={total} breakdown={breakdown} />
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-3">
-          {breakdown.map((item) => (
-            <article key={item.type} className="rounded-xl border border-slate-700 bg-[#0E1628] p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">{TYPE_LABEL[item.type]}</p>
-              <p className="mt-2 text-2xl font-bold text-white">
-                {item.correct}/{item.total}
-              </p>
-            </article>
-          ))}
-        </div>
+        <UpgradeCTA />
 
-        <div className="mt-7 flex flex-wrap gap-3">
-          <a
-            href="/exam-prep"
-            className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-          >
-            Unlock Full Access
-          </a>
+        <div className="mt-6 flex justify-start">
           <button
             type="button"
             onClick={restart}
@@ -195,28 +235,15 @@ export default function QuestionProgressionSystem() {
             Continue Practicing
           </button>
         </div>
+
+        <BonusPracticeCapture />
       </section>
     );
   }
 
   return (
-    <section className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
-      <div className="mb-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Free Question Set</p>
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">
-            Question {index + 1} of {total}
-          </p>
-        </div>
-
-        <div className="h-2 overflow-hidden rounded-full bg-slate-700">
-          <div
-            className="h-2 rounded-full bg-[#2FAF9E] transition-all duration-500"
-            style={{ width: `${progressPercent}%` }}
-            aria-hidden="true"
-          />
-        </div>
-      </div>
+    <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
+      <QuizProgressBar current={index + 1} total={total} />
 
       <article className="rounded-xl border border-slate-700 bg-[#0E1628] p-5 transition-all duration-300">
         <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">{TYPE_LABEL[current.type]}</p>
@@ -245,7 +272,7 @@ export default function QuestionProgressionSystem() {
                 type="button"
                 onClick={() => handleSelect(option.id)}
                 disabled={Boolean(currentAnswer)}
-                className={`rounded-lg border px-4 py-3 text-left text-sm font-medium transition ${optionClass} disabled:cursor-not-allowed`}
+                className={`rounded-lg border px-4 py-4 text-left text-base font-medium transition ${optionClass} disabled:cursor-not-allowed`}
               >
                 <span className="mr-2 inline-block font-semibold">{option.label}.</span>
                 <span>{option.text}</span>
@@ -254,19 +281,19 @@ export default function QuestionProgressionSystem() {
           })}
         </div>
 
-        {currentAnswer && (
+        {currentAnswer ? (
           <div className="mt-5 rounded-lg border border-slate-600 bg-[#111A2D] p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Explanation</p>
             <p className="mt-2 text-sm leading-7 text-slate-200">{current.explanation}</p>
           </div>
-        )}
+        ) : null}
 
         <div className="mt-5 flex justify-end">
           <button
             type="button"
             onClick={handleNext}
             disabled={!currentAnswer}
-            className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex min-w-[170px] items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-40"
           >
             {index === total - 1 ? 'View Results' : 'Next Question'}
           </button>
