@@ -2,13 +2,12 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
-import {
-  classifyNewsCategory,
-  NewsCategoryVisual,
-  newsCategoryMeta,
-  type NewsCategoryKey
-} from '@/components/editorial/news-categories';
-import { digestTags } from '@/config/home';
+import FeaturedStoriesGrid from '@/components/news/FeaturedStoriesGrid';
+import ForStudentsStrip from '@/components/news/ForStudentsStrip';
+import NewsCard from '@/components/news/NewsCard';
+import NewsHero from '@/components/news/NewsHero';
+import { classifyNewsCategory } from '@/components/news/category-system';
+import type { NewsArticleView } from '@/components/news/types';
 import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
@@ -16,8 +15,16 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: 'Life Insurance News Digest | LifeForge Insurance Prep',
-  description: 'Weekly life insurance digest with clear summaries, practical implications, and exam-prep relevance.'
+  title: 'Daily Insurance Brief | LifeForge Insurance Prep',
+  description:
+    'Life insurance news, insurance industry updates, underwriting trends, and insurance regulation updates with practical LLQP context.',
+  keywords: [
+    'life insurance news',
+    'insurance industry updates',
+    'underwriting trends',
+    'insurance regulation updates',
+    'llqp practice exam'
+  ]
 };
 
 type HubItem = {
@@ -25,63 +32,42 @@ type HubItem = {
   slug: string;
   title: string;
   summary: string;
+  whyThisMatters: string;
   publishedAtLabel: string;
   source: string;
   tag: string;
+  canonicalUrl?: string | null;
 };
 
-type DailyBrief = {
-  title: string;
-  summary: string;
-  keyThemes: [string, string, string];
-  whyItMatters: string;
-  worthReading: HubItem[];
+type Props = {
+  searchParams?: {
+    page?: string;
+  };
 };
-
-type CategorizedHubItem = HubItem & { category: NewsCategoryKey };
 
 function mapStaticItems(): HubItem[] {
   return newsItems.map((item) => ({
     slug: item.slug,
     title: item.title,
     summary: item.summary,
+    whyThisMatters: item.whatItMeans,
     publishedAtLabel: item.publishedAtLabel,
     source: item.source,
-    tag: item.tag
+    tag: item.tag,
+    canonicalUrl: null
   }));
 }
 
 function parseTag(raw: string | null | undefined): string {
-  if (!raw) return 'Market Watch';
+  if (!raw) return 'Industry Trends';
   try {
     const parsed = JSON.parse(raw) as string[];
     const first = parsed?.[0]?.trim();
-    if (!first) return 'Market Watch';
+    if (!first) return 'Industry Trends';
     return first.charAt(0).toUpperCase() + first.slice(1);
   } catch {
-    return 'Market Watch';
+    return 'Industry Trends';
   }
-}
-
-function titleScore(title: string, tag: string): number {
-  const text = `${title} ${tag}`.toLowerCase();
-  let score = 0;
-  if (/(claims?|payout|beneficiar|denied|contestability)/.test(text)) score += 4;
-  if (/(underwriting|policy|premium|pricing|regulation)/.test(text)) score += 3;
-  if (/(ai|automation|insurtech|product|launch)/.test(text)) score += 2;
-  if (/(stock|profit|earnings|valuation)/.test(text)) score += 1;
-  return score;
-}
-
-function toTheme(tag: string): string {
-  const raw = tag.toLowerCase();
-  if (raw.includes('claim')) return 'Claims Trends';
-  if (raw.includes('underwrit')) return 'Underwriting Risk';
-  if (raw.includes('regulat')) return 'Regulatory Watch';
-  if (raw.includes('premium')) return 'Premium Pressure';
-  if (raw.includes('policy')) return 'Policy Terms';
-  if (raw.includes('market')) return 'Market Watch';
-  return 'Coverage Insights';
 }
 
 function normalizeHeadline(title: string): string {
@@ -103,48 +89,41 @@ function dedupeHubItems(items: HubItem[]): HubItem[] {
   });
 }
 
-function buildDailyBrief(items: HubItem[]): DailyBrief {
-  const dateLabel = new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  }).format(new Date());
+function fallbackWhyThisMatters(item: Pick<HubItem, 'title' | 'summary' | 'tag'>): string {
+  const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
+  if (/(underwriting|risk class|medical)/.test(text)) {
+    return 'This could impact underwriting decisions and lead to stricter risk classification.';
+  }
+  if (/(claim|contestability|beneficiar|lawsuit)/.test(text)) {
+    return 'This may affect claims expectations, beneficiary planning, and advisor guidance on policy conditions.';
+  }
+  if (/(regulat|policy|compliance|rule)/.test(text)) {
+    return 'This may change suitability, disclosure, or documentation standards in advisor recommendations.';
+  }
 
-  const ranked = [...items].sort((a, b) => titleScore(b.title, b.tag) - titleScore(a.title, a.tag));
-
-  const seen = new Set<string>();
-  const uniqueRanked = ranked.filter((item) => {
-    const key = normalizeHeadline(item.title);
-    if (!key || seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
-  const shortlist = uniqueRanked.slice(0, 5);
-
-  const themes = Array.from(new Set(shortlist.map((i) => toTheme(i.tag))));
-  while (themes.length < 3) themes.push('Client Impact');
-  const keyThemes: [string, string, string] = [themes[0], themes[1], themes[2]];
-
-  const summary =
-    shortlist.length > 0
-      ? "Today's coverage centers on claim outcomes, policy interpretation, and shifting risk signals across the life insurance market. Advisors should focus on updates that affect claims expectations, underwriting conversations, and client suitability guidance. For LLQP prep, these stories reinforce practical exam scenarios around policy wording, claims handling, and risk assessment."
-      : 'Today’s coverage is light, but key stories still highlight claims, policy structure, and underwriting implications. Review the latest items for client-facing relevance.';
-
-  return {
-    title: `Daily Insurance Brief — ${dateLabel}`,
-    summary,
-    keyThemes,
-    whyItMatters:
-      'This helps you quickly prioritize high-signal stories that affect client advice, policy understanding, and LLQP exam judgment.',
-    worthReading: shortlist
-  };
+  return 'This highlights market shifts that can influence product comparisons, client planning, and exam-relevant judgment.';
 }
 
-async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubItem[]; items: HubItem[] }> {
+function buildTrendingTopics(items: HubItem[]): string[] {
+  const text = items.slice(0, 20).map((item) => `${item.title} ${item.tag}`).join(' ').toLowerCase();
+  const topics: string[] = [];
+
+  if (/(ai|automation|digital|insurtech)/.test(text)) topics.push('AI in underwriting');
+  if (/(premium|pricing|rate|cost)/.test(text)) topics.push('Premium increases');
+  if (/(regulat|policy|compliance|rule)/.test(text)) topics.push('Regulatory changes');
+  if (/(claim|litigation|lawsuit)/.test(text)) topics.push('Claims disputes');
+  if (/(underwriting|risk)/.test(text)) topics.push('Underwriting trends');
+
+  if (topics.length === 0) {
+    return ['AI in underwriting', 'Premium increases', 'Regulatory changes'];
+  }
+
+  return topics.slice(0, 5);
+}
+
+async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[] }> {
   if (!isLiveNewsEnabled()) {
-    const items = mapStaticItems();
-    return { mode: 'static', featured: items.slice(0, 3), items };
+    return { mode: 'static', items: mapStaticItems() };
   }
 
   try {
@@ -156,140 +135,103 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; featured: HubIt
       slug: item.slug,
       title: item.title,
       summary: item.summary,
+      whyThisMatters: item.whyItMatters,
       publishedAtLabel: item.publishedAt
         ? new Date(item.publishedAt).toLocaleDateString()
         : new Date(item.createdAt).toLocaleDateString(),
       source: item.source?.name ?? 'LifeForge News',
-      tag: parseTag(item.tagsJson)
+      tag: parseTag(item.tagsJson),
+      canonicalUrl: item.canonicalUrl ?? null
     }));
 
-    return {
-      mode: 'live',
-      featured: mapped.slice(0, 3),
-      items: mapped
-    };
+    return { mode: 'live', items: mapped };
   } catch (error) {
     console.error('news hub live fetch failed:', error);
-    const items = mapStaticItems();
-    return { mode: 'static', featured: items.slice(0, 3), items };
+    return { mode: 'static', items: mapStaticItems() };
   }
 }
 
-export default async function NewsHubPage() {
+export default async function NewsHubPage({ searchParams }: Props) {
   const { mode, items } = await getHubItems();
-  const dedupedItems = dedupeHubItems(items);
-  const brief = buildDailyBrief(dedupedItems);
-  const categorized: CategorizedHubItem[] = dedupedItems.map((item) => ({
+  const deduped = dedupeHubItems(items);
+
+  const categorized: NewsArticleView[] = deduped.map((item) => ({
     ...item,
+    whyThisMatters: item.whyThisMatters?.trim() ? item.whyThisMatters : fallbackWhyThisMatters(item),
     category: classifyNewsCategory(item)
   }));
-  const featuredStory = categorized[0];
-  const remaining = categorized.slice(1);
+
+  const featured = categorized.slice(0, 4);
+  const feed = categorized.slice(4);
+
+  const pageSize = 9;
+  const requestedPage = Number(searchParams?.page ?? '1');
+  const currentPage = Number.isFinite(requestedPage) && requestedPage > 0 ? Math.floor(requestedPage) : 1;
+  const totalPages = Math.max(1, Math.ceil(feed.length / pageSize));
+  const safePage = Math.min(currentPage, totalPages);
+  const start = (safePage - 1) * pageSize;
+  const pagedFeed = feed.slice(start, start + pageSize);
+
+  const trendingTopics = buildTrendingTopics(categorized);
 
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen bg-[#EEF2F6] py-12">
+      <main className="min-h-screen bg-[#EEF2F6] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <header className="mb-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LifeForge News Digest</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">This Week in Life Insurance</h1>
-            <p className="mt-3 max-w-3xl text-[#4A5568]">
-              Practical life insurance headlines with clear summaries, key implications, and exam-relevant context.
-            </p>
-            <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
-          </header>
+          <NewsHero topics={trendingTopics} />
 
-          <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Daily Brief</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">{brief.title}</h2>
-            <p className="mt-3 text-sm leading-7 text-slate-700">{brief.summary}</p>
+          <p className="mb-6 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {brief.keyThemes.map((theme) => (
-                <span key={theme} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                  {theme}
-                </span>
-              ))}
-            </div>
+          <FeaturedStoriesGrid items={featured} />
 
-            <p className="mt-4 text-sm font-medium text-slate-800">{brief.whyItMatters}</p>
+          <ForStudentsStrip />
 
-          </section>
-
-          <div className="mb-6 flex flex-wrap gap-2">
-            {digestTags.map((tag) => (
-              <span key={tag} className="rounded-full border border-slate-300 bg-white px-3 py-1 text-xs font-medium text-slate-600">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {featuredStory && (
-            <section className="mb-8">
-              <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Featured Story</h2>
-              <article className="grid gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:shadow-md lg:grid-cols-[320px_minmax(0,1fr)]">
-                <NewsCategoryVisual category={featuredStory.category} />
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                    <span className={`rounded-full px-2.5 py-1 font-semibold ${newsCategoryMeta[featuredStory.category].badgeClass}`}>
-                      {newsCategoryMeta[featuredStory.category].label}
-                    </span>
-                    <span>{featuredStory.publishedAtLabel}</span>
-                    <span>•</span>
-                    <span>{featuredStory.source}</span>
-                  </div>
-                  <h3 className="mt-3 text-2xl font-bold leading-tight text-[#1F2A44]">{featuredStory.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{featuredStory.summary}</p>
-                  <div className="mt-5">
-                    <Link
-                      href={`/news/${featuredStory.slug}`}
-                      className="inline-flex items-center text-sm font-semibold text-[#2FAF9E] transition hover:text-[#1F2A44]"
-                    >
-                      Read more
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            </section>
-          )}
-
-          <section>
-            <h2 className="mb-4 text-lg font-semibold text-[#1F2A44]">Latest Stories</h2>
-            {remaining.length === 0 ? (
+          <section className="mb-10">
+            <h2 className="mb-4 text-xl font-semibold text-[#1F2A44]">Latest Insurance Industry Updates</h2>
+            {pagedFeed.length === 0 ? (
               <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
                 No additional articles available right now. Please check back shortly.
               </div>
             ) : (
               <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {remaining.map((item) => (
-                  <article
-                    key={item.id ?? item.slug}
-                    className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md"
-                  >
-                    <NewsCategoryVisual category={item.category} />
-                    <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-                      <span className={`rounded-full px-2.5 py-1 font-semibold ${newsCategoryMeta[item.category].badgeClass}`}>
-                        {newsCategoryMeta[item.category].label}
-                      </span>
-                      <span>{item.publishedAtLabel}</span>
-                      <span>•</span>
-                      <span>{item.source}</span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-bold text-[#1F2A44]">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
-                    <div className="mt-4 flex items-center justify-between">
-                      <Link href={`/news/${item.slug}`} className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
-                        Read more
-                      </Link>
-                      <a href="/#newsletter-signup" className="text-sm font-semibold text-slate-700 hover:text-slate-900">
-                        Weekly digest
-                      </a>
-                    </div>
-                  </article>
+                {pagedFeed.map((item) => (
+                  <NewsCard key={item.id ?? item.slug} article={item} />
                 ))}
               </div>
             )}
+
+            <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+              <span className="text-slate-600">
+                Page {safePage} of {totalPages}
+              </span>
+              <div className="flex gap-2">
+                <Link
+                  href={safePage > 1 ? `/news?page=${safePage - 1}` : '/news'}
+                  className={`rounded-lg border px-3 py-1.5 font-semibold ${
+                    safePage > 1
+                      ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
+                      : 'cursor-not-allowed border-slate-200 text-slate-400'
+                  }`}
+                  aria-disabled={safePage <= 1}
+                  tabIndex={safePage <= 1 ? -1 : 0}
+                >
+                  Previous
+                </Link>
+                <Link
+                  href={safePage < totalPages ? `/news?page=${safePage + 1}` : `/news?page=${safePage}`}
+                  className={`rounded-lg border px-3 py-1.5 font-semibold ${
+                    safePage < totalPages
+                      ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
+                      : 'cursor-not-allowed border-slate-200 text-slate-400'
+                  }`}
+                  aria-disabled={safePage >= totalPages}
+                  tabIndex={safePage >= totalPages ? -1 : 0}
+                >
+                  Next
+                </Link>
+              </div>
+            </div>
           </section>
         </div>
       </main>

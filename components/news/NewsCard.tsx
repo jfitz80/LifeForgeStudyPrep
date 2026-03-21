@@ -1,57 +1,35 @@
 import Link from 'next/link';
+import ArticleDetail from '@/components/news/ArticleDetail';
+import { CategoryTag } from '@/components/news/category-system';
+import type { NewsArticleView } from '@/components/news/types';
 
 type NewsCardProps = {
-  article: {
-    id: string;
-    slug: string;
-    title: string;
-    summary: string;
-    publishedAt: Date;
-    source: { name: string };
-    canonicalUrl: string;
-    isFeatured: boolean;
-  };
+  article: NewsArticleView;
+  featured?: boolean;
 };
 
-function formatDate(date: Date) {
-  const d = new Date(date);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
-
-export default function NewsCard({ article }: NewsCardProps) {
-  const analysisHref = `/news/${article.slug}`;
-
+export default function NewsCard({ article, featured = false }: NewsCardProps) {
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      {article.isFeatured && (
-        <p className="mb-2 inline-flex rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-900">Featured story</p>
-      )}
-
-      <a href={analysisHref} className="block rounded-md focus-visible:ring-2 focus-visible:ring-brand-600">
-        <h3 className="text-lg font-bold text-slate-900 hover:text-brand-700">{article.title}</h3>
-        <p className="mt-2 text-sm text-slate-600">{article.summary}</p>
-      </a>
-
-      <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
-        <span>{formatDate(article.publishedAt)}</span>
-        <span>Source: {article.source.name}</span>
+    <article
+      className={`rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md ${
+        featured ? 'h-full' : ''
+      }`}
+    >
+      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+        <CategoryTag category={article.category} />
+        <span>{article.publishedAtLabel}</span>
+        <span>•</span>
+        <span>{article.source}</span>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-3">
-        <a href={analysisHref} className="inline-flex text-xs font-semibold text-slate-900 underline hover:text-brand-700">
-          Read analysis
-        </a>
-        <a
-          href={article.canonicalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex text-xs font-semibold text-brand-700 hover:text-brand-900"
-        >
-          Read original source
-        </a>
+      <h3 className={`${featured ? 'mt-3 text-2xl' : 'mt-3 text-lg'} font-bold leading-tight text-[#1F2A44]`}>
+        <Link href={`/news/${article.slug}`} className="hover:text-[#2FAF9E]">
+          {article.title}
+        </Link>
+      </h3>
+
+      <div className="mt-3">
+        <ArticleDetail summary={article.summary} whyThisMatters={article.whyThisMatters} canonicalUrl={article.canonicalUrl} />
       </div>
     </article>
   );
