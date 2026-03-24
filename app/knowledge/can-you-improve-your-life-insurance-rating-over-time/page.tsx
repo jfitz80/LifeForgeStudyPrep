@@ -133,6 +133,12 @@ export default function ImproveLifeInsuranceRatingArticlePage() {
               </Link>
             </div>
           </section>
+          <section className="mt-8 rounded-xl border border-slate-200 bg-[#F8FAFC] p-4">
+            <p className="text-xs leading-6 text-slate-600">
+              Disclaimer: This content is for general informational purposes only and does not constitute medical or professional advice.
+              Always consult a qualified healthcare provider regarding any medical condition or treatment decisions.
+            </p>
+          </section>
         </article>
       </main>
       <SiteFooter />
