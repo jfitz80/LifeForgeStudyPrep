@@ -14,6 +14,7 @@ const links: HeaderLink[] = [
   { label: 'News', href: '/news' },
   { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
+  { label: 'Health & Insurance', href: '/health-insurance' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Tools', href: '/tools' },
   { label: 'About', href: '/about' }
