@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
+import HomeNewsReel from '@/components/home/HomeNewsReel';
+import { classifyNewsCategory } from '@/components/news/category-system';
+import type { NewsCategoryKey } from '@/components/news/types';
+import { newsItems } from '@/data/news';
+import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Advisor Learning Platform',
@@ -39,7 +44,52 @@ const knowledgeLinks = [
   }
 ] as const;
 
-export default function HomePage() {
+type HomeNewsItem = {
+  slug: string;
+  title: string;
+  summary: string;
+  publishedAtLabel: string;
+  category: NewsCategoryKey;
+  imageUrl?: string | null;
+};
+
+function mapStaticHomeNews(): HomeNewsItem[] {
+  return newsItems.slice(0, 3).map((item) => ({
+    slug: item.slug,
+    title: item.title,
+    summary: item.summary,
+    publishedAtLabel: item.publishedAtLabel,
+    category: classifyNewsCategory(item),
+    imageUrl: null
+  }));
+}
+
+async function getHomeNews(): Promise<HomeNewsItem[]> {
+  if (!isLiveNewsEnabled()) return mapStaticHomeNews();
+
+  try {
+    const { getNewsHubData } = await import('@/lib/news/queries');
+    const data = await getNewsHubData();
+
+    return data.items.slice(0, 3).map((item) => ({
+      slug: item.slug,
+      title: item.title,
+      summary: item.summary,
+      publishedAtLabel: item.publishedAt
+        ? new Date(item.publishedAt).toLocaleDateString()
+        : new Date(item.createdAt).toLocaleDateString(),
+      category: classifyNewsCategory({ title: item.title, summary: item.summary, tag: item.tagsJson ?? '' }),
+      imageUrl: item.imageUrl ?? null
+    }));
+  } catch (error) {
+    console.error('home news fetch failed:', error);
+    return mapStaticHomeNews();
+  }
+}
+
+export default async function HomePage() {
+  const homeNewsItems = await getHomeNews();
+
   return (
     <>
       <SiteHeader />
@@ -194,21 +244,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Life insurance news and insights</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
-              Follow important developments in underwriting, consumer trends, product design, regulation, and health-related changes
-              affecting the insurance industry.
-            </p>
-            <Link
-              href="/news"
-              className="mt-6 inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              Read Latest News
-            </Link>
-          </div>
-        </section>
+        <HomeNewsReel items={homeNewsItems} />
 
         <section className="bg-[#1F2A44] px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
