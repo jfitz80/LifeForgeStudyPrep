@@ -11,12 +11,11 @@ type HeaderLink = {
 };
 
 const links: HeaderLink[] = [
-  { label: 'News', href: '/news' },
+  { label: 'Home', href: '/' },
+  { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
-  { label: 'Health & Insurance', href: '/health-insurance' },
-  { label: 'Exam Prep', href: '/exam-prep' },
-  { label: 'Tools', href: '/tools' },
+  { label: 'News', href: '/news' },
   { label: 'About', href: '/about' }
 ];
 
