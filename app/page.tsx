@@ -87,6 +87,34 @@ async function getHomeNews(): Promise<HomeNewsItem[]> {
   }
 }
 
+const faqItems = [
+  {
+    question: 'Is LifeforgePrep only for Canadian learners?',
+    answer:
+      'LifeforgePrep includes Canadian LLQP-focused resources, but many of the life insurance concepts and learning materials are useful for anyone building foundational knowledge.'
+  },
+  {
+    question: 'Can U.S. visitors use LifeforgePrep?',
+    answer:
+      'Yes. U.S. visitors can benefit from the site\'s life insurance education, product guides, and practice-based learning resources.'
+  },
+  {
+    question: 'What is included in Free Practice?',
+    answer:
+      'Free Practice includes sample questions designed to help you test your understanding of life insurance concepts, products, and advisor-style thinking.'
+  },
+  {
+    question: 'Who is Exam Prep for?',
+    answer:
+      'Exam Prep is designed primarily for Canadian learners preparing for the LLQP, while also helping users strengthen broader life insurance knowledge.'
+  },
+  {
+    question: 'Do I need prior insurance experience?',
+    answer:
+      'No. LifeforgePrep is built to help beginners, career changers, and aspiring advisors build confidence step by step.'
+  }
+] as const;
+
 export default async function HomePage() {
   const homeNewsItems = await getHomeNews();
 
@@ -245,6 +273,31 @@ export default async function HomePage() {
         </section>
 
         <HomeNewsReel items={homeNewsItems} />
+
+        <section className="px-4 py-12 sm:px-6 lg:px-8" aria-labelledby="homepage-faq">
+          <div className="mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 id="homepage-faq" className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
+              Quick answers for new visitors, aspiring advisors, and learners exploring life insurance.
+            </p>
+
+            <div className="mt-6 divide-y divide-slate-200 rounded-xl border border-slate-200 bg-slate-50">
+              {faqItems.map((item) => (
+                <details key={item.question} className="group p-4">
+                  <summary className="cursor-pointer list-none pr-8 text-sm font-semibold text-[#1F2A44]">
+                    {item.question}
+                    <span className="float-right text-[#2FAF9E] transition group-open:rotate-45" aria-hidden="true">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-sm leading-7 text-[#4A5568]">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section className="bg-[#1F2A44] px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
