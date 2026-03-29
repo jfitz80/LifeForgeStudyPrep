@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
@@ -26,6 +27,12 @@ const appFeatures = [
     title: 'Build confidence over time',
     text: 'Track progress through consistent repetition and practical recall.'
   }
+] as const;
+
+const appScreenshots = [
+  { src: '/app/screen-1.png', alt: 'LifeForgePrep app start screen' },
+  { src: '/app/screen-2.png', alt: 'LifeForgePrep app question screen' },
+  { src: '/app/screen-3.png', alt: 'LifeForgePrep app results screen' }
 ] as const;
 
 export default function AppPage() {
@@ -78,17 +85,20 @@ export default function AppPage() {
 
           <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
             <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">App preview</h2>
-            <p className="mt-3 text-sm leading-7 text-[#4A5568]">
-              Preview screenshots are shown below. Replace these placeholders with production app screenshots when available.
-            </p>
+            <p className="mt-3 text-sm leading-7 text-[#4A5568]">Real in-app screenshots from the quiz flow.</p>
             <div className="mt-5 grid gap-4 sm:grid-cols-3">
-              {[1, 2, 3].map((slot) => (
-                <div
-                  key={slot}
-                  className="flex aspect-[9/16] items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-center text-xs font-medium text-slate-500"
-                >
-                  App Screenshot Placeholder {slot}
-                </div>
+              {appScreenshots.map((shot) => (
+                <figure key={shot.src} className="rounded-xl border border-slate-200 bg-slate-50 p-2">
+                  <div className="relative mx-auto aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-lg bg-white">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 33vw, 280px"
+                    />
+                  </div>
+                </figure>
               ))}
             </div>
           </section>
