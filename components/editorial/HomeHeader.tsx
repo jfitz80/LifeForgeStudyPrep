@@ -9,6 +9,8 @@ const navItems = [
   { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
   { label: 'News', href: '/news' },
+  { label: 'App', href: '/app' },
+  { label: 'Support', href: '/support' },
   { label: 'About', href: '/about' }
 ] as const;
 

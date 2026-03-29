@@ -299,6 +299,29 @@ export default async function HomePage() {
           </div>
         </section>
 
+        <section className="px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Study on the go with the LifeforgePrep App</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
+              Access learning tools and practice resources in a convenient mobile experience.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/app"
+                className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              >
+                Learn More
+              </Link>
+              <Link
+                href="/support"
+                className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+              >
+                Support
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-[#1F2A44] px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
