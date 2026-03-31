@@ -1,12 +1,13 @@
-import CTAConversionBlock from '@/components/news/CTAConversionBlock';
+import NewsCtaBlock from '@/components/news/NewsCtaBlock';
+import type { NewsArticleView } from '@/components/news/types';
 
 type ArticleDetailProps = {
-  summary: string;
-  whyThisMatters: string;
-  canonicalUrl?: string | null;
+  article: NewsArticleView;
 };
 
-export default function ArticleDetail({ summary, whyThisMatters, canonicalUrl }: ArticleDetailProps) {
+export default function ArticleDetail({ article }: ArticleDetailProps) {
+  const { summary, whyThisMatters, canonicalUrl } = article;
+
   return (
     <div>
       <p className="text-sm leading-7 text-slate-600">{summary}</p>
@@ -30,7 +31,7 @@ export default function ArticleDetail({ summary, whyThisMatters, canonicalUrl }:
       ) : null}
 
       <div className="mt-4">
-        <CTAConversionBlock compact />
+        <NewsCtaBlock article={article} compact />
       </div>
     </div>
   );

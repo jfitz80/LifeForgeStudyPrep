@@ -29,7 +29,7 @@ export default function NewsCard({ article, featured = false }: NewsCardProps) {
       </h3>
 
       <div className="mt-3">
-        <ArticleDetail summary={article.summary} whyThisMatters={article.whyThisMatters} canonicalUrl={article.canonicalUrl} />
+        <ArticleDetail article={article} />
       </div>
     </article>
   );
