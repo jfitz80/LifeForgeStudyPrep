@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
-import HomeNewsReel from '@/components/home/HomeNewsReel';
-import { classifyNewsCategory } from '@/components/news/category-system';
+import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsCategoryKey } from '@/components/news/types';
 import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
@@ -13,13 +12,6 @@ export const metadata: Metadata = {
   description:
     'Build life insurance knowledge, test yourself with practice questions, and explore exam-focused resources for Canada and the United States.'
 };
-
-const freePracticePoints = [
-  'Scenario-based questions',
-  'Product knowledge',
-  'Client recommendation thinking',
-  'Exam-style practice'
-] as const;
 
 const knowledgeLinks = [
   {
@@ -43,6 +35,41 @@ const knowledgeLinks = [
     href: '/knowledge'
   }
 ] as const;
+
+const howItWorks = [
+  {
+    title: 'Learn the concepts',
+    description: 'Absorb product basics, underwriting logic, and regulation through concise explainers.'
+  },
+  {
+    title: 'Practice with questions',
+    description: 'Apply what you learn using scenario-based and exam-style prompts.'
+  },
+  {
+    title: 'Prepare with confidence',
+    description: 'Build judgment with targeted feedback before client conversations or exams.'
+  }
+] as const;
+
+const audienceCards = [
+  {
+    title: 'Aspiring advisors',
+    description: 'Gain clarity on client conversations, underwriting, and licensing requirements.'
+  },
+  {
+    title: 'Career changers',
+    description: 'Transition into insurance with curated lessons and practical thinking exercises.'
+  },
+  {
+    title: 'Insurance learners',
+    description: 'Deepen product knowledge and advisory confidence on your own schedule.'
+  }
+] as const;
+
+const personaCopy = {
+  best: 'Best for practical learners who want judgment, clarity, and exam readiness.',
+  notFor: 'Not for those seeking unrelated finance topics or generic business training.'
+};
 
 type HomeNewsItem = {
   slug: string;
@@ -117,134 +144,110 @@ const faqItems = [
 
 export default async function HomePage() {
   const homeNewsItems = await getHomeNews();
+  const featuredNews = homeNewsItems[0];
+  const secondaryNews = homeNewsItems.slice(1, 3);
 
   return (
     <>
       <SiteHeader />
       <main className="min-h-screen bg-[#F5F7FA]">
-        <section className="bg-[#1F2A44] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <section className="bg-[#1F2A44] px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Interested in becoming a Life Insurance Advisor?
             </h1>
-            <p className="mx-auto mt-5 max-w-4xl text-lg leading-8 text-slate-200 sm:text-xl">
-              Build your knowledge, test yourself with practice questions, and explore life insurance products, concepts, and exam-focused
-              resources.
+            <p className="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-200 sm:text-xl">
+              Build your knowledge, test yourself with practice questions, and explore life insurance products and exam-focused resources designed across
+              Canada and the United States.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/free-practice"
-                className="inline-flex items-center rounded-xl bg-[#2FAF9E] px-6 py-3 text-base font-semibold text-white shadow-[0_10px_24px_rgba(47,175,158,0.28)] transition hover:bg-[#26988a]"
-              >
-                Start Free Practice
-              </Link>
+            <div className="mt-8 grid gap-4 lg:grid-cols-2">
               <Link
                 href="/exam-prep"
-                className="inline-flex items-center rounded-xl border border-white/30 bg-white px-6 py-3 text-base font-semibold text-[#1F2A44] transition hover:bg-slate-100"
+                className="group flex flex-col justify-between rounded-2xl border border-white/30 bg-white/90 p-6 text-left shadow-lg transition hover:-translate-y-1 hover:bg-white"
               >
-                Explore Exam Prep
-              </Link>
-            </div>
-
-            <p className="mt-4 text-sm text-slate-300">
-              For aspiring advisors, career changers, and insurance learners in Canada and beyond.
-            </p>
-          </div>
-        </section>
-
-        <section className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Choose your path</h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
-                <h3 className="text-xl font-bold text-[#1F2A44]">Canada: LLQP Exam Prep</h3>
-                <p className="mt-3 text-sm leading-7 text-[#4A5568]">
-                  Prepare for the Life License Qualification Program with focused study support, realistic practice questions, and structured
-                  learning by topic.
-                </p>
-                <Link
-                  href="/exam-prep"
-                  className="mt-5 inline-flex items-center rounded-lg bg-[#2FAF9E] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-                >
-                  Go to LLQP Prep
-                </Link>
-              </article>
-
-              <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md">
-                <h3 className="text-xl font-bold text-[#1F2A44]">United States: Life Insurance Knowledge</h3>
-                <p className="mt-3 text-sm leading-7 text-[#4A5568]">
-                  Learn the foundations of life insurance, understand common product types, and build practical knowledge for client
-                  conversations and career exploration.
-                </p>
-                <Link
-                  href="/knowledge"
-                  className="mt-5 inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
-                >
-                  Explore Knowledge Hub
-                </Link>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Try free practice questions</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
-              Test your understanding with sample questions designed to help you think like an advisor, not just memorize definitions.
-            </p>
-
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {freePracticePoints.map((point) => (
-                <div key={point} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-[#1F2A44]">
-                  {point}
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#2FAF9E]">Canada</p>
+                  <h3 className="mt-3 text-2xl font-semibold text-[#1F2A44]">LLQP Exam Prep</h3>
+                  <p className="mt-3 text-sm leading-7 text-[#4A5568]">
+                    Structured lessons, exam-style questions, and focused reasoning for the Life Licence Qualification Program.
+                  </p>
                 </div>
-              ))}
+                <span className="mt-6 inline-flex items-center text-sm font-semibold text-[#1F2A44]">
+                  Go to LLQP Prep
+                  <span aria-hidden="true" className="ml-2 opacity-70">
+                    →
+                  </span>
+                </span>
+              </Link>
+
+              <Link
+                href="/knowledge"
+                className="group flex flex-col justify-between rounded-2xl border border-white/30 bg-white/5 p-6 text-left shadow-lg transition hover:-translate-y-1 hover:bg-white/10"
+              >
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#2FAF9E]">United States & Beyond</p>
+                  <h3 className="mt-3 text-2xl font-semibold text-white">Life Insurance Knowledge</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-200">
+                    Deepen product knowledge, understand underwriting logic, and explore lessons that help you advise with confidence anywhere.
+                  </p>
+                </div>
+                <span className="mt-6 inline-flex items-center text-sm font-semibold text-white">
+                  Explore Knowledge Hub
+                  <span aria-hidden="true" className="ml-2 opacity-70">
+                    →
+                  </span>
+                </span>
+              </Link>
             </div>
 
             <Link
               href="/free-practice"
-              className="mt-6 inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              className="mt-6 inline-flex items-center justify-center rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
             >
-              Try Free Practice
+              Start Free Practice
             </Link>
           </div>
         </section>
 
         <section className="px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Built for practical understanding</h2>
-            <p className="mt-3 text-sm leading-7 text-[#4A5568]">
-              LifeforgePrep is designed to help future advisors go beyond surface-level memorization. Whether you are preparing for an exam
-              or trying to better understand life insurance products, the goal is the same: clearer thinking, stronger knowledge, and more
-              confidence.
-            </p>
-
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">How LifeForgePrep works</h2>
             <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <article className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <h3 className="text-lg font-semibold text-[#1F2A44]">Understand products</h3>
-                <p className="mt-2 text-sm leading-7 text-[#4A5568]">
-                  Learn the difference between term, permanent, and guaranteed issue coverage.
-                </p>
-              </article>
-              <article className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <h3 className="text-lg font-semibold text-[#1F2A44]">Practice real thinking</h3>
-                <p className="mt-2 text-sm leading-7 text-[#4A5568]">
-                  Work through questions that reflect how advisors assess needs and explain options.
-                </p>
-              </article>
-              <article className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <h3 className="text-lg font-semibold text-[#1F2A44]">Stay informed</h3>
-                <p className="mt-2 text-sm leading-7 text-[#4A5568]">
-                  Follow industry developments, consumer trends, and changes shaping life insurance today.
-                </p>
-              </article>
+              {howItWorks.map((step, index) => (
+                <article key={step.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <span className="text-xs font-semibold tracking-[0.3em] text-[#4A5568]">Step {index + 1}</span>
+                  <h3 className="mt-3 text-xl font-semibold text-[#1F2A44]">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-[#4A5568]">{step.description}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
         <section className="border-y border-slate-200 bg-white px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Who this is for</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              {audienceCards.map((audience) => (
+                <article key={audience.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <h3 className="text-xl font-semibold text-[#1F2A44]">{audience.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-[#4A5568]">{audience.description}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-[#4A5568] sm:flex-row sm:items-center sm:justify-between">
+              <p>
+                <span className="font-semibold text-[#1F2A44]">Best for:</span> {personaCopy.best}
+              </p>
+              <p>
+                <span className="font-semibold text-[#1F2A44]">Not for:</span> {personaCopy.notFor}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Learn the business of life insurance</h2>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
@@ -272,7 +275,68 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <HomeNewsReel items={homeNewsItems} />
+        <section className="px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#2FAF9E]">Latest in life insurance</p>
+                <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#1F2A44] sm:text-3xl">Daily Insurance Brief</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-7 text-[#4A5568]">
+                  Stay up to date with trends, product shifts, regulation, and filed stories that affect advisors and exam candidates.
+                </p>
+              </div>
+              <Link
+                href="/news"
+                className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+              >
+                Read Latest News
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-[1.25fr_0.85fr]">
+              {featuredNews && (
+                <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <CategoryTag category={featuredNews.category} />
+                    <span className="text-xs text-[#4A5568]">{featuredNews.publishedAtLabel}</span>
+                  </div>
+                  <h3 className="mt-3 text-2xl font-semibold text-[#1F2A44]" aria-label="Featured news">
+                    {featuredNews.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[#4A5568]">{featuredNews.summary}</p>
+                  <Link
+                    href={`/news/${featuredNews.slug}`}
+                    className="mt-5 inline-flex items-center text-sm font-semibold text-[#2FAF9E]"
+                  >
+                    Read full story
+                    <span aria-hidden="true" className="ml-2">
+                      →
+                    </span>
+                  </Link>
+                </article>
+              )}
+
+              <div className="grid gap-4">
+                {secondaryNews.map((item) => (
+                  <article key={item.slug} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <CategoryTag category={item.category} />
+                      <span className="text-xs text-[#4A5568]">{item.publishedAtLabel}</span>
+                    </div>
+                    <h3 className="mt-3 text-xl font-semibold text-[#1F2A44]">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-[#4A5568]">{item.summary}</p>
+                    <Link href={`/news/${item.slug}`} className="mt-4 inline-flex items-center text-sm font-semibold text-[#2FAF9E]">
+                      Read story
+                      <span aria-hidden="true" className="ml-2">
+                        →
+                      </span>
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="px-4 py-12 sm:px-6 lg:px-8" aria-labelledby="homepage-faq">
           <div className="mx-auto max-w-6xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -324,11 +388,9 @@ export default async function HomePage() {
 
         <section className="bg-[#1F2A44] px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Start building your life insurance knowledge today
-            </h2>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Start building practical life insurance knowledge</h2>
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-slate-200">
-              Access free practice, explore core concepts, and take the next step toward becoming a more confident insurance professional.
+              Access free practice, explore core concepts, and take the next step toward becoming a confident insurance professional.
             </p>
             <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <Link
@@ -338,10 +400,10 @@ export default async function HomePage() {
                 Start Free Practice
               </Link>
               <Link
-                href="/knowledge"
-                className="inline-flex items-center rounded-lg border border-white/30 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-100"
+                href="/exam-prep"
+                className="inline-flex items-center rounded-lg border border-white/40 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-100"
               >
-                Browse Study Resources
+                Explore Exam Prep
               </Link>
             </div>
           </div>
