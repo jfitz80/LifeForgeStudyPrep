@@ -44,6 +44,25 @@ const lifeForgeSteps = [
   }
 ] as const;
 
+const categorizedSections = [
+  {
+    title: 'Foundations',
+    items: ['Life insurance purpose and terminology', 'Insurable interest and disclosure', 'Coverage need estimation basics']
+  },
+  {
+    title: 'Products',
+    items: ['Term vs permanent structures', 'Riders and flexibility', 'Beneficiary mechanics']
+  },
+  {
+    title: 'Exam Concepts',
+    items: ['Scenario-based suitability reasoning', 'High-frequency LLQP question traps', 'Calculation workflows']
+  },
+  {
+    title: 'Industry Insights',
+    items: ['Claims & litigation patterns', 'Regulatory updates', 'Underwriting & market implications']
+  }
+] as const;
+
 export default function KnowledgePage() {
   const articleCounts = KNOWLEDGE_ARTICLES.reduce<Record<string, number>>((acc, article) => {
     acc[article.cluster] = (acc[article.cluster] ?? 0) + 1;
