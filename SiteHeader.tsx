@@ -4,7 +4,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/config/site';
 
-const primaryLinks = [
+type PrimaryLink = {
+  label: string;
+  href: string;
+  highlight?: boolean;
+};
+
+const primaryLinks: PrimaryLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Free Practice', href: '/free-practice', highlight: true },
   { label: 'Exam Prep', href: '/exam-prep' },
@@ -12,7 +18,7 @@ const primaryLinks = [
   { label: 'About', href: '/about' },
   { label: 'App', href: '/app' },
   { label: 'Support', href: '/support' }
-] as const;
+];
 
 const knowledgeLinks = [
   { label: 'All Knowledge Hub', href: '/knowledge-hub' },
