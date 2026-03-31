@@ -197,13 +197,4 @@ export default function SiteHeader() {
       </div>
     </header>
   );
-}k>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
-  );
 }
