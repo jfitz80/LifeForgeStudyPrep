@@ -8,17 +8,22 @@ type PrimaryLink = {
   label: string;
   href: string;
   highlight?: boolean;
+  emphatic?: boolean;
 };
 
 const primaryLinks: PrimaryLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Free Practice', href: '/free-practice', highlight: true },
-  { label: 'Exam Prep', href: '/exam-prep' },
-  { label: 'News', href: '/news' },
-  { label: 'About', href: '/about' },
-  { label: 'App', href: '/app' },
-  { label: 'Support', href: '/support' }
+  { label: 'Exam Prep', href: '/exam-prep', emphatic: true },
+  { label: 'Knowledge Hub', href: '/knowledge-hub' },
+  { label: 'News', href: '/news' }
 ];
+
+const secondaryLinks = [
+  { label: 'App', href: '/app' },
+  { label: 'Support', href: '/support' },
+  { label: 'About', href: '/about' }
+] as const;
 
 const knowledgeLinks = [
   { label: 'All Knowledge Hub', href: '/knowledge-hub' },
@@ -54,12 +59,16 @@ export default function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center gap-6 lg:flex" aria-label="Main navigation">
-            {primaryLinks.slice(0, 3).map((item) => (
+            {primaryLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`text-sm font-medium transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2 rounded-sm ${
-                  item.highlight ? 'font-semibold text-[#1F2A44]' : 'text-[#1F2A44]'
+                  item.highlight
+                    ? 'font-semibold text-[#1F2A44]'
+                    : item.emphatic
+                    ? 'font-semibold text-[#1F2A44]'
+                    : 'text-[#1F2A44]'
                 }`}
               >
                 {item.label}
@@ -67,26 +76,26 @@ export default function SiteHeader() {
             ))}
 
             <div className="group relative">
-              <Link
-                href="/knowledge-hub"
+              <button
+                type="button"
                 className="inline-flex items-center gap-1 text-sm font-medium text-[#1F2A44] transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2 rounded-sm"
                 aria-haspopup="menu"
               >
-                Knowledge Hub
+                More
                 <svg
                   viewBox="0 0 20 20"
-                  className="h-4 w-4 transition group-hover:rotate-180 group-focus-within:rotate-180"
+                  className="h-4 w-4 transition group-hover:-rotate-180"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                 >
                   <path d="M5 7.5 10 12.5 15 7.5" />
                 </svg>
-              </Link>
+              </button>
 
-              <div className="pointer-events-none absolute left-0 top-full pt-2 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
-                <div className="w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-lg">
-                  {knowledgeLinks.map((item) => (
+              <div className="pointer-events-none absolute right-0 top-full pt-2 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100">
+                <div className="w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-lg">
+                  {secondaryLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -98,16 +107,6 @@ export default function SiteHeader() {
                 </div>
               </div>
             </div>
-
-            {primaryLinks.slice(3).map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-[#1F2A44] transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2 rounded-sm"
-              >
-                {item.label}
-              </Link>
-            ))}
           </nav>
 
           <button
@@ -125,7 +124,7 @@ export default function SiteHeader() {
         {menuOpen && (
           <div id="mobile-nav" className="border-t border-slate-200 py-4 lg:hidden">
             <div className="flex flex-col gap-2">
-              {primaryLinks.slice(0, 3).map((item) => (
+              {primaryLinks.map((item) => (
                 <Link
                   key={`mobile-${item.href}`}
                   href={item.href}
@@ -172,16 +171,18 @@ export default function SiteHeader() {
                 )}
               </div>
 
-              {primaryLinks.slice(3).map((item) => (
-                <Link
-                  key={`mobile-${item.href}`}
-                  href={item.href}
-                  className="rounded-md px-1 py-2 text-sm font-medium text-[#1F2A44]"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <div className="border-t border-slate-200 pt-3">
+                {secondaryLinks.map((item) => (
+                  <Link
+                    key={`mobile-${item.href}`}
+                    href={item.href}
+                    className="block rounded-md px-1 py-2 text-sm font-medium text-[#1F2A44]"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}
