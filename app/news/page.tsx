@@ -79,15 +79,26 @@ function normalizeHeadline(title: string): string {
     .trim();
 }
 
+function normalizeSummary(summary: string): string {
+  return summary
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function dedupeHubItems(items: HubItem[]): HubItem[] {
-  const seenHeadlines = new Set<string>();
+  const seenKeys = new Set<string>();
   const seenSlugs = new Set<string>();
   return items.filter((item) => {
     if (seenSlugs.has(item.slug)) return false;
-    const key = normalizeHeadline(item.title);
-    if (!key || seenHeadlines.has(key)) return false;
+    const canonical = item.canonicalUrl?.toLowerCase() ?? '';
+    const headlineKey = normalizeHeadline(item.title);
+    const summaryKey = normalizeSummary(item.summary);
+    const compositeKey = canonical || `${headlineKey}|${summaryKey}`;
+    if (!compositeKey || seenKeys.has(compositeKey)) return false;
     seenSlugs.add(item.slug);
-    seenHeadlines.add(key);
+    seenKeys.add(compositeKey);
     return true;
   });
 }
