@@ -80,11 +80,14 @@ function normalizeHeadline(title: string): string {
 }
 
 function dedupeHubItems(items: HubItem[]): HubItem[] {
-  const seen = new Set<string>();
+  const seenHeadlines = new Set<string>();
+  const seenSlugs = new Set<string>();
   return items.filter((item) => {
+    if (seenSlugs.has(item.slug)) return false;
     const key = normalizeHeadline(item.title);
-    if (!key || seen.has(key)) return false;
-    seen.add(key);
+    if (!key || seenHeadlines.has(key)) return false;
+    seenSlugs.add(item.slug);
+    seenHeadlines.add(key);
     return true;
   });
 }
