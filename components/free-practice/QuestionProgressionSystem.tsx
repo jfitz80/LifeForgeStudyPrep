@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import Link from 'next/link';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import BonusPracticeCapture from '@/components/free-practice/BonusPracticeCapture';
 import QuizProgressBar from '@/components/free-practice/QuizProgressBar';
 import QuizResultsCard from '@/components/free-practice/QuizResultsCard';
@@ -30,9 +31,9 @@ type AnswerRecord = {
   isCorrect: boolean;
 };
 
-const QUESTIONS: Question[] = [
+const LLQP_QUESTIONS: Question[] = [
   {
-    id: 'q1',
+    id: 'llqp-1',
     type: 'concept',
     prompt: 'A client takes a policy loan from their permanent life insurance policy. Which is TRUE?',
     options: [
@@ -45,7 +46,7 @@ const QUESTIONS: Question[] = [
     explanation: 'Policy loans can trigger taxable consequences when values exceed adjusted cost basis thresholds.'
   },
   {
-    id: 'q2',
+    id: 'llqp-2',
     type: 'scenario',
     prompt: 'An applicant discloses a serious condition. What is MOST likely?',
     options: [
@@ -55,10 +56,10 @@ const QUESTIONS: Question[] = [
       { id: 'd', label: 'D', text: 'Standard issue' }
     ],
     correctOptionId: 'c',
-    explanation: 'Serious disclosed conditions are typically assessed through underwriting and may lead to ratings or exclusions.'
+    explanation: 'Disclosed conditions typically receive ratings or exclusions once underwriting assesses severity.'
   },
   {
-    id: 'q3',
+    id: 'llqp-3',
     type: 'concept',
     prompt: 'Revocable beneficiary means:',
     options: [
@@ -68,10 +69,10 @@ const QUESTIONS: Question[] = [
       { id: 'd', label: 'D', text: 'Permanent' }
     ],
     correctOptionId: 'b',
-    explanation: 'Revocable beneficiary designations can generally be changed by the policy owner.'
+    explanation: 'Revocable beneficiaries can generally be changed by the policy owner without consent.'
   },
   {
-    id: 'q4',
+    id: 'llqp-4',
     type: 'concept',
     prompt: 'Group life insurance coverage is usually:',
     options: [
@@ -81,10 +82,10 @@ const QUESTIONS: Question[] = [
       { id: 'd', label: 'D', text: 'Investment-based' }
     ],
     correctOptionId: 'c',
-    explanation: 'Employer-sponsored group life is commonly expressed as a multiple of employee salary.'
+    explanation: 'Most employer plans are expressed as a multiple of salary rather than health-based benefit.'
   },
   {
-    id: 'q5',
+    id: 'llqp-5',
     type: 'calculation',
     prompt: 'Which creates a taxable event?',
     options: [
@@ -94,118 +95,159 @@ const QUESTIONS: Question[] = [
       { id: 'd', label: 'D', text: 'Increasing benefit' }
     ],
     correctOptionId: 'c',
-    explanation: 'Policy withdrawals can create taxable gains depending on adjusted cost basis and policy structure.'
-  },
-  {
-    id: 'q6',
-    type: 'calculation',
-    prompt: 'A withdrawal exceeds ACB. What happens?',
-    options: [
-      { id: 'a', label: 'A', text: 'No tax' },
-      { id: 'b', label: 'B', text: 'Fully tax-free' },
-      { id: 'c', label: 'C', text: 'Excess is taxable' },
-      { id: 'd', label: 'D', text: 'Only taxed at death' }
-    ],
-    correctOptionId: 'c',
-    explanation: 'Amounts withdrawn above ACB are generally taxable under standard policy taxation treatment.'
-  },
-  {
-    id: 'q7',
-    type: 'concept',
-    prompt: 'What is the PRIMARY purpose of underwriting?',
-    options: [
-      { id: 'a', label: 'A', text: 'Maximize premiums' },
-      { id: 'b', label: 'B', text: 'Eliminate all risk' },
-      { id: 'c', label: 'C', text: 'Assess and classify risk' },
-      { id: 'd', label: 'D', text: 'Approve all applicants' }
-    ],
-    correctOptionId: 'c',
-    explanation: 'Underwriting evaluates and classifies risk so coverage can be priced and structured appropriately.'
-  },
-  {
-    id: 'q8',
-    type: 'concept',
-    prompt: 'Irrevocable beneficiary means:',
-    options: [
-      { id: 'a', label: 'A', text: 'Can change anytime' },
-      { id: 'b', label: 'B', text: 'Requires consent to change' },
-      { id: 'c', label: 'C', text: 'Has no rights' },
-      { id: 'd', label: 'D', text: 'Only applies to group plans' }
-    ],
-    correctOptionId: 'b',
-    explanation: 'Irrevocable beneficiaries usually must consent before ownership or beneficiary changes are made.'
-  },
-  {
-    id: 'q9',
-    type: 'scenario',
-    prompt: 'If policy loan interest is unpaid:',
-    options: [
-      { id: 'a', label: 'A', text: 'No effect' },
-      { id: 'b', label: 'B', text: 'Added to loan balance' },
-      { id: 'c', label: 'C', text: 'Waived' },
-      { id: 'd', label: 'D', text: 'Paid by insurer' }
-    ],
-    correctOptionId: 'b',
-    explanation: 'Unpaid loan interest is generally capitalized into the outstanding policy loan balance.'
-  },
-  {
-    id: 'q10',
-    type: 'scenario',
-    prompt: 'A client withdraws funds and policy collapses. What is MOST likely?',
-    options: [
-      { id: 'a', label: 'A', text: 'No tax consequence' },
-      { id: 'b', label: 'B', text: 'Only future premiums affected' },
-      { id: 'c', label: 'C', text: 'Gains may become taxable' },
-      { id: 'd', label: 'D', text: 'Death benefit increases' }
-    ],
-    correctOptionId: 'c',
-    explanation: 'When policy values are distributed and coverage collapses, taxable gains may be triggered.'
+    explanation: 'Withdrawals can trigger taxable gains depending on the adjusted cost basis and policy structure.'
   }
 ];
+
+const BASICS_QUESTIONS: Question[] = [
+  {
+    id: 'basics-1',
+    type: 'concept',
+    prompt: 'Term life insurance is best suited for clients who:',
+    options: [
+      { id: 'a', label: 'A', text: 'Need coverage for a specific period such as a mortgage' },
+      { id: 'b', label: 'B', text: 'Want a permanent investment vehicle' },
+      { id: 'c', label: 'C', text: 'Prefer to tie coverage to an investment account' },
+      { id: 'd', label: 'D', text: 'Need coverage that never changes' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'Term life delivers protection for a finite period at a lower premium than permanent plans.'
+  },
+  {
+    id: 'basics-2',
+    type: 'calculation',
+    prompt: 'Which factor most directly adjusts the premium for a new policy?',
+    options: [
+      { id: 'a', label: 'A', text: 'The applicant’s age at issue' },
+      { id: 'b', label: 'B', text: 'The agent’s commission structure' },
+      { id: 'c', label: 'C', text: 'The carrier’s marketing spend' },
+      { id: 'd', label: 'D', text: 'The illustration projections' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'Age is a core underwriting factor and directly sets the baseline premium.'
+  },
+  {
+    id: 'basics-3',
+    type: 'scenario',
+    prompt: 'When matching coverage to a client, what should an advisor focus on first?',
+    options: [
+      { id: 'a', label: 'A', text: 'The cheapest available policy' },
+      { id: 'b', label: 'B', text: 'The provider with the slickest marketing' },
+      { id: 'c', label: 'C', text: "Understanding the client’s goals and risk tolerance" },
+      { id: 'd', label: 'D', text: 'The most popular coverage in the market' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'Suitability means aligning insurance with goals, finances, and comfort with risk.'
+  },
+  {
+    id: 'basics-4',
+    type: 'concept',
+    prompt: 'An accidental death benefit rider is used to:',
+    options: [
+      { id: 'a', label: 'A', text: 'Add coverage that pays extra if death is accident-related' },
+      { id: 'b', label: 'B', text: 'Guarantee investment return' },
+      { id: 'c', label: 'C', text: 'Cancel a policy early' },
+      { id: 'd', label: 'D', text: 'Provide guaranteed cash value' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'Accidental riders boost the benefit when qualifying accidents occur.'
+  },
+  {
+    id: 'basics-5',
+    type: 'concept',
+    prompt: 'Guaranteed issue life insurance is defined by:',
+    options: [
+      { id: 'a', label: 'A', text: 'No medical underwriting and limited face amounts' },
+      { id: 'b', label: 'B', text: 'Guaranteed cash value growth' },
+      { id: 'c', label: 'C', text: 'Coverage tied to the stock market' },
+      { id: 'd', label: 'D', text: 'Coverage that expires every month' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'Guaranteed issue products focus on accessibility with fewer underwriting questions but lower limits.'
+  }
+];
+
 
 const TYPE_LABEL: Record<QuestionType, string> = {
   concept: 'Concept',
   scenario: 'Scenario',
   calculation: 'Calculation'
 };
+const QUIZ_SETS = {
+  llqp: {
+    title: 'LLQP Quick Test',
+    description: 'Five candidate-style questions pulling from LLQP reasoning and taxation logic.',
+    questions: LLQP_QUESTIONS
+  },
+  basics: {
+    title: 'Life Insurance Basics Quick Test',
+    description: 'Five prompts that reinforce advisor thinking, product logic, and suitability reasoning.',
+    questions: BASICS_QUESTIONS
+  }
+} as const;
+
+type TestKey = keyof typeof QUIZ_SETS;
+
+type ResultAction = {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  variant?: 'muted';
+};
+
+function getResultTier(score: number, total: number) {
+  const ratio = total > 0 ? score / total : 0;
+  if (ratio <= 0.4) return 'low' as const;
+  if (ratio <= 0.8) return 'mid' as const;
+  return 'high' as const;
+}
 
 export default function QuestionProgressionSystem() {
+  const [selectedTest, setSelectedTest] = useState<TestKey | null>(null);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [finished, setFinished] = useState(false);
 
-  const total = QUESTIONS.length;
-  const current = QUESTIONS[index];
-  const currentAnswer = answers.find((a) => a.questionId === current.id);
+  const currentSet = selectedTest ? QUIZ_SETS[selectedTest] : null;
+  const questions = currentSet?.questions ?? [];
+  const total = questions.length;
+  const current = questions[index];
+  const currentAnswer = current ? answers.find((a) => a.questionId === current.id) : undefined;
 
-  const score = useMemo(() => answers.filter((a) => a.isCorrect).length, [answers]);
+  const score = useMemo(() => answers.filter((answer) => answer.isCorrect).length, [answers]);
 
   const breakdown = useMemo(() => {
     const types: QuestionType[] = ['concept', 'scenario', 'calculation'];
     return types.map((type) => {
-      const typeQuestions = QUESTIONS.filter((q) => q.type === type).length;
+      const typeQuestions = questions.filter((q) => q.type === type).length;
       const correct = answers.filter((a) => a.type === type && a.isCorrect).length;
-      return { typeLabel: TYPE_LABEL[type], correct, total: typeQuestions };
+      return { typeLabel: type.charAt(0).toUpperCase() + type.slice(1), correct, total: typeQuestions };
     });
-  }, [answers]);
+  }, [answers, questions]);
+
+  useEffect(() => {
+    setIndex(0);
+    setAnswers([]);
+    setFinished(false);
+  }, [selectedTest]);
+
+  const restart = useCallback(() => {
+    setIndex(0);
+    setAnswers([]);
+    setFinished(false);
+  }, []);
 
   function handleSelect(optionId: string) {
-    if (currentAnswer) return;
-
+    if (!current || currentAnswer) return;
     const isCorrect = optionId === current.correctOptionId;
     setAnswers((prev) => [
       ...prev,
-      {
-        questionId: current.id,
-        type: current.type,
-        selectedOptionId: optionId,
-        isCorrect
-      }
+      { questionId: current.id, type: current.type, selectedOptionId: optionId, isCorrect }
     ]);
   }
 
   function handleNext() {
-    if (!currentAnswer) return;
+    if (!current || !currentAnswer) return;
     if (index === total - 1) {
       setFinished(true);
       return;
@@ -213,26 +255,120 @@ export default function QuestionProgressionSystem() {
     setIndex((prev) => prev + 1);
   }
 
-  function restart() {
-    setAnswers([]);
-    setIndex(0);
-    setFinished(false);
+  const resultTier = getResultTier(score, total);
+
+  const resultActions = useMemo(() => {
+    if (resultTier === 'low') {
+      return {
+        primary: { label: 'Read beginner guides', href: '/knowledge' },
+        secondary: { label: 'Try another practice set', onClick: () => restart() }
+      };
+    }
+
+    if (resultTier === 'mid') {
+      return {
+        primary: { label: 'Try another practice set', onClick: () => restart() },
+        secondary: { label: 'Browse the Knowledge Hub', href: '/knowledge', variant: 'muted' }
+      };
+    }
+
+    return {
+      primary: { label: 'Explore LLQP Exam Prep', href: '/exam-prep' },
+      secondary: { label: 'Download the LifeforgePrep app', href: '/app', variant: 'muted' }
+    };
+  }, [resultTier, restart]);
+
+  if (!selectedTest) {
+    return (
+      <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
+        <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
+        <p className="mt-2 text-sm text-slate-300">
+          Select the set that matches your focus: Canadian LLQP logic or broader life insurance fundamentals.
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {(Object.keys(QUIZ_SETS) as TestKey[]).map((key) => {
+            const test = QUIZ_SETS[key];
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSelectedTest(key)}
+                className="flex h-full flex-col justify-between rounded-2xl border border-slate-700 bg-[#0E1628] p-5 text-left transition hover:border-[#2FAF9E] hover:bg-[#142039]"
+              >
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#6BC4B8]">{test.title}</p>
+                  <p className="mt-3 text-lg font-semibold text-white">{test.description}</p>
+                </div>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">5 questions • start learning</p>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+    );
   }
 
-  if (finished) {
+  if (finished && currentSet) {
     return (
-      <section id="free-practice-quiz" className="scroll-mt-28">
+      <section id="free-practice-quiz" className="scroll-mt-28 space-y-6">
         <QuizResultsCard score={score} total={total} breakdown={breakdown} />
+
+        <div className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 text-sm text-slate-200">
+          <p>
+            This is for learning, not just memorizing—focus on advisor thinking, product logic, and suitability reasoning with every question.
+          </p>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-2">
+          {resultActions.primary &&
+            (resultActions.primary.href ? (
+              <Link
+                href={resultActions.primary.href}
+                className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              >
+                {resultActions.primary.label}
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={resultActions.primary.onClick}
+                className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              >
+                {resultActions.primary.label}
+              </button>
+            ))}
+
+          {resultActions.secondary &&
+            (resultActions.secondary.href ? (
+              <Link
+                href={resultActions.secondary.href}
+                className={`inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition ${
+                  resultActions.secondary.variant === 'muted'
+                    ? 'border-slate-500 text-slate-100 hover:border-white'
+                    : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
+                }`}
+              >
+                {resultActions.secondary.label}
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={resultActions.secondary.onClick}
+                className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              >
+                {resultActions.secondary.label}
+              </button>
+            ))}
+        </div>
 
         <UpgradeCTA />
 
-        <div className="mt-6 flex justify-start">
-          <button
-            type="button"
-            onClick={restart}
-            className="inline-flex items-center rounded-lg border border-slate-500 bg-transparent px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-          >
-            Continue Practicing
+        <div className="flex justify-between text-sm text-slate-400">
+          <button type="button" onClick={restart} className="underline-offset-4 hover:underline">
+            Try the same quick test again
+          </button>
+          <button type="button" onClick={() => setSelectedTest(null)} className="underline-offset-4 hover:underline">
+            Choose a different quick test
           </button>
         </div>
 
@@ -241,64 +377,98 @@ export default function QuestionProgressionSystem() {
     );
   }
 
+  if (!currentSet || !current) return null;
+
   return (
-    <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
-      <QuizProgressBar current={index + 1} total={total} />
-
-      <article className="rounded-xl border border-slate-700 bg-[#0E1628] p-5 transition-all duration-300">
-        <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">{TYPE_LABEL[current.type]}</p>
-        <h2 className="mt-2 text-xl font-bold leading-8 text-white">{current.prompt}</h2>
-
-        <div className="mt-5 grid gap-3">
-          {current.options.map((option) => {
-            const isSelected = currentAnswer?.selectedOptionId === option.id;
-            const isCorrect = option.id === current.correctOptionId;
-
-            let optionClass = 'border-slate-600 bg-[#111A2D] text-slate-200 hover:border-slate-400';
-
-            if (currentAnswer) {
-              if (isCorrect) {
-                optionClass = 'border-emerald-500 bg-emerald-500/15 text-emerald-100';
-              } else if (isSelected && !isCorrect) {
-                optionClass = 'border-rose-500 bg-rose-500/15 text-rose-100';
-              } else {
-                optionClass = 'border-slate-700 bg-[#111A2D] text-slate-400';
-              }
-            }
-
-            return (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => handleSelect(option.id)}
-                disabled={Boolean(currentAnswer)}
-                className={`rounded-lg border px-4 py-4 text-left text-base font-medium transition ${optionClass} disabled:cursor-not-allowed`}
-              >
-                <span className="mr-2 inline-block font-semibold">{option.label}.</span>
-                <span>{option.text}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {currentAnswer ? (
-          <div className="mt-5 rounded-lg border border-slate-600 bg-[#111A2D] p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Explanation</p>
-            <p className="mt-2 text-sm leading-7 text-slate-200">{current.explanation}</p>
+    <section id="free-practice-quiz" className="scroll-mt-28 space-y-6">
+      <div className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">{currentSet.title}</p>
+            <p className="text-sm text-slate-300">{currentSet.description}</p>
           </div>
-        ) : null}
-
-        <div className="mt-5 flex justify-end">
           <button
             type="button"
-            onClick={handleNext}
-            disabled={!currentAnswer}
-            className="inline-flex min-w-[170px] items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-40"
+            onClick={() => setSelectedTest(null)}
+            className="text-xs font-semibold uppercase tracking-[0.3em] text-[#4A5568]"
           >
-            {index === total - 1 ? 'View Results' : 'Next Question'}
+            Change test
           </button>
         </div>
-      </article>
+
+        <QuizProgressBar current={index + 1} total={total} />
+
+        <div className="mt-4 rounded-2xl border border-slate-600 bg-[#0E1628] p-4 text-sm text-slate-200">
+          <p>
+            This is for learning, not just memorizing—focus on advisor thinking, product logic, and suitability reasoning as you answer each
+            question.
+          </p>
+        </div>
+
+        <article className="mt-6 rounded-xl border border-slate-700 bg-[#0E1628] p-5">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">{TYPE_LABEL[current.type]}</p>
+          <h2 className="mt-2 text-xl font-bold leading-8 text-white">{current.prompt}</h2>
+
+          <div className="mt-5 grid gap-3">
+            {current.options.map((option) => {
+              const isSelected = currentAnswer?.selectedOptionId === option.id;
+              const isCorrect = option.id === current.correctOptionId;
+
+              let optionClass = 'border-slate-600 bg-[#111A2D] text-slate-200 hover:border-slate-400';
+
+              if (currentAnswer) {
+                if (isCorrect) {
+                  optionClass = 'border-emerald-500 bg-emerald-500/15 text-emerald-100';
+                } else if (isSelected && !isCorrect) {
+                  optionClass = 'border-rose-500 bg-rose-500/15 text-rose-100';
+                } else {
+                  optionClass = 'border-slate-700 bg-[#111A2D] text-slate-400';
+                }
+              }
+
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => handleSelect(option.id)}
+                  disabled={Boolean(currentAnswer)}
+                  className={`rounded-lg border px-4 py-4 text-left text-base font-medium transition ${optionClass} disabled:cursor-not-allowed`}
+                >
+                  <span className="mr-2 inline-block font-semibold">{option.label}.</span>
+                  <span>{option.text}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {currentAnswer && (
+            <div className="mt-5 rounded-lg border border-slate-600 bg-[#111A2D] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Explanation</p>
+              <p className="mt-2 text-sm leading-7 text-slate-200">{current.explanation}</p>
+            </div>
+          )}
+
+          <div className="mt-5 flex justify-between">
+            {index > 0 && (
+              <button
+                type="button"
+                onClick={() => setIndex((prev) => Math.max(prev - 1, 0))}
+                className="inline-flex items-center rounded-lg border border-slate-600 bg-transparent px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-400"
+              >
+                Back
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!currentAnswer}
+              className="inline-flex min-w-[170px] items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {index === total - 1 ? 'View Results' : 'Next Question'}
+            </button>
+          </div>
+        </article>
+      </div>
     </section>
   );
 }

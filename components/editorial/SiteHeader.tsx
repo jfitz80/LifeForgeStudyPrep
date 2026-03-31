@@ -8,6 +8,7 @@ import { siteConfig } from '@/config/site';
 type HeaderLink = {
   label: string;
   href: string;
+  highlight?: boolean;
 };
 
 const links: HeaderLink[] = [

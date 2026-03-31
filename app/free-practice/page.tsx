@@ -25,9 +25,9 @@ export default function FreePracticePage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <header className="mb-6 rounded-2xl border border-slate-700 bg-[#111A2D] px-6 py-10 text-center shadow-sm sm:px-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Free Practice</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Test Your LLQP Readiness in 2 Minutes</h1>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Test your life insurance readiness in 2 minutes</h1>
             <p className="mx-auto mt-3 max-w-3xl text-slate-300">
-              Most candidates fail the LLQP not because they don&apos;t study - but because they don&apos;t understand how questions are asked.
+              Pick a quick test that matches your focus—LLQP-style logic or broader life insurance fundamentals—and see where to improve next.
             </p>
 
             <ul className="mx-auto mt-5 grid max-w-2xl gap-2 text-left text-sm text-slate-200 sm:grid-cols-3">
@@ -50,7 +50,7 @@ export default function FreePracticePage() {
                 href="#free-practice-quiz"
                 className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
               >
-                Start Test (5 Questions)
+                Start Quick Test (5 Questions)
               </Link>
               <p className="mt-3 text-sm text-slate-400">Most users score 2-3 out of 5</p>
             </div>
