@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import QuestionProgressionSystem from '@/components/free-practice/QuestionProgressionSystem';
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ const testedOn = [
 export default function FreePracticePage() {
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#0B1323] py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <header className="mb-6 rounded-2xl border border-slate-700 bg-[#111A2D] px-6 py-10 text-center shadow-sm sm:px-10">
@@ -71,7 +71,7 @@ export default function FreePracticePage() {
           <QuestionProgressionSystem />
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
