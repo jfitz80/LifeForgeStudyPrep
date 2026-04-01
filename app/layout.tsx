@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 import { Analytics } from '@vercel/analytics/react';
-
+import SiteHeader from '@/components/SiteHeader'; // adjust path if needed
 
 const siteUrl = `https://${siteConfig.domain}`;
 
@@ -14,20 +14,23 @@ export const metadata: Metadata = {
     description: siteConfig.seo.description,
     type: 'website',
     url: siteUrl,
-    siteName: siteConfig.brandName
+    siteName: siteConfig.brandName,
   },
-  metadataBase: new URL(siteUrl)
+  metadataBase: new URL(siteUrl),
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body>{children}
-      <Analytics /></body>
+      <body>
+        <SiteHeader />
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
