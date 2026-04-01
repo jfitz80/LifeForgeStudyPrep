@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import FeaturedStoriesGrid from '@/components/news/FeaturedStoriesGrid';
 import ForStudentsStrip from '@/components/news/ForStudentsStrip';
 import NewsCard from '@/components/news/NewsCard';
@@ -190,7 +190,7 @@ export default async function NewsHubPage({ searchParams }: Props) {
 
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#EEF2F6] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <NewsHero topics={trendingTopics} />
@@ -249,7 +249,7 @@ export default async function NewsHubPage({ searchParams }: Props) {
           </section>
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
