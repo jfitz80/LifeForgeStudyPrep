@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'LifeforgePrep App | Study On the Go',
@@ -60,7 +60,7 @@ const mobileReasons = [
 export default function AppPage() {
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <section className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
@@ -189,7 +189,7 @@ export default function AppPage() {
           </section>
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
