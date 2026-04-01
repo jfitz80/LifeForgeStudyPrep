@@ -10,15 +10,18 @@ type HeaderLink = {
   href: string;
 };
 
-const mainLinks: HeaderLink[] = [
-  { label: 'Home', href: '/' },
-  { label: 'Knowledge Hub', href: '/knowledge' },
-  { label: 'News', href: '/news' }
-];
-
 const examPrepLinks: HeaderLink[] = [
   { label: 'Exam Prep Overview', href: '/exam-prep' },
   { label: 'Free Practice', href: '/free-practice' }
+];
+
+const newsLinks: HeaderLink[] = [
+  { label: 'All News', href: '/news' },
+  { label: 'Law & Litigation', href: '/news?category=law-and-litigation' },
+  { label: 'Clinical Knowledge', href: '/news?category=clinical-knowledge' },
+  { label: 'Future Risk', href: '/news?category=future-risk' },
+  { label: 'Product Innovation', href: '/news?category=product-innovation' },
+  { label: 'Regulation & Compliance', href: '/news?category=regulation-compliance' }
 ];
 
 const moreLinks: HeaderLink[] = [
@@ -29,8 +32,9 @@ const moreLinks: HeaderLink[] = [
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [mobileExamPrepOpen, setMobileExamPrepOpen] = useState(false);
+  const [mobileNewsOpen, setMobileNewsOpen] = useState(false);
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -39,6 +43,51 @@ export default function SiteHeader() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  const DropdownButton = ({
+    label,
+    children,
+  }: {
+    label: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="group relative">
+      <button
+        type="button"
+        className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E]"
+        aria-haspopup="true"
+      >
+        <span>{label}</span>
+        <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+          <path
+            fillRule="evenodd"
+            d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+      <div className="invisible absolute left-0 top-full z-50 mt-3 w-56 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        {children}
+      </div>
+    </div>
+  );
+
+  const DropdownLink = ({
+    href,
+    label,
+    accent,
+  }: {
+    href: string;
+    label: string;
+    accent?: boolean;
+  }) => (
+    <Link
+      href={href}
+      className={`block rounded-lg px-3 py-2 text-[16px] font-medium ${accent ? 'bg-[#E8F7F4] text-[#1E887B]' : 'text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]'}`}
+    >
+      {label}
+    </Link>
+  );
 
   return (
     <header
@@ -71,76 +120,29 @@ export default function SiteHeader() {
               Home
             </Link>
 
-            <div className="group relative">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
-                aria-haspopup="true"
-              >
-                Exam Prep
-                <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+            <DropdownButton label="Exam Prep">
+              <DropdownLink href="/exam-prep" label="Exam Prep Overview" />
+              <DropdownLink href="/free-practice" label="Free Practice" accent />
+            </DropdownButton>
 
-              <div className="invisible absolute left-0 top-full z-50 mt-3 w-56 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                <Link
-                  href="/exam-prep"
-                  className="block rounded-lg px-3 py-2 text-[16px] font-medium text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]"
-                >
-                  Exam Prep Overview
-                </Link>
-                <Link
-                  href="/free-practice"
-                  className="block rounded-lg bg-[#E8F7F4] px-3 py-2 text-[16px] font-semibold text-[#1E887B] hover:bg-[#D9F1EC]"
-                >
-                  Free Practice
-                </Link>
-              </div>
-            </div>
+            <Link
+              href="/knowledge"
+              className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
+            >
+              Knowledge Hub
+            </Link>
 
-            {mainLinks.slice(1).map((item) => (
-              <Link
-                key={`${item.label}-${item.href}`}
-                href={item.href}
-                className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
-              >
-                {item.label}
-              </Link>
-            ))}
+            <DropdownButton label="News">
+              {newsLinks.map((item) => (
+                <DropdownLink key={item.href} href={item.href} label={item.label} />
+              ))}
+            </DropdownButton>
 
-            <div className="group relative">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
-                aria-haspopup="true"
-              >
-                More
-                <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-
-              <div className="invisible absolute right-0 top-full z-50 mt-3 w-48 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                {moreLinks.map((item) => (
-                  <Link
-                    key={`more-${item.label}-${item.href}`}
-                    href={item.href}
-                    className="block rounded-lg px-3 py-2 text-[16px] font-medium text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <DropdownButton label="More">
+              {moreLinks.map((item) => (
+                <DropdownLink key={item.href} href={item.href} label={item.label} />
+              ))}
+            </DropdownButton>
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
@@ -204,33 +206,25 @@ export default function SiteHeader() {
                     <path
                       fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                      clipRule="evenodd"
                     />
                   </svg>
                 </button>
 
                 {mobileExamPrepOpen && (
                   <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
-                    <Link
-                      href="/exam-prep"
-                      className="text-sm font-medium text-[#1F2A44]"
-                      onClick={() => {
-                        setMenuOpen(false);
-                        setMobileExamPrepOpen(false);
-                      }}
-                    >
-                      Exam Prep Overview
-                    </Link>
-                    <Link
-                      href="/free-practice"
-                      className="rounded-md bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B]"
-                      onClick={() => {
-                        setMenuOpen(false);
-                        setMobileExamPrepOpen(false);
-                      }}
-                    >
-                      Free Practice
-                    </Link>
+                    {examPrepLinks.map((item) => (
+                      <Link
+                        key={`mobile-exam-${item.href}`}
+                        href={item.href}
+                        className={`text-sm font-medium ${item.label === 'Free Practice' ? 'rounded-md bg-[#E8F7F4] px-3 py-2 text-[#1E887B]' : ''}`}
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setMobileExamPrepOpen(false);
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
                   </div>
                 )}
               </div>
@@ -243,13 +237,45 @@ export default function SiteHeader() {
                 Knowledge Hub
               </Link>
 
-              <Link
-                href="/news"
-                className="text-sm font-medium text-[#1F2A44]"
-                onClick={() => setMenuOpen(false)}
-              >
-                News
-              </Link>
+              <div className="rounded-md border border-slate-200">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-semibold text-[#1F2A44]"
+                  onClick={() => setMobileNewsOpen((v) => !v)}
+                  aria-expanded={mobileNewsOpen}
+                >
+                  News
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={`h-4 w-4 transition ${mobileNewsOpen ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+                    />
+                  </svg>
+                </button>
+
+                {mobileNewsOpen && (
+                  <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
+                    {newsLinks.map((item) => (
+                      <Link
+                        key={`mobile-news-${item.href}`}
+                        href={item.href}
+                        className="text-sm font-medium text-[#1F2A44]"
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setMobileNewsOpen(false);
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               <div className="rounded-md border border-slate-200">
                 <button
@@ -268,7 +294,6 @@ export default function SiteHeader() {
                     <path
                       fillRule="evenodd"
                       d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                      clipRule="evenodd"
                     />
                   </svg>
                 </button>
@@ -277,7 +302,7 @@ export default function SiteHeader() {
                   <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
                     {moreLinks.map((item) => (
                       <Link
-                        key={`mobile-more-${item.label}-${item.href}`}
+                        key={`mobile-more-${item.href}`}
                         href={item.href}
                         className="text-sm font-medium text-[#1F2A44]"
                         onClick={() => {
