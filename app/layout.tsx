@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 import { Analytics } from '@vercel/analytics/react';
-//import SiteHeader from '@/components/editorial/SiteHeader'; // adjust exact filename if needed
+import SiteHeader from '@/components/editorial/SiteHeader'; // adjust exact filename if needed
 
 const siteUrl = `https://${siteConfig.domain}`;
 
