@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import ClusterIcon from '@/components/knowledge/ClusterIcon';
 import GlossaryIndex from '@/components/knowledge/GlossaryIndex';
 import { KNOWLEDGE_ARTICLES, KNOWLEDGE_CLUSTERS } from '@/lib/knowledge/content';
@@ -120,7 +120,7 @@ export default function KnowledgePage() {
 
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <header className="mb-8">
@@ -250,7 +250,7 @@ export default function KnowledgePage() {
           <GlossaryIndex />
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
