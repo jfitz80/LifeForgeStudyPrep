@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ const productFeatures = [
 export default function ExamPrepPage() {
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <header className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
@@ -128,7 +128,7 @@ export default function ExamPrepPage() {
           </section>
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
