@@ -32,10 +32,10 @@ type HubItem = {
 };
 
 const categoryLabels: Record<string, string> = {
-  'law-and-litigation': 'Law & Litigation',
+  'Claims': 'Claims',
   'clinical-knowledge': 'Clinical Knowledge',
-  'future-risk': 'Future Risk',
-  'product-innovation': 'Product Innovation',
+  'Industry Trends': 'Industry Trends',
+  'Underwriting': 'Underwriting',
   'regulation-compliance': 'Regulation & Compliance'
 };
 
