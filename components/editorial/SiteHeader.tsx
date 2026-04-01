@@ -8,15 +8,17 @@ import { siteConfig } from '@/config/site';
 type HeaderLink = {
   label: string;
   href: string;
-  highlight?: boolean;
 };
 
 const mainLinks: HeaderLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'Exam Prep', href: '/exam-prep' },
-  { label: 'Free Practice', href: '/free-practice' },
   { label: 'Knowledge Hub', href: '/knowledge' },
   { label: 'News', href: '/news' }
+];
+
+const examPrepLinks: HeaderLink[] = [
+  { label: 'Exam Prep Overview', href: '/exam-prep' },
+  { label: 'Free Practice', href: '/free-practice' }
 ];
 
 const moreLinks: HeaderLink[] = [
@@ -28,6 +30,7 @@ const moreLinks: HeaderLink[] = [
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
+  const [mobileExamPrepOpen, setMobileExamPrepOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -36,16 +39,6 @@ export default function SiteHeader() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const desktopLinkClass = (href: string) =>
-    href === '/free-practice'
-      ? 'rounded-lg bg-[#E8F7F4] px-3 py-1.5 text-[17px] font-semibold text-[#1E887B] hover:bg-[#D9F1EC]'
-      : 'text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]';
-
-  const mobileLinkClass = (href: string) =>
-    href === '/free-practice'
-      ? 'rounded-md bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B]'
-      : 'text-sm font-medium text-[#1F2A44]';
 
   return (
     <header
@@ -71,11 +64,50 @@ export default function SiteHeader() {
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
-            {mainLinks.map((item) => (
+            <Link
+              href="/"
+              className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
+            >
+              Home
+            </Link>
+
+            <div className="group relative">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
+                aria-haspopup="true"
+              >
+                Exam Prep
+                <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              <div className="invisible absolute left-0 top-full z-50 mt-3 w-56 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <Link
+                  href="/exam-prep"
+                  className="block rounded-lg px-3 py-2 text-[16px] font-medium text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]"
+                >
+                  Exam Prep Overview
+                </Link>
+                <Link
+                  href="/free-practice"
+                  className="block rounded-lg bg-[#E8F7F4] px-3 py-2 text-[16px] font-semibold text-[#1E887B] hover:bg-[#D9F1EC]"
+                >
+                  Free Practice
+                </Link>
+              </div>
+            </div>
+
+            {mainLinks.slice(1).map((item) => (
               <Link
                 key={`${item.label}-${item.href}`}
                 href={item.href}
-                className={desktopLinkClass(item.href)}
+                className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
               >
                 {item.label}
               </Link>
@@ -88,12 +120,7 @@ export default function SiteHeader() {
                 aria-haspopup="true"
               >
                 More
-                <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                >
+                <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                   <path
                     fillRule="evenodd"
                     d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
@@ -152,16 +179,77 @@ export default function SiteHeader() {
         {menuOpen && (
           <div id="mobile-nav" className="border-t border-slate-200 py-4 lg:hidden">
             <div className="flex flex-col gap-3">
-              {mainLinks.map((item) => (
-                <Link
-                  key={`mobile-${item.label}-${item.href}`}
-                  href={item.href}
-                  className={mobileLinkClass(item.href)}
-                  onClick={() => setMenuOpen(false)}
+              <Link
+                href="/"
+                className="text-sm font-medium text-[#1F2A44]"
+                onClick={() => setMenuOpen(false)}
+              >
+                Home
+              </Link>
+
+              <div className="rounded-md border border-slate-200">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-semibold text-[#1F2A44]"
+                  onClick={() => setMobileExamPrepOpen((v) => !v)}
+                  aria-expanded={mobileExamPrepOpen}
                 >
-                  {item.label}
-                </Link>
-              ))}
+                  Exam Prep
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={`h-4 w-4 transition ${mobileExamPrepOpen ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                {mobileExamPrepOpen && (
+                  <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
+                    <Link
+                      href="/exam-prep"
+                      className="text-sm font-medium text-[#1F2A44]"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setMobileExamPrepOpen(false);
+                      }}
+                    >
+                      Exam Prep Overview
+                    </Link>
+                    <Link
+                      href="/free-practice"
+                      className="rounded-md bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B]"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setMobileExamPrepOpen(false);
+                      }}
+                    >
+                      Free Practice
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/knowledge"
+                className="text-sm font-medium text-[#1F2A44]"
+                onClick={() => setMenuOpen(false)}
+              >
+                Knowledge Hub
+              </Link>
+
+              <Link
+                href="/news"
+                className="text-sm font-medium text-[#1F2A44]"
+                onClick={() => setMenuOpen(false)}
+              >
+                News
+              </Link>
 
               <div className="rounded-md border border-slate-200">
                 <button
