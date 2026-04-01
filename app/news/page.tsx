@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import { digestTags } from '@/config/home';
 import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
@@ -151,7 +151,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
 
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <header className="mb-10">
@@ -229,7 +229,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
           )}
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
