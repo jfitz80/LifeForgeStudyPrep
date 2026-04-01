@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Health & Insurance | LifeForgePrep',
@@ -19,7 +19,7 @@ const featured = {
 export default function HealthInsurancePage() {
   return (
     <>
-      <SiteHeader />
+      
       <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <header className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
@@ -44,7 +44,7 @@ export default function HealthInsurancePage() {
           </section>
         </div>
       </main>
-      <SiteFooter />
+      
     </>
   );
 }
