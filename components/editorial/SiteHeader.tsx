@@ -17,10 +17,10 @@ const examPrepLinks: HeaderLink[] = [
 
 const newsLinks: HeaderLink[] = [
   { label: 'All News', href: '/news' },
-  { label: 'Law & Litigation', href: '/news?category=law-and-litigation' },
+  { label: 'Claims', href: '/news?category=claims' },
   { label: 'Clinical Knowledge', href: '/news?category=clinical-knowledge' },
-  { label: 'Future Risk', href: '/news?category=future-risk' },
-  { label: 'Product Innovation', href: '/news?category=product-innovation' },
+  { label: 'Industry Trends', href: '/news?category=industry-trends' },
+  { label: 'Underwriting', href: '/news?category=underwriting' },
   { label: 'Regulation & Compliance', href: '/news?category=regulation-compliance' }
 ];
 
