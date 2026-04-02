@@ -25,6 +25,27 @@ export const metadata: Metadata = {
   ]
 };
 
+const categoryFilterMap = {
+  claims: { key: 'legal-litigation', label: 'Claims' },
+  'clinical-knowledge': { key: 'risk-underwriting', label: 'Clinical Knowledge' },
+  'industry-trends': { key: 'industry-trends', label: 'Industry Trends' },
+  underwriting: { key: 'risk-underwriting', label: 'Underwriting' },
+  'regulation-compliance': { key: 'regulation-policy', label: 'Regulation & Compliance' },
+  'law-and-litigation': { key: 'legal-litigation', label: 'Law & Litigation' },
+  'future-risk': { key: 'risk-underwriting', label: 'Future Risk' },
+  'product-innovation': { key: 'products-pricing', label: 'Product Innovation' }
+} as const;
+
+type CategoryFilterSlug = keyof typeof categoryFilterMap;
+
+function buildNewsUrl(page: number, category?: string): string {
+  const params = new URLSearchParams();
+  if (category) params.set('category', category);
+  if (page > 1) params.set('page', String(page));
+  const query = params.toString();
+  return query ? `/news?${query}` : '/news';
+}
+
 type HubItem = {
   id?: string;
   slug: string;
@@ -38,9 +59,10 @@ type HubItem = {
 };
 
 type Props = {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
-  };
+    category?: string;
+  }>;
 };
 
 function mapStaticItems(): HubItem[] {
@@ -164,6 +186,10 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
 }
 
 export default async function NewsHubPage({ searchParams }: Props) {
+  const params = (await searchParams) ?? {};
+  const requestedCategory = params.category?.toLowerCase().trim() as CategoryFilterSlug | undefined;
+  const activeCategory = requestedCategory ? categoryFilterMap[requestedCategory] : undefined;
+
   const { mode, items } = await getHubItems();
   const deduped = dedupeHubItems(items);
 
@@ -173,18 +199,22 @@ export default async function NewsHubPage({ searchParams }: Props) {
     category: classifyNewsCategory(item)
   }));
 
-  const featured = categorized.slice(0, 4);
-  const feed = categorized.slice(4);
+  const filtered = activeCategory
+    ? categorized.filter((item) => item.category === activeCategory.key)
+    : categorized;
+
+  const featured = activeCategory ? [] : filtered.slice(0, 4);
+  const feed = activeCategory ? filtered : filtered.slice(4);
 
   const pageSize = 9;
-  const requestedPage = Number(searchParams?.page ?? '1');
+  const requestedPage = Number(params.page ?? '1');
   const currentPage = Number.isFinite(requestedPage) && requestedPage > 0 ? Math.floor(requestedPage) : 1;
   const totalPages = Math.max(1, Math.ceil(feed.length / pageSize));
   const safePage = Math.min(currentPage, totalPages);
   const start = (safePage - 1) * pageSize;
   const pagedFeed = feed.slice(start, start + pageSize);
 
-  const trendingTopics = buildTrendingTopics(categorized);
+  const trendingTopics = buildTrendingTopics(filtered);
 
   return (
     <>
@@ -194,12 +224,24 @@ export default async function NewsHubPage({ searchParams }: Props) {
 
           <p className="mb-6 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
 
-          <FeaturedStoriesGrid items={featured} />
+          {activeCategory ? (
+            <div className="mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm">
+              <span className="font-semibold text-[#1F2A44]">Showing category:</span>
+              <span className="rounded-full bg-[#E8F7F4] px-3 py-1 font-semibold text-[#1E887B]">{activeCategory.label}</span>
+              <Link href="/news" className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                View all news
+              </Link>
+            </div>
+          ) : null}
 
-          <ForStudentsStrip />
+          {!activeCategory ? <FeaturedStoriesGrid items={featured} /> : null}
+
+          {!activeCategory ? <ForStudentsStrip /> : null}
 
           <section className="mb-10">
-            <h2 className="mb-4 text-xl font-semibold text-[#1F2A44]">Latest Insurance Industry Updates</h2>
+            <h2 className="mb-4 text-xl font-semibold text-[#1F2A44]">
+              {activeCategory ? `${activeCategory.label} Stories` : 'Latest Insurance Industry Updates'}
+            </h2>
             {pagedFeed.length === 0 ? (
               <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
                 No additional articles available right now. Please check back shortly.
@@ -218,7 +260,7 @@ export default async function NewsHubPage({ searchParams }: Props) {
               </span>
               <div className="flex gap-2">
                 <Link
-                  href={safePage > 1 ? `/news?page=${safePage - 1}` : '/news'}
+                  href={buildNewsUrl(safePage > 1 ? safePage - 1 : 1, requestedCategory)}
                   className={`rounded-lg border px-3 py-1.5 font-semibold ${
                     safePage > 1
                       ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
@@ -230,7 +272,7 @@ export default async function NewsHubPage({ searchParams }: Props) {
                   Previous
                 </Link>
                 <Link
-                  href={safePage < totalPages ? `/news?page=${safePage + 1}` : `/news?page=${safePage}`}
+                  href={buildNewsUrl(safePage < totalPages ? safePage + 1 : safePage, requestedCategory)}
                   className={`rounded-lg border px-3 py-1.5 font-semibold ${
                     safePage < totalPages
                       ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
