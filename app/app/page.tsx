@@ -185,6 +185,13 @@ export default function AppPage() {
               <p>
                 <span className="font-semibold text-[#1F2A44]">Updates:</span> Question banks refresh regularly to reflect LLQP focus areas and core product logic.
               </p>
+              <p>
+                <span className="font-semibold text-[#1F2A44]">Privacy:</span>{' '}
+                <Link href="/app/privacy" className="text-[#2FAF9E] hover:text-[#1F2A44]">
+                  Read the app privacy page
+                </Link>
+                .
+              </p>
             </div>
           </section>
         </div>
