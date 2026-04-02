@@ -63,6 +63,17 @@ const categorizedSections = [
   }
 ] as const;
 
+
+const supplementalKnowledgeCards = [
+  {
+    title: 'Annuities',
+    description: 'Understand retirement income contracts, the main annuity types, and how they compare with life insurance.',
+    href: '/knowledge/annuities',
+    eyebrow: 'Retirement Income',
+    cta: 'Explore annuities'
+  }
+] as const;
+
 export default function KnowledgePage() {
   const articleCounts = KNOWLEDGE_ARTICLES.reduce<Record<string, number>>((acc, article) => {
     acc[article.cluster] = (acc[article.cluster] ?? 0) + 1;
@@ -242,6 +253,25 @@ export default function KnowledgePage() {
                       Start with a guide
                     </Link>
                   </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-10">
+            <h2 className="text-2xl font-bold text-[#1F2A44]">Additional topics</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              {supplementalKnowledgeCards.map((card) => (
+                <article key={card.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">{card.eyebrow}</p>
+                  <h3 className="mt-2 text-xl font-bold text-[#1F2A44]">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[#4A5568]">{card.description}</p>
+                  <Link
+                    href={card.href}
+                    className="mt-4 inline-flex items-center text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
+                  >
+                    {card.cta}
+                  </Link>
                 </article>
               ))}
             </div>

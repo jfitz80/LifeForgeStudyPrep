@@ -1,41 +1,132 @@
 'use client';
 
+import type { FocusEvent, ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/config/site';
 
-type HeaderLink = {
+type DropdownItem = {
   label: string;
   href: string;
+  accent?: boolean;
 };
 
-const examPrepLinks: HeaderLink[] = [
-  { label: 'Exam Prep Overview', href: '/exam-prep' },
-  { label: 'Free Practice', href: '/free-practice' }
+type NavItem = {
+  label: string;
+  href?: string;
+  dropdown?: DropdownItem[];
+};
+
+const navItems: NavItem[] = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Exam Prep',
+    dropdown: [
+      { label: 'Exam Prep Overview', href: '/exam-prep' },
+      { label: 'Free Practice', href: '/free-practice', accent: true }
+    ]
+  },
+  {
+    label: 'Knowledge Hub',
+    dropdown: [
+      { label: 'Knowledge Hub Overview', href: '/knowledge' },
+      { label: 'Annuities', href: '/knowledge/annuities' }
+    ]
+  },
+  {
+    label: 'News',
+    dropdown: [
+      { label: 'All News', href: '/news' },
+      { label: 'Claims', href: '/news?category=claims' },
+      { label: 'Clinical Knowledge', href: '/news?category=clinical-knowledge' },
+      { label: 'Industry Trends', href: '/news?category=industry-trends' },
+      { label: 'Underwriting', href: '/news?category=underwriting' },
+      { label: 'Regulation & Compliance', href: '/news?category=regulation-compliance' }
+    ]
+  },
+  {
+    label: 'More',
+    dropdown: [
+      { label: 'App', href: '/app' },
+      { label: 'Support', href: '/support' },
+      { label: 'About', href: '/about' }
+    ]
+  }
 ];
 
-const newsLinks: HeaderLink[] = [
-  { label: 'All News', href: '/news' },
-  { label: 'Claims', href: '/news?category=claims' },
-  { label: 'Clinical Knowledge', href: '/news?category=clinical-knowledge' },
-  { label: 'Industry Trends', href: '/news?category=industry-trends' },
-  { label: 'Underwriting', href: '/news?category=underwriting' },
-  { label: 'Regulation & Compliance', href: '/news?category=regulation-compliance' }
-];
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className={`h-4 w-4 transition ${open ? 'rotate-180' : ''}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden="true"
+    >
+      <path d="M5 7.5 10 12.5 15 7.5" />
+    </svg>
+  );
+}
 
-const moreLinks: HeaderLink[] = [
-  { label: 'App', href: '/app' },
-  { label: 'Support', href: '/support' },
-  { label: 'About', href: '/about' }
-];
+function DropdownLink({ item, onNavigate }: { item: DropdownItem; onNavigate?: () => void }) {
+  return (
+    <Link
+      href={item.href}
+      className={
+        item.accent
+          ? 'block rounded-lg bg-[#E8F7F4] px-3 py-2 text-sm font-semibold text-[#1E887B] hover:bg-[#D9F1EC]'
+          : 'block rounded-lg px-3 py-2 text-sm font-medium text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]'
+      }
+      onClick={onNavigate}
+    >
+      {item.label}
+    </Link>
+  );
+}
+
+function MobileSection({
+  label,
+  items,
+  open,
+  onToggle,
+  onNavigate
+}: {
+  label: string;
+  items: DropdownItem[];
+  open: boolean;
+  onToggle: () => void;
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white">
+      <button
+        type="button"
+        className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold text-[#1F2A44]"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={`mobile-section-${label}`}
+      >
+        <span>{label}</span>
+        <Chevron open={open} />
+      </button>
+      {open ? (
+        <div id={`mobile-section-${label}`} className="space-y-2 border-t border-slate-200 px-4 py-3">
+          {items.map((item) => (
+            <DropdownLink key={`${label}-${item.href}`} item={item} onNavigate={onNavigate} />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mobileExamPrepOpen, setMobileExamPrepOpen] = useState(false);
-  const [mobileNewsOpen, setMobileNewsOpen] = useState(false);
-  const [mobileMoreOpen, setMobileMoreOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [desktopOpen, setDesktopOpen] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -44,50 +135,74 @@ export default function SiteHeader() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const DropdownButton = ({
-    label,
-    children,
-  }: {
-    label: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="group relative">
-      <button
-        type="button"
-        className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E]"
-        aria-haspopup="true"
-      >
-        <span>{label}</span>
-        <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-      <div className="invisible absolute left-0 top-full z-50 mt-3 w-56 rounded-xl border border-slate-200 bg-white p-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-        {children}
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    if (!menuOpen) {
+      setMobileOpen({});
+    }
+  }, [menuOpen]);
 
-  const DropdownLink = ({
-    href,
-    label,
-    accent,
-  }: {
-    href: string;
-    label: string;
-    accent?: boolean;
-  }) => (
-    <Link
-      href={href}
-      className={`block rounded-lg px-3 py-2 text-[16px] font-medium ${accent ? 'bg-[#E8F7F4] text-[#1E887B]' : 'text-[#1F2A44] hover:bg-slate-50 hover:text-[#2FAF9E]'}`}
-    >
-      {label}
-    </Link>
-  );
+  function closeMobileMenu() {
+    setMenuOpen(false);
+    setMobileOpen({});
+  }
+
+  function toggleMobileSection(label: string) {
+    setMobileOpen((current) => ({
+      ...current,
+      [label]: !current[label]
+    }));
+  }
+
+  function handleBlur(label: string, event: FocusEvent<HTMLDivElement>) {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setDesktopOpen((current) => (current === label ? null : current));
+    }
+  }
+
+  function renderDesktopItem(item: NavItem): ReactNode {
+    if (!item.dropdown) {
+      return (
+        <Link
+          key={item.label}
+          href={item.href ?? '/'}
+          className="text-[18px] font-medium text-[#1F2A44] transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
+        >
+          {item.label}
+        </Link>
+      );
+    }
+
+    const isOpen = desktopOpen === item.label;
+
+    return (
+      <div
+        key={item.label}
+        className="relative"
+        onMouseEnter={() => setDesktopOpen(item.label)}
+        onMouseLeave={() => setDesktopOpen((current) => (current === item.label ? null : current))}
+        onBlurCapture={(event) => handleBlur(item.label, event)}
+      >
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 text-[18px] font-medium text-[#1F2A44] transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+          onClick={() => setDesktopOpen((current) => (current === item.label ? null : item.label))}
+          onFocus={() => setDesktopOpen(item.label)}
+        >
+          <span>{item.label}</span>
+          <Chevron open={isOpen} />
+        </button>
+        <div className={`absolute left-0 top-full z-50 pt-3 ${isOpen ? 'pointer-events-auto visible opacity-100' : 'pointer-events-none invisible opacity-0'} transition-all duration-150`}>
+          <div className="w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg shadow-slate-200/70">
+            {item.dropdown.map((child) => (
+              <DropdownLink key={`${item.label}-${child.href}`} item={child} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <header
@@ -96,7 +211,7 @@ export default function SiteHeader() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-4">
+        <div className="flex min-h-[84px] items-center justify-between gap-4 py-3">
           <Link href="/" className="inline-flex min-w-0 items-center gap-2.5">
             <Image
               src="/brand/lifeforge-emblem.png"
@@ -112,43 +227,14 @@ export default function SiteHeader() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex">
-            <Link
-              href="/"
-              className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
-            >
-              Home
-            </Link>
-
-            <DropdownButton label="Exam Prep">
-              <DropdownLink href="/exam-prep" label="Exam Prep Overview" />
-              <DropdownLink href="/free-practice" label="Free Practice" accent />
-            </DropdownButton>
-
-            <Link
-              href="/knowledge"
-              className="text-[18px] font-medium text-[#1F2A44] hover:text-[#2FAF9E]"
-            >
-              Knowledge Hub
-            </Link>
-
-            <DropdownButton label="News">
-              {newsLinks.map((item) => (
-                <DropdownLink key={item.href} href={item.href} label={item.label} />
-              ))}
-            </DropdownButton>
-
-            <DropdownButton label="More">
-              {moreLinks.map((item) => (
-                <DropdownLink key={item.href} href={item.href} label={item.label} />
-              ))}
-            </DropdownButton>
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+            {navItems.map((item) => renderDesktopItem(item))}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               href="/news"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 text-[#1F2A44] hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-[#1F2A44] transition hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
               aria-label="Search news"
             >
               <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.1">
@@ -160,7 +246,7 @@ export default function SiteHeader() {
               href={siteConfig.checkoutUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl bg-[#2C3440] px-4 py-2.5 text-[18px] font-semibold text-white hover:bg-slate-700"
+              className="rounded-xl bg-[#2C3440] px-5 py-3 text-[18px] font-semibold text-white transition hover:bg-slate-700"
             >
               Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
             </a>
@@ -170,7 +256,7 @@ export default function SiteHeader() {
             type="button"
             aria-label="Toggle menu"
             className="inline-flex items-center rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-[#1F2A44] lg:hidden"
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={() => setMenuOpen((current) => !current)}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
           >
@@ -178,157 +264,42 @@ export default function SiteHeader() {
           </button>
         </div>
 
-        {menuOpen && (
+        {menuOpen ? (
           <div id="mobile-nav" className="border-t border-slate-200 py-4 lg:hidden">
-            <div className="flex flex-col gap-3">
+            <div className="space-y-3">
               <Link
                 href="/"
-                className="text-sm font-medium text-[#1F2A44]"
-                onClick={() => setMenuOpen(false)}
+                className="block rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44]"
+                onClick={closeMobileMenu}
               >
                 Home
               </Link>
 
-              <div className="rounded-md border border-slate-200">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-semibold text-[#1F2A44]"
-                  onClick={() => setMobileExamPrepOpen((v) => !v)}
-                  aria-expanded={mobileExamPrepOpen}
-                >
-                  Exam Prep
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className={`h-4 w-4 transition ${mobileExamPrepOpen ? 'rotate-180' : ''}`}
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                    />
-                  </svg>
-                </button>
-
-                {mobileExamPrepOpen && (
-                  <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
-                    {examPrepLinks.map((item) => (
-                      <Link
-                        key={`mobile-exam-${item.href}`}
-                        href={item.href}
-                        className={`text-sm font-medium ${item.label === 'Free Practice' ? 'rounded-md bg-[#E8F7F4] px-3 py-2 text-[#1E887B]' : ''}`}
-                        onClick={() => {
-                          setMenuOpen(false);
-                          setMobileExamPrepOpen(false);
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <Link
-                href="/knowledge"
-                className="text-sm font-medium text-[#1F2A44]"
-                onClick={() => setMenuOpen(false)}
-              >
-                Knowledge Hub
-              </Link>
-
-              <div className="rounded-md border border-slate-200">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-semibold text-[#1F2A44]"
-                  onClick={() => setMobileNewsOpen((v) => !v)}
-                  aria-expanded={mobileNewsOpen}
-                >
-                  News
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className={`h-4 w-4 transition ${mobileNewsOpen ? 'rotate-180' : ''}`}
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                    />
-                  </svg>
-                </button>
-
-                {mobileNewsOpen && (
-                  <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
-                    {newsLinks.map((item) => (
-                      <Link
-                        key={`mobile-news-${item.href}`}
-                        href={item.href}
-                        className="text-sm font-medium text-[#1F2A44]"
-                        onClick={() => {
-                          setMenuOpen(false);
-                          setMobileNewsOpen(false);
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="rounded-md border border-slate-200">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-3 py-2 text-left text-sm font-semibold text-[#1F2A44]"
-                  onClick={() => setMobileMoreOpen((v) => !v)}
-                  aria-expanded={mobileMoreOpen}
-                >
-                  More
-                  <svg
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className={`h-4 w-4 transition ${mobileMoreOpen ? 'rotate-180' : ''}`}
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.51a.75.75 0 0 1-1.08 0l-4.25-4.51a.75.75 0 0 1 .02-1.06Z"
-                    />
-                  </svg>
-                </button>
-
-                {mobileMoreOpen && (
-                  <div className="flex flex-col gap-2 border-t border-slate-200 px-3 py-3">
-                    {moreLinks.map((item) => (
-                      <Link
-                        key={`mobile-more-${item.href}`}
-                        href={item.href}
-                        className="text-sm font-medium text-[#1F2A44]"
-                        onClick={() => {
-                          setMenuOpen(false);
-                          setMobileMoreOpen(false);
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              {navItems
+                .filter((item) => item.dropdown)
+                .map((item) => (
+                  <MobileSection
+                    key={`mobile-${item.label}`}
+                    label={item.label}
+                    items={item.dropdown ?? []}
+                    open={Boolean(mobileOpen[item.label])}
+                    onToggle={() => toggleMobileSection(item.label)}
+                    onNavigate={closeMobileMenu}
+                  />
+                ))}
 
               <a
                 href={siteConfig.checkoutUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-[#1F2A44]"
-                onClick={() => setMenuOpen(false)}
+                className="block rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44]"
+                onClick={closeMobileMenu}
               >
                 Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
               </a>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </header>
   );

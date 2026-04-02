@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-//import SiteHeader from '@/components/editorial/SiteHeader';
-//import SiteFooter from '@/components/editorial/SiteFooter';
 import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsCategoryKey } from '@/components/news/types';
 import { newsItems } from '@/data/news';
@@ -148,9 +146,7 @@ export default async function HomePage() {
   const secondaryNews = homeNewsItems.slice(1, 3);
 
   return (
-    <>
-      
-      <main className="min-h-screen bg-[#F5F7FA]">
+    <main className="min-h-screen bg-[#F5F7FA]">
         <section className="bg-[#1F2A44] px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -409,7 +405,5 @@ export default async function HomePage() {
           </div>
         </section>
       </main>
-      
-    </>
   );
 }
