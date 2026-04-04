@@ -4,7 +4,7 @@ import FeaturedStoriesGrid from '@/components/news/FeaturedStoriesGrid';
 import ForStudentsStrip from '@/components/news/ForStudentsStrip';
 import NewsCard from '@/components/news/NewsCard';
 import NewsHero from '@/components/news/NewsHero';
-import { classifyNewsCategory } from '@/components/news/category-system';
+import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsArticleView } from '@/components/news/types';
 import { newsItems } from '@/data/news';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
@@ -26,17 +26,72 @@ export const metadata: Metadata = {
 };
 
 const categoryFilterMap = {
-  claims: { key: 'legal-litigation', label: 'Claims' },
-  'clinical-knowledge': { key: 'risk-underwriting', label: 'Clinical Knowledge' },
-  'industry-trends': { key: 'industry-trends', label: 'Industry Trends' },
-  underwriting: { key: 'risk-underwriting', label: 'Underwriting' },
-  'regulation-compliance': { key: 'regulation-policy', label: 'Regulation & Compliance' },
-  'law-and-litigation': { key: 'legal-litigation', label: 'Law & Litigation' },
-  'future-risk': { key: 'risk-underwriting', label: 'Future Risk' },
-  'product-innovation': { key: 'products-pricing', label: 'Product Innovation' }
+  claims: {
+    key: 'legal-litigation',
+    label: 'Claims',
+    description: 'Claims disputes, litigation patterns, and beneficiary or policy wording issues.'
+  },
+  'clinical-knowledge': {
+    key: 'risk-underwriting',
+    label: 'Clinical Knowledge',
+    description: 'Health-related risk factors, medical evidence, and underwriting consequences.'
+  },
+  'industry-trends': {
+    key: 'industry-trends',
+    label: 'Industry Trends',
+    description: 'Carrier behavior, market direction, and broader insurance business shifts.'
+  },
+  underwriting: {
+    key: 'risk-underwriting',
+    label: 'Underwriting',
+    description: 'Risk classification, disclosure quality, and decision logic.'
+  },
+  'regulation-compliance': {
+    key: 'regulation-policy',
+    label: 'Regulation & Compliance',
+    description: 'Disclosure, documentation, and compliance updates that affect advisor practice.'
+  },
+  'law-and-litigation': {
+    key: 'legal-litigation',
+    label: 'Law & Litigation',
+    description: 'Court cases, disputes, and legal precedents with practical insurance implications.'
+  },
+  'future-risk': {
+    key: 'risk-underwriting',
+    label: 'Future Risk',
+    description: 'Emerging underwriting patterns and evolving insurability concerns.'
+  },
+  'product-innovation': {
+    key: 'products-pricing',
+    label: 'Product Innovation',
+    description: 'Product design changes, pricing moves, and feature comparisons.'
+  }
 } as const;
 
 type CategoryFilterSlug = keyof typeof categoryFilterMap;
+
+const categoryRail: Array<{ slug: CategoryFilterSlug; title: string; teaser: string }> = [
+  {
+    slug: 'product-innovation',
+    title: 'Product Innovation',
+    teaser: 'Track product changes, pricing moves, and design shifts that affect recommendation logic.'
+  },
+  {
+    slug: 'regulation-compliance',
+    title: 'Regulation & Compliance',
+    teaser: 'Follow suitability, disclosure, and documentation themes that matter in practice and on exams.'
+  },
+  {
+    slug: 'underwriting',
+    title: 'Underwriting',
+    teaser: 'See how health risk, disclosures, and evidence requirements shape what clients can actually buy.'
+  },
+  {
+    slug: 'claims',
+    title: 'Claims & Litigation',
+    teaser: 'Use disputes and claims cases to understand policy wording, beneficiary control, and claim expectations.'
+  }
+];
 
 function buildNewsUrl(page: number, category?: string): string {
   const params = new URLSearchParams();
@@ -215,79 +270,132 @@ export default async function NewsHubPage({ searchParams }: Props) {
   const pagedFeed = feed.slice(start, start + pageSize);
 
   const trendingTopics = buildTrendingTopics(filtered);
+  const categoryCounts = categoryRail.map((item) => ({
+    ...item,
+    count: categorized.filter((article) => article.category === categoryFilterMap[item.slug].key).length
+  }));
 
   return (
-    <>
-      <main className="min-h-screen bg-[#EEF2F6] py-10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <NewsHero topics={trendingTopics} />
+    <main className="min-h-screen bg-[#EEF2F6] py-10">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <NewsHero topics={trendingTopics} />
 
-          <p className="mb-6 text-xs font-medium uppercase tracking-wide text-slate-500">Mode: {mode}</p>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <span>Mode: {mode}</span>
+          <span>{categorized.length} editorial stories available</span>
+        </div>
 
-          {activeCategory ? (
-            <div className="mb-6 flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm">
-              <span className="font-semibold text-[#1F2A44]">Showing category:</span>
-              <span className="rounded-full bg-[#E8F7F4] px-3 py-1 font-semibold text-[#1E887B]">{activeCategory.label}</span>
-              <Link href="/news" className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+        <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Editorial categories</p>
+              <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Browse by insurance theme</h2>
+              <p className="mt-2 max-w-3xl text-sm leading-7 text-[#4A5568]">
+                Use category views when you want the news feed to reinforce a specific area like underwriting, claims, product design, or compliance.
+              </p>
+            </div>
+            {activeCategory ? (
+              <Link href="/news" className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
                 View all news
               </Link>
+            ) : null}
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {categoryCounts.map((item) => {
+              const isActive = requestedCategory === item.slug;
+              return (
+                <Link
+                  key={item.slug}
+                  href={`/news?category=${item.slug}`}
+                  className={`rounded-2xl border p-4 transition ${
+                    isActive
+                      ? 'border-[#2FAF9E] bg-[#F2FBF8]'
+                      : 'border-slate-200 bg-[#F9FAFB] hover:border-slate-300 hover:bg-white'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-base font-semibold text-[#1F2A44]">{item.title}</p>
+                    <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-[#4A5568]">{item.count}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-7 text-[#4A5568]">{item.teaser}</p>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {activeCategory ? (
+          <div className="mb-6 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-sm shadow-sm">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="font-semibold text-[#1F2A44]">Showing category:</span>
+              <span className="rounded-full bg-[#E8F7F4] px-3 py-1 font-semibold text-[#1E887B]">{activeCategory.label}</span>
             </div>
-          ) : null}
+            <p className="mt-3 text-[#4A5568]">{activeCategory.description}</p>
+          </div>
+        ) : null}
 
-          {!activeCategory ? <FeaturedStoriesGrid items={featured} /> : null}
+        {!activeCategory ? <FeaturedStoriesGrid items={featured} /> : null}
+        {!activeCategory ? <ForStudentsStrip /> : null}
 
-          {!activeCategory ? <ForStudentsStrip /> : null}
-
-          <section className="mb-10">
-            <h2 className="mb-4 text-xl font-semibold text-[#1F2A44]">
+        <section className="mb-10">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2 className="text-xl font-semibold text-[#1F2A44]">
               {activeCategory ? `${activeCategory.label} Stories` : 'Latest Insurance Industry Updates'}
             </h2>
-            {pagedFeed.length === 0 ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
-                No additional articles available right now. Please check back shortly.
-              </div>
-            ) : (
-              <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {pagedFeed.map((item) => (
-                  <NewsCard key={item.id ?? item.slug} article={item} />
+            {!activeCategory ? (
+              <div className="hidden gap-2 md:flex">
+                {categoryRail.slice(0, 3).map((item) => (
+                  <CategoryTag key={item.slug} category={categoryFilterMap[item.slug].key} />
                 ))}
               </div>
-            )}
-
-            <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
-              <span className="text-slate-600">
-                Page {safePage} of {totalPages}
-              </span>
-              <div className="flex gap-2">
-                <Link
-                  href={buildNewsUrl(safePage > 1 ? safePage - 1 : 1, requestedCategory)}
-                  className={`rounded-lg border px-3 py-1.5 font-semibold ${
-                    safePage > 1
-                      ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
-                      : 'cursor-not-allowed border-slate-200 text-slate-400'
-                  }`}
-                  aria-disabled={safePage <= 1}
-                  tabIndex={safePage <= 1 ? -1 : 0}
-                >
-                  Previous
-                </Link>
-                <Link
-                  href={buildNewsUrl(safePage < totalPages ? safePage + 1 : safePage, requestedCategory)}
-                  className={`rounded-lg border px-3 py-1.5 font-semibold ${
-                    safePage < totalPages
-                      ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
-                      : 'cursor-not-allowed border-slate-200 text-slate-400'
-                  }`}
-                  aria-disabled={safePage >= totalPages}
-                  tabIndex={safePage >= totalPages ? -1 : 0}
-                >
-                  Next
-                </Link>
-              </div>
+            ) : null}
+          </div>
+          {pagedFeed.length === 0 ? (
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600">
+              No additional articles available right now. Please check back shortly.
             </div>
-          </section>
-        </div>
-      </main>
-    </>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {pagedFeed.map((item) => (
+                <NewsCard key={item.id ?? item.slug} article={item} />
+              ))}
+            </div>
+          )}
+
+          <div className="mt-6 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+            <span className="text-slate-600">
+              Page {safePage} of {totalPages}
+            </span>
+            <div className="flex gap-2">
+              <Link
+                href={buildNewsUrl(safePage > 1 ? safePage - 1 : 1, requestedCategory)}
+                className={`rounded-lg border px-3 py-1.5 font-semibold ${
+                  safePage > 1
+                    ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
+                    : 'cursor-not-allowed border-slate-200 text-slate-400'
+                }`}
+                aria-disabled={safePage <= 1}
+                tabIndex={safePage <= 1 ? -1 : 0}
+              >
+                Previous
+              </Link>
+              <Link
+                href={buildNewsUrl(safePage < totalPages ? safePage + 1 : safePage, requestedCategory)}
+                className={`rounded-lg border px-3 py-1.5 font-semibold ${
+                  safePage < totalPages
+                    ? 'border-slate-300 text-[#1F2A44] hover:bg-slate-50'
+                    : 'cursor-not-allowed border-slate-200 text-slate-400'
+                }`}
+                aria-disabled={safePage >= totalPages}
+                tabIndex={safePage >= totalPages ? -1 : 0}
+              >
+                Next
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }

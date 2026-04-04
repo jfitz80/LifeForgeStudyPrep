@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 
 type FinderForm = {
   age: string;
@@ -23,6 +24,8 @@ type FinderResult = {
   explanation: string;
 };
 
+const STORAGE_KEY = 'lifeforge-tools-coverage-finder';
+
 const steps: Array<{
   key: keyof FinderForm;
   label: string;
@@ -36,6 +39,15 @@ const steps: Array<{
   { key: 'savings', label: 'How much savings do you have?', hint: 'Emergency fund + investable liquid savings.', type: 'number' },
   { key: 'smoker', label: 'Do you currently smoke?', hint: 'Smoking status materially affects premium estimates.', type: 'select' }
 ];
+
+const emptyForm: FinderForm = {
+  age: '',
+  annualIncome: '',
+  dependents: '',
+  debt: '',
+  savings: '',
+  smoker: ''
+};
 
 function formatMoney(value: number) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
@@ -59,8 +71,8 @@ function calculateResult(input: FinderForm): FinderResult {
   const grossNeed = incomeNeed + dependentNeed + debt;
   const netNeed = Math.max(100000, grossNeed - savings);
 
-  const lowCoverage = Math.max(100000, Math.round(netNeed * 0.85 / 50000) * 50000);
-  const highCoverage = Math.max(lowCoverage + 50000, Math.round(netNeed * 1.2 / 50000) * 50000);
+  const lowCoverage = Math.max(100000, Math.round((netNeed * 0.85) / 50000) * 50000);
+  const highCoverage = Math.max(lowCoverage + 50000, Math.round((netNeed * 1.2) / 50000) * 50000);
 
   let policyType: PolicyType = 'Universal';
   if (age <= 45 && (dependents > 0 || debt > 0)) {
@@ -117,14 +129,31 @@ function calculateResult(input: FinderForm): FinderResult {
 export default function SmartCoverageFinder() {
   const [stepIndex, setStepIndex] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [form, setForm] = useState<FinderForm>({
-    age: '',
-    annualIncome: '',
-    dependents: '',
-    debt: '',
-    savings: '',
-    smoker: ''
-  });
+  const [form, setForm] = useState<FinderForm>(emptyForm);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        setHydrated(true);
+        return;
+      }
+      const parsed = JSON.parse(raw) as { stepIndex?: number; showResult?: boolean; form?: FinderForm };
+      if (parsed.form) setForm(parsed.form);
+      if (typeof parsed.stepIndex === 'number') setStepIndex(Math.max(0, Math.min(parsed.stepIndex, steps.length - 1)));
+      if (typeof parsed.showResult === 'boolean') setShowResult(parsed.showResult);
+    } catch {
+      // Ignore malformed local storage.
+    } finally {
+      setHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ stepIndex, showResult, form }));
+  }, [form, hydrated, showResult, stepIndex]);
 
   const currentStep = steps[stepIndex];
   const isLastStep = stepIndex === steps.length - 1;
@@ -143,13 +172,37 @@ export default function SmartCoverageFinder() {
 
   const result = useMemo(() => (isComplete ? calculateResult(form) : null), [form, isComplete]);
 
+  useEffect(() => {
+    if (showResult && result) {
+      trackEvent('calculator_usage', {
+        tool: 'coverage',
+        action: 'show_result',
+        suggested_policy: result.policyType,
+        low_coverage: result.lowCoverage,
+        high_coverage: result.highCoverage
+      });
+    }
+  }, [result, showResult]);
+
+  function resetFinder() {
+    setStepIndex(0);
+    setShowResult(false);
+    setForm(emptyForm);
+    window.localStorage.removeItem(STORAGE_KEY);
+  }
+
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Smart Coverage Finder</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Step-by-step estimate</h2>
-          <p className="mt-2 text-sm text-[#4A5568]">Answer a few key questions to get a practical starting range.</p>
+        <div className="mb-6 flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Smart Coverage Finder</p>
+            <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Step-by-step estimate</h2>
+            <p className="mt-2 text-sm text-[#4A5568]">Answer a few key questions to get a practical starting range.</p>
+          </div>
+          <button type="button" onClick={resetFinder} className="text-sm font-semibold text-[#1F2A44] underline-offset-4 hover:underline">
+            Reset
+          </button>
         </div>
 
         <div className="mb-5 h-2 rounded-full bg-slate-100">
@@ -159,6 +212,7 @@ export default function SmartCoverageFinder() {
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
           Step {stepIndex + 1} of {steps.length}
         </p>
+        {!hydrated ? <p className="mt-2 text-xs text-slate-500">Loading saved progress...</p> : null}
 
         <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
           <label htmlFor={currentStep.key} className="block text-lg font-semibold text-[#1F2A44]">

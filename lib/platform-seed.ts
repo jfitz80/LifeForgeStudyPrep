@@ -16,6 +16,9 @@ export type AdvisorScenarioSeed = {
   bestFit: string;
   whyNotOthers: string;
   takeaway: string;
+  recommendedProduct: string;
+  primaryObjective: string;
+  priority: 'affordability' | 'permanence' | 'guaranteed acceptance' | 'estate planning' | 'simplicity';
 };
 
 export type ToolTeaser = {
@@ -94,7 +97,10 @@ export const ADVISOR_SCENARIOS: AdvisorScenarioSeed[] = [
     advisorQuestions: ['How long does the mortgage need protection?', 'What happens if one income disappears?', 'Is future convertibility important?'],
     bestFit: 'Term coverage usually leads because it matches temporary high-liability years at a manageable cost.',
     whyNotOthers: 'Permanent coverage may be stronger for estate or lifelong goals, but it can strain affordability in this scenario.',
-    takeaway: 'Start with the household risk first, then layer features only if the budget still supports them.'
+    takeaway: 'Start with the household risk first, then layer features only if the budget still supports them.',
+    recommendedProduct: '20-year term',
+    primaryObjective: 'Protect family income and debt obligations during child-rearing and mortgage years.',
+    priority: 'affordability'
   },
   {
     slug: 'single-professional-no-dependents',
@@ -106,7 +112,10 @@ export const ADVISOR_SCENARIOS: AdvisorScenarioSeed[] = [
     advisorQuestions: ['Who would be affected by outstanding debt?', 'Are future family or business obligations likely?', 'Does the client want long-term guarantees or low-cost flexibility?'],
     bestFit: 'Convertible term often makes sense when current need is limited but future insurability matters.',
     whyNotOthers: 'Permanent coverage may be premature if the objective is still uncertain and affordability discipline matters.',
-    takeaway: 'Advisors should not oversell coverage where immediate financial dependency is low, but they should still think ahead.'
+    takeaway: 'Advisors should not oversell coverage where immediate financial dependency is low, but they should still think ahead.',
+    recommendedProduct: 'Convertible term',
+    primaryObjective: 'Preserve future options while covering debt and protecting insurability.',
+    priority: 'simplicity'
   },
   {
     slug: 'older-applicant-health-issues',
@@ -118,7 +127,40 @@ export const ADVISOR_SCENARIOS: AdvisorScenarioSeed[] = [
     advisorQuestions: ['What conditions affect insurability?', 'Is the client seeking estate value or just final-expense support?', 'What waiting periods or limitations apply?'],
     bestFit: 'Simplified or guaranteed access products may be more realistic if full underwriting is unlikely to succeed.',
     whyNotOthers: 'Traditional coverage may not be available or may be priced well beyond the client’s comfort level.',
-    takeaway: 'Good advisor thinking means matching recommendation quality to access realities, not idealized product theory.'
+    takeaway: 'Good advisor thinking means matching recommendation quality to access realities, not idealized product theory.',
+    recommendedProduct: 'Guaranteed issue',
+    primaryObjective: 'Secure accessible final-expense support when underwriting flexibility is limited.',
+    priority: 'guaranteed acceptance'
+  },
+  {
+    slug: 'business-owner-key-person',
+    title: 'Business owner needing key person protection',
+    clientProfile: 'Founder-led company with lender pressure, concentrated revenue relationships, and a small leadership bench.',
+    needs: 'Business continuity, cash flow support, and lender reassurance if the key person dies.',
+    budgetContext: 'Company can support premium if the policy clearly protects operations and borrowing capacity.',
+    productOptions: ['Key person term insurance', 'Permanent insurance', 'Buy-sell funding only', 'No business coverage'],
+    advisorQuestions: ['What financial loss would the business face immediately?', 'Who should own the policy and receive proceeds?', 'Is this about temporary continuity risk or long-term succession planning?'],
+    bestFit: 'Key person term insurance often fits when the main objective is protecting revenue and lender confidence during a vulnerable growth period.',
+    whyNotOthers: 'Permanent insurance may fit succession or estate goals later, but term usually aligns better with immediate business continuity exposure.',
+    takeaway: 'Separate business continuity protection from owner legacy planning before recommending a structure.',
+    recommendedProduct: 'Key person term insurance',
+    primaryObjective: 'Protect business continuity and lender confidence if the core revenue driver dies.',
+    priority: 'simplicity'
+  },
+  {
+    slug: 'final-expense-limited-budget',
+    title: 'Final expense and limited budget case',
+    clientProfile: 'Older client with modest savings, strong desire to avoid burdening family, and strict monthly budget limits.',
+    needs: 'Small face amount, simple qualification process, and confidence that some benefit will be available.',
+    budgetContext: 'Client needs a manageable premium and values certainty more than optimization.',
+    productOptions: ['Simplified issue final expense', 'Guaranteed issue', 'Large underwritten permanent policy', 'Short-term accidental policy'],
+    advisorQuestions: ['How much support is actually needed?', 'Can the client answer health questions?', 'Does the client understand waiting periods and benefit limitations?'],
+    bestFit: 'Simplified issue final-expense coverage may be the best educational direction when the client can still qualify and wants a manageable premium.',
+    whyNotOthers: 'Guaranteed issue can still fit, but it often gives up value when the client could have qualified for a stronger simplified product.',
+    takeaway: 'Budget cases require disciplined scope: cover the most realistic need first and explain tradeoffs clearly.',
+    recommendedProduct: 'Simplified issue final expense',
+    primaryObjective: 'Provide a modest, realistic death benefit without overextending the client budget.',
+    priority: 'affordability'
   }
 ];
 
@@ -144,7 +186,7 @@ export const ADVISOR_GUIDANCE_LINKS: ComparisonGuideSeed[] = [
   {
     title: 'Questions a New Advisor Should Ask a Client',
     description: 'Use a simple discovery framework before talking about product type or premium.',
-    href: '/knowledge/advisor-guidance'
+    href: '/knowledge/llqp-exam-prep/questions-a-new-advisor-should-ask-a-client'
   },
   {
     title: 'How Underwriting Works',
