@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { siteConfig } from '@/config/site';
+import { trackEvent } from '@/lib/analytics';
 
 type FormStatus = 'idle' | 'loading' | 'error';
 
@@ -12,13 +13,17 @@ type LeadFormProps = {
   heading?: string;
   description?: string;
   submitLabel?: string;
+  interest?: 'free-pack' | 'newsletter' | 'exam-prep' | 'general';
+  source?: string;
 };
 
 export default function LeadForm({
   sectionId = 'free-questions',
   heading = 'Get free life insurance practice questions',
   description = 'Enter your email to get free sample questions delivered and start practicing today.',
-  submitLabel = 'Get Free Questions'
+  submitLabel = 'Get Free Questions',
+  interest = 'free-pack',
+  source = 'lead-form'
 }: LeadFormProps) {
   const router = useRouter();
   const [status, setStatus] = useState<FormStatus>('idle');
@@ -28,7 +33,7 @@ export default function LeadForm({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const name = String(formData.get('name') ?? '').trim();
-    const email = String(formData.get('email') ?? '').trim();
+    const email = String(formData.get('email') ?? '').trim().toLowerCase();
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus('error');
@@ -43,13 +48,14 @@ export default function LeadForm({
       const response = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email })
+        body: JSON.stringify({ name, email, interest, source })
       });
 
       if (!response.ok) {
         throw new Error('Submission failed');
       }
 
+      trackEvent('email_capture_submit', { interest, source });
       event.currentTarget.reset();
       router.push('/thanks');
     } catch {
@@ -108,8 +114,7 @@ export default function LeadForm({
         </form>
 
         <p className="mt-4 text-xs leading-6 text-slate-500">
-          By requesting updates, you agree to receive emails from LifeForge Insurance Prep. You can unsubscribe at any time.
-          See our{' '}
+          By requesting updates, you agree to receive emails from LifeForgePrep. You can unsubscribe at any time. See our{' '}
           <Link href={siteConfig.legalUrls.privacy} className="font-medium text-slate-700 underline underline-offset-2 hover:text-slate-900">
             Privacy Policy
           </Link>

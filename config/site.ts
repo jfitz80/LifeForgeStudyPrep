@@ -1,5 +1,5 @@
 export const siteConfig = {
-  brandName: "LifeForge Insurance Prep",
+  brandName: "LifeForgePrep",
   tagline: "Empowering Future Advisors",
   productName: "Life Insurance Exam Question Bank",
 
@@ -10,7 +10,7 @@ export const siteConfig = {
   price: "$8.99",
 
   checkoutUrl: "https://payhip.com/b/xwfO6",
-  supportEmail: "support@lifeforgeprep.com",
+  supportEmail: "lifeforgewealth@gmail.com",
   domain: "www.lifeforgeprep.com",
 
   seo: {
