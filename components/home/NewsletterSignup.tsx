@@ -1,10 +1,27 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 
 type SubmitState = 'idle' | 'loading' | 'success' | 'error';
 
-export default function NewsletterSignup() {
+type NewsletterSignupProps = {
+  title?: string;
+  description?: string;
+  buttonLabel?: string;
+  successMessage?: string;
+  idleMessage?: string;
+  eventName?: string;
+};
+
+export default function NewsletterSignup({
+  title = 'Stay Informed with LifeForgePrep',
+  description = 'Get the latest life insurance news and expert tips delivered to your inbox.',
+  buttonLabel = 'Subscribe',
+  successMessage = 'You are subscribed. Watch your inbox for updates.',
+  idleMessage = 'Your information is kept secure. Unsubscribe anytime.',
+  eventName = 'email_capture_submit'
+}: NewsletterSignupProps) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
@@ -34,8 +51,9 @@ export default function NewsletterSignup() {
         throw new Error(data.error || 'Unable to subscribe right now.');
       }
 
+      trackEvent(eventName, { placement: 'homepage', email_domain: normalized.split('@')[1] ?? 'unknown' });
       setState('success');
-      setMessage('You are subscribed. Watch your inbox for updates.');
+      setMessage(successMessage);
       setEmail('');
     } catch (error) {
       setState('error');
@@ -48,10 +66,8 @@ export default function NewsletterSignup() {
       <div className="rounded-3xl bg-gradient-to-r from-[#1F2A44] to-[#2f4d73] p-8 text-white shadow-sm">
         <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-center">
           <div>
-            <h3 className="text-5xl font-bold">Stay Informed with LifeForgePrep</h3>
-            <p className="mt-3 text-2xl text-slate-200">
-              Get the latest life insurance news and expert tips delivered to your inbox.
-            </p>
+            <h3 className="text-4xl font-bold sm:text-5xl">{title}</h3>
+            <p className="mt-3 text-lg text-slate-200 sm:text-2xl">{description}</p>
           </div>
 
           <div>
@@ -71,16 +87,16 @@ export default function NewsletterSignup() {
                     setMessage('');
                   }
                 }}
-                className="w-full px-5 py-4 text-xl text-[#1F2A44] outline-none"
+                className="w-full px-5 py-4 text-lg text-[#1F2A44] outline-none"
                 required
                 autoComplete="email"
               />
               <button
                 type="submit"
                 disabled={state === 'loading'}
-                className="bg-[#2FAF9E] px-8 py-4 text-2xl font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-70"
+                className="bg-[#2FAF9E] px-8 py-4 text-lg font-semibold text-white transition hover:bg-[#26988a] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {state === 'loading' ? 'Submitting...' : 'Subscribe'}
+                {state === 'loading' ? 'Submitting...' : buttonLabel}
               </button>
             </form>
 
@@ -93,7 +109,7 @@ export default function NewsletterSignup() {
                 {message}
               </p>
             ) : (
-              <p className="mt-3 text-base text-slate-200">Your information is kept secure. Unsubscribe anytime.</p>
+              <p className="mt-3 text-base text-slate-200">{idleMessage}</p>
             )}
           </div>
         </div>

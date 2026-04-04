@@ -6,6 +6,7 @@ import BonusPracticeCapture from '@/components/free-practice/BonusPracticeCaptur
 import QuizProgressBar from '@/components/free-practice/QuizProgressBar';
 import QuizResultsCard from '@/components/free-practice/QuizResultsCard';
 import UpgradeCTA from '@/components/free-practice/UpgradeCTA';
+import { trackEvent } from '@/lib/analytics';
 
 type QuestionType = 'concept' | 'scenario' | 'calculation';
 
@@ -133,7 +134,7 @@ const BASICS_QUESTIONS: Question[] = [
     options: [
       { id: 'a', label: 'A', text: 'The cheapest available policy' },
       { id: 'b', label: 'B', text: 'The provider with the slickest marketing' },
-      { id: 'c', label: 'C', text: "Understanding the client’s goals and risk tolerance" },
+      { id: 'c', label: 'C', text: 'Understanding the client’s goals and risk tolerance' },
       { id: 'd', label: 'D', text: 'The most popular coverage in the market' }
     ],
     correctOptionId: 'c',
@@ -167,12 +168,18 @@ const BASICS_QUESTIONS: Question[] = [
   }
 ];
 
+const ADVANCED_PREVIEW = [
+  'A replacement scenario where affordability, underwriting, and disclosure all conflict',
+  'A business-owner case requiring key-person protection and succession logic',
+  'A policy-loan question with tax consequences and lapse risk layered together'
+] as const;
 
 const TYPE_LABEL: Record<QuestionType, string> = {
   concept: 'Concept',
   scenario: 'Scenario',
   calculation: 'Calculation'
 };
+
 const QUIZ_SETS = {
   llqp: {
     title: 'LLQP Quick Test',
@@ -198,7 +205,7 @@ type ResultAction = {
 function getResultTier(score: number, total: number) {
   const ratio = total > 0 ? score / total : 0;
   if (ratio <= 0.4) return 'low' as const;
-  if (ratio <= 0.8) return 'mid' as const;
+  if (ratio <= 0.7) return 'mid' as const;
   return 'high' as const;
 }
 
@@ -215,6 +222,17 @@ export default function QuestionProgressionSystem() {
   const currentAnswer = current ? answers.find((a) => a.questionId === current.id) : undefined;
 
   const score = useMemo(() => answers.filter((answer) => answer.isCorrect).length, [answers]);
+  const wrongAnswers = useMemo(
+    () =>
+      answers
+        .filter((answer) => !answer.isCorrect)
+        .map((answer) => {
+          const question = questions.find((item) => item.id === answer.questionId);
+          return question ? { question, answer } : null;
+        })
+        .filter((entry): entry is { question: Question; answer: AnswerRecord } => Boolean(entry)),
+    [answers, questions]
+  );
 
   const breakdown = useMemo(() => {
     const types: QuestionType[] = ['concept', 'scenario', 'calculation'];
@@ -237,6 +255,11 @@ export default function QuestionProgressionSystem() {
     setFinished(false);
   }, []);
 
+  function chooseTest(test: TestKey) {
+    trackEvent('free_practice_start', { quiz_set: test });
+    setSelectedTest(test);
+  }
+
   function handleSelect(optionId: string) {
     if (!current || currentAnswer) return;
     const isCorrect = optionId === current.correctOptionId;
@@ -249,6 +272,12 @@ export default function QuestionProgressionSystem() {
   function handleNext() {
     if (!current || !currentAnswer) return;
     if (index === total - 1) {
+      trackEvent('free_practice_complete', {
+        quiz_set: selectedTest ?? 'unknown',
+        score,
+        total,
+        percentage: Math.round((score / Math.max(total, 1)) * 100)
+      });
       setFinished(true);
       return;
     }
@@ -257,7 +286,7 @@ export default function QuestionProgressionSystem() {
 
   const resultTier = getResultTier(score, total);
 
-  const resultActions = useMemo(() => {
+  const resultActions = useMemo<{ primary: ResultAction; secondary: ResultAction }>(() => {
     if (resultTier === 'low') {
       return {
         primary: { label: 'Read beginner guides', href: '/knowledge' },
@@ -268,7 +297,7 @@ export default function QuestionProgressionSystem() {
     if (resultTier === 'mid') {
       return {
         primary: { label: 'Try another practice set', onClick: () => restart() },
-        secondary: { label: 'Browse the Knowledge Hub', href: '/knowledge', variant: 'muted' }
+        secondary: { label: 'Try harder questions', href: '/exam-prep', variant: 'muted' }
       };
     }
 
@@ -292,7 +321,7 @@ export default function QuestionProgressionSystem() {
               <button
                 key={key}
                 type="button"
-                onClick={() => setSelectedTest(key)}
+                onClick={() => chooseTest(key)}
                 className="flex h-full flex-col justify-between rounded-2xl border border-slate-700 bg-[#0E1628] p-5 text-left transition hover:border-[#2FAF9E] hover:bg-[#142039]"
               >
                 <div>
@@ -319,47 +348,80 @@ export default function QuestionProgressionSystem() {
           </p>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-2">
-          {resultActions.primary &&
-            (resultActions.primary.href ? (
-              <Link
-                href={resultActions.primary.href}
-                className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-              >
-                {resultActions.primary.label}
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={resultActions.primary.onClick}
-                className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-              >
-                {resultActions.primary.label}
-              </button>
-            ))}
+        {wrongAnswers.length > 0 ? (
+          <section className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
+            <h3 className="text-xl font-bold text-white">Review the questions you missed</h3>
+            <div className="mt-4 space-y-4">
+              {wrongAnswers.map(({ question, answer }) => {
+                const selectedOption = question.options.find((option) => option.id === answer.selectedOptionId);
+                const correctOption = question.options.find((option) => option.id === question.correctOptionId);
+                return (
+                  <article key={question.id} className="rounded-xl border border-slate-700 bg-[#0E1628] p-4">
+                    <p className="text-sm font-semibold text-white">{question.prompt}</p>
+                    <p className="mt-2 text-sm text-rose-200">Your answer: {selectedOption?.text}</p>
+                    <p className="mt-1 text-sm text-emerald-200">Correct answer: {correctOption?.text}</p>
+                    <p className="mt-3 text-sm leading-7 text-slate-300">{question.explanation}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
 
-          {resultActions.secondary &&
-            (resultActions.secondary.href ? (
-              <Link
-                href={resultActions.secondary.href}
-                className={`inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition ${
-                  resultActions.secondary.variant === 'muted'
-                    ? 'border-slate-500 text-slate-100 hover:border-white'
-                    : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
-                }`}
-              >
-                {resultActions.secondary.label}
-              </Link>
-            ) : (
-              <button
-                type="button"
-                onClick={resultActions.secondary.onClick}
-                className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
-              >
-                {resultActions.secondary.label}
-              </button>
-            ))}
+        <div className="grid gap-3 md:grid-cols-2">
+          {resultActions.primary.href ? (
+            <Link
+              href={resultActions.primary.href}
+              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+            >
+              {resultActions.primary.label}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={resultActions.primary.onClick}
+              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+            >
+              {resultActions.primary.label}
+            </button>
+          )}
+
+          {resultActions.secondary.href ? (
+            <Link
+              href={resultActions.secondary.href}
+              className={`inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition ${
+                resultActions.secondary.variant === 'muted'
+                  ? 'border-slate-500 text-slate-100 hover:border-white'
+                  : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
+              }`}
+            >
+              {resultActions.secondary.label}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={resultActions.secondary.onClick}
+              className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+            >
+              {resultActions.secondary.label}
+            </button>
+          )}
         </div>
+
+        <section className="rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
+          <h3 className="text-2xl font-bold text-white">Advanced scenario-based questions are available in Exam Prep</h3>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            Push beyond the free set with layered client situations, comparison logic, and harder suitability traps.
+          </p>
+          <div className="mt-5 grid gap-3 md:grid-cols-3">
+            {ADVANCED_PREVIEW.map((item) => (
+              <article key={item} className="relative overflow-hidden rounded-xl border border-slate-700 bg-[#111A2D] p-4 text-sm text-slate-300">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#111A2D]/70 backdrop-blur-[2px]" aria-hidden="true" />
+                <p className="relative font-medium">{item}</p>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <UpgradeCTA />
 
@@ -400,8 +462,7 @@ export default function QuestionProgressionSystem() {
 
         <div className="mt-4 rounded-2xl border border-slate-600 bg-[#0E1628] p-4 text-sm text-slate-200">
           <p>
-            This is for learning, not just memorizing—focus on advisor thinking, product logic, and suitability reasoning as you answer each
-            question.
+            This is for learning, not just memorizing—focus on advisor thinking, product logic, and suitability reasoning as you answer each question.
           </p>
         </div>
 
@@ -441,15 +502,15 @@ export default function QuestionProgressionSystem() {
             })}
           </div>
 
-          {currentAnswer && (
+          {currentAnswer ? (
             <div className="mt-5 rounded-lg border border-slate-600 bg-[#111A2D] p-4">
               <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Explanation</p>
               <p className="mt-2 text-sm leading-7 text-slate-200">{current.explanation}</p>
             </div>
-          )}
+          ) : null}
 
           <div className="mt-5 flex justify-between">
-            {index > 0 && (
+            {index > 0 ? (
               <button
                 type="button"
                 onClick={() => setIndex((prev) => Math.max(prev - 1, 0))}
@@ -457,7 +518,7 @@ export default function QuestionProgressionSystem() {
               >
                 Back
               </button>
-            )}
+            ) : <span />}
             <button
               type="button"
               onClick={handleNext}

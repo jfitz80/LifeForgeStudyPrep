@@ -207,6 +207,111 @@ export const KNOWLEDGE_ARTICLES: KnowledgeArticle[] = [
     glossaryTerms: ['Suitability', 'Beneficiary', 'Underwriting', 'Material Misrepresentation']
   },
   {
+    cluster: 'life-insurance-basics',
+    slug: 'what-is-permanent-life-insurance',
+    title: 'What Is Permanent Life Insurance?',
+    excerpt: 'A beginner-friendly introduction to permanent coverage, long-term protection, and cash value design.',
+    explanation:
+      'Permanent life insurance is designed to stay in force for life as long as policy requirements are met. It is often used when the client wants long-duration protection, estate support, or policy value that can build inside the contract over time.',
+    example:
+      'A parent planning long-term estate support may choose permanent insurance because the protection is intended to last beyond income-replacement years.',
+    commonMistakes:
+      'A common mistake is treating permanent insurance as automatically better than term without checking affordability or whether the client actually needs lifetime coverage.',
+    summary:
+      'Permanent insurance is best understood as long-duration protection with added structural features, not just a more expensive version of term.',
+    glossaryTerms: ['Permanent Insurance', 'Cash Value', 'Policy Owner', 'Beneficiary']
+  },
+  {
+    cluster: 'life-insurance-basics',
+    slug: 'what-is-guaranteed-issue-life-insurance',
+    title: 'What Is Guaranteed Issue Life Insurance?',
+    excerpt: 'Learn how guaranteed issue coverage works, when it can help, and what tradeoffs it usually involves.',
+    explanation:
+      'Guaranteed issue life insurance is designed for applicants who may not qualify for traditionally underwritten coverage. It typically asks few or no health questions, but that easier access usually comes with smaller coverage amounts, higher costs, or waiting-period conditions.',
+    example:
+      'An older applicant with serious health issues may use guaranteed issue coverage to support final expenses when standard underwriting is no longer realistic.',
+    commonMistakes:
+      'People often assume guaranteed issue means best value. In practice, it usually means access first, efficiency second.',
+    summary:
+      'Guaranteed issue products solve an access problem, not an affordability problem, so suitability depends on the client’s real options.',
+    glossaryTerms: ['Underwriting', 'Permanent Insurance', 'Death Benefit', 'Beneficiary']
+  },
+  {
+    cluster: 'life-insurance-basics',
+    slug: 'who-needs-life-insurance',
+    title: 'Who Needs Life Insurance?',
+    excerpt: 'A simple guide to identifying when life insurance solves a real financial problem.',
+    explanation:
+      'Life insurance is most useful when another person, household, or business would experience financial strain after a death. The core question is not whether life insurance sounds important in general, but whether a real dependency, liability, or planning obligation would remain behind.',
+    example:
+      'A parent with young children, a homeowner with shared debt, or a business owner protecting continuity all have clearer insurance needs than someone with no dependents and minimal obligations.',
+    commonMistakes:
+      'Many buyers focus on generic income multiples before identifying what actually needs protection and for how long.',
+    summary:
+      'Start with the financial problem that would exist after a death, then determine whether insurance is the right tool to solve it.',
+    glossaryTerms: ['Death Benefit', 'Term Life Insurance', 'Permanent Insurance', 'Insurable Interest']
+  },
+  {
+    cluster: 'policy-mechanics',
+    slug: 'how-underwriting-works',
+    title: 'How Underwriting Works',
+    excerpt: 'Understand how insurers assess risk, classify applicants, and decide pricing or limitations.',
+    explanation:
+      'Underwriting is the process insurers use to assess how much risk they are taking on before issuing a policy. Health history, smoking status, occupation, lifestyle, and medical evidence can all influence whether the applicant receives standard pricing, a rating, exclusions, or a decline.',
+    example:
+      'Two applicants seeking the same amount of coverage may receive very different pricing if one has a complex medical history and the other does not.',
+    commonMistakes:
+      'Applicants often assume underwriting is only about current health. In reality, lifestyle, hazardous activities, and disclosure quality also affect classification.',
+    summary:
+      'Good underwriting understanding helps users separate what they want to buy from what they are likely able to buy under current conditions.',
+    glossaryTerms: ['Underwriting', 'Material Misrepresentation', 'Term Life Insurance', 'Permanent Insurance']
+  },
+  {
+    cluster: 'policy-mechanics',
+    slug: 'what-is-evidence-of-insurability',
+    title: 'What Is Evidence of Insurability?',
+    excerpt: 'Learn when insurers require extra proof before issuing or increasing coverage.',
+    explanation:
+      'Evidence of insurability means the insurer requires current proof that the insured still meets acceptable underwriting standards. This can happen when someone applies for new coverage, requests a policy increase, or exercises a contractual option that does not come with guaranteed eligibility.',
+    example:
+      'A client may be able to increase coverage without new medical evidence only if the policy includes a guaranteed insurability feature. Otherwise, fresh underwriting may be required.',
+    commonMistakes:
+      'A common mistake is assuming all policy changes can be made without new medical review once coverage has already been issued.',
+    summary:
+      'Evidence of insurability protects the insurer from new undisclosed risk and should always be considered before promising flexibility to a client.',
+    glossaryTerms: ['Underwriting', 'Guaranteed Insurability', 'Policy Owner', 'Material Misrepresentation']
+  },
+  {
+    cluster: 'policy-mechanics',
+    slug: 'what-is-cash-value',
+    title: 'What Is Cash Value?',
+    excerpt: 'A plain-language guide to what cash value is and why it matters inside some life insurance policies.',
+    explanation:
+      'Cash value is the internal policy value that can build over time in certain permanent insurance contracts. It is not the same thing as the death benefit, and it should be understood in terms of access rules, long-term policy sustainability, and tax implications before being treated like simple savings.',
+    example:
+      'A policy owner may borrow against cash value for liquidity, but that decision can affect future policy performance and claim outcomes if not managed carefully.',
+    commonMistakes:
+      'People often assume cash value is free money inside the policy. In reality, loans, withdrawals, and charges can change both policy strength and tax treatment.',
+    summary:
+      'Cash value can add flexibility, but it only improves a policy when the client understands the tradeoffs that come with using it.',
+    glossaryTerms: ['Cash Value', 'Policy Loan', 'Withdrawal', 'Adjusted Cost Basis']
+  },
+  {
+    cluster: 'llqp-exam-prep',
+    slug: 'questions-a-new-advisor-should-ask-a-client',
+    title: 'Questions a New Advisor Should Ask a Client',
+    excerpt: 'A simple discovery checklist to improve product fit, suitability, and recommendation quality.',
+    explanation:
+      'New advisors often jump too quickly into product talk. A stronger approach starts by clarifying who depends on the client, what liabilities exist, how long the need lasts, what budget constraints matter, and whether access or permanence is the bigger concern.',
+    example:
+      'Before recommending term or permanent insurance, an advisor should ask how long the obligation lasts, who is financially exposed, and whether the client values long-term guarantees enough to support the higher premium.',
+    commonMistakes:
+      'A frequent mistake is asking only about income and age while missing family structure, debt timing, business risk, or future coverage flexibility needs.',
+    summary:
+      'Good recommendations come from good discovery. The best first question is usually about the problem the client is trying to solve, not the product they think they want.',
+    glossaryTerms: ['Suitability', 'Beneficiary', 'Policy Owner', 'Underwriting']
+  },
+  {
     cluster: 'llqp-exam-prep',
     slug: 'high-frequency-llqp-mistakes',
     title: 'High-Frequency LLQP Mistakes and How to Avoid Them',
@@ -226,7 +331,9 @@ export const KNOWLEDGE_ARTICLES: KnowledgeArticle[] = [
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
   { term: 'Adjusted Cost Basis', slug: 'adjusted-cost-basis', letter: 'A', definition: 'The policy tax basis used to determine gain for certain policy transactions.' },
   { term: 'Beneficiary', slug: 'beneficiary', letter: 'B', definition: 'The person or entity designated to receive policy proceeds.' },
+  { term: 'Annuity', slug: 'annuity', letter: 'A', definition: 'A contract typically used to support accumulation or income payments over time, often in retirement planning.' },
   { term: 'Cash Value', slug: 'cash-value', letter: 'C', definition: 'Accumulated value within certain permanent policies that may be accessed during life.' },
+  { term: 'Evidence of Insurability', slug: 'evidence-of-insurability', letter: 'E', definition: 'Current proof of acceptable risk that an insurer may require before issuing or increasing coverage.' },
   { term: 'Contestability Period', slug: 'contestability-period', letter: 'C', definition: 'Initial period where claim review may focus heavily on application accuracy and disclosure.' },
   { term: 'Death Benefit', slug: 'death-benefit', letter: 'D', definition: 'Amount paid to beneficiaries when the insured dies, subject to policy terms.' },
   { term: 'Guaranteed Insurability', slug: 'guaranteed-insurability', letter: 'G', definition: 'Rider allowing future coverage increases at specified events without full medical requalification.' },
@@ -235,8 +342,13 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   { term: 'Key Person Insurance', slug: 'key-person-insurance', letter: 'K', definition: 'Coverage used by a business to offset financial impact after loss of a critical individual.' },
   { term: 'Material Misrepresentation', slug: 'material-misrepresentation', letter: 'M', definition: 'An incorrect or omitted fact that would have affected underwriting or policy issuance.' },
   { term: 'Permanent Insurance', slug: 'permanent-insurance', letter: 'P', definition: 'Life insurance designed for long-duration or lifetime coverage, often with cash value features.' },
+  { term: 'Premium', slug: 'premium', letter: 'P', definition: 'The amount paid to keep an insurance policy in force.' },
   { term: 'Policy Loan', slug: 'policy-loan', letter: 'P', definition: 'Borrowing against policy value that can affect long-term policy performance and obligations.' },
   { term: 'Policy Owner', slug: 'policy-owner', letter: 'P', definition: 'Person or entity with contractual control rights over the policy.' },
+  { term: 'Face Amount', slug: 'face-amount', letter: 'F', definition: 'The stated amount of coverage shown in the policy before adjustments or riders.' },
+  { term: 'Incontestability', slug: 'incontestability', letter: 'I', definition: 'A rule that limits when an insurer can challenge the validity of a policy after a specified period, subject to exceptions.' },
+  { term: 'Lapse', slug: 'lapse', letter: 'L', definition: 'Loss of coverage after policy requirements such as premium payment are not maintained.' },
+  { term: 'Replacement', slug: 'replacement', letter: 'R', definition: 'A transaction where one policy is being replaced by another, often requiring extra disclosure and care.' },
   { term: 'Rider', slug: 'rider', letter: 'R', definition: 'Optional policy add-on that modifies benefits, conditions, or flexibility.' },
   { term: 'Suitability', slug: 'suitability', letter: 'S', definition: 'Alignment between policy recommendation and client needs, capacity, and objectives.' },
   { term: 'Term Life Insurance', slug: 'term-life-insurance', letter: 'T', definition: 'Coverage for a specified period, focused on temporary risk protection.' },
