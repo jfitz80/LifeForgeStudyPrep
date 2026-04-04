@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
 import ClusterIcon from '@/components/knowledge/ClusterIcon';
 import GlossaryTerm from '@/components/knowledge/GlossaryTerm';
 import {
@@ -46,9 +44,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
   const glossary = getClusterGlossaryTerms(cluster).slice(0, 10);
 
   return (
-    <>
-      <SiteHeader />
-      <main className="min-h-screen bg-[#F5F7FA] py-12">
+    <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full" style={{ backgroundColor: clusterData.accent }}>
@@ -93,7 +89,5 @@ export default async function KnowledgeClusterPage({ params }: Props) {
           </div>
         </div>
       </main>
-      <SiteFooter />
-    </>
   );
 }
