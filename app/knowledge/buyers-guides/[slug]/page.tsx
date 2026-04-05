@@ -9,8 +9,13 @@ export function generateStaticParams() {
   return BUYERS_GUIDES.map((guide) => ({ slug: guide.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const guide = getBuyersGuide(params.slug);
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const guide = getBuyersGuide(slug);
 
   if (!guide) {
     return {
@@ -24,8 +29,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function BuyersGuideDetailPage({ params }: { params: { slug: string } }) {
-  const guide = getBuyersGuide(params.slug);
+export default async function BuyersGuideDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const guide = getBuyersGuide(slug);
 
   if (!guide) {
     notFound();
