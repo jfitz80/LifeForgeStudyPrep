@@ -30,8 +30,11 @@ const resendFromEmail = process.env.RESEND_FROM_EMAIL;
 const crmWebhookUrl = process.env.CRM_WEBHOOK_URL;
 
 function getLeadMagnetUrl() {
-  return `${siteConfig.siteUrl}${siteConfig.leadMagnetPath}`;
+  const baseUrl = 'siteUrl' in siteConfig ? siteConfig.siteUrl : `https://${siteConfig.domain}`;
+  const leadPath = 'leadMagnetPath' in siteConfig ? siteConfig.leadMagnetPath : '/free-pack';
+  return `${baseUrl}${leadPath}`;
 }
+
 
 async function sendResendEmail(args: {
   to: string | string[];
