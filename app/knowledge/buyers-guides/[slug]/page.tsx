@@ -14,7 +14,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 
   if (!guide) {
     return {
-      title: 'Buyer\'s Guide | LifeForgePrep'
+      title: "Buyer's Guide | LifeForgePrep"
     };
   }
 
@@ -54,6 +54,31 @@ export default function BuyersGuideDetailPage({ params }: { params: { slug: stri
           </div>
         </section>
 
+        {guide.howTheyWorkSections?.length ? (
+          <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <h2 className="text-2xl font-bold text-[#1F2A44]">How They Work</h2>
+            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+              {guide.howTheyWorkSections.map((section) => (
+                <article key={section.title} className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-5">
+                  <h3 className="text-lg font-semibold text-[#1F2A44]">{section.title}</h3>
+                  {section.body ? <p className="mt-2 text-sm leading-7 text-[#4A5568]">{section.body}</p> : null}
+                  {section.bullets?.length ? (
+                    <ul className="mt-3 space-y-2 text-sm leading-7 text-[#4A5568]">
+                      {section.bullets.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-[9px] h-1.5 w-1.5 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {section.kicker ? <p className="mt-4 text-sm font-semibold text-[#1F2A44]">{section.kicker}</p> : null}
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <section className="mt-8 grid gap-6 lg:grid-cols-2">
           <article className="rounded-2xl border border-[#D6E8E5] bg-[#F2FBF8] p-6 shadow-sm">
             <h2 className="text-2xl font-bold text-[#1F2A44]">Pros and cons</h2>
@@ -79,14 +104,32 @@ export default function BuyersGuideDetailPage({ params }: { params: { slug: stri
 
           <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-2xl font-bold text-[#1F2A44]">Who it may suit</h2>
-            <ul className="mt-4 space-y-3 text-sm leading-7 text-[#4A5568]">
-              {guide.whoItMaySuit.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <span className="mt-[10px] h-2 w-2 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            {guide.whoItMaySuitSections?.length ? (
+              <div className="mt-4 space-y-5">
+                {guide.whoItMaySuitSections.map((section) => (
+                  <div key={section.title}>
+                    <h3 className="text-lg font-semibold text-[#1F2A44]">{section.title}</h3>
+                    <ul className="mt-3 space-y-3 text-sm leading-7 text-[#4A5568]">
+                      {section.items.map((item) => (
+                        <li key={item} className="flex gap-3">
+                          <span className="mt-[10px] h-2 w-2 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ul className="mt-4 space-y-3 text-sm leading-7 text-[#4A5568]">
+                {guide.whoItMaySuit.map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-[10px] h-2 w-2 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </article>
         </section>
 
@@ -105,6 +148,35 @@ export default function BuyersGuideDetailPage({ params }: { params: { slug: stri
             ))}
           </div>
         </section>
+
+        {guide.comparisonTable ? (
+          <section className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="border-b border-slate-200 px-7 py-6">
+              <h2 className="text-2xl font-bold text-[#1F2A44]">Comparison table</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-left text-sm text-[#4A5568]">
+                <thead className="bg-[#F9FAFB] text-xs uppercase tracking-[0.14em] text-slate-500">
+                  <tr>
+                    {guide.comparisonTable.columns.map((column) => (
+                      <th key={column} className="px-6 py-4 font-semibold">{column}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {guide.comparisonTable.rows.map((row, index) => (
+                    <tr key={row.feature} className={index % 2 === 0 ? 'bg-white' : 'bg-[#FCFDFE]'}>
+                      <th className="px-6 py-4 font-semibold text-[#1F2A44]">{row.feature}</th>
+                      {row.values.map((value) => (
+                        <td key={`${row.feature}-${value}`} className="px-6 py-4 leading-7">{value}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ) : null}
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
           <h2 className="text-2xl font-bold text-[#1F2A44]">Related articles and tools</h2>
@@ -129,6 +201,17 @@ export default function BuyersGuideDetailPage({ params }: { params: { slug: stri
             </div>
           </div>
         </section>
+
+        {guide.bottomLine?.length ? (
+          <section className="mt-8 rounded-2xl border border-[#D6E8E5] bg-[#F2FBF8] p-6 shadow-sm sm:p-8">
+            <h2 className="text-2xl font-bold text-[#1F2A44]">Bottom line</h2>
+            <div className="mt-4 space-y-3 text-sm leading-7 text-[#4A5568]">
+              {guide.bottomLine.map((item) => (
+                <p key={item}>{item}</p>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 text-sm leading-7 text-[#4A5568] shadow-sm">
           <p className="font-semibold text-[#1F2A44]">Disclaimer</p>

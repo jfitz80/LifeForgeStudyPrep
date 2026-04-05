@@ -4,13 +4,31 @@ export type BuyersGuide = {
   summary: string;
   quickAnswer: string;
   explanation: string[];
+  howTheyWorkSections?: Array<{
+    title: string;
+    body?: string;
+    bullets?: string[];
+    kicker?: string;
+  }>;
   pros: string[];
   cons: string[];
   whoItMaySuit: string[];
+  whoItMaySuitSections?: Array<{
+    title: string;
+    items: string[];
+  }>;
   watchOutFor: string[];
   keyTradeoffs: string[];
+  comparisonTable?: {
+    columns: string[];
+    rows: Array<{
+      feature: string;
+      values: string[];
+    }>;
+  };
   questionsToAsk: string[];
   relatedArticles: Array<{ title: string; href: string }>;
+  bottomLine?: string[];
   disclaimer: string;
   category: 'Basics' | 'Buying Process' | 'Product Comparisons' | 'Access & Eligibility' | 'Life Stage';
 };
@@ -64,71 +82,167 @@ export const BUYERS_GUIDES: BuyersGuide[] = [
   },
   {
     slug: 'term-vs-whole-life-insurance',
-    title: 'Term vs Whole Life Insurance',
-    summary: 'A plain-language comparison of temporary protection and lifelong coverage with cash value features.',
-    quickAnswer: 'Term insurance is usually cheaper and built for a set period, while whole life is built for long-term coverage and may build cash value.',
+    title: 'Term vs Whole Life Insurance: What’s the Difference?',
+    summary: 'A simple comparison of temporary coverage and lifelong insurance with cash value, so you can understand the tradeoffs, not just the marketing.',
+    quickAnswer:
+      'Term life = lower cost, coverage for a set period. Whole life = higher cost, lifelong coverage plus cash value. The right choice depends on whether you need affordable protection now or long-term guarantees and stability.',
     explanation: [
-      'Term life insurance is often chosen when the need is tied to a time-limited problem such as raising children or covering a mortgage period.',
-      'Whole life is a form of permanent insurance. It usually costs more, but it is designed to remain in force for life and can include guaranteed values depending on the contract.'
+      'Term life and whole life solve different problems. Term is usually used when someone wants the most coverage for the lowest cost during important financial years such as raising children or paying down a mortgage.',
+      'Whole life is built for permanence. It usually costs much more, but it is designed to stay in force for life and include a cash value component. That can appeal to buyers who want long-term guarantees, but it also means a bigger premium commitment.'
     ],
-    pros: ['Term usually offers more immediate coverage per premium dollar.', 'Whole life can provide longer-term certainty and policy value features.', 'Both can be appropriate depending on the reason for buying.'],
-    cons: ['Term can become expensive or expire before long-term needs end.', 'Whole life can be more expensive than many buyers need.', 'Comparisons are often distorted by overselling investment or savings language.'],
-    whoItMaySuit: ['Term may suit budget-sensitive families with temporary protection needs.', 'Whole life may suit buyers with permanent obligations, estate goals, or strong preference for lifelong guarantees.'],
-    watchOutFor: ['Do not compare only monthly premium without comparing duration and purpose.', 'Do not assume cash value makes whole life automatically better.', 'Do not ignore what happens when term coverage ends.'],
-    keyTradeoffs: ['Lower cost now vs higher long-term certainty', 'Temporary protection vs lifelong protection', 'Simple structure vs added policy value features'],
-    questionsToAsk: ['How long do I need coverage?', 'What happens when the term ends?', 'Am I paying for permanent features I do not really need?', 'Would convertibility matter later?'],
+    howTheyWorkSections: [
+      {
+        title: 'Term Life Insurance',
+        body: 'Covers you for a fixed period such as 10, 20, or 30 years. It pays a benefit if you die during that time. If the term ends and you are still alive, there is usually no payout.',
+        bullets: ['Covers you for a fixed period (10, 20, 30 years)', 'Pays a benefit if you die during that time', 'No payout if the term expires and you are still alive'],
+        kicker: 'Think of it as renting insurance.'
+      },
+      {
+        title: 'Whole Life Insurance',
+        body: 'Covers you for life as long as the policy stays in force. It includes a cash value component that grows over time, and premiums are usually much higher than term.',
+        bullets: ['Covers you for life (as long as premiums are paid)', 'Includes a cash value component that grows over time', 'Premiums are much higher than term'],
+        kicker: 'Think of it as owning a permanent policy with savings attached.'
+      }
+    ],
+    pros: ['Term usually offers the most coverage for the lowest cost.', 'Whole life can provide lifelong coverage and structured cash accumulation.', 'Both can make sense depending on the need and budget.'],
+    cons: ['Term eventually expires.', 'Whole life is significantly more expensive.', 'Cash value growth is often slower than people expect.'],
+    whoItMaySuit: ['Buyers deciding between affordable temporary protection and lifelong guarantees.'],
+    whoItMaySuitSections: [
+      {
+        title: 'Term Life may be better if:',
+        items: ['You have a mortgage or young children.', 'You want the most coverage for the lowest cost.', 'You only need coverage for a specific time.']
+      },
+      {
+        title: 'Whole Life may be better if:',
+        items: ['You want lifelong coverage.', 'You value guaranteed cash accumulation.', 'You are planning for estate or legacy purposes.']
+      }
+    ],
+    watchOutFor: ['Term expires, so coverage may become expensive or unavailable later.', 'Whole life is significantly more expensive.', 'Cash value growth is often slower than people expect.', 'Policies can become complex depending on features and illustrations.'],
+    keyTradeoffs: ['Affordable coverage now vs long-term guarantees', 'Temporary protection vs lifetime protection', 'Simple cost efficiency vs structured policy value'],
+    comparisonTable: {
+      columns: ['Feature', 'Term Life', 'Whole Life'],
+      rows: [
+        { feature: 'Cost', values: ['Low', 'High'] },
+        { feature: 'Duration', values: ['Temporary', 'Lifetime'] },
+        { feature: 'Cash Value', values: ['No', 'Yes'] },
+        { feature: 'Flexibility', values: ['High (early)', 'Lower'] },
+        { feature: 'Long-term value', values: ['Limited', 'Potentially higher'] }
+      ]
+    },
+    questionsToAsk: ['How long do I actually need coverage?', 'Can I afford higher premiums long-term?', 'Is cash value important to me?', 'What happens when the term ends?', 'Are there simpler options that meet my needs?'],
     relatedArticles: [
       { title: 'Term vs Permanent Life Insurance', href: '/knowledge/life-insurance-basics/term-vs-permanent-life-insurance' },
       { title: 'What Is Permanent Life Insurance?', href: '/knowledge/life-insurance-basics/what-is-permanent-life-insurance' },
-      { title: 'Product Comparisons', href: '/knowledge/product-comparisons' }
+      { title: 'Coverage Calculator', href: '/tools' }
+    ],
+    bottomLine: [
+      'Term life is designed for affordability and protection during key years.',
+      'Whole life is designed for long-term certainty and structured value.',
+      'Neither is universally better. The better choice depends on your goals.'
     ],
     disclaimer: 'Educational information only. Whole life and other permanent products vary significantly by insurer and contract design.',
     category: 'Product Comparisons'
   },
   {
     slug: 'how-to-compare-life-insurance-quotes',
-    title: 'How To Compare Life Insurance Quotes',
-    summary: 'A guide to comparing quotes without getting trapped by headline price alone.',
-    quickAnswer: 'A good quote comparison looks at policy type, coverage amount, duration, renewal terms, underwriting assumptions, and contract features, not just the cheapest premium.',
+    title: 'How To Compare Life Insurance Quotes (Without Getting Misled by Price)',
+    summary: 'A practical guide to comparing life insurance quotes beyond just the monthly premium.',
+    quickAnswer:
+      'The cheapest quote is not always the best option. Compare coverage type, term length, insurer strength, policy features, and flexibility over time.',
     explanation: [
-      'Two quotes can look similar while offering very different long-term value. A lower premium may reflect shorter guarantees, fewer conversion options, or different underwriting assumptions.',
-      'The practical question is not only “Which quote is cheaper?” but “Which quote solves the need I actually have, with acceptable tradeoffs?”'
+      'Two policies with the same monthly cost can still be very different. One may offer a longer guarantee period, more flexibility, or stronger conversion options, while another may simply look cheaper at first glance.',
+      'A good quote comparison is about fit over time, not just the lowest number on day one. The real question is whether the policy still works if your needs change or if coverage has to continue longer than expected.'
     ],
-    pros: ['Better comparisons reduce the chance of buying the wrong product.', 'Helps buyers understand what they are paying for.', 'Makes follow-up questions with an advisor or insurer more specific and useful.'],
-    cons: ['Quotes can still be hard to compare when products are not equivalent.', 'Some assumptions change after underwriting.', 'Headline numbers can create false confidence if contract details are ignored.'],
-    whoItMaySuit: ['Shoppers comparing more than one provider or policy type.', 'Buyers who want clearer criteria before speaking with an advisor.', 'Consumers trying to avoid purely price-driven decisions.'],
-    watchOutFor: ['Do not compare term and permanent quotes as if they are interchangeable.', 'Do not ignore whether the quote is fully underwritten, simplified, or no-exam.', 'Do not assume the quoted premium is final until underwriting is complete.'],
-    keyTradeoffs: ['Lowest premium vs stronger contractual features', 'Speed and convenience vs more thorough underwriting', 'Short-term affordability vs longer-term renewal risk'],
-    questionsToAsk: ['Is this quote for the same policy type and term as the other one?', 'What assumptions could change after underwriting?', 'Does the policy include conversion or guaranteed renewability?', 'What happens after the initial term or rate period?'],
+    howTheyWorkSections: [
+      {
+        title: 'Why price alone can be misleading',
+        body: 'Two policies with the same monthly cost can still differ in coverage duration, exclusions, renewal costs, conversion options, and insurer reliability.'
+      },
+      {
+        title: 'What you should compare',
+        bullets: [
+          'Type of coverage: term vs permanent, temporary vs lifelong protection',
+          'Length of coverage: 10, 20, or 30 years for term, and whether it matches your needs',
+          'Premium structure: fixed or increasing, and what happens after the initial term',
+          'Conversion options: whether you can convert later and whether deadlines apply',
+          'Insurer strength: long-term financial stability matters',
+          'Policy features: riders, flexibility, and renewal conditions'
+        ]
+      }
+    ],
+    pros: ['Better comparisons reduce the chance of buying the wrong product.', 'Helps buyers understand what they are really paying for.', 'Creates better follow-up questions before making a commitment.'],
+    cons: ['Quotes can still be hard to compare when products are not equivalent.', 'Underwriting can change the final outcome.', 'Low headline prices can distract from weaker long-term terms.'],
+    whoItMaySuit: ['Shoppers comparing more than one insurer or policy type.', 'Buyers who want to avoid making a purely price-driven decision.', 'Consumers trying to understand how a quote might behave over time.'],
+    watchOutFor: ['Extremely low prices with limited flexibility.', 'Policies that become very expensive after the initial term.', 'Missing conversion options.', 'Not understanding what happens at renewal.'],
+    keyTradeoffs: ['Lower premium now vs more long-term flexibility', 'Basic features vs enhanced options', 'Cheaper headline quote vs more stable long-term structure'],
+    comparisonTable: {
+      columns: ['Factor', 'Lower Cost Option', 'Higher Cost Option'],
+      rows: [
+        { feature: 'Premium', values: ['Lower now', 'Higher now'] },
+        { feature: 'Flexibility', values: ['Limited', 'More options'] },
+        { feature: 'Long-term cost', values: ['Can increase', 'More stable'] },
+        { feature: 'Features', values: ['Basic', 'Enhanced'] }
+      ]
+    },
+    questionsToAsk: ['What happens when the term ends?', 'Can I convert this policy later?', 'Are premiums guaranteed?', 'What flexibility do I have if my situation changes?', 'How strong is the insurer?'],
     relatedArticles: [
       { title: 'How To Buy Life Insurance', href: '/knowledge/buyers-guides/how-to-buy-life-insurance' },
       { title: 'No-Exam Life Insurance Explained', href: '/knowledge/buyers-guides/no-exam-life-insurance-explained' },
       { title: 'Coverage Calculator', href: '/tools' }
     ],
+    bottomLine: ['A good policy is not just about today’s price. It is about how well it fits your needs over time.'],
     disclaimer: 'Educational information only. Quotes are not all directly comparable, and final terms may change after underwriting review.',
     category: 'Buying Process'
   },
   {
     slug: 'no-exam-life-insurance-explained',
-    title: 'No-Exam Life Insurance Explained',
-    summary: 'A clear explanation of what no-exam life insurance usually means, where it helps, and what it may cost.',
-    quickAnswer: 'No-exam life insurance usually skips the medical exam, but it does not always mean no underwriting, lower cost, or automatic approval.',
+    title: 'No-Exam Life Insurance: What It Is, How It Works, and What It Costs',
+    summary: 'A clear explanation of life insurance that does not require a medical exam, including when it helps and what to expect.',
+    quickAnswer:
+      'No-exam life insurance allows you to apply without a medical exam, but it usually comes with higher premiums, lower coverage amounts, and stricter limitations.',
     explanation: [
-      'No-exam products are often used when speed or convenience matters. Some still ask health questions and use prescription or database checks to assess risk.',
-      'The tradeoff is that easier access can come with higher premiums, lower coverage limits, or fewer product choices than traditional full underwriting.'
+      'No-exam life insurance is built around convenience and accessibility. It removes the medical exam, but it does not remove the insurer’s need to assess risk.',
+      'That means many no-exam products still rely on health questions, prescription history, and other records. In exchange for a faster or simpler process, buyers often face higher costs or lower coverage.'
     ],
-    pros: ['Can reduce friction and speed up the application process.', 'Can help buyers who dislike medical exam logistics.', 'Can work well when the coverage need is straightforward and eligibility remains acceptable.'],
-    cons: ['May cost more than fully underwritten coverage.', 'Coverage limits may be lower.', 'Some buyers mistake “no exam” for “no questions” or “guaranteed approval.”'],
-    whoItMaySuit: ['People who want a faster or simpler application path.', 'Buyers with moderate needs who still qualify under simplified underwriting.', 'Consumers comparing convenience against price efficiency.'],
-    watchOutFor: ['No exam does not mean no underwriting.', 'A quick approval path may still produce a higher premium.', 'Guaranteed issue and no-exam are not the same thing.'],
-    keyTradeoffs: ['Convenience vs pricing efficiency', 'Faster approval vs more detailed risk assessment', 'Lower friction vs potentially lower coverage flexibility'],
-    questionsToAsk: ['What underwriting still happens even without an exam?', 'How does the price compare with a fully underwritten policy?', 'Are there coverage limits or waiting periods?', 'Am I choosing speed over long-term value?'],
+    howTheyWorkSections: [
+      {
+        title: 'How it works',
+        body: 'Instead of a medical exam, insurers may use health questionnaires, prescription history, and databases or records. Approval is often faster, simpler, and less invasive.'
+      },
+      {
+        title: 'Types of no-exam coverage',
+        bullets: [
+          'Simplified issue: no medical exam, some health questions, faster approval',
+          'Guaranteed issue: no medical exam, no health questions, approval is usually easier but coverage is lower and cost is higher'
+        ]
+      }
+    ],
+    pros: ['Can speed up approval.', 'Can reduce application friction.', 'Can help people who want to avoid medical exams or who need quick coverage.'],
+    cons: ['Premiums are usually higher than traditional coverage.', 'Coverage limits may be lower.', 'Waiting periods may apply, especially with guaranteed issue.'],
+    whoItMaySuit: ['People who want quick coverage.', 'Individuals with health concerns.', 'Those who want to avoid medical exams.', 'Older applicants comparing accessible options.'],
+    watchOutFor: ['Higher premiums compared with traditional policies.', 'Lower coverage limits.', 'Waiting periods, especially with guaranteed issue.', 'Limited flexibility compared with fully underwritten products.'],
+    keyTradeoffs: ['Fast approval vs lower pricing efficiency', 'No medical exam vs more limited underwriting precision', 'Accessibility vs broader product choice'],
+    comparisonTable: {
+      columns: ['Feature', 'No-Exam Insurance', 'Traditional Insurance'],
+      rows: [
+        { feature: 'Approval speed', values: ['Fast', 'Slower'] },
+        { feature: 'Medical exam', values: ['Not required', 'Required'] },
+        { feature: 'Cost', values: ['Higher', 'Lower'] },
+        { feature: 'Coverage amount', values: ['Lower', 'Higher'] },
+        { feature: 'Underwriting accuracy', values: ['Less precise', 'More precise'] }
+      ]
+    },
+    questionsToAsk: ['Is there a waiting period before full benefits apply?', 'How much coverage can I get?', 'Are premiums fixed?', 'Is this the best option given my health?', 'What happens if I qualify for traditional coverage?'],
     relatedArticles: [
       { title: 'What Is Guaranteed Issue Life Insurance?', href: '/knowledge/life-insurance-basics/what-is-guaranteed-issue-life-insurance' },
       { title: 'How Underwriting Works', href: '/knowledge/policy-mechanics/how-underwriting-works' },
       { title: 'How To Compare Life Insurance Quotes', href: '/knowledge/buyers-guides/how-to-compare-life-insurance-quotes' }
     ],
-    disclaimer: 'Educational information only. No-exam products differ widely in underwriting, coverage limits, and pricing.',
+    bottomLine: [
+      'No-exam life insurance prioritizes speed and accessibility, but usually at a higher cost.',
+      'It can be a good option when traditional coverage is difficult or too slow, but the tradeoff needs to be understood clearly.'
+    ],
+    disclaimer: 'Educational information only. No-exam products differ widely in underwriting, coverage limits, pricing, and waiting-period rules.',
     category: 'Access & Eligibility'
   },
   {
