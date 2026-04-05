@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 const explore = [
   { label: 'News', href: '/news' },
@@ -14,18 +15,24 @@ const resources = [
   { label: 'Glossary', href: '/knowledge#glossary' }
 ] as const;
 
+const company = [
+  { label: 'About', href: '/about' },
+  { label: 'Support', href: '/support' },
+  { label: 'App', href: '/app' }
+] as const;
+
 const legal = [
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Use', href: '/terms' },
   { label: 'Disclaimer', href: '/disclaimer' },
-  { label: 'Contact', href: 'mailto:support@lifeforgeprep.com' }
+  { label: 'Contact', href: `mailto:${siteConfig.supportEmail}` }
 ] as const;
 
 export default function SiteFooter() {
   return (
     <footer className="bg-[#1F2A44] text-[#F5F7FA]">
       <div className="mx-auto max-w-7xl px-8 py-14 sm:px-10 lg:px-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
           <div>
             <h3 className="text-2xl font-bold">LifeForgePrep</h3>
             <p className="mt-2 text-sm uppercase tracking-wide text-[#6BC4B8]">Life Insurance Explained Simply</p>
@@ -49,6 +56,17 @@ export default function SiteFooter() {
             <h4 className="text-lg font-semibold">Resources</h4>
             <div className="mt-3 space-y-2">
               {resources.map((item) => (
+                <Link key={item.label} href={item.href} className="block text-[#6BC4B8] hover:underline">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-lg font-semibold">Company</h4>
+            <div className="mt-3 space-y-2">
+              {company.map((item) => (
                 <Link key={item.label} href={item.href} className="block text-[#6BC4B8] hover:underline">
                   {item.label}
                 </Link>

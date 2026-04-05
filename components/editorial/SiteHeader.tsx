@@ -17,9 +17,7 @@ const primaryLinks: NavLink[] = [
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Free Practice', href: '/free-practice', accent: true },
   { label: 'News', href: '/news' },
-  { label: 'App', href: '/app' },
-  { label: 'Support', href: '/support' },
-  { label: 'About', href: '/about' }
+  { label: 'App', href: '/app' }
 ];
 
 const knowledgeLinks: NavLink[] = [
