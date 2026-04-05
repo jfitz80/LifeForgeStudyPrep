@@ -23,6 +23,7 @@ const primaryLinks: NavLink[] = [
 const knowledgeLinks: NavLink[] = [
   { label: 'Knowledge Hub Overview', href: '/knowledge' },
   { label: 'Life Insurance Basics', href: '/knowledge/life-insurance-basics' },
+  { label: "Buyer's Guides", href: '/knowledge/buyers-guides' },
   { label: 'Annuities', href: '/knowledge/annuities' },
   { label: 'Advisor Guidance', href: '/knowledge/advisor-guidance' },
   { label: 'Product Comparisons', href: '/knowledge/product-comparisons' },

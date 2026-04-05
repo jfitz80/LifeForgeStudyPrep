@@ -71,6 +71,13 @@ const supplementalKnowledgeCards = [
     href: '/knowledge/annuities',
     eyebrow: 'Retirement Income',
     cta: 'Explore annuities'
+  },
+  {
+    title: "Buyer's Guides",
+    description: 'Read consumer-friendly guides that explain how life insurance products work, what to compare, and what to watch out for before buying.',
+    href: '/knowledge/buyers-guides',
+    eyebrow: 'Consumer Guides',
+    cta: "Browse buyer's guides"
   }
 ] as const;
 
