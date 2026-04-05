@@ -197,5 +197,15 @@ export const ADVISOR_GUIDANCE_LINKS: ComparisonGuideSeed[] = [
     title: 'What Is Evidence of Insurability?',
     description: 'Learn when extra proof is required and why that changes timing and recommendation strategy.',
     href: '/knowledge/policy-mechanics/what-is-evidence-of-insurability'
+  },
+  {
+    title: 'Retirement Income Planning',
+    description: 'See how guaranteed income, spending needs, and product fit work together in retirement.',
+    href: '/knowledge/advisor-guidance/retirement-income-planning'
+  },
+  {
+    title: 'Risk Management',
+    description: 'Review how longevity, liquidity, and family protection risks shape recommendations.',
+    href: '/knowledge/advisor-guidance/risk-management'
   }
 ];

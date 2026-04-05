@@ -111,16 +111,40 @@ export default function AnnuitiesPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
-              href="/knowledge"
+              href="/knowledge/annuities/how-annuities-work"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Explore Knowledge Hub
+              How Annuities Work
             </Link>
             <Link
               href="/news"
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
               Read Industry News
+            </Link>
+          </div>
+        </section>
+
+
+
+        <section className="mt-8 rounded-2xl border border-[#D6E8E5] bg-[#F2FBF8] p-7 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Start Here</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">A better way to understand annuities</h2>
+          <p className="mt-3 max-w-4xl text-sm leading-7 text-[#4A5568]">
+            The deeper guide focuses on the part that confuses most people: who wins if someone lives a very long time, who loses if someone dies early, and how guarantee periods, refund options, and survivor features change the outcome.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href="/knowledge/annuities/how-annuities-work"
+              className="inline-flex items-center rounded-lg bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#162033]"
+            >
+              Read the Full Explainer
+            </Link>
+            <Link
+              href="/knowledge/glossary/annuity"
+              className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+            >
+              Review the Glossary Term
             </Link>
           </div>
         </section>
