@@ -40,14 +40,18 @@ export default function BuyersGuidesPage() {
                 </div>
                 <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {guides.map((guide) => (
-                    <article key={guide.slug} className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-sm">
+                    <Link
+                      key={guide.slug}
+                      href={`/knowledge/buyers-guides/${guide.slug}`}
+                      className="group rounded-xl border border-slate-200 bg-[#F9FAFB] p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
+                    >
                       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">{guide.category}</p>
                       <h3 className="mt-2 text-xl font-bold text-[#1F2A44]">{guide.title}</h3>
                       <p className="mt-3 text-sm leading-7 text-[#4A5568]">{guide.summary}</p>
-                      <Link href={`/knowledge/buyers-guides/${guide.slug}`} className="mt-4 inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                      <span className="mt-4 inline-flex text-sm font-semibold text-[#2FAF9E] transition group-hover:text-[#1F2A44]">
                         Read guide
-                      </Link>
-                    </article>
+                      </span>
+                    </Link>
                   ))}
                 </div>
               </div>
