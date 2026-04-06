@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ContextualCTA from '@/components/conversion/ContextualCTA';
 import BuyerGuideQuestions from '@/components/knowledge/BuyerGuideQuestions';
 import BuyerGuideWatchouts from '@/components/knowledge/BuyerGuideWatchouts';
 import { BUYERS_GUIDES, getBuyersGuide } from '@/lib/knowledge/buyers-guides';
@@ -60,6 +61,40 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
           </div>
         </section>
 
+        <div className="mt-8">
+          <ContextualCTA
+            eyebrow="Studying CTA"
+            title="Studying for LLQP? Test yourself on this concept."
+            body="Understanding the guide is useful. Applying the idea under exam pressure is different. Use the free practice set to see whether the concept actually holds up when a question gets specific."
+            variant="studying"
+            actions={[
+              {
+                label: 'Start Free Practice',
+                href: '/free-practice',
+                eventPayload: {
+                  source_page: `/knowledge/buyers-guides/${guide.slug}`,
+                  destination_page: '/free-practice',
+                  cta_type: 'studying',
+                  content_type: 'buyers_guide',
+                  topic: guide.slug
+                }
+              },
+              {
+                label: 'Explore Full Exam Prep',
+                href: '/exam-prep',
+                style: 'secondary',
+                eventPayload: {
+                  source_page: `/knowledge/buyers-guides/${guide.slug}`,
+                  destination_page: '/exam-prep',
+                  cta_type: 'gap',
+                  content_type: 'buyers_guide',
+                  topic: guide.slug
+                }
+              }
+            ]}
+          />
+        </div>
+
         {guide.howTheyWorkSections?.length ? (
           <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <h2 className="text-2xl font-bold text-[#1F2A44]">How They Work</h2>
@@ -93,7 +128,10 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
                 <h3 className="text-lg font-semibold text-[#1F2A44]">Potential pros</h3>
                 <ul className="mt-3 space-y-3 text-sm leading-7 text-[#4A5568]">
                   {guide.pros.map((item) => (
-                    <li key={item} className="flex gap-3"><span className="mt-[10px] h-2 w-2 rounded-full bg-[#2FAF9E]" aria-hidden="true" /><span>{item}</span></li>
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-[10px] h-2 w-2 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -101,7 +139,10 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
                 <h3 className="text-lg font-semibold text-[#1F2A44]">Potential cons</h3>
                 <ul className="mt-3 space-y-3 text-sm leading-7 text-[#4A5568]">
                   {guide.cons.map((item) => (
-                    <li key={item} className="flex gap-3"><span className="mt-[10px] h-2 w-2 rounded-full bg-[#1F2A44]" aria-hidden="true" /><span>{item}</span></li>
+                    <li key={item} className="flex gap-3">
+                      <span className="mt-[10px] h-2 w-2 rounded-full bg-[#1F2A44]" aria-hidden="true" />
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -207,6 +248,40 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
             </div>
           </div>
         </section>
+
+        <div className="mt-8">
+          <ContextualCTA
+            eyebrow="Gap CTA"
+            title="Understanding the concept is one thing. Applying it under exam pressure is another."
+            body="If this guide helped the concept click, the next step is testing whether you can use it in a question. Start with free practice or move into deeper exam prep if you want harder scenarios."
+            variant="gap"
+            actions={[
+              {
+                label: 'Start Free Practice',
+                href: '/free-practice',
+                eventPayload: {
+                  source_page: `/knowledge/buyers-guides/${guide.slug}`,
+                  destination_page: '/free-practice',
+                  cta_type: 'bottom_studying',
+                  content_type: 'buyers_guide',
+                  topic: guide.slug
+                }
+              },
+              {
+                label: 'Explore Full Exam Prep',
+                href: '/exam-prep',
+                style: 'secondary',
+                eventPayload: {
+                  source_page: `/knowledge/buyers-guides/${guide.slug}`,
+                  destination_page: '/exam-prep',
+                  cta_type: 'bottom_gap',
+                  content_type: 'buyers_guide',
+                  topic: guide.slug
+                }
+              }
+            ]}
+          />
+        </div>
 
         {guide.bottomLine?.length ? (
           <section className="mt-8 rounded-2xl border border-[#D6E8E5] bg-[#F2FBF8] p-6 shadow-sm sm:p-8">
