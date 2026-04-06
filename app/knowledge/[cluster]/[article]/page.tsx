@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
 import GlossaryTerm from '@/components/knowledge/GlossaryTerm';
 import InlineGlossaryText from '@/components/knowledge/InlineGlossaryText';
 import {
@@ -53,9 +51,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
     .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
 
   return (
-    <>
-      <SiteHeader />
-      <main className="min-h-screen bg-[#F5F7FA] py-12">
+    <main className="min-h-screen bg-[#F5F7FA] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <header className="mb-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.14em]" style={{ color: clusterData.accent }}>
@@ -102,7 +98,5 @@ export default async function KnowledgeArticlePage({ params }: Props) {
           </div>
         </div>
       </main>
-      <SiteFooter />
-    </>
   );
 }
