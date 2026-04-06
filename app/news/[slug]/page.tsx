@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { cache } from 'react';
+import ContextualCTA from '@/components/conversion/ContextualCTA';
 import NewsCtaBlock from '@/components/news/NewsCtaBlock';
 import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsArticleView } from '@/components/news/types';
@@ -213,7 +214,12 @@ export default async function NewsArticlePage({ params }: Props) {
 
           {item.originalUrl ? (
             <p className="mt-3">
-              <a href={item.originalUrl} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+              <a
+                href={item.originalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
+              >
                 Read original source
               </a>
             </p>
@@ -245,11 +251,49 @@ export default async function NewsArticlePage({ params }: Props) {
             </div>
           </section>
 
+          <div className="mt-8">
+            <ContextualCTA
+              eyebrow="Studying CTA"
+              title="Studying for LLQP? Test yourself on this concept."
+              body="News is useful when it helps a concept stick. The next step is checking whether you can apply the idea under exam pressure instead of just recognizing it in an article."
+              variant="studying"
+              actions={[
+                {
+                  label: 'Start Free Practice',
+                  href: '/free-practice',
+                  eventPayload: {
+                    source_page: `/news/${item.slug}`,
+                    destination_page: '/free-practice',
+                    cta_type: 'news_mid_studying',
+                    content_type: 'news_article',
+                    topic: item.category
+                  }
+                },
+                {
+                  label: 'Explore Full Exam Prep',
+                  href: '/exam-prep',
+                  style: 'secondary',
+                  eventPayload: {
+                    source_page: `/news/${item.slug}`,
+                    destination_page: '/exam-prep',
+                    cta_type: 'news_mid_gap',
+                    content_type: 'news_article',
+                    topic: item.category
+                  }
+                }
+              ]}
+            />
+          </div>
+
           <section className="mt-8 rounded-xl border border-slate-200 bg-[#F5F7FA] p-5">
             <h2 className="text-lg font-bold text-[#1F2A44]">Related topics from the Knowledge Hub</h2>
             <div className="mt-4 grid gap-3 md:grid-cols-2">
               {item.relatedTopics.map((topic) => (
-                <Link key={topic.href} href={topic.href} className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44] transition hover:border-[#2FAF9E] hover:text-[#2FAF9E]">
+                <Link
+                  key={topic.href}
+                  href={topic.href}
+                  className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44] transition hover:border-[#2FAF9E] hover:text-[#2FAF9E]"
+                >
                   {topic.label}
                 </Link>
               ))}
