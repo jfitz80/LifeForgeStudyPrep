@@ -163,20 +163,49 @@ function normalizeSummary(summary: string): string {
 }
 
 function dedupeHubItems(items: HubItem[]): HubItem[] {
-  const seenKeys = new Set<string>();
   const seenSlugs = new Set<string>();
+  const seenHeadlines = new Set<string>();
+  const seenCanonicalUrls = new Set<string>();
+  const seenSummaryPairs = new Set<string>();
+
   return items.filter((item) => {
-    if (seenSlugs.has(item.slug)) return false;
-    const canonical = item.canonicalUrl?.toLowerCase() ?? '';
+    if (seenSlugs.has(item.slug)) {
+      return false;
+    }
+
+    const canonical = item.canonicalUrl?.toLowerCase().trim();
     const headlineKey = normalizeHeadline(item.title);
     const summaryKey = normalizeSummary(item.summary);
-    const compositeKey = canonical || `${headlineKey}|${summaryKey}`;
-    if (!compositeKey || seenKeys.has(compositeKey)) return false;
+    const summaryPairKey = `${headlineKey}|${summaryKey}`;
+
+    if (headlineKey && seenHeadlines.has(headlineKey)) {
+      return false;
+    }
+
+    if (canonical && seenCanonicalUrls.has(canonical)) {
+      return false;
+    }
+
+    if (seenSummaryPairs.has(summaryPairKey)) {
+      return false;
+    }
+
     seenSlugs.add(item.slug);
-    seenKeys.add(compositeKey);
+
+    if (headlineKey) {
+      seenHeadlines.add(headlineKey);
+    }
+
+    if (canonical) {
+      seenCanonicalUrls.add(canonical);
+    }
+
+    seenSummaryPairs.add(summaryPairKey);
+
     return true;
   });
 }
+
 
 function fallbackWhyThisMatters(item: Pick<HubItem, 'title' | 'summary' | 'tag'>): string {
   const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
