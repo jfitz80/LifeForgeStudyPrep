@@ -87,26 +87,29 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
   );
 }
 
-export function CategoryTag({ category }: { category: NewsCategoryKey }) {
-  const meta = newsCategoryMeta[category];
-
-  return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${meta.badgeClass}`}>
-      <Icon icon={meta.icon} />
-      <span>{meta.label}</span>
-    </span>
-  );
-}
-
 export function classifyNewsCategory(item: Pick<NewsArticleView, 'title' | 'summary' | 'tag'>): NewsCategoryKey {
   const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
 
-  if (/(regulat|policy|compliance|guideline|rule|disclosure|standards)/.test(text)) return 'regulation-policy';
-  if (/(premium|pricing|product|term|whole|universal|benefit|coverage|carrier)/.test(text)) return 'products-pricing';
-  if (/(underwriting|medical|clinical|risk class|smoker|insurability|mortality)/.test(text)) return 'risk-underwriting';
-  if (/(legal|lawsuit|litigation|court|ruling|claim dispute|denied claim|contestability)/.test(text)) {
+  if (
+    /(claim|claims|rejected claim|rejected claims|denied claim|denied claims|claim dispute|claim disputes|beneficiar|contestability|legal|lawsuit|litigation|court|ruling|judgment)/.test(
+      text
+    )
+  ) {
     return 'legal-litigation';
+  }
+
+  if (/(underwriting|medical|clinical|risk class|smoker|insurability|mortality)/.test(text)) {
+    return 'risk-underwriting';
+  }
+
+  if (/(regulat|policy|compliance|guideline|rule|disclosure|standards)/.test(text)) {
+    return 'regulation-policy';
+  }
+
+  if (/(premium|pricing|product|term|whole|universal|benefit|coverage|carrier)/.test(text)) {
+    return 'products-pricing';
   }
 
   return 'industry-trends';
 }
+
