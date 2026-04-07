@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { cache } from 'react';
-import ContextualCTA from '@/components/conversion/ContextualCTA';
+import ContextualCTA from '@/components/ContextualCTA';
 import NewsCtaBlock from '@/components/news/NewsCtaBlock';
 import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsArticleView } from '@/components/news/types';
