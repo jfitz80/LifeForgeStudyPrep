@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ContextualCTA from '@/components/conversion/ContextualCTA';
+import ContextualCTA from '@/components/ContextualCTA';
 import ClusterIcon from '@/components/knowledge/ClusterIcon';
 import GlossaryTerm from '@/components/knowledge/GlossaryTerm';
 import {
