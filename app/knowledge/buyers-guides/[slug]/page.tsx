@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ContextualCTA from '@/components/conversion/ContextualCTA';
+import ContextualCTA from '@/components/ContextualCTA';
 import BuyerGuideQuestions from '@/components/knowledge/BuyerGuideQuestions';
 import BuyerGuideWatchouts from '@/components/knowledge/BuyerGuideWatchouts';
 import { BUYERS_GUIDES, getBuyersGuide } from '@/lib/knowledge/buyers-guides';
