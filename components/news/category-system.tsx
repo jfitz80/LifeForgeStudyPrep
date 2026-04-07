@@ -88,7 +88,7 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
 }
 
 export function classifyNewsCategory(item: Pick<NewsArticleView, 'title' | 'summary' | 'tag'>): NewsCategoryKey {
-  const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
+  const text = ${item.title} ${item.summary} ${item.tag}.toLowerCase();
 
   if (
     /(claim|claims|rejected claim|rejected claims|denied claim|denied claims|claim dispute|claim disputes|beneficiar|contestability|legal|lawsuit|litigation|court|ruling|judgment)/.test(
@@ -112,4 +112,3 @@ export function classifyNewsCategory(item: Pick<NewsArticleView, 'title' | 'summ
 
   return 'industry-trends';
 }
-
