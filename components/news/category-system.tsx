@@ -48,7 +48,15 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
 
   if (icon === 'shield') {
     return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M12 3 5 7v5c0 5 3.5 7.5 7 9 3.5-1.5 7-4 7-9V7z" />
         <path d="m9.5 12.5 1.5 1.5 3.5-3.5" />
       </svg>
@@ -57,7 +65,15 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
 
   if (icon === 'gavel') {
     return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="m14 4 6 6" />
         <path d="m5 13 6 6" />
         <path d="m3 21 6-6" />
@@ -68,7 +84,15 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
 
   if (icon === 'document') {
     return (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        viewBox="0 0 24 24"
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
         <path d="M14 3v5h5" />
         <path d="M9 12h6" />
@@ -78,7 +102,15 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
   }
 
   return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M4 19h16" />
       <path d="M7 16v-5" />
       <path d="M12 16V8" />
@@ -87,8 +119,21 @@ function Icon({ icon }: { icon: NewsCategoryMeta['icon'] }): ReactElement {
   );
 }
 
+export function CategoryTag({ category }: { category: NewsCategoryKey }) {
+  const meta = newsCategoryMeta[category];
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${meta.badgeClass}`}
+    >
+      <Icon icon={meta.icon} />
+      <span>{meta.label}</span>
+    </span>
+  );
+}
+
 export function classifyNewsCategory(item: Pick<NewsArticleView, 'title' | 'summary' | 'tag'>): NewsCategoryKey {
-  const text = ${item.title} ${item.summary} ${item.tag}.toLowerCase();
+  const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
 
   if (
     /(claim|claims|rejected claim|rejected claims|denied claim|denied claims|claim dispute|claim disputes|beneficiar|contestability|legal|lawsuit|litigation|court|ruling|judgment)/.test(
