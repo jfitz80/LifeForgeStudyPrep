@@ -64,3 +64,44 @@ model IngestionJob {
   errorMessage  String?
   detailsJson   String?
 }
+
+model LeadCapture {
+  id                String   @id @default(cuid())
+  name              String?
+  email             String
+  interest          String
+  source            String?
+  submittedAt       DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  deliveryStatus    String   @default("PENDING")
+  deliveryAttemptedAt DateTime?
+  deliveryError     String?
+  crmStatus         String   @default("PENDING")
+  crmAttemptedAt    DateTime?
+  crmError          String?
+
+  @@index([email, createdAt(sort: Desc)])
+  @@index([interest, createdAt(sort: Desc)])
+}
+
+model SupportRequest {
+  id                   String   @id @default(cuid())
+  name                 String
+  email                String
+  issueType            String
+  message              String
+  source               String?
+  submittedAt          DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  notificationStatus   String   @default("PENDING")
+  notificationAttemptedAt DateTime?
+  notificationError    String?
+  crmStatus            String   @default("PENDING")
+  crmAttemptedAt       DateTime?
+  crmError             String?
+
+  @@index([email, createdAt(sort: Desc)])
+  @@index([issueType, createdAt(sort: Desc)])
+}

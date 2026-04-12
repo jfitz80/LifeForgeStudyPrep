@@ -3,16 +3,16 @@ import { siteConfig } from '@/config/site';
 
 const nextSteps = [
   {
+    title: 'Open the free pack',
+    body: 'Use the direct link below if you want to start immediately instead of waiting for the email.'
+  },
+  {
     title: 'Check your inbox',
-    body: 'Your free question pack or newsletter confirmation should arrive shortly. If it does not, check spam or promotions first.'
+    body: 'A follow-up email should arrive shortly with the same free-pack link and next-step guidance.'
   },
   {
-    title: 'Start free practice',
-    body: 'Use the interactive quick tests while the concepts are still fresh so you can turn passive reading into active recall.'
-  },
-  {
-    title: 'Explore deeper resources',
-    body: 'Move into the Knowledge Hub or Exam Prep depending on whether you need understanding, harder questions, or both.'
+    title: 'Move into practice',
+    body: 'Once you finish the pack, shift into the interactive free practice flow or the full Exam Prep path.'
   }
 ] as const;
 
@@ -24,7 +24,7 @@ export default function ThanksPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">You’re in</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Thanks. Your request has been received.</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            If you requested the free pack or newsletter updates, watch your inbox for the next message from LifeForgePrep. This page is your fastest route back into practice, product learning, or full exam prep while you wait.
+            If you requested the free pack or newsletter updates, the next email from LifeForgePrep should arrive shortly. You can also open the free pack immediately below.
           </p>
         </section>
 
@@ -39,17 +39,32 @@ export default function ThanksPage() {
         </section>
 
         <section className="rounded-2xl border border-[#D8ECE8] bg-[#F2FBF8] p-8 shadow-sm">
+          <h2 className="text-2xl font-bold text-[#1F2A44]">Access the free pack now</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
+            The email should still arrive, but you do not need to wait for it. Open the free pack now and start with the questions and cheat sheet right away.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href={siteConfig.leadMagnetPath}
+              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+            >
+              Open Free Pack
+            </Link>
+            <Link
+              href="/free-practice"
+              className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+            >
+              Start Free Practice
+            </Link>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
           <h2 className="text-2xl font-bold text-[#1F2A44]">Keep the momentum going</h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
             The free resources help you get oriented. The best next step depends on whether you want quick repetition, deeper understanding, or structured exam prep.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/free-practice"
-              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              Start Free Practice
-            </Link>
             <Link
               href="/knowledge"
               className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"

@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
-import { saveSupportSubmission, type SupportIssueType } from '@/lib/submissions';
+import {
+  markSupportCrmStatus,
+  markSupportNotificationStatus,
+  saveSupportSubmission,
+  type SupportIssueType
+} from '@/lib/submissions';
+import { notifySupportSubmission, sendCrmWebhook } from '@/lib/notifications';
 
 const validIssueTypes = new Set<SupportIssueType>([
   'Exam Prep Access',
@@ -28,29 +34,40 @@ export async function POST(request: Request) {
     if (!name) {
       return NextResponse.json({ error: 'Name is required.' }, { status: 400 });
     }
-
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: 'Valid email is required.' }, { status: 400 });
     }
-
     if (!issueType || !validIssueTypes.has(issueType)) {
       return NextResponse.json({ error: 'Issue type is required.' }, { status: 400 });
     }
-
     if (!message || message.length < 10) {
       return NextResponse.json({ error: 'Please provide a fuller message.' }, { status: 400 });
     }
 
-    saveSupportSubmission({
+    const submissionPayload = {
       name,
       email,
       issueType,
       message,
       source: source || undefined,
       submittedAt: new Date().toISOString()
-    });
+    };
 
-    return NextResponse.json({ ok: true }, { status: 200 });
+    const submission = await saveSupportSubmission(submissionPayload);
+    const notifyResult = await notifySupportSubmission(submissionPayload);
+    await markSupportNotificationStatus(submission.id, notifyResult.status, notifyResult.error);
+
+    const crmResult = await sendCrmWebhook('support', submissionPayload);
+    await markSupportCrmStatus(submission.id, crmResult.status, crmResult.error);
+
+    return NextResponse.json(
+      {
+        ok: true,
+        notificationStatus: notifyResult.status,
+        crmStatus: crmResult.status
+      },
+      { status: 200 }
+    );
   } catch {
     return NextResponse.json({ error: 'Unable to process request.' }, { status: 500 });
   }
