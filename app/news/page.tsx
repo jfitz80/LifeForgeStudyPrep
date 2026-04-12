@@ -7,6 +7,7 @@ import NewsHero from '@/components/news/NewsHero';
 import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsArticleView } from '@/components/news/types';
 import { newsItems } from '@/data/news';
+import { buildTrendingTopics, dedupeAndFilterNewsItems } from '@/lib/news/feed-utils';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 export const dynamic = 'force-dynamic';
@@ -111,6 +112,8 @@ type HubItem = {
   source: string;
   tag: string;
   canonicalUrl?: string | null;
+  isFeatured?: boolean;
+  publishedAtMs?: number;
 };
 
 type Props = {
@@ -145,68 +148,6 @@ function parseTag(raw: string | null | undefined): string {
   }
 }
 
-function normalizeHeadline(title: string): string {
-  return title
-    .toLowerCase()
-    .split(' - ')[0]
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function normalizeSummary(summary: string): string {
-  return summary
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function dedupeHubItems(items: HubItem[]): HubItem[] {
-  const seenSlugs = new Set<string>();
-  const seenHeadlines = new Set<string>();
-  const seenCanonicalUrls = new Set<string>();
-  const seenSummaryPairs = new Set<string>();
-
-  return items.filter((item) => {
-    if (seenSlugs.has(item.slug)) {
-      return false;
-    }
-
-    const canonical = item.canonicalUrl?.toLowerCase().trim();
-    const headlineKey = normalizeHeadline(item.title);
-    const summaryKey = normalizeSummary(item.summary);
-    const summaryPairKey = `${headlineKey}|${summaryKey}`;
-
-    if (headlineKey && seenHeadlines.has(headlineKey)) {
-      return false;
-    }
-
-    if (canonical && seenCanonicalUrls.has(canonical)) {
-      return false;
-    }
-
-    if (seenSummaryPairs.has(summaryPairKey)) {
-      return false;
-    }
-
-    seenSlugs.add(item.slug);
-
-    if (headlineKey) {
-      seenHeadlines.add(headlineKey);
-    }
-
-    if (canonical) {
-      seenCanonicalUrls.add(canonical);
-    }
-
-    seenSummaryPairs.add(summaryPairKey);
-
-    return true;
-  });
-}
-
-
 function fallbackWhyThisMatters(item: Pick<HubItem, 'title' | 'summary' | 'tag'>): string {
   const text = `${item.title} ${item.summary} ${item.tag}`.toLowerCase();
   if (/(underwriting|risk class|medical)/.test(text)) {
@@ -220,23 +161,6 @@ function fallbackWhyThisMatters(item: Pick<HubItem, 'title' | 'summary' | 'tag'>
   }
 
   return 'This highlights market shifts that can influence product comparisons, client planning, and exam-relevant judgment.';
-}
-
-function buildTrendingTopics(items: HubItem[]): string[] {
-  const text = items.slice(0, 20).map((item) => `${item.title} ${item.tag}`).join(' ').toLowerCase();
-  const topics: string[] = [];
-
-  if (/(ai|automation|digital|insurtech)/.test(text)) topics.push('AI in underwriting');
-  if (/(premium|pricing|rate|cost)/.test(text)) topics.push('Premium increases');
-  if (/(regulat|policy|compliance|rule)/.test(text)) topics.push('Regulatory changes');
-  if (/(claim|litigation|lawsuit)/.test(text)) topics.push('Claims disputes');
-  if (/(underwriting|risk)/.test(text)) topics.push('Underwriting trends');
-
-  if (topics.length === 0) {
-    return ['AI in underwriting', 'Premium increases', 'Regulatory changes'];
-  }
-
-  return topics.slice(0, 5);
 }
 
 async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[] }> {
@@ -259,7 +183,11 @@ async function getHubItems(): Promise<{ mode: 'live' | 'static'; items: HubItem[
         : new Date(item.createdAt).toLocaleDateString(),
       source: item.source?.name ?? 'LifeForge News',
       tag: parseTag(item.tagsJson),
-      canonicalUrl: item.canonicalUrl ?? null
+      canonicalUrl: item.canonicalUrl ?? null,
+      isFeatured: item.isFeatured ?? false,
+      publishedAtMs: item.publishedAt
+        ? new Date(item.publishedAt).getTime()
+        : new Date(item.createdAt).getTime()
     }));
 
     return { mode: 'live', items: mapped };
@@ -275,7 +203,7 @@ export default async function NewsHubPage({ searchParams }: Props) {
   const activeCategory = requestedCategory ? categoryFilterMap[requestedCategory] : undefined;
 
   const { mode, items } = await getHubItems();
-  const deduped = dedupeHubItems(items);
+  const deduped = dedupeAndFilterNewsItems(items);
 
   const categorized: NewsArticleView[] = deduped.map((item) => ({
     ...item,
