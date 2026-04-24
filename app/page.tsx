@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import SiteHeader from '@/components/editorial/SiteHeader';
-import SiteFooter from '@/components/editorial/SiteFooter';
+//import SiteHeader from '@/components/editorial/SiteHeader';
+//import SiteFooter from '@/components/editorial/SiteFooter';
 import VisualBreak from '@/components/VisualBreak';
 import SampleQuestionCard from '@/components/SampleQuestionCard';
 
@@ -22,7 +22,7 @@ const whyCards = [
 export default function HomePage() {
   return (
     <>
-      <SiteHeader />
+     
       <main className="min-h-screen bg-slate-50">
         <section className="border-b border-slate-200 bg-white">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
@@ -92,7 +92,7 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
+     
     </>
   );
 }
