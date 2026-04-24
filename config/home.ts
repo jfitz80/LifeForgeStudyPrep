@@ -146,3 +146,43 @@ export const popularTopics = [
   'Living Benefits',
   'Claim Denial Reasons'
 ] as const;
+
+
+export const insuranceFundamentalsHighlights = [
+  {
+    title: 'Insurable interest is checked when a policy is issued',
+    detail:
+      'A life policy typically requires insurable interest at issue. After issue, claims are generally determined by contract terms and policy status.',
+    relevance: 'This explains why setup quality at application stage matters so much.'
+  },
+  {
+    title: 'Grace periods can prevent avoidable policy lapse',
+    detail:
+      'Many policies include a grace period after a missed premium where coverage may still continue, subject to policy terms.',
+    relevance: 'One of the most practical clauses for families and exam candidates to understand.'
+  },
+  {
+    title: 'Reinstatement may be possible after lapse',
+    detail:
+      'Some lapsed policies can be reinstated if eligibility conditions are met, which may include evidence and payment requirements.',
+    relevance: 'Clients often do not realize lapse does not always mean permanent loss of coverage.'
+  },
+  {
+    title: 'Policy loans and withdrawals affect long-term outcomes',
+    detail:
+      'Using cash value may reduce policy performance or death benefit depending on product design and repayment behavior.',
+    relevance: 'Useful for both consumer planning and scenario-based exam logic.'
+  },
+  {
+    title: 'Underwriting exists to manage adverse selection',
+    detail:
+      'Insurers classify risk to price coverage fairly and keep pools sustainable when high-risk applicants seek larger protection.',
+    relevance: 'Core to understanding premiums, eligibility, and product recommendations.'
+  },
+  {
+    title: 'Beneficiary structure directly affects claim flow',
+    detail:
+      'Primary and contingent beneficiary setup can significantly change who receives proceeds and how smoothly claims are paid.',
+    relevance: 'A simple admin step that has major real-world impact.'
+  }
+] as const;

@@ -84,6 +84,16 @@ export const faqItems = [
     question: 'What is your refund policy?',
     answer:
       'Digital product sales are generally final, but support is available for duplicate purchases or technical access issues.'
+  },
+  {
+    question: 'Do life insurance policies always lapse immediately after a missed payment?',
+    answer:
+      'Not always. Many policies include a grace period. Coverage outcomes during that period depend on policy terms and unpaid premium treatment.'
+  },
+  {
+    question: 'Can a lapsed policy ever be put back in force?',
+    answer:
+      'Sometimes yes. Reinstatement may be possible if policy requirements are met, which can include evidence and payment conditions.'
   }
 ];
 

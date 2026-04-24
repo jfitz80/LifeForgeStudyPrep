@@ -16,6 +16,13 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const fundamentalsToReview = [
+  'Insurable interest is generally required at policy issue, not re-proven at claim time.',
+  'Grace period and reinstatement provisions can materially change lapse outcomes.',
+  'Policy loans or withdrawals can affect long-term value and death benefits.',
+  'Beneficiary setup (primary + contingent) strongly affects claim flow and payout clarity.'
+] as const;
+
 type ArticleView = {
   slug: string;
   title: string;
@@ -248,6 +255,15 @@ export default async function NewsArticlePage({ params }: Props) {
             <div id="consumer-takeaway" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
               <h2 className="text-lg font-bold text-[#1F2A44]">Consumer takeaway</h2>
               <p className="mt-2 text-sm leading-7 text-slate-700">{item.consumerTakeaway}</p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Insurance fundamentals to review</h2>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
+                {fundamentalsToReview.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
             </div>
           </section>
 
