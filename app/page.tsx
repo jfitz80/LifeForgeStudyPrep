@@ -8,7 +8,7 @@ import { newsItems } from '@/data/news';
 import { dedupeAndFilterNewsItems } from '@/lib/news/feed-utils';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
 import { ADVISOR_SCENARIOS, KNOWLEDGE_PREVIEW_CARDS, TOOL_TEASERS } from '@/lib/platform-seed';
-import { insuranceFundamentalsHighlights } from '@/config/home';
+import { insuranceFundamentalsHighlights, chapter7SupplementalBenefitsHighlights } from '@/config/home';
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Insurance Learning and LLQP Exam Prep',
@@ -386,6 +386,34 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
+      </section>
+
+
+      <section className="px-4 py-12 sm:px-6 lg:px-8"> 
+        <div className="mx-auto max-w-6xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"> 
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"> 
+            <div> 
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Chapter 7 Focus</p> 
+              <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44]">Supplemental benefits people overlook</h2> 
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]"> 
+                These are the rider concepts that frequently change real policy outcomes and show up in scenario-style exam questions.
+              </p> 
+            </div> 
+          </div> 
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3"> 
+            {chapter7SupplementalBenefitsHighlights.map((item) => ( 
+              <article key={item.code} className="rounded-2xl border border-slate-200 bg-[#F9FAFB] p-5"> 
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Objective {item.code}</p> 
+                <h3 className="mt-2 text-lg font-semibold text-[#1F2A44]">{item.title}</h3> 
+                <p className="mt-3 text-sm leading-7 text-[#4A5568]">{item.summary}</p> 
+                <p className="mt-3 rounded-lg border border-[#D8ECE8] bg-[#F2FBF8] px-3 py-2 text-sm text-[#1E887B]"> 
+                  Why this matters: {item.whyItMatters}
+                </p> 
+              </article> 
+            ))} 
+          </div> 
+        </div> 
       </section>
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">

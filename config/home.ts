@@ -186,3 +186,47 @@ export const insuranceFundamentalsHighlights = [
     relevance: 'A simple admin step that has major real-world impact.'
   }
 ] as const;
+
+
+export const chapter7SupplementalBenefitsHighlights = [
+  {
+    code: '7A',
+    title: 'Supplemental disability benefits',
+    summary:
+      'Common riders include waiver of premium, payor waiver, and disability income support. These help protect policy continuity when income is disrupted.',
+    whyItMatters:
+      'Disability risk can stop premium payments long before mortality risk materializes.'
+  },
+  {
+    code: '7B',
+    title: 'Accidental death and AD&D riders',
+    summary:
+      'These riders can increase payout for defined accidental outcomes, but usually include exclusions and strict definitions.',
+    whyItMatters:
+      'Clients often assume broad coverage, but wording and exclusions drive real claim outcomes.'
+  },
+  {
+    code: '7C',
+    title: 'Accelerated death benefit riders',
+    summary:
+      'Terminal illness, severe illness, or long-term-care-style accelerations may allow early access to part of the death benefit while living.',
+    whyItMatters:
+      'Living benefit design affects liquidity, care planning, and eventual death-benefit amounts.'
+  },
+  {
+    code: '7D',
+    title: 'Riders for additional insureds',
+    summary:
+      'Spouse, child, or second-insured riders can extend coverage beyond one life under a single policy framework.',
+    whyItMatters:
+      'Useful for family-level protection planning and cost-efficient coverage layering.'
+  },
+  {
+    code: '7E',
+    title: 'Insurability riders',
+    summary:
+      'Guaranteed insurability and paid-up additions options can allow additional coverage purchases later without new evidence in certain windows.',
+    whyItMatters:
+      'Future insurability can matter as much as current premiums for long-term planning.'
+  }
+] as const;
