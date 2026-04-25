@@ -8,11 +8,12 @@ export const siteConfig = {
   regularPriceDisplay: '$29',
   launchPriceDisplay: '$8.99',
   price: '$8.99',
-siteUrl: 'https://www.lifeforgeprep.com',
 
   checkoutUrl: 'https://payhip.com/b/xwfO6',
   appStoreUrl: 'https://apps.apple.com/ca/app/lifeforgeprep/id6761309802',
   playStoreUrl: '',
+  leadMagnetPath: '/thanks',
+  siteUrl: 'https://www.lifeforgeprep.com',
   supportEmail: 'support@lifeforgeprep.com',
   domain: 'www.lifeforgeprep.com',
 
@@ -52,13 +53,13 @@ export const insideGuideItems = [
   'Exam traps & common mistakes',
   'Scenario questions with explanations',
   'Quick review checklists'
-];
+] as const;
 
 export const howItWorksSteps = [
   'Download instantly',
   'Study with checklists + scenarios',
   'Test yourself with practice questions'
-];
+] as const;
 
 export const faqItems = [
   {
@@ -96,7 +97,7 @@ export const faqItems = [
     answer:
       'Sometimes yes. Reinstatement may be possible if policy requirements are met, which can include evidence and payment conditions.'
   }
-];
+] as const;
 
 export const sampleQuestion = {
   heading: 'Question Most Candidates Get Wrong',
@@ -110,4 +111,5 @@ export const sampleQuestion = {
   ],
   reveal:
     'Correct answer: C — the death benefit is paid, but the unpaid premium is deducted.'
-};
+} as const;
+
