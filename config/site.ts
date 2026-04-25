@@ -1,5 +1,5 @@
 export const siteConfig = {
-  brandName: 'LifeForgePrep',
+  brandName: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
   productName: 'Life Insurance Exam Question Bank',
 
@@ -10,10 +10,10 @@ export const siteConfig = {
   price: '$8.99',
 
   checkoutUrl: 'https://payhip.com/b/xwfO6',
-  supportEmail: 'lifeforgewealth@gmail.com',
+  appStoreUrl: 'https://apps.apple.com/ca/app/lifeforgeprep/id6761309802',
+  playStoreUrl: '',
+  supportEmail: 'support@lifeforgeprep.com',
   domain: 'www.lifeforgeprep.com',
-  siteUrl: 'https://www.lifeforgeprep.com',
-  leadMagnetPath: '/free-pack',
 
   seo: {
     title: 'LifeForge Insurance Prep | Life Insurance Exam Question Bank',
@@ -27,7 +27,7 @@ export const siteConfig = {
     refundPolicy: '/refund-policy',
     disclaimer: '/disclaimer'
   }
-};
+} as const;
 
 export const heroCopy = {
   eyebrow: 'LifeForge Insurance Prep',
