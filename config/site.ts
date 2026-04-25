@@ -8,6 +8,7 @@ export const siteConfig = {
   regularPriceDisplay: '$29',
   launchPriceDisplay: '$8.99',
   price: '$8.99',
+siteUrl: 'https://www.lifeforgeprep.com',
 
   checkoutUrl: 'https://payhip.com/b/xwfO6',
   appStoreUrl: 'https://apps.apple.com/ca/app/lifeforgeprep/id6761309802',
