@@ -1,9 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import NewsletterSignup from '@/components/news/NewsletterSignup';
-import NewsArticleCard, { NewsCardItem, NewsCategory } from '@/components/news/NewsArticleCard';
+import { FormEvent, useMemo, useState } from 'react';
 
 type BriefItem = {
   headline: string;
@@ -11,7 +9,24 @@ type BriefItem = {
   why: string;
 };
 
+type NewsCategory =
+  | 'Life Insurance'
+  | 'Annuities'
+  | 'Regulation'
+  | 'Industry Trends'
+  | 'Claims'
+  | 'Consumer Education';
+
 type CategoryTab = 'All' | NewsCategory;
+
+type NewsItem = {
+  category: NewsCategory;
+  title: string;
+  date: string;
+  summary: string;
+  whyItMatters?: string;
+  href: string;
+};
 
 const categories: CategoryTab[] = [
   'All',
@@ -55,7 +70,7 @@ const featuredInsight = {
   href: '/news/claims-communication-consumer-pain-point'
 };
 
-const articles: NewsCardItem[] = [
+const articles: NewsItem[] = [
   {
     category: 'Life Insurance',
     title: 'Term product comparisons are shifting in 2026',
@@ -106,11 +121,60 @@ const articles: NewsCardItem[] = [
   }
 ];
 
-export const metadata = {
-  title: 'News | LifeForge Insurance Prep',
-  description:
-    'Life insurance digest with product trends, regulation updates, and practical exam-prep relevance.'
-};
+function NewsletterSignup({
+  title,
+  subtitle,
+  buttonLabel
+}: {
+  title: string;
+  subtitle: string;
+  buttonLabel: string;
+}) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      return;
+    }
+
+    // TODO: connect to Kit/Mailchimp/Resend
+    setStatus('success');
+    setEmail('');
+  }
+
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <h2 className="text-2xl font-bold tracking-tight text-slate-900">{title}</h2>
+      <p className="mt-2 text-sm leading-7 text-slate-600">{subtitle}</p>
+
+      <form onSubmit={onSubmit} className="mt-5 flex w-full max-w-xl flex-col gap-3 sm:flex-row">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
+          required
+        />
+        <button
+          type="submit"
+          className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+        >
+          {buttonLabel}
+        </button>
+      </form>
+
+      <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
+
+      {status === 'success' ? <p className="mt-2 text-sm text-emerald-700">Thanks — you’re subscribed.</p> : null}
+      {status === 'error' ? <p className="mt-2 text-sm text-rose-700">Please enter a valid email address.</p> : null}
+    </section>
+  );
+}
 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryTab>('All');
@@ -134,7 +198,6 @@ export default function NewsPage() {
 
           <div className="mt-7 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
             <NewsletterSignup
-              compact
               title=""
               subtitle=""
               buttonLabel="Get the Weekly Digest"
@@ -213,8 +276,24 @@ export default function NewsPage() {
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
-            {filteredArticles.map((article) => (
-              <NewsArticleCard key={`${article.title}-${article.date}`} item={article} />
+            {filteredArticles.map((item) => (
+              <article key={`${item.title}-${item.date}`} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 font-semibold text-slate-700">{item.category}</span>
+                  <span>•</span>
+                  <span>{item.date}</span>
+                </div>
+                <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900">{item.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
+                {item.whyItMatters ? (
+                  <p className="mt-3 text-sm text-slate-700">
+                    <span className="font-semibold">Why it matters:</span> {item.whyItMatters}
+                  </p>
+                ) : null}
+                <Link href={item.href} className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
+                  Read More
+                </Link>
+              </article>
             ))}
           </div>
         )}
@@ -222,7 +301,11 @@ export default function NewsPage() {
 
       <section className="border-y border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <NewsletterSignup />
+          <NewsletterSignup
+            title="Get the 2-minute insurance brief every week."
+            subtitle="No noise. Just what matters."
+            buttonLabel="Subscribe"
+          />
         </div>
       </section>
 
@@ -235,16 +318,10 @@ export default function NewsPage() {
             LifeForgePrep connects real insurance trends to the concepts learners need to understand.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/free-practice"
-              className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-700"
-            >
+            <Link href="/free-practice" className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-700">
               Start Free Practice
             </Link>
-            <Link
-              href="/exam-prep"
-              className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100"
-            >
+            <Link href="/exam-prep" className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100">
               Explore Exam Prep
             </Link>
           </div>
