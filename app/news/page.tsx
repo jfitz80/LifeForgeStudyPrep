@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Script from 'next/script';
 import { FormEvent, useMemo, useState } from 'react';
 
 type BriefItem = {
