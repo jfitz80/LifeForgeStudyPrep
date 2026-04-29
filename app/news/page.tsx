@@ -147,32 +147,27 @@ function NewsletterSignup({
   }
 
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <h2 className="text-2xl font-bold tracking-tight text-slate-900">{title}</h2>
-      <p className="mt-2 text-sm leading-7 text-slate-600">{subtitle}</p>
+   <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+  <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+    Get the 2-minute insurance brief every week.
+  </h2>
+  <p className="mt-2 text-sm leading-7 text-slate-600">
+    No noise. Just what matters.
+  </p>
 
-      <form onSubmit={onSubmit} className="mt-5 flex w-full max-w-xl flex-col gap-3 sm:flex-row">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@example.com"
-          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
-          required
-        />
-        <button
-          type="submit"
-          className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
-        >
-          {buttonLabel}
-        </button>
-      </form>
+  <div className="mt-5">
+    <Script
+      async
+      data-uid="b13949982f"
+      src="https://lifeforgetrading.kit.com/b13949982f/index.js"
+      strategy="afterInteractive"
+    />
+  </div>
 
-      <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
-
-      {status === 'success' ? <p className="mt-2 text-sm text-emerald-700">Thanks — you’re subscribed.</p> : null}
-      {status === 'error' ? <p className="mt-2 text-sm text-rose-700">Please enter a valid email address.</p> : null}
-    </section>
+  <p className="mt-3 text-xs text-slate-500">
+    No spam. Just the weekly insurance brief.
+  </p>
+</section>
   );
 }
 
