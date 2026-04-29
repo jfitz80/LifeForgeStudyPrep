@@ -42,12 +42,10 @@ export default function NewsArticleCard({ item }: Props) {
         </p>
       ) : null}
 
-      <Link
-        href={item.href}
-        className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900"
-      >
+      <Link href={item.href} className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
         Read More
       </Link>
     </article>
   );
 }
+
