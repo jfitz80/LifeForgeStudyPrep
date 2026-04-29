@@ -1,14 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Script from 'next/script';
 import { useMemo, useState } from 'react';
-
-type BriefItem = {
-  headline: string;
-  summary: string;
-  whyItMatters: string;
-};
 
 type NewsCategory =
   | 'Life Insurance'
@@ -20,11 +13,17 @@ type NewsCategory =
 
 type CategoryFilter = 'All' | NewsCategory;
 
+type BriefItem = {
+  headline: string;
+  summary: string;
+  why: string;
+};
+
 type NewsItem = {
   id: string;
   category: NewsCategory;
   title: string;
-  publishedDate: string;
+  date: string;
   summary: string;
   whyItMatters?: string;
   href: string;
@@ -43,109 +42,71 @@ const categories: CategoryFilter[] = [
 const weeklyBrief: BriefItem[] = [
   {
     headline: 'Carriers tighten underwriting in selected risk segments',
-    summary:
-      'Several insurers signaled stricter evidence requirements in higher-risk application profiles.',
-    whyItMatters:
-      'This affects recommendation strategy and expectation-setting with clients.'
+    summary: 'Several insurers signaled stricter evidence requirements in higher-risk profiles.',
+    why: 'This affects recommendation strategy and expectation setting.'
   },
   {
     headline: 'Disclosure language updates continue',
-    summary:
-      'More plain-language disclosure templates are being adopted in consumer communications.',
-    whyItMatters:
-      'Clear communication helps reduce confusion and suitability complaints.'
+    summary: 'Plain-language policy communications are expanding across providers.',
+    why: 'Clear communication helps reduce confusion and complaint risk.'
   },
   {
     headline: 'Claims servicing turnaround improves',
-    summary:
-      'Workflow updates are reducing delays in common claims status and follow-up processes.',
-    whyItMatters:
-      'Faster, clearer servicing improves trust and long-term retention.'
+    summary: 'Workflow updates are reducing delays in common claims scenarios.',
+    why: 'Faster servicing supports client trust and retention.'
   },
   {
-    headline: 'Term pricing remains competitive in core family markets',
-    summary:
-      'Carriers continue adjusting term offerings to stay competitive with digital-first buyers.',
-    whyItMatters:
-      'Important context for needs analysis and policy comparisons.'
+    headline: 'Term pricing remains competitive',
+    summary: 'Carriers continue adjusting term offerings for core family markets.',
+    why: 'Important context for needs analysis and policy comparisons.'
   }
 ];
 
 const featuredInsight = {
   title: 'How claims communication quality is becoming a competitive advantage',
   summary:
-    'Insurers are improving claims timelines, status updates, and plain-language communication to reduce friction for policyholders and beneficiaries.',
-  whyItMatters:
-    'For learners and advisors, this shows that long-term policy value is not only premium and coverage, but also service quality.',
+    'Insurers are improving timelines, status updates, and plain-language claims communication to reduce friction for policyholders and beneficiaries.',
+  why:
+    'For learners and advisors, this shows policy value includes service quality, not just premium and coverage.',
   href: '/news/claims-communication-consumer-pain-point'
 };
 
 const articles: NewsItem[] = [
   {
-    id: 'n1',
+    id: '1',
     category: 'Life Insurance',
     title: 'Term product comparisons are shifting in 2026',
-    publishedDate: 'April 28, 2026',
-    summary:
-      'Carriers are repositioning term offerings for younger families and digital channels.',
-    whyItMatters:
-      'Helps learners connect pricing dynamics to recommendation logic.',
+    date: 'April 28, 2026',
+    summary: 'Carriers are repositioning term offerings for younger families and digital buyers.',
+    whyItMatters: 'Helps connect pricing dynamics to recommendation logic.',
     href: '/news/carrier-pricing-updates-term-comparisons'
   },
   {
-    id: 'n2',
+    id: '2',
     category: 'Regulation',
     title: 'Suitability and disclosure remain a policy focus',
-    publishedDate: 'April 27, 2026',
-    summary:
-      'Guidance continues to emphasize stronger documentation and consumer clarity.',
-    whyItMatters:
-      'Directly relevant to LLQP-style ethics and suitability scenarios.',
+    date: 'April 27, 2026',
+    summary: 'Guidance continues to emphasize clear explanations and stronger documentation.',
+    whyItMatters: 'Directly relevant to LLQP-style ethics and suitability scenarios.',
     href: '/news/regulatory-disclosure-suitability-focus'
   },
   {
-    id: 'n3',
+    id: '3',
     category: 'Industry Trends',
     title: 'Underwriting modernization expands with human review controls',
-    publishedDate: 'April 26, 2026',
-    summary:
-      'Automation is growing, but carriers are adding stronger manual quality checkpoints.',
-    whyItMatters:
-      'Useful context for underwriting and risk classification concepts.',
+    date: 'April 26, 2026',
+    summary: 'Automation is growing, with stronger manual quality checkpoints.',
+    whyItMatters: 'Supports understanding of underwriting and risk classification.',
     href: '/news/underwriting-modernization-human-review-critical'
   },
   {
-    id: 'n4',
+    id: '4',
     category: 'Claims',
     title: 'Claims servicing updates improve response expectations',
-    publishedDate: 'April 25, 2026',
-    summary:
-      'Process changes target faster communication and clearer claim status visibility.',
-    whyItMatters:
-      'Supports better client conversations during sensitive claim periods.',
+    date: 'April 25, 2026',
+    summary: 'Process improvements target faster communication and clearer claim status tracking.',
+    whyItMatters: 'Useful for client communication during sensitive claim periods.',
     href: '/news/claims-communication-consumer-pain-point'
-  },
-  {
-    id: 'n5',
-    category: 'Annuities',
-    title: 'Annuity explanations are becoming more client-friendly',
-    publishedDate: 'April 24, 2026',
-    summary:
-      'Providers are simplifying wording around guarantees, fees, and product mechanics.',
-    whyItMatters:
-      'Clear education improves suitability discussions and confidence.',
-    href: '/news'
-  },
-  {
-    id: 'n6',
-    category: 'Consumer Education',
-    title: 'Consumers are comparing policy details more closely before buying',
-    publishedDate: 'April 23, 2026',
-    summary:
-      'Buyers are paying more attention to exclusions, servicing, and claim pathways.',
-    whyItMatters:
-      'Education-first guidance builds trust and reduces future friction.',
-    href: '/news'
   }
 ];
 
@@ -168,50 +129,38 @@ export default function NewsPage() {
             Life Insurance News, Explained Simply
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">
-            A weekly digest of insurance headlines, product trends, regulation, and what they
-            mean for learners, advisors, and curious consumers.
+            A weekly digest of insurance headlines, product trends, regulation, and what they mean for learners, advisors, and curious consumers.
           </p>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-  <div className="rounded-2xl border border-slate-200 bg-white p-4">
-    <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4">
+              <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
 
-    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
-      <form
-        action="/api/lead"
-        method="POST"
-        className="flex w-full max-w-xl flex-col gap-3 sm:flex-row"
-      >
-        <input type="hidden" name="source" value="news_digest" />
-        <label htmlFor="news-email" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="news-email"
-          name="email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
-        >
-          Get the Weekly Digest
-        </button>
-      </form>
-      <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
-    </div>
-  </div>
+              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <form action="/api/lead" method="POST" className="flex w-full max-w-xl flex-col gap-3 sm:flex-row">
+                  <input type="hidden" name="source" value="news_digest" />
+                  <label htmlFor="news-email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="news-email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+                  >
+                    Get the Weekly Digest
+                  </button>
+                </form>
+                <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
+              </div>
+            </div>
 
-  <Link
-    href="#latest-news"
-    className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-  >
-    Browse Latest News
-  </Link>
-</div>
             <Link
               href="#latest-news"
               className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
@@ -232,7 +181,7 @@ export default function NewsPage() {
                   <h3 className="text-sm font-semibold text-slate-900">{item.headline}</h3>
                   <p className="mt-1 text-sm leading-6 text-slate-600">{item.summary}</p>
                   <p className="mt-2 text-xs font-medium uppercase tracking-wide text-brand-700">
-                    Why it matters: {item.whyItMatters}
+                    Why it matters: {item.why}
                   </p>
                 </li>
               ))}
@@ -243,13 +192,11 @@ export default function NewsPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-700">
               Featured Insight
             </p>
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900">
-              {featuredInsight.title}
-            </h2>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900">{featuredInsight.title}</h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">{featuredInsight.summary}</p>
             <div className="mt-4 rounded-xl border border-brand-100 bg-brand-50 p-4">
               <p className="text-sm text-brand-900">
-                <span className="font-semibold">Why it matters:</span> {featuredInsight.whyItMatters}
+                <span className="font-semibold">Why it matters:</span> {featuredInsight.why}
               </p>
             </div>
             <Link
@@ -270,7 +217,6 @@ export default function NewsPage() {
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              aria-pressed={activeCategory === category}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activeCategory === category
                   ? 'bg-slate-900 text-white'
@@ -297,7 +243,7 @@ export default function NewsPage() {
                     {item.category}
                   </span>
                   <span>•</span>
-                  <span>{item.publishedDate}</span>
+                  <span>{item.date}</span>
                 </div>
                 <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900">{item.title}</h3>
                 <p className="mt-2 text-sm leading-7 text-slate-600">{item.summary}</p>
@@ -306,37 +252,13 @@ export default function NewsPage() {
                     <span className="font-semibold">Why it matters:</span> {item.whyItMatters}
                   </p>
                 ) : null}
-                <Link
-                  href={item.href}
-                  className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900"
-                >
+                <Link href={item.href} className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900">
                   Read More
                 </Link>
               </article>
             ))}
           </div>
         )}
-      </section>
-
-      <section className="border-y border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Get the 2-minute insurance brief every week.
-            </h2>
-            <p className="mt-2 text-sm leading-7 text-slate-600">No noise. Just what matters.</p>
-            <div className="mt-5 min-h-[110px] rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <div id="kit-form-news-bottom" />
-              <Script
-                id="kit-news-embed-bottom"
-                src="https://lifeforgetrading.kit.com/b13949982f/index.js"
-                data-uid="b13949982f"
-                strategy="afterInteractive"
-              />
-            </div>
-            <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
-          </div>
-        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
