@@ -176,15 +176,32 @@ export default function NewsPage() {
             <div className="rounded-2xl border border-slate-200 bg-white p-4">
               <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
               <div className="mt-4 min-h-[110px] rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <div id="kit-form-news" />
-                <Script
-                  id="kit-news-embed"
-                  src="https://lifeforgetrading.kit.com/b13949982f/index.js"
-                  data-uid="b13949982f"
-                  strategy="afterInteractive"
-                />
-              </div>
-              <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
+               <form
+  action="/api/lead"
+  method="POST"
+  className="mt-5 flex w-full max-w-xl flex-col gap-3 sm:flex-row"
+>
+  <input type="hidden" name="source" value="news_digest" />
+  <label htmlFor="news-email" className="sr-only">
+    Email address
+  </label>
+  <input
+    id="news-email"
+    name="email"
+    type="email"
+    required
+    placeholder="you@example.com"
+    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
+  />
+  <button
+    type="submit"
+    className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+  >
+    Get the Weekly Digest
+  </button>
+</form>
+<p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
+
             </div>
 
             <Link
