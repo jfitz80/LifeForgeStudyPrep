@@ -173,37 +173,45 @@ export default function NewsPage() {
           </p>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-            <div className="rounded-2xl border border-slate-200 bg-white p-4">
-              <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
-              <div className="mt-4 min-h-[110px] rounded-xl border border-slate-200 bg-slate-50 p-4">
-               <form
-  action="/api/lead"
-  method="POST"
-  className="mt-5 flex w-full max-w-xl flex-col gap-3 sm:flex-row"
->
-  <input type="hidden" name="source" value="news_digest" />
-  <label htmlFor="news-email" className="sr-only">
-    Email address
-  </label>
-  <input
-    id="news-email"
-    name="email"
-    type="email"
-    required
-    placeholder="you@example.com"
-    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
-  />
-  <button
-    type="submit"
-    className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+  <div className="rounded-2xl border border-slate-200 bg-white p-4">
+    <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
+
+    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <form
+        action="/api/lead"
+        method="POST"
+        className="flex w-full max-w-xl flex-col gap-3 sm:flex-row"
+      >
+        <input type="hidden" name="source" value="news_digest" />
+        <label htmlFor="news-email" className="sr-only">
+          Email address
+        </label>
+        <input
+          id="news-email"
+          name="email"
+          type="email"
+          required
+          placeholder="you@example.com"
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
+        />
+        <button
+          type="submit"
+          className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+        >
+          Get the Weekly Digest
+        </button>
+      </form>
+      <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
+    </div>
+  </div>
+
+  <Link
+    href="#latest-news"
+    className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
   >
-    Get the Weekly Digest
-  </button>
-</form>
-<p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
-
-            </div>
-
+    Browse Latest News
+  </Link>
+</div>
             <Link
               href="#latest-news"
               className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
