@@ -148,7 +148,7 @@ function NewsletterSignup({
   }
 
   return (
-   <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+  <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
   <h2 className="text-2xl font-bold tracking-tight text-slate-900">
     Get the 2-minute insurance brief every week.
   </h2>
@@ -156,21 +156,19 @@ function NewsletterSignup({
     No noise. Just what matters.
   </p>
 
-  <div className="mt-5">
+  <div className="mt-5 min-h-[120px] rounded-xl border border-slate-200 bg-slate-50 p-4">
+    <div id="kit-form-news" />
     <Script
-      async
-      data-uid="b13949982f"
+      id="kit-news-embed"
       src="https://lifeforgetrading.kit.com/b13949982f/index.js"
+      data-uid="b13949982f"
       strategy="afterInteractive"
     />
+    <p className="mt-3 text-xs text-slate-500">
+      No spam. Just the weekly insurance brief.
+    </p>
   </div>
-
-  <p className="mt-3 text-xs text-slate-500">
-    No spam. Just the weekly insurance brief.
-  </p>
 </section>
-  );
-}
 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryTab>('All');
