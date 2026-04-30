@@ -157,6 +157,7 @@ export default function NewsPage() {
                     Get the Weekly Digest
                   </button>
                 </form>
+                <script async data-uid="d6b92e6422" src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"></script>
                 <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
               </div>
             </div>
