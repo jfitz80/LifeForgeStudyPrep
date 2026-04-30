@@ -156,12 +156,33 @@ export default function NewsPage() {
                     className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
                   >
                     Get the Weekly Digest
-                  </button>
-                </form>
-                <script async data-uid="d6b92e6422" src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"></script>
-                <p className="mt-3 text-xs text-slate-500">No spam. Just the weekly insurance brief.</p>
-              </div>
-            </div>
+                  export default function NewsletterSignup() {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <h3 className="text-lg font-semibold text-slate-900">
+        Get the weekly life insurance brief
+      </h3>
+
+      <p className="mt-2 text-sm text-slate-600">
+        Practical insurance updates, study tips, and plain-English explainers.
+      </p>
+
+      <div className="mt-4">
+        <Script
+          id="kit-life-insurance-form"
+          async
+          data-uid="d6b92e6422"
+          src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"
+          strategy="afterInteractive"
+        />
+      </div>
+
+      <p className="mt-3 text-xs text-slate-500">
+        No spam. Just the weekly life insurance brief.
+      </p>
+    </div>
+  );
+}
 
             <Link
               href="#latest-news"
