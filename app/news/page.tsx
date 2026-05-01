@@ -140,13 +140,7 @@ export default function NewsPage() {
     </p>
 
     <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
-      <Script
-        id="kit-life-insurance-form"
-        async
-        data-uid="d6b92e6422"
-        src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"
-        strategy="afterInteractive"
-      />
+      <script async data-uid="d6b92e6422" src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"></script>
 
       <p className="mt-3 text-xs text-slate-500">
         No spam. Just the weekly life insurance brief.
