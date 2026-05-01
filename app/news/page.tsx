@@ -134,63 +134,33 @@ export default function NewsPage() {
           </p>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-            <div className="rounded-2xl border border-slate-200 bg-white p-4">
-              <p className="text-sm text-slate-600">Get the 2-minute insurance brief every week.</p>
+  <div className="rounded-2xl border border-slate-200 bg-white p-4">
+    <p className="text-sm text-slate-600">
+      Get the 2-minute insurance brief every week.
+    </p>
 
-              <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <form action="/api/lead" method="POST" className="flex w-full max-w-xl flex-col gap-3 sm:flex-row">
-                  <input type="hidden" name="source" value="news_digest" />
-                  <label htmlFor="news-email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="news-email"
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-brand-500 focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    className="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
-                  >
-                    Get the Weekly Digest
-                  export default function NewsletterSignup() {
-  return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h3 className="text-lg font-semibold text-slate-900">
-        Get the weekly life insurance brief
-      </h3>
-
-      <p className="mt-2 text-sm text-slate-600">
-        Practical insurance updates, study tips, and plain-English explainers.
-      </p>
-
-      <div className="mt-4">
-        <Script
-          id="kit-life-insurance-form"
-          async
-          data-uid="d6b92e6422"
-          src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"
-          strategy="afterInteractive"
-        />
-      </div>
+    <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <Script
+        id="kit-life-insurance-form"
+        async
+        data-uid="d6b92e6422"
+        src="https://lifeforgetrading.kit.com/d6b92e6422/index.js"
+        strategy="afterInteractive"
+      />
 
       <p className="mt-3 text-xs text-slate-500">
         No spam. Just the weekly life insurance brief.
       </p>
     </div>
-  );
-}
+  </div>
 
-            <Link
-              href="#latest-news"
-              className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-            >
-              Browse Latest News
-            </Link>
-          </div>
+  <Link
+    href="#latest-news"
+    className="inline-flex h-[46px] items-center justify-center rounded-xl border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+  >
+    Browse Latest News
+  </Link>
+</div>
         </div>
       </section>
 
