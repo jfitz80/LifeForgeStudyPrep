@@ -1,3 +1,103 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { SubscribeForm } from "../subscribe-form";
+import styles from "./news.module.css";
+
+type NewsCategory =
+  | "Life Insurance"
+  | "Annuities"
+  | "Regulation"
+  | "Industry Trends"
+  | "Claims"
+  | "Consumer Education";
+
+type CategoryFilter = "All" | NewsCategory;
+
+type BriefItem = {
+  headline: string;
+  summary: string;
+  why: string;
+};
+
+type NewsItem = {
+  id: string;
+  category: NewsCategory;
+  title: string;
+  date: string;
+  summary: string;
+  whyItMatters?: string;
+  href: string;
+};
+
+const categories: CategoryFilter[] = [
+  "All",
+  "Life Insurance",
+  "Annuities",
+  "Regulation",
+  "Industry Trends",
+  "Claims",
+  "Consumer Education"
+];
+
+const weeklyBrief: BriefItem[] = [
+  {
+    headline: "Carriers tighten underwriting in selected risk segments",
+    summary: "Several insurers signaled stricter evidence requirements in higher-risk profiles.",
+    why: "This affects recommendation strategy and expectation setting."
+  },
+  {
+    headline: "Disclosure language updates continue",
+    summary: "Plain-language policy communications are expanding across providers.",
+    why: "Clear communication helps reduce confusion and complaint risk."
+  },
+  {
+    headline: "Claims servicing turnaround improves",
+    summary: "Workflow updates are reducing delays in common claims scenarios.",
+    why: "Faster servicing supports client trust and retention."
+  },
+  {
+    headline: "Term pricing remains competitive",
+    summary: "Carriers continue adjusting term offerings for core family markets.",
+    why: "Important context for needs analysis and policy comparisons."
+  }
+];
+
+const featuredInsight = {
+  title: "How claims communication quality is becoming a competitive advantage",
+  summary:
+    "Insurers are improving timelines, status updates, and plain-language claims communication to reduce friction for policyholders and beneficiaries.",
+  why:
+    "For learners and advisors, this shows policy value includes service quality, not just premium and coverage.",
+  href: "/news/claims-communication-consumer-pain-point"
+};
+
+const articles: NewsItem[] = [
+  {
+    id: "1",
+    category: "Life Insurance",
+    title: "Term product comparisons are shifting in 2026",
+    date: "April 28, 2026",
+    summary: "Carriers are repositioning term offerings for younger families and digital buyers.",
+    whyItMatters: "Helps connect pricing dynamics to recommendation logic.",
+    href: "/news/carrier-pricing-updates-term-comparisons"
+  },
+  {
+    id: "2",
+    category: "Regulation",
+    title: "Suitability and disclosure remain a policy focus",
+    date: "April 27, 2026",
+    summary: "Guidance continues to emphasize clear explanations and stronger documentation.",
+    whyItMatters: "Directly relevant to LLQP-style ethics and suitability scenarios.",
+    href: "/news/regulatory-disclosure-suitability-focus"
+  },
+  {
+    id: "3",
+    category: "Industry Trends",
+    title: "Underwriting modernization expands with human review controls",
+    date: "April 26, 2026",
+    summary: "Automation is growing, with stronger manual quality checkpoints.",
     whyItMatters: "Supports understanding of underwriting and risk classification.",
     href: "/news/underwriting-modernization-human-review-critical"
   },
