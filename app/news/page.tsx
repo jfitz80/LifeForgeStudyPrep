@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
-import { SubscribeForm } from "../subscribe-form";
-import styles from "./news.module.css";
 
 type NewsCategory =
   | "Life Insurance"
@@ -15,22 +14,6 @@ type NewsCategory =
 
 type CategoryFilter = "All" | NewsCategory;
 
-type BriefItem = {
-  headline: string;
-  summary: string;
-  why: string;
-};
-
-type NewsItem = {
-  id: string;
-  category: NewsCategory;
-  title: string;
-  date: string;
-  summary: string;
-  whyItMatters?: string;
-  href: string;
-};
-
 const categories: CategoryFilter[] = [
   "All",
   "Life Insurance",
@@ -41,7 +24,7 @@ const categories: CategoryFilter[] = [
   "Consumer Education"
 ];
 
-const weeklyBrief: BriefItem[] = [
+const weeklyBrief = [
   {
     headline: "Carriers tighten underwriting in selected risk segments",
     summary: "Several insurers signaled stricter evidence requirements in higher-risk profiles.",
@@ -56,27 +39,13 @@ const weeklyBrief: BriefItem[] = [
     headline: "Claims servicing turnaround improves",
     summary: "Workflow updates are reducing delays in common claims scenarios.",
     why: "Faster servicing supports client trust and retention."
-  },
-  {
-    headline: "Term pricing remains competitive",
-    summary: "Carriers continue adjusting term offerings for core family markets.",
-    why: "Important context for needs analysis and policy comparisons."
   }
 ];
 
-const featuredInsight = {
-  title: "How claims communication quality is becoming a competitive advantage",
-  summary:
-    "Insurers are improving timelines, status updates, and plain-language claims communication to reduce friction for policyholders and beneficiaries.",
-  why:
-    "For learners and advisors, this shows policy value includes service quality, not just premium and coverage.",
-  href: "/news/claims-communication-consumer-pain-point"
-};
-
-const articles: NewsItem[] = [
+const articles = [
   {
     id: "1",
-    category: "Life Insurance",
+    category: "Life Insurance" as const,
     title: "Term product comparisons are shifting in 2026",
     date: "April 28, 2026",
     summary: "Carriers are repositioning term offerings for younger families and digital buyers.",
@@ -85,16 +54,16 @@ const articles: NewsItem[] = [
   },
   {
     id: "2",
-    category: "Regulation",
+    category: "Regulation" as const,
     title: "Suitability and disclosure remain a policy focus",
     date: "April 27, 2026",
     summary: "Guidance continues to emphasize clear explanations and stronger documentation.",
-    whyItMatters: "Directly relevant to LLQP-style ethics and suitability scenarios.",
+    whyItMatters: "Directly relevant to ethics and suitability scenarios.",
     href: "/news/regulatory-disclosure-suitability-focus"
   },
   {
     id: "3",
-    category: "Industry Trends",
+    category: "Industry Trends" as const,
     title: "Underwriting modernization expands with human review controls",
     date: "April 26, 2026",
     summary: "Automation is growing, with stronger manual quality checkpoints.",
@@ -103,7 +72,7 @@ const articles: NewsItem[] = [
   },
   {
     id: "4",
-    category: "Claims",
+    category: "Claims" as const,
     title: "Claims servicing updates improve response expectations",
     date: "April 25, 2026",
     summary: "Process improvements target faster communication and clearer claim status tracking.",
@@ -111,6 +80,42 @@ const articles: NewsItem[] = [
     href: "/news/claims-communication-consumer-pain-point"
   }
 ];
+
+const s: Record<string, CSSProperties> = {
+  page: { minHeight: "100vh", background: "#f8fafc", color: "#0f172a", fontFamily: "Arial, sans-serif" },
+  container: { width: "min(100% - 32px, 1120px)", margin: "0 auto" },
+  hero: { background: "#fff", borderBottom: "1px solid #e2e8f0", padding: "56px 0" },
+  eyebrow: { color: "#0f766e", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" },
+  title: { maxWidth: 880, margin: "12px 0 0", fontSize: "clamp(36px, 6vw, 72px)", lineHeight: 1 },
+  intro: { maxWidth: 760, color: "#475569", lineHeight: 1.8 },
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 },
+  card: { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 8, padding: 24 },
+  muted: { color: "#475569", lineHeight: 1.65 },
+  button: { border: 0, borderRadius: 6, background: "#0f172a", color: "#fff", padding: "12px 18px", fontWeight: 700 },
+  linkButton: { display: "inline-flex", borderRadius: 8, background: "#0f172a", color: "#fff", padding: "12px 18px", fontWeight: 700, textDecoration: "none" },
+  categoryButton: { border: "1px solid #cbd5e1", borderRadius: 999, background: "#fff", padding: "9px 16px", cursor: "pointer" }
+};
+
+function NewsletterForm() {
+  return (
+    <form action="https://app.kit.com/forms/9376932/subscriptions" method="post" acceptCharset="UTF-8">
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 10 }}>
+        <input
+          name="email_address"
+          type="email"
+          autoComplete="email"
+          placeholder="Enter your email"
+          required
+          style={{ minWidth: 0, border: "1px solid #cbd5e1", borderRadius: 6, padding: 12 }}
+        />
+        <button type="submit" style={s.button}>Subscribe</button>
+      </div>
+      <p style={{ ...s.muted, margin: "12px 0 0", fontSize: 13 }}>
+        No spam. Just the weekly life insurance brief.
+      </p>
+    </form>
+  );
+}
 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
@@ -121,77 +126,62 @@ export default function NewsPage() {
   }, [activeCategory]);
 
   return (
-    <main className={styles.page}>
-      <section className={styles.hero}>
-        <div className={`${styles.container} ${styles.heroInner}`}>
-          <p className={styles.eyebrow}>LifeForge News Digest</p>
-          <h1 className={styles.title}>Life Insurance News, Explained Simply</h1>
-          <p className={styles.intro}>
+    <main style={s.page}>
+      <section style={s.hero}>
+        <div style={s.container}>
+          <p style={s.eyebrow}>LifeForge News Digest</p>
+          <h1 style={s.title}>Life Insurance News, Explained Simply</h1>
+          <p style={s.intro}>
             A weekly digest of insurance headlines, product trends, regulation, and what they
             mean for learners, advisors, and curious consumers.
           </p>
 
-          <div className={styles.signupRow}>
-            <div className={styles.signupCard}>
-              <p>Get the 2-minute insurance brief every week.</p>
-              <div className={styles.signupBox}>
-                <SubscribeForm
-                  label="Join the newsletter"
-                  buttonLabel="Subscribe"
-                  message="No spam. Just the weekly life insurance brief."
-                />
-              </div>
-            </div>
-
-            <Link href="#latest-news" className={styles.secondaryLink}>
-              Browse Latest News
-            </Link>
+          <div style={{ ...s.card, marginTop: 28 }}>
+            <p style={s.muted}>Get the 2-minute insurance brief every week.</p>
+            <NewsletterForm />
           </div>
         </div>
       </section>
 
-      <section className={`${styles.container} ${styles.section}`}>
-        <div className={styles.featureGrid}>
-          <article className={styles.card}>
+      <section style={{ ...s.container, padding: "40px 0" }}>
+        <div style={s.grid}>
+          <article style={s.card}>
             <h2>This Week&apos;s Brief</h2>
-            <ul className={styles.briefList}>
-              {weeklyBrief.map((item) => (
-                <li key={item.headline} className={styles.briefItem}>
-                  <h3>{item.headline}</h3>
-                  <p>{item.summary}</p>
-                  <div className={styles.why}>Why it matters: {item.why}</div>
-                </li>
-              ))}
-            </ul>
+            {weeklyBrief.map((item) => (
+              <div key={item.headline} style={{ ...s.card, background: "#f8fafc", marginTop: 14 }}>
+                <h3>{item.headline}</h3>
+                <p style={s.muted}>{item.summary}</p>
+                <p style={{ color: "#0f766e", fontWeight: 700 }}>Why it matters: {item.why}</p>
+              </div>
+            ))}
           </article>
 
-          <article className={styles.card}>
-            <p className={styles.eyebrow}>Featured Insight</p>
-            <h2>{featuredInsight.title}</h2>
-            <p className={styles.cardText}>{featuredInsight.summary}</p>
-            <div className={styles.insightBox}>
-              <p>
-                <strong>Why it matters:</strong> {featuredInsight.why}
-              </p>
-            </div>
-            <Link href={featuredInsight.href} className={styles.darkLink}>
+          <article style={s.card}>
+            <p style={s.eyebrow}>Featured Insight</p>
+            <h2>How claims communication quality is becoming a competitive advantage</h2>
+            <p style={s.muted}>
+              Insurers are improving timelines, status updates, and plain-language claims
+              communication to reduce friction for policyholders and beneficiaries.
+            </p>
+            <Link href="/news/claims-communication-consumer-pain-point" style={s.linkButton}>
               Read analysis
             </Link>
           </article>
         </div>
       </section>
 
-      <section className={`${styles.container} ${styles.sectionTight}`}>
-        <h2 className={styles.categoryHeader}>News Categories</h2>
-        <div className={styles.categoryButtons}>
+      <section style={{ ...s.container, paddingBottom: 24 }}>
+        <h2>News Categories</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {categories.map((category) => (
             <button
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              className={`${styles.categoryButton} ${
-                activeCategory === category ? styles.activeCategory : ""
-              }`}
+              style={{
+                ...s.categoryButton,
+                ...(activeCategory === category ? { background: "#0f172a", color: "#fff" } : {})
+              }}
             >
               {category}
             </button>
@@ -199,49 +189,19 @@ export default function NewsPage() {
         </div>
       </section>
 
-      <section id="latest-news" className={`${styles.container} ${styles.section}`}>
-        {filteredArticles.length === 0 ? (
-          <div className={styles.emptyState}>No articles available in this category yet.</div>
-        ) : (
-          <div className={styles.articleGrid}>
-            {filteredArticles.map((item) => (
-              <article key={item.id} className={styles.articleCard}>
-                <div className={styles.meta}>
-                  <span className={styles.pill}>{item.category}</span>
-                  <span aria-hidden="true">•</span>
-                  <span>{item.date}</span>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                {item.whyItMatters ? (
-                  <p>
-                    <strong>Why it matters:</strong> {item.whyItMatters}
-                  </p>
-                ) : null}
-                <Link href={item.href} className={styles.brandLink}>
-                  Read More
-                </Link>
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section className={`${styles.container} ${styles.section}`}>
-        <div className={styles.cta}>
-          <h2>Studying insurance? Turn headlines into exam knowledge.</h2>
-          <p>
-            LifeForgePrep connects real insurance trends to the concepts learners need to
-            understand.
-          </p>
-          <div className={styles.ctaActions}>
-            <Link href="/free-practice" className={styles.brandCta}>
-              Start Free Practice
-            </Link>
-            <Link href="/exam-prep" className={styles.outlineLink}>
-              Explore Exam Prep
-            </Link>
-          </div>
+      <section id="latest-news" style={{ ...s.container, padding: "24px 0 40px" }}>
+        <div style={s.grid}>
+          {filteredArticles.map((item) => (
+            <article key={item.id} style={s.card}>
+              <p style={{ color: "#64748b", fontSize: 13 }}>{item.category} - {item.date}</p>
+              <h3>{item.title}</h3>
+              <p style={s.muted}>{item.summary}</p>
+              <p style={s.muted}><strong>Why it matters:</strong> {item.whyItMatters}</p>
+              <Link href={item.href} style={{ color: "#0f766e", fontWeight: 700 }}>
+                Read More
+              </Link>
+            </article>
+          ))}
         </div>
       </section>
     </main>
