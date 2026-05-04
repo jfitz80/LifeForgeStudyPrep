@@ -4,6 +4,7 @@ import Link from 'next/link';
 //import SiteFooter from '@/components/editorial/SiteFooter';
 import ClusterIcon from '@/components/knowledge/ClusterIcon';
 import GlossaryIndex from '@/components/knowledge/GlossaryIndex';
+import { marketDeskArticles } from '@/data/marketDeskArticles';
 import { KNOWLEDGE_ARTICLES, KNOWLEDGE_CLUSTERS } from '@/lib/knowledge/content';
 
 export const metadata: Metadata = {
@@ -82,6 +83,7 @@ const supplementalKnowledgeCards = [
 ] as const;
 
 export default function KnowledgePage() {
+  const latestMarketDeskArticles = marketDeskArticles.slice(0, 3);
   const articleCounts = KNOWLEDGE_ARTICLES.reduce<Record<string, number>>((acc, article) => {
     acc[article.cluster] = (acc[article.cluster] ?? 0) + 1;
     return acc;
@@ -189,6 +191,40 @@ export default function KnowledgePage() {
                   <p className="mt-2 flex-1 text-sm leading-6 text-[#4A5568]">{step.text}</p>
                   <Link href={step.href} className="mt-4 inline-flex items-center text-sm font-semibold text-[#2FAF9E]">
                     Continue
+                  </Link>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-10 rounded-2xl border border-sky-100 bg-gradient-to-br from-white to-[#EEF6FF] p-6 shadow-sm sm:p-7">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Market commentary</p>
+                <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">From the LifeForge Market Desk</h2>
+                <p className="mt-2 text-sm leading-6 text-[#4A5568]">
+                  Current insurance trends explained in plain language.
+                </p>
+              </div>
+              <Link href="/news/market-desk" className="inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                Read Market Desk
+              </Link>
+            </div>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-3">
+              {latestMarketDeskArticles.map((article) => (
+                <article key={article.slug} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <span className="rounded-full bg-[#E8F7F4] px-2.5 py-1 font-semibold text-[#1E887B]">{article.category}</span>
+                    <span>{article.readingTime}</span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold leading-snug text-[#1F2A44]">{article.title}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-[#4A5568]">{article.summary}</p>
+                  <Link
+                    href={`/news/market-desk/${article.slug}`}
+                    className="mt-4 inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
+                  >
+                    Read commentary
                   </Link>
                 </article>
               ))}

@@ -16,7 +16,6 @@ const primaryLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Free Practice', href: '/free-practice', accent: true },
-  { label: 'News', href: '/news' },
   { label: 'App', href: '/app' }
 ];
 
@@ -28,6 +27,14 @@ const knowledgeLinks: NavLink[] = [
   { label: 'Advisor Guidance', href: '/knowledge/advisor-guidance' },
   { label: 'Product Comparisons', href: '/knowledge/product-comparisons' },
   { label: 'Glossary', href: '/knowledge/glossary' }
+];
+
+const newsLinks: NavLink[] = [
+  { label: 'All News', href: '/news' },
+  { label: 'LifeForge Market Desk', href: '/news/market-desk' },
+  { label: 'Regulation', href: '/news?category=Regulation' },
+  { label: 'Annuities', href: '/news?category=Annuities' },
+  { label: 'Consumer Protection', href: '/news?category=Consumer%20Protection' }
 ];
 
 function Chevron({ open }: { open: boolean }) {
@@ -64,7 +71,9 @@ function HeaderLink({ item, onNavigate }: { item: NavLink; onNavigate?: () => vo
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [knowledgeOpen, setKnowledgeOpen] = useState(false);
+  const [newsOpen, setNewsOpen] = useState(false);
   const [mobileKnowledgeOpen, setMobileKnowledgeOpen] = useState(false);
+  const [mobileNewsOpen, setMobileNewsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -77,17 +86,25 @@ export default function SiteHeader() {
   useEffect(() => {
     if (!menuOpen) {
       setMobileKnowledgeOpen(false);
+      setMobileNewsOpen(false);
     }
   }, [menuOpen]);
 
   function closeMobileMenu() {
     setMenuOpen(false);
     setMobileKnowledgeOpen(false);
+    setMobileNewsOpen(false);
   }
 
   function handleKnowledgeBlur(event: FocusEvent<HTMLDivElement>) {
     if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
       setKnowledgeOpen(false);
+    }
+  }
+
+  function handleNewsBlur(event: FocusEvent<HTMLDivElement>) {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setNewsOpen(false);
     }
   }
 
@@ -144,6 +161,43 @@ export default function SiteHeader() {
               >
                 <div className="w-72 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg shadow-slate-200/70">
                   {knowledgeLinks.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block rounded-lg px-3 py-2 text-sm font-medium text-[#1F2A44] transition hover:bg-slate-50 hover:text-[#2FAF9E]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setNewsOpen(true)}
+              onMouseLeave={() => setNewsOpen(false)}
+              onBlurCapture={handleNewsBlur}
+            >
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 text-sm font-medium text-[#1F2A44] transition hover:text-[#2FAF9E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2FAF9E] focus-visible:ring-offset-2"
+                aria-haspopup="menu"
+                aria-expanded={newsOpen}
+                onClick={() => setNewsOpen((current) => !current)}
+                onFocus={() => setNewsOpen(true)}
+              >
+                <span>News</span>
+                <Chevron open={newsOpen} />
+              </button>
+
+              <div
+                className={`absolute left-0 top-full z-50 pt-3 transition-all duration-150 ${
+                  newsOpen ? 'pointer-events-auto visible opacity-100' : 'pointer-events-none invisible opacity-0'
+                }`}
+              >
+                <div className="w-72 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg shadow-slate-200/70">
+                  {newsLinks.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
@@ -217,6 +271,33 @@ export default function SiteHeader() {
                     {knowledgeLinks.map((item) => (
                       <Link
                         key={`mobile-knowledge-${item.href}`}
+                        href={item.href}
+                        className="block rounded-lg px-3 py-2 text-sm font-medium text-[#1F2A44] transition hover:bg-slate-50 hover:text-[#2FAF9E]"
+                        onClick={closeMobileMenu}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-white">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold text-[#1F2A44]"
+                  onClick={() => setMobileNewsOpen((current) => !current)}
+                  aria-expanded={mobileNewsOpen}
+                  aria-controls="mobile-news"
+                >
+                  <span>News</span>
+                  <Chevron open={mobileNewsOpen} />
+                </button>
+                {mobileNewsOpen ? (
+                  <div id="mobile-news" className="space-y-2 border-t border-slate-200 px-4 py-3">
+                    {newsLinks.map((item) => (
+                      <Link
+                        key={`mobile-news-${item.href}`}
                         href={item.href}
                         className="block rounded-lg px-3 py-2 text-sm font-medium text-[#1F2A44] transition hover:bg-slate-50 hover:text-[#2FAF9E]"
                         onClick={closeMobileMenu}

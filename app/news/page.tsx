@@ -3,24 +3,29 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
+import { marketDeskArticles } from "@/data/marketDeskArticles";
 
 type NewsCategory =
+  | "LifeForge Market Desk"
   | "Life Insurance"
   | "Annuities"
   | "Regulation"
   | "Industry Trends"
   | "Claims"
+  | "Consumer Protection"
   | "Consumer Education";
 
 type CategoryFilter = "All" | NewsCategory;
 
 const categories: CategoryFilter[] = [
   "All",
+  "LifeForge Market Desk",
   "Life Insurance",
   "Annuities",
   "Regulation",
   "Industry Trends",
   "Claims",
+  "Consumer Protection",
   "Consumer Education"
 ];
 
@@ -43,6 +48,15 @@ const weeklyBrief = [
 ];
 
 const articles = [
+  ...marketDeskArticles.slice(0, 3).map((article) => ({
+    id: article.slug,
+    category: "LifeForge Market Desk" as const,
+    title: article.title,
+    date: article.date,
+    summary: article.summary,
+    whyItMatters: "Educational commentary from the LifeForge Market Desk.",
+    href: `/news/market-desk/${article.slug}`
+  })),
   {
     id: "1",
     category: "Life Insurance" as const,
@@ -118,7 +132,11 @@ function NewsletterForm() {
 }
 
 export default function NewsPage() {
-  const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>(() => {
+    if (typeof window === "undefined") return "All";
+    const category = new URLSearchParams(window.location.search).get("category");
+    return categories.includes(category as CategoryFilter) ? (category as CategoryFilter) : "All";
+  });
 
   const filteredArticles = useMemo(() => {
     if (activeCategory === "All") return articles;
@@ -172,6 +190,9 @@ export default function NewsPage() {
 
       <section style={{ ...s.container, paddingBottom: 24 }}>
         <h2>News Categories</h2>
+        <p style={s.muted}>
+          Follow all headlines or browse focused editorial coverage from LifeForge Market Desk.
+        </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {categories.map((category) => (
             <button
@@ -190,6 +211,25 @@ export default function NewsPage() {
       </section>
 
       <section id="latest-news" style={{ ...s.container, padding: "24px 0 40px" }}>
+        <article
+          style={{
+            ...s.card,
+            marginBottom: 24,
+            borderColor: "#bae6fd",
+            background: "linear-gradient(135deg, #ffffff 0%, #eef6ff 48%, #f2fbf8 100%)"
+          }}
+        >
+          <p style={{ ...s.eyebrow, margin: 0 }}>Editorial Desk</p>
+          <h2 style={{ marginBottom: 0 }}>LifeForge Market Desk</h2>
+          <p style={s.muted}>
+            Clear, independent commentary on life insurance, annuities, regulation,
+            consumer protection, underwriting, claims, and insurance education.
+          </p>
+          <Link href="/news/market-desk" style={s.linkButton}>
+            Visit Market Desk
+          </Link>
+        </article>
+
         <div style={s.grid}>
           {filteredArticles.map((item) => (
             <article key={item.id} style={s.card}>
