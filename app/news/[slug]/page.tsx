@@ -270,12 +270,12 @@ export default async function NewsArticlePage({ params }: Props) {
           <div className="mt-8">
             <ContextualCTA
               eyebrow="Studying CTA"
-              title="Studying for LLQP? Test yourself on this concept."
+              title="Studying the LLQP Life Insurance module? Test yourself on this concept."
               body="News is useful when it helps a concept stick. The next step is checking whether you can apply the idea under exam pressure instead of just recognizing it in an article."
               variant="studying"
               actions={[
                 {
-                  label: 'Start Free Practice',
+                  label: 'Try 5 Free Questions',
                   href: '/free-practice',
                   eventPayload: {
                     source_page: `/news/${item.slug}`,
@@ -286,7 +286,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   }
                 },
                 {
-                  label: 'Explore Full Exam Prep',
+                  label: 'Explore Life Insurance Module Prep',
                   href: '/exam-prep',
                   style: 'secondary',
                   eventPayload: {

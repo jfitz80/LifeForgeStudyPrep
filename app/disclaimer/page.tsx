@@ -21,8 +21,8 @@ export default function DisclaimerPage() {
             licensing concepts. This site does not provide leaked exam questions or unauthorized exam content.
           </p>
           <p>
-            Materials are provided for educational purposes only and are not a substitute for official curriculum,
-            regulatory guidance, or legal advice.
+            Materials are provided for educational purposes only and are designed to supplement, not replace, official LLQP
+            course material, curriculum, regulatory guidance, or legal advice.
           </p>
           <p>
             No guarantee is made that any user will pass an exam. Outcomes depend on each learner&apos;s preparation,

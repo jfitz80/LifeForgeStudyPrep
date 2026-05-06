@@ -64,12 +64,12 @@ export default async function KnowledgeClusterPage({ params }: Props) {
         <div className="mb-8">
           <ContextualCTA
             eyebrow="Studying CTA"
-            title="Studying for LLQP? Test yourself on this concept."
+            title="Studying the LLQP Life Insurance module? Test yourself on this concept."
             body="Reading articles builds understanding. Free practice shows whether the idea holds up when you have to apply it under exam pressure."
             variant="studying"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -80,7 +80,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {
@@ -137,7 +137,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -148,7 +148,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {

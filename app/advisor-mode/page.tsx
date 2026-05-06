@@ -19,7 +19,7 @@ export default function AdvisorModePage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/free-practice" className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]">
-              Start Free Practice
+              Try 5 Free Questions
             </Link>
             <Link href="/knowledge/advisor-guidance" className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
               Read Advisor Guidance

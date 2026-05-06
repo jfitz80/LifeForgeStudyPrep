@@ -6,7 +6,7 @@ export type BriefSourceItem = {
   source: string;
 };
 
-export type DailyInsuranceBrief = {
+export type InsuranceBrief = {
   title: string;
   summary: string;
   keyThemes: string[];
@@ -60,16 +60,16 @@ function detectThemes(items: BriefSourceItem[]) {
     .map(([theme]) => theme);
 }
 
-export function buildDailyInsuranceBrief(items: BriefSourceItem[]): DailyInsuranceBrief {
+export function buildInsuranceBrief(items: BriefSourceItem[]): InsuranceBrief {
   const top = items.slice(0, 5);
   const themes = detectThemes(items);
 
   const summary =
     top.length >= 3
-      ? `Today's coverage centers on ${themes[0] ?? 'core insurance operations'}, with headlines highlighting ${cleanTitle(
+      ? `Recent coverage centers on ${themes[0] ?? 'core insurance operations'}, with headlines highlighting ${cleanTitle(
           top[0].title
         )}, ${cleanTitle(top[1].title)}, and ${cleanTitle(top[2].title)}. The pattern points to practical implications for claims handling, underwriting judgment, and product/suitability conversations.`
-      : 'Today’s headlines emphasize practical developments across claims, underwriting, and policy guidance for advisors and learners.';
+      : 'Recent headlines emphasize practical developments across claims, underwriting, and policy guidance for advisors and learners.';
 
   const whyItMatters =
     'For professionals and LLQP students, the signal is clear: strong documentation, accurate disclosure, and defensible recommendations remain critical.';
@@ -81,7 +81,7 @@ export function buildDailyInsuranceBrief(items: BriefSourceItem[]): DailyInsuran
   }));
 
   return {
-    title: `Daily Insurance Brief — ${briefDateLabel()}`,
+    title: `Insurance Brief — ${briefDateLabel()}`,
     summary,
     keyThemes: themes.length ? themes : ['Claims Scrutiny', 'Underwriting Shift', 'Suitability Focus'],
     whyItMatters,

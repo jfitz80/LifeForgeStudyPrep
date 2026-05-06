@@ -124,8 +124,8 @@ export default function KnowledgePage() {
       href: '/free-practice'
     },
     {
-      title: 'Explore exam prep',
-      text: 'Use LLQP Exam Prep to sharpen scenario reasoning, understand traps, and build exam stamina.',
+      title: 'Explore Life Insurance module prep',
+      text: 'Use LLQP Life Insurance module prep to sharpen scenario reasoning, understand traps, and build confidence alongside your official course material.',
       href: '/exam-prep'
     }
   ] as const;

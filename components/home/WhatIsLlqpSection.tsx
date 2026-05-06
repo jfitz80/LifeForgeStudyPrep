@@ -64,7 +64,7 @@ export default function WhatIsLlqpSection() {
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LLQP Guide</p>
           <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">
-            What Is the LLQP? (And How to Pass It First Time)
+            What Is the LLQP? (And How to Prepare for the Life Insurance Module)
           </h2>
 
           <div className="mt-5 grid gap-6 lg:grid-cols-2">
@@ -131,7 +131,7 @@ export default function WhatIsLlqpSection() {
           <article className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
             <h3 className="text-lg font-semibold text-[#1F2A44]">How LifeForge Helps You Prepare</h3>
             <p className="mt-2 text-sm leading-7 text-[#4A5568]">
-              Our prep resources are designed to reflect real exam difficulty, highlight common traps, and build confidence through structured practice.
+              LifeForge Prep currently focuses on the LLQP Life Insurance module. The resources use exam-style difficulty, common traps, and structured practice to supplement your official course material.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -139,10 +139,10 @@ export default function WhatIsLlqpSection() {
                 href="/free-practice"
                 className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
               >
-                Try a Free LLQP Practice Exam
+                Try 5 Free Questions
               </Link>
               <Link href="/exam-prep" className="text-sm font-semibold text-[#1F2A44] underline-offset-2 hover:underline">
-                Explore Full Exam Prep
+                Explore Life Insurance Module Prep
               </Link>
             </div>
           </article>

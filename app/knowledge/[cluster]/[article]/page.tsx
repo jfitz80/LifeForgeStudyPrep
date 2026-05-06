@@ -73,12 +73,12 @@ export default async function KnowledgeArticlePage({ params }: Props) {
         <div className="mb-8">
           <ContextualCTA
             eyebrow="Studying CTA"
-            title="Studying for LLQP? Test yourself on this concept."
+            title="Studying the LLQP Life Insurance module? Test yourself on this concept."
             body="Reading the explanation is useful. The next step is checking whether you can apply the idea in a question when the wording gets more specific."
             variant="studying"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: sourcePath,
@@ -89,7 +89,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {
@@ -157,7 +157,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: sourcePath,
@@ -168,7 +168,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {

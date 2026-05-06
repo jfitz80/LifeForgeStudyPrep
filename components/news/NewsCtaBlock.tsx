@@ -16,10 +16,10 @@ export function selectNewsCta(article: NewsArticleView): NewsCta {
   const isRegulatory = article.category === 'regulation-policy' || llqpKeywords.test(text);
   if (isRegulatory) {
     return {
-      heading: 'Preparing for the LLQP?',
-      subheading: 'Studying for the LLQP? Practice with focused exam-style material.',
-      primary: { label: 'Explore Exam Prep', href: '/exam-prep' },
-      secondary: { label: 'Try Free Practice', href: '/free-practice' }
+      heading: 'Preparing for the LLQP Life Insurance module?',
+      subheading: 'Practice with focused exam-style material that supplements your official course.',
+      primary: { label: 'Explore Life Insurance Module Prep', href: '/exam-prep' },
+      secondary: { label: 'Try 5 Free Questions', href: '/free-practice' }
     };
   }
 
@@ -38,7 +38,7 @@ export function selectNewsCta(article: NewsArticleView): NewsCta {
       heading: 'Want to understand this topic better?',
       subheading: 'Build practical life insurance knowledge with guides and examples.',
       primary: { label: 'Visit Knowledge Hub', href: '/knowledge' },
-      secondary: { label: 'Try Free Practice', href: '/free-practice' }
+      secondary: { label: 'Try 5 Free Questions', href: '/free-practice' }
     };
   }
 
@@ -46,7 +46,7 @@ export function selectNewsCta(article: NewsArticleView): NewsCta {
     heading: 'See how this connects to coverage decisions',
     subheading: 'Learn how this topic connects to products, underwriting, and suitability.',
     primary: { label: 'Read Related Guides', href: '/knowledge' },
-    secondary: { label: 'Try Free Practice', href: '/free-practice' }
+    secondary: { label: 'Try 5 Free Questions', href: '/free-practice' }
   };
 }
 

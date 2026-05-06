@@ -54,7 +54,7 @@ export default function ThanksPage() {
               href="/free-practice"
               className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Start Free Practice
+              Try 5 Free Questions
             </Link>
           </div>
         </section>
@@ -77,7 +77,7 @@ export default function ThanksPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-lg border border-[#1F2A44] bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#162033]"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay}
+              Get Life Insurance Practice Guide - {siteConfig.launchPriceDisplay}
             </a>
           </div>
         </section>

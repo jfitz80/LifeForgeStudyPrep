@@ -70,7 +70,7 @@ export default function QuizResultsCard({ score, total, breakdown }: QuizResults
       <div className="mt-5 rounded-xl border border-slate-700 bg-[#0E1628] p-4">
         <p className="text-base font-semibold text-white">{getBandMessage(band)}</p>
         <p className="mt-3 text-sm leading-7 text-slate-300">
-          The difference between passing and failing isn’t memorization — it’s how well you apply concepts under exam conditions.
+          The free set is a short diagnostic. Use it to spot where you need more practice applying concepts under exam-style conditions.
         </p>
       </div>
 

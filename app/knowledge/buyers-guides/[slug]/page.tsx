@@ -64,12 +64,12 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
         <div className="mt-8">
           <ContextualCTA
             eyebrow="Studying CTA"
-            title="Studying for LLQP? Test yourself on this concept."
+            title="Studying the LLQP Life Insurance module? Test yourself on this concept."
             body="Understanding the guide is useful. Applying the idea under exam pressure is different. Use the free practice set to see whether the concept actually holds up when a question gets specific."
             variant="studying"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/buyers-guides/${guide.slug}`,
@@ -80,7 +80,7 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {
@@ -257,7 +257,7 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 5 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/buyers-guides/${guide.slug}`,
@@ -268,7 +268,7 @@ export default async function BuyersGuideDetailPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
+                label: 'Explore Life Insurance Module Prep',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {

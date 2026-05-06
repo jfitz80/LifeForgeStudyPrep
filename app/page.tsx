@@ -7,7 +7,7 @@ import SampleQuestionCard from '@/components/SampleQuestionCard';
 const whyCards = [
   {
     title: 'Practice first',
-    text: 'Start with real questions before committing to the full guide.'
+    text: 'Start with exam-style Life Insurance module questions before committing to the full guide.'
   },
   {
     title: 'Learn the traps',
@@ -28,10 +28,11 @@ export default function HomePage() {
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
             <p className="text-sm font-semibold uppercase tracking-wide text-brand-700">LifeForge Insurance Prep</p>
             <h1 className="mt-3 max-w-4xl text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-              Become a Life Insurance Advisor — Start Practicing in 30 Seconds
+              Prepare for the LLQP Life Insurance Module — Start Practicing in 30 Seconds
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-              Real exam-style questions. Clear explanations. No signup required to start.
+              Scenario-based questions, clear explanations, calculation drills, and common exam-style traps.
+              Built to supplement your official LLQP course material — not replace it.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -39,18 +40,19 @@ export default function HomePage() {
                 href="/free-practice"
                 className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-700"
               >
-                Start Free Practice
+                Try 5 Free Questions
               </Link>
               <Link
                 href="/exam-prep"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-100"
               >
-                View Exam Guide
+                View Life Insurance Guide
               </Link>
             </div>
 
             <div className="mt-4 space-y-1 text-xs text-slate-500">
               <p>No signup required to start.</p>
+              <p>Currently focused on the LLQP Life Insurance module.</p>
               <p>Designed for insurance exam preparation and beginner life insurance learning.</p>
               <p>Educational content only — not legal, tax, investment, or financial advice.</p>
             </div>
@@ -61,7 +63,7 @@ export default function HomePage() {
           <VisualBreak
             variant="gradient"
             title="Learn by doing — not by reading endless notes."
-            subtitle="Start with a few practice questions, see what you know, then decide if the full guide is right for you."
+            subtitle="Start with a few LLQP Life Insurance module practice questions, see what you know, then decide if the full guide is right for you."
             cta={{ label: 'Try Free Questions', href: '/free-practice' }}
           />
         </section>
@@ -83,10 +85,10 @@ export default function HomePage() {
             </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link href="/free-practice" className="rounded-xl bg-brand-600 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-brand-700">
-                Start Free Practice
+                Try 5 Free Questions
               </Link>
               <Link href="/exam-prep" className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-center text-sm font-semibold text-slate-900 hover:bg-slate-100">
-                Get the Full Guide
+                Get the Life Insurance Practice Guide
               </Link>
             </div>
           </div>

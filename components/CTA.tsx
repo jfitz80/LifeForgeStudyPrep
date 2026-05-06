@@ -5,11 +5,11 @@ export default function CTA() {
     <section className="bg-slate-900 py-14 sm:py-16">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
         <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          Life Insurance Licensing Question Bank for Focused Exam Prep
+          LLQP Life Insurance Module Practice Guide
         </h2>
         <p className="mt-3 text-slate-300">
-          200+ exam-style questions, clear explanations, and scenario-based practice. Especially helpful for LLQP Life
-          Insurance candidates.
+          80+ exam-style Life Insurance module questions, clear explanations, and scenario-based practice. Built to
+          supplement your official LLQP course material.
         </p>
         <p className="mt-4 text-sm text-slate-300">
           <span className="mr-3 text-slate-500 line-through">{siteConfig.regularPriceDisplay}</span>
@@ -21,7 +21,7 @@ export default function CTA() {
           rel="noopener noreferrer"
           className="mt-7 inline-flex items-center justify-center rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700"
         >
-          Get the Study Guide - {siteConfig.launchPriceDisplay}
+          Get the Life Insurance Practice Guide - {siteConfig.launchPriceDisplay}
         </a>
       </div>
     </section>

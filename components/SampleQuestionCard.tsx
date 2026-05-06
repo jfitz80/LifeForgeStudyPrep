@@ -9,10 +9,10 @@ type Option = {
 };
 
 const options: Option[] = [
-  { id: 'A', label: 'To create a guaranteed investment return' },
-  { id: 'B', label: 'To provide financial protection against loss caused by death' },
-  { id: 'C', label: 'To avoid all taxes' },
-  { id: 'D', label: 'To replace the need for retirement planning' }
+  { id: 'A', label: 'The death benefit is always unaffected' },
+  { id: 'B', label: 'A policy loan may create tax consequences if it exceeds the policy’s adjusted cost basis' },
+  { id: 'C', label: 'Withdrawals are never taxable' },
+  { id: 'D', label: 'The policy automatically becomes paid-up' }
 ];
 
 const correctId = 'B';
@@ -25,9 +25,9 @@ export default function SampleQuestionCard() {
 
   return (
     <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-      <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Sample 1 of 5</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Life Insurance module sample</p>
       <h3 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl">
-        What is the primary purpose of life insurance?
+        A client owns a permanent life insurance policy with cash value. They want to access funds without cancelling the policy. Which issue should the advisor explain first?
       </h3>
 
       <div className="mt-6 grid gap-3">
@@ -57,8 +57,8 @@ export default function SampleQuestionCard() {
           }`}
         >
           {isCorrect
-            ? 'Correct. Life insurance is primarily designed to transfer the financial risk created by death.'
-            : 'Not quite. The key idea is risk transfer: life insurance protects against financial loss caused by death.'}
+            ? 'Correct. Accessing cash value can affect taxation, policy performance, and the eventual death benefit. A policy loan or withdrawal is not automatically tax-free in every situation, so the advisor should explain the possible tax and policy consequences before the client proceeds.'
+            : 'Not quite. The trap is assuming cash value access has no side effects. The advisor should explain possible tax and policy consequences before the client proceeds.'}
 
           <div className="mt-3">
             <Link

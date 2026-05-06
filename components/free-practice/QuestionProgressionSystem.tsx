@@ -183,7 +183,7 @@ const TYPE_LABEL: Record<QuestionType, string> = {
 const QUIZ_SETS = {
   llqp: {
     title: 'LLQP Quick Test',
-    description: 'Five candidate-style questions pulling from LLQP reasoning and taxation logic.',
+    description: 'Five exam-style questions pulling from LLQP Life Insurance module reasoning and taxation logic.',
     questions: LLQP_QUESTIONS
   },
   basics: {
@@ -302,7 +302,7 @@ export default function QuestionProgressionSystem() {
     }
 
     return {
-      primary: { label: 'Explore LLQP Exam Prep', href: '/exam-prep' },
+      primary: { label: 'Explore Life Insurance Module Prep', href: '/exam-prep' },
       secondary: { label: 'Download the LifeforgePrep app', href: '/app', variant: 'muted' }
     };
   }, [resultTier, restart]);
@@ -312,7 +312,7 @@ export default function QuestionProgressionSystem() {
       <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
         <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
         <p className="mt-2 text-sm text-slate-300">
-          Select the set that matches your focus: Canadian LLQP logic or broader life insurance fundamentals.
+          Select a 5-question set that matches your focus: Canadian LLQP Life Insurance module logic or broader life insurance fundamentals.
         </p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {(Object.keys(QUIZ_SETS) as TestKey[]).map((key) => {
@@ -411,7 +411,7 @@ export default function QuestionProgressionSystem() {
         <section className="rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
           <h3 className="text-2xl font-bold text-white">Advanced scenario-based questions are available in Exam Prep</h3>
           <p className="mt-3 text-sm leading-7 text-slate-300">
-            Push beyond the free set with layered client situations, comparison logic, and harder suitability traps.
+            Push beyond the 5-question free set with layered client situations, comparison logic, and harder suitability traps.
           </p>
           <div className="mt-5 grid gap-3 md:grid-cols-3">
             {ADVANCED_PREVIEW.map((item) => (

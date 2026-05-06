@@ -20,7 +20,7 @@ export const siteConfig = {
   seo: {
     title: 'LifeForge Insurance Prep | Life Insurance Exam Question Bank',
     description:
-      'Life insurance licensing exam prep with realistic exam-style questions, clear explanations, and scenario-based practice. Especially helpful for LLQP Life Insurance candidates.'
+      'LLQP Life Insurance module study support with exam-style questions, clear explanations, and scenario-based practice.'
   },
 
   legalUrls: {
@@ -34,17 +34,17 @@ export const siteConfig = {
 export const heroCopy = {
   eyebrow: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
-  headline: 'Pass Your Life Insurance Licensing Exam With Confidence',
+  headline: 'Prepare for the LLQP Life Insurance Module With Confidence',
   subheadline:
-    'Practice with realistic exam-style questions designed for future advisors. Especially helpful for candidates preparing for the Canadian LLQP Life Insurance module.',
+    'Practice with exam-style questions designed for future advisors. LifeForge Prep currently focuses on the Canadian LLQP Life Insurance module and supplements your official course material.',
   bullets: [
-    '200+ exam-style questions',
+    '80+ Life Insurance module questions',
     'Clear explanations',
     'Scenario-based practice',
-    'Especially helpful for LLQP candidates'
+    'Designed to supplement official LLQP course material'
   ],
   primaryCta: 'Start Practicing Questions',
-  secondaryCta: 'Get the Study Guide',
+  secondaryCta: 'Get the Life Insurance Practice Guide',
   trustLine: 'Independent exam prep resource. Instant digital access.'
 };
 
@@ -112,4 +112,3 @@ export const sampleQuestion = {
   reveal:
     'Correct answer: C — the death benefit is paid, but the unpaid premium is deducted.'
 } as const;
-

@@ -147,15 +147,15 @@ export default function NewsPage() {
     <main style={s.page}>
       <section style={s.hero}>
         <div style={s.container}>
-          <p style={s.eyebrow}>LifeForge News Digest</p>
-          <h1 style={s.title}>Life Insurance News, Explained Simply</h1>
+          <p style={s.eyebrow}>LifeForge Market Desk</p>
+          <h1 style={s.title}>LifeForge Market Desk</h1>
           <p style={s.intro}>
-            A weekly digest of insurance headlines, product trends, regulation, and what they
-            mean for learners, advisors, and curious consumers.
+            Plain-English commentary on life insurance trends, regulation, product changes, and
+            market news — written for learners, advisors, and curious consumers.
           </p>
 
           <div style={{ ...s.card, marginTop: 28 }}>
-            <p style={s.muted}>Get the 2-minute insurance brief every week.</p>
+            <p style={s.muted}>Get periodic LifeForge insurance commentary and learning notes.</p>
             <NewsletterForm />
           </div>
         </div>
@@ -164,7 +164,8 @@ export default function NewsPage() {
       <section style={{ ...s.container, padding: "40px 0" }}>
         <div style={s.grid}>
           <article style={s.card}>
-            <h2>This Week&apos;s Brief</h2>
+            <h2>Industry Headlines</h2>
+            <p style={s.muted}>Curated life insurance headlines and market developments, refreshed periodically.</p>
             {weeklyBrief.map((item) => (
               <div key={item.headline} style={{ ...s.card, background: "#f8fafc", marginTop: 14 }}>
                 <h3>{item.headline}</h3>
@@ -175,7 +176,7 @@ export default function NewsPage() {
           </article>
 
           <article style={s.card}>
-            <p style={s.eyebrow}>Featured Insight</p>
+            <p style={s.eyebrow}>LifeForge Market Desk</p>
             <h2>How claims communication quality is becoming a competitive advantage</h2>
             <p style={s.muted}>
               Insurers are improving timelines, status updates, and plain-language claims
@@ -219,7 +220,7 @@ export default function NewsPage() {
             background: "linear-gradient(135deg, #ffffff 0%, #eef6ff 48%, #f2fbf8 100%)"
           }}
         >
-          <p style={{ ...s.eyebrow, margin: 0 }}>Editorial Desk</p>
+          <p style={{ ...s.eyebrow, margin: 0 }}>Original commentary</p>
           <h2 style={{ marginBottom: 0 }}>LifeForge Market Desk</h2>
           <p style={s.muted}>
             Clear, independent commentary on life insurance, annuities, regulation,
@@ -242,6 +243,14 @@ export default function NewsPage() {
               </Link>
             </article>
           ))}
+        </div>
+
+        <div style={{ ...s.card, marginTop: 24, background: "#f8fafc" }}>
+          <h2>Educational disclaimer</h2>
+          <p style={s.muted}>
+            LifeForge Prep content is for education only and should not be treated as financial,
+            legal, tax, or licensing advice.
+          </p>
         </div>
       </section>
     </main>

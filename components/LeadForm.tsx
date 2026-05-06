@@ -144,7 +144,7 @@ export default function LeadForm({
                   Open Free Pack
                 </Link>
                 <Link href="/free-practice" className="font-semibold text-emerald-700 underline underline-offset-2 hover:text-emerald-800">
-                  Start Free Practice
+                  Try 5 Free Questions
                 </Link>
               </div>
             ) : null}

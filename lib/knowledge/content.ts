@@ -62,7 +62,7 @@ export const KNOWLEDGE_CLUSTERS: KnowledgeCluster[] = [
   },
   {
     slug: 'llqp-exam-prep',
-    title: 'LLQP Exam Prep',
+    title: 'LLQP Life Insurance Prep',
     shortDescription: 'Exam-oriented frameworks, scenario thinking, and common high-stakes mistakes.',
     intro:
       'Use this cluster to sharpen exam judgment: apply rules to scenarios, avoid frequent traps, and communicate rationale clearly under time pressure.',
