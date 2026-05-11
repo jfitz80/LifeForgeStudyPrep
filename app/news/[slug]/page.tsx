@@ -114,6 +114,64 @@ function buildConsumerTakeaway(category: NewsArticleView['category'], whatItMean
   }
 }
 
+function buildOpeningInsight(category: NewsArticleView['category']) {
+  switch (category) {
+    case 'risk-underwriting':
+      return 'Read this as an underwriting signal: the study value is in how disclosure, evidence, risk classification, and advisor fact-finding connect.';
+    case 'products-pricing':
+      return 'Read this as a product-comparison signal: the study value is in separating price, structure, flexibility, and client suitability.';
+    case 'legal-litigation':
+      return 'Read this as a documentation signal: the study value is in how policy wording, beneficiary setup, and communication affect outcomes.';
+    case 'regulation-policy':
+      return 'Read this as an advisor-conduct signal: the study value is in needs analysis, disclosure, documentation, and client understanding.';
+    default:
+      return 'Read this as a study signal: connect the market theme to policy mechanics, advisor duties, and client communication.';
+  }
+}
+
+function buildLlqpConceptConnection(category: NewsArticleView['category'], fallback: string) {
+  switch (category) {
+    case 'risk-underwriting':
+      return 'Underwriting, risk classification, applicant disclosure, and evidence of insurability.';
+    case 'products-pricing':
+      return 'Product comparison, suitability, premium structure, policy features, and long-term client fit.';
+    case 'legal-litigation':
+      return 'Claims process, beneficiary communication, policy conditions, grace periods, and documentation.';
+    case 'regulation-policy':
+      return 'Advisor ethics, suitability, disclosure, needs analysis, and documented recommendation rationale.';
+    default:
+      return fallback;
+  }
+}
+
+function buildCommonExamTrap(category: NewsArticleView['category']) {
+  switch (category) {
+    case 'risk-underwriting':
+      return 'Assuming the advisor can downplay disclosure issues to speed up approval. Exam-style scenarios often test whether the advisor protects the integrity of the application.';
+    case 'products-pricing':
+      return 'Choosing the lowest premium without considering product features, duration, conversion options, or the client need behind the recommendation.';
+    case 'legal-litigation':
+      return 'Promising a claim outcome before policy status, beneficiary details, documentation, and contractual conditions have been reviewed.';
+    case 'regulation-policy':
+      return 'Treating disclosure as a formality instead of a client understanding and suitability requirement.';
+    default:
+      return 'Jumping to a product answer before identifying the client need, the policy rule, and the advisor responsibility being tested.';
+  }
+}
+
+const miniPracticeQuestion = {
+  question: 'A beneficiary calls the insurer asking why a claim is delayed. What is the most appropriate advisor response?',
+  options: [
+    'A. Promise immediate payment',
+    'B. Explain that claims may require documentation, policy status review, and beneficiary verification',
+    'C. Tell the beneficiary to cancel the policy',
+    'D. Avoid communication until the insurer pays'
+  ],
+  answer: 'B',
+  explanation:
+    'Claims handling requires proper documentation, verification, and policy review. Advisors should communicate clearly without promising outcomes they cannot control.'
+};
+
 function fromStatic(slug: string): ArticleView | null {
   const item = getNewsBySlug(slug);
   if (!item) return null;
@@ -176,9 +234,12 @@ async function fromLive(slug: string): Promise<ArticleView | null> {
 }
 
 const getArticle = cache(async (slug: string): Promise<ArticleView | null> => {
+  const staticArticle = fromStatic(slug);
+  if (staticArticle) return staticArticle;
+
   const live = await fromLive(slug);
   if (live) return live;
-  return fromStatic(slug);
+  return null;
 });
 
 export function generateStaticParams() {
@@ -191,7 +252,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return { title: 'News Analysis | LifeForgePrep' };
   return {
     title: `${item.title} | LifeForge News`,
-    description: item.summary
+    description: item.summary,
+    alternates: {
+      canonical: `/news/${item.slug}`
+    },
+    openGraph: {
+      title: item.title,
+      description: item.summary,
+      url: `/news/${item.slug}`,
+      type: 'article'
+    }
   };
 }
 
@@ -200,6 +270,10 @@ export default async function NewsArticlePage({ params }: Props) {
   const item = await getArticle(slug);
 
   if (!item) notFound();
+
+  const openingInsight = buildOpeningInsight(item.category);
+  const llqpConceptConnection = buildLlqpConceptConnection(item.category, item.examRelevance);
+  const commonExamTrap = buildCommonExamTrap(item.category);
 
   return (
     <main className="min-h-screen bg-white py-12">
@@ -232,6 +306,11 @@ export default async function NewsArticlePage({ params }: Props) {
             </p>
           ) : null}
 
+          <section className="mt-8 rounded-xl border border-[#99f6e4] bg-[#f0fdfa] p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#0f766e]">Opening insight</p>
+            <p className="mt-2 text-sm leading-7 text-slate-700">{openingInsight}</p>
+          </section>
+
           <section id="key-points" className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
             <h2 className="text-lg font-bold text-[#1F2A44]">Key points</h2>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
@@ -247,9 +326,15 @@ export default async function NewsArticlePage({ params }: Props) {
               <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatItMeans}</p>
             </div>
 
-            <div id="exam-relevance" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
-              <h2 className="text-lg font-bold text-[#1F2A44]">Exam relevance</h2>
-              <p className="mt-2 text-sm leading-7 text-slate-700">{item.examRelevance}</p>
+            <div id="llqp-connection" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">LLQP concept connection</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-700">{llqpConceptConnection}</p>
+              <p className="mt-3 text-sm leading-7 text-slate-700">{item.examRelevance}</p>
+            </div>
+
+            <div id="common-exam-trap" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Common exam trap</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-700">{commonExamTrap}</p>
             </div>
 
             <div id="consumer-takeaway" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
@@ -264,6 +349,22 @@ export default async function NewsArticlePage({ params }: Props) {
                   <li key={point}>{point}</li>
                 ))}
               </ul>
+            </div>
+
+            <div id="mini-practice" className="rounded-xl border border-slate-200 bg-white p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Mini practice question</h2>
+              <p className="mt-2 text-sm font-semibold leading-7 text-slate-800">{miniPracticeQuestion.question}</p>
+              <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-700">
+                {miniPracticeQuestion.options.map((option) => (
+                  <li key={option} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                    {option}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-sm leading-7 text-slate-700">
+                <strong>Correct answer:</strong> {miniPracticeQuestion.answer}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-slate-700">{miniPracticeQuestion.explanation}</p>
             </div>
           </section>
 
@@ -332,6 +433,15 @@ export default async function NewsArticlePage({ params }: Props) {
               }}
             />
           </div>
+
+          <section className="mt-8 rounded-xl border border-slate-200 bg-[#F5F7FA] p-5">
+            <h2 className="text-lg font-bold text-[#1F2A44]">Educational disclaimer</h2>
+            <p className="mt-2 text-sm leading-7 text-slate-700">
+              LifeForge Prep content is for education only and should not be treated as financial, legal,
+              tax, insurance, or licensing advice. Always refer to official course materials, regulators,
+              insurers, and licensed professionals for decisions involving insurance products or licensing requirements.
+            </p>
+          </section>
         </article>
 
         <aside className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-24">
@@ -340,7 +450,9 @@ export default async function NewsArticlePage({ params }: Props) {
           <nav className="mt-4 space-y-2 text-sm">
             <a href="#key-points" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Jump to key points</a>
             <a href="#why-this-matters" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Why this matters</a>
-            <a href="#exam-relevance" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Exam relevance</a>
+            <a href="#llqp-connection" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">LLQP connection</a>
+            <a href="#common-exam-trap" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Common exam trap</a>
+            <a href="#mini-practice" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Mini practice</a>
             <a href="#consumer-takeaway" className="block font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">Consumer takeaway</a>
           </nav>
           <Link href="/free-practice" className="mt-5 inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
