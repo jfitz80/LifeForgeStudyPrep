@@ -3,6 +3,7 @@ import Link from 'next/link';
 //import SiteFooter from '@/components/editorial/SiteFooter';
 import VisualBreak from '@/components/VisualBreak';
 import SampleQuestionCard from '@/components/SampleQuestionCard';
+import NewThisWeekSection from '@/components/home/NewThisWeekSection';
 
 const whyCards = [
   {
@@ -67,6 +68,8 @@ export default function HomePage() {
             cta={{ label: 'Try Free Questions', href: '/free-practice' }}
           />
         </section>
+
+        <NewThisWeekSection />
 
         <section className="mx-auto max-w-6xl px-4 pb-8 sm:px-6 lg:px-8">
           <SampleQuestionCard />

@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 //import SiteHeader from '@/components/editorial/SiteHeader';
 //import SiteFooter from '@/components/editorial/SiteFooter';
+import TrackedLink from '@/components/TrackedLink';
 import ClusterIcon from '@/components/knowledge/ClusterIcon';
 import GlossaryIndex from '@/components/knowledge/GlossaryIndex';
 import { marketDeskArticles } from '@/data/marketDeskArticles';
+import { weeklyContent } from '@/data/weeklyContent';
 import { KNOWLEDGE_ARTICLES, KNOWLEDGE_CLUSTERS } from '@/lib/knowledge/content';
 
 export const metadata: Metadata = {
@@ -253,6 +255,46 @@ export default function KnowledgePage() {
                   <Link href={path.href} className="mt-4 inline-flex items-center text-sm font-semibold text-[#2FAF9E]">
                     Open guide
                   </Link>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mb-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Recently updated</p>
+                <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Freshly reviewed study guides</h2>
+                <p className="mt-2 text-sm leading-6 text-[#4A5568]">
+                  Updated labels make it easier to spot current explainers and exam-help pages worth revisiting.
+                </p>
+              </div>
+              <Link href="/knowledge/exam-traps" className="text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]">
+                See exam traps
+              </Link>
+            </div>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {weeklyContent.recentlyUpdated.map((guide) => (
+                <article key={guide.href} className="flex flex-col rounded-2xl border border-slate-200 bg-[#F9FAFB] p-5">
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full bg-[#E8F7F4] px-2.5 py-1 text-xs font-semibold text-[#1E887B]">
+                      {guide.category}
+                    </span>
+                    <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500">
+                      {guide.type}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-[#1F2A44]">{guide.title}</h3>
+                  <p className="mt-2 text-sm font-semibold text-slate-500">Updated {guide.updated}</p>
+                  <TrackedLink
+                    href={guide.href}
+                    eventName="click_recently_updated_guide"
+                    eventPayload={{ source: 'knowledge_recently_updated', guide: guide.title }}
+                    className="mt-4 inline-flex text-sm font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
+                  >
+                    Open guide
+                  </TrackedLink>
                 </article>
               ))}
             </div>

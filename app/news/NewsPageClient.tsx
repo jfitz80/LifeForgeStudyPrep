@@ -1,9 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
+import TrackedLink from "@/components/TrackedLink";
 import { marketDeskArticles } from "@/data/marketDeskArticles";
+import { weeklyContent } from "@/data/weeklyContent";
+import { trackEvent } from "@/lib/analytics";
 
 type NewsCategory =
   | "LifeForge Market Desk"
@@ -73,6 +75,32 @@ const watchlistItems = [
     why:
       "Learners should understand the claims process, policy conditions, grace periods, beneficiaries, and documentation expectations.",
     badge: "Claims"
+  }
+];
+
+const contentBuckets = [
+  {
+    title: "This Week in Life Insurance",
+    label: "Updated weekly",
+    summary: weeklyContent.weeklyBrief.summary,
+    href: weeklyContent.weeklyBrief.href,
+    cta: "Read this week’s brief"
+  },
+  {
+    title: "Regulation Watch",
+    label: "Study insight",
+    summary:
+      "Suitability, disclosure clarity, and documented recommendations remain high-value study themes for new advisors.",
+    href: "/news/regulatory-disclosure-suitability-focus",
+    cta: "Read regulation note"
+  },
+  {
+    title: "Consumer Impact",
+    label: "Plain-English takeaway",
+    summary:
+      "Claims communication, beneficiary expectations, and policy status reviews all connect market themes to exam-ready reasoning.",
+    href: "/news/claims-communication-consumer-pain-point",
+    cta: "Read consumer impact"
   }
 ];
 
@@ -178,7 +206,12 @@ const s: Record<string, CSSProperties> = {
 
 function NewsletterForm() {
   return (
-    <form action="https://app.kit.com/forms/9376932/subscriptions" method="post" acceptCharset="UTF-8">
+    <form
+      action="https://app.kit.com/forms/9376932/subscriptions"
+      method="post"
+      acceptCharset="UTF-8"
+      onSubmit={() => trackEvent("newsletter_signup_attempt", { source: "news_market_desk" })}
+    >
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 10 }}>
         <input
           name="email_address"
@@ -190,9 +223,7 @@ function NewsletterForm() {
         />
         <button type="submit" style={s.button}>Subscribe</button>
       </div>
-      <p style={{ ...s.muted, margin: "12px 0 0", fontSize: 13 }}>
-        No spam. Just practical insurance learning notes.
-      </p>
+      <p style={{ ...s.muted, margin: "12px 0 0", fontSize: 13 }}>No spam. Just practical insurance learning notes.</p>
     </form>
   );
 }
@@ -209,9 +240,14 @@ function ArticleCard({ item }: { item: ArticleCard }) {
       <p style={{ margin: 0, color: "#334155", fontSize: 14 }}>
         <strong>LLQP connection:</strong> {item.llqpConnection}
       </p>
-      <Link href={item.href} style={{ color: "#0f766e", fontWeight: 700, marginTop: "auto" }}>
+      <TrackedLink
+        href={item.href}
+        eventName="click_new_this_week_brief"
+        eventPayload={{ source: "news_latest_commentary", category: item.category }}
+        style={{ color: "#0f766e", fontWeight: 700, marginTop: "auto" }}
+      >
         Read more
-      </Link>
+      </TrackedLink>
     </article>
   );
 }
@@ -235,21 +271,56 @@ export default function NewsPageClient() {
           <p style={s.eyebrow}>Market Desk + Study Insights</p>
           <h1 style={s.title}>LifeForge Market Desk</h1>
           <p style={{ ...s.intro, fontSize: 18 }}>
-            Plain-English commentary on life insurance trends, regulation, product changes, claims,
-            underwriting, and consumer protection — written for LLQP learners, new advisors, and
-            curious consumers.
+            Weekly plain-English commentary on life insurance trends, regulation, products, and consumer issues.
           </p>
           <p style={{ ...s.intro, marginTop: 12 }}>
             We connect insurance market themes to the concepts learners need to understand before exam day.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 28 }}>
-            <Link href="/free-practice" style={s.linkButton}>
+            <TrackedLink
+              href="/free-practice"
+              eventName="click_free_practice_cta"
+              eventPayload={{ source: "news_hero" }}
+              style={s.linkButton}
+            >
               Try 5 Free LLQP Questions
-            </Link>
-            <Link href="/exam-prep" style={s.secondaryButton}>
+            </TrackedLink>
+            <TrackedLink
+              href="/exam-prep"
+              eventName="click_exam_prep_cta"
+              eventPayload={{ source: "news_hero" }}
+              style={s.secondaryButton}
+            >
               Explore Exam Prep
-            </Link>
+            </TrackedLink>
           </div>
+        </div>
+      </section>
+
+      <section style={{ ...s.container, padding: "40px 0 20px" }}>
+        <div style={{ marginBottom: 18 }}>
+          <p style={s.eyebrow}>This week’s focus</p>
+          <h2 style={s.sectionTitle}>Market Desk study buckets</h2>
+          <p style={s.muted}>
+            Three recurring angles keep the page current without turning LifeForge Prep into a noisy news feed.
+          </p>
+        </div>
+        <div style={s.grid}>
+          {contentBuckets.map((bucket) => (
+            <article key={bucket.title} style={s.card}>
+              <span style={s.pill}>{bucket.label}</span>
+              <h3>{bucket.title}</h3>
+              <p style={s.muted}>{bucket.summary}</p>
+              <TrackedLink
+                href={bucket.href}
+                eventName="click_new_this_week_brief"
+                eventPayload={{ source: "news_content_bucket", bucket: bucket.title }}
+                style={{ color: "#0f766e", fontWeight: 700 }}
+              >
+                {bucket.cta}
+              </TrackedLink>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -277,9 +348,14 @@ export default function NewsPageClient() {
             Insurers are improving timelines, status updates, and plain-language claims communication
             to reduce friction for policyholders and beneficiaries.
           </p>
-          <Link href="/news/claims-communication-consumer-pain-point" style={s.linkButton}>
+          <TrackedLink
+            href="/news/claims-communication-consumer-pain-point"
+            eventName="click_new_this_week_brief"
+            eventPayload={{ source: "news_featured_insight" }}
+            style={s.linkButton}
+          >
             Read analysis
-          </Link>
+          </TrackedLink>
         </article>
       </section>
 
@@ -322,9 +398,14 @@ export default function NewsPageClient() {
             Clear, independent commentary on life insurance, annuities, regulation, consumer protection,
             underwriting, claims, and insurance education.
           </p>
-          <Link href="/news/market-desk" style={s.linkButton}>
+          <TrackedLink
+            href="/news/market-desk"
+            eventName="click_new_this_week_brief"
+            eventPayload={{ source: "news_market_desk_card" }}
+            style={s.linkButton}
+          >
             Visit Market Desk
-          </Link>
+          </TrackedLink>
         </article>
 
         <div style={s.grid}>
@@ -375,12 +456,22 @@ export default function NewsPageClient() {
             and learn how exam-style traps are usually framed.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 22 }}>
-            <Link href="/free-practice" style={{ ...s.linkButton, background: "#fff", color: "#0f172a" }}>
+            <TrackedLink
+              href="/free-practice"
+              eventName="click_free_practice_cta"
+              eventPayload={{ source: "news_study_cta" }}
+              style={{ ...s.linkButton, background: "#fff", color: "#0f172a" }}
+            >
               Try 5 Free Questions
-            </Link>
-            <Link href="/exam-prep" style={{ ...s.secondaryButton, borderColor: "#bae6fd", background: "transparent", color: "#fff" }}>
+            </TrackedLink>
+            <TrackedLink
+              href="/exam-prep"
+              eventName="click_exam_prep_cta"
+              eventPayload={{ source: "news_study_cta" }}
+              style={{ ...s.secondaryButton, borderColor: "#bae6fd", background: "transparent", color: "#fff" }}
+            >
               Get the Life Insurance Module Guide
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>
@@ -388,9 +479,9 @@ export default function NewsPageClient() {
       <section style={{ ...s.container, padding: "28px 0" }}>
         <div style={s.card}>
           <p style={s.eyebrow}>Insurance learning notes</p>
-          <h2 style={{ marginTop: 0 }}>Get the LifeForge insurance brief</h2>
+          <h2 style={{ marginTop: 0 }}>Subscribe to the Weekly Insurance Brief</h2>
           <p style={s.muted}>
-            Periodic plain-English notes on life insurance trends, consumer protection, and LLQP study connections.
+            Get the weekly insurance brief, exam traps, and plain-English insurance insights.
           </p>
           <NewsletterForm />
         </div>

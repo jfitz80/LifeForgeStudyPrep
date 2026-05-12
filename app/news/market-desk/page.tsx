@@ -3,16 +3,16 @@ import Link from 'next/link';
 import { marketDeskArticles, marketDeskDisclaimer } from '@/data/marketDeskArticles';
 
 export const metadata: Metadata = {
-  title: 'LifeForge Market Desk | LifeForgePrep',
+  title: 'LifeForge Market Desk | Life Insurance News and Trends',
   description:
-    'Clear, independent commentary on life insurance, annuities, regulation, and market trends.',
+    'Plain-English commentary on life insurance trends, regulation, products, and consumer issues.',
   alternates: {
     canonical: '/news/market-desk'
   },
   openGraph: {
     title: 'LifeForge Market Desk',
     description:
-      'Clear, independent commentary on life insurance, annuities, regulation, and market trends.',
+      'Plain-English commentary on life insurance trends, regulation, products, and consumer issues.',
     url: '/news/market-desk',
     type: 'website'
   }

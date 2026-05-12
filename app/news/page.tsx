@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import NewsPageClient from "./NewsPageClient";
 
 export const metadata: Metadata = {
-  title: "LifeForge Market Desk | Life Insurance News & LLQP Study Insights",
+  title: "LifeForge Market Desk | Life Insurance News and Trends",
   description:
-    "Plain-English life insurance commentary, regulatory themes, product trends, consumer protection insights, and LLQP study connections from LifeForge Prep.",
+    "Plain-English commentary on life insurance trends, regulation, products, and consumer issues.",
   openGraph: {
     title: "LifeForge Market Desk",
     description:

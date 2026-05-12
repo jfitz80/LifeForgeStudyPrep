@@ -1,16 +1,12 @@
-export type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>;
+import { track } from '@vercel/analytics';
 
-declare global {
-  interface Window {
-    va?: {
-      track?: (name: string, payload?: AnalyticsPayload) => void;
-    };
-  }
-}
+export type AnalyticsPayload = Record<string, string | number | boolean | null | undefined>;
 
 export function trackEvent(name: string, payload?: AnalyticsPayload) {
   if (typeof window === 'undefined') return;
-  window.va?.track?.(name, payload);
+  try {
+    track(name, payload);
+  } catch {}
   if (process.env.NODE_ENV !== 'production') {
     console.debug('[analytics]', name, payload ?? {});
   }
