@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import LeadForm from '@/components/LeadForm';
 import TrackedLink from '@/components/TrackedLink';
+import ProductEducationSections from '@/components/product/ProductEducationSections';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -62,7 +63,7 @@ export default function ExamPrepPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Get the Life Insurance Practice Guide - {siteConfig.launchPriceDisplay}
+              Download the Study Guide - {siteConfig.launchPriceDisplay}
             </a>
             <TrackedLink
               href="/free-practice"
@@ -72,8 +73,20 @@ export default function ExamPrepPage() {
             >
               Try 5 Free Questions
             </TrackedLink>
+            <TrackedLink
+              href="/app"
+              eventName="click_app_cta"
+              eventPayload={{ cta: 'exam_prep_get_app', location: 'exam_prep_hero' }}
+              className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+            >
+              Get the App
+            </TrackedLink>
           </div>
         </header>
+
+        <div className="mt-8">
+          <ProductEducationSections context="exam-prep" />
+        </div>
 
         <section className="mt-8 grid gap-6 lg:grid-cols-2">
           <article className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">

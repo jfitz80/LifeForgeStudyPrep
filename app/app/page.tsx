@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProductEducationSections from '@/components/product/ProductEducationSections';
+import TrackedLink from '@/components/TrackedLink';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
@@ -64,7 +66,7 @@ export default function AppPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Mobile App</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            LifeforgePrep’s app delivers real practice questions, quick concept refreshers, and instant feedback wherever you have a minute.
+            LifeForgePrep’s app gives learners 15 free practice questions, then offers a one-time unlock for the full question bank. Use it to practise key life insurance concepts, review explanations, and study at your own pace.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
@@ -75,13 +77,27 @@ export default function AppPage() {
             >
               Download on the App Store
             </a>
-            <Link
-              href="/support"
+            <TrackedLink
+              href="/free-practice"
+              eventName="click_free_practice_cta"
+              eventPayload={{ source: 'app_hero' }}
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Contact Support
-            </Link>
+              Start Free Practice
+            </TrackedLink>
+            <a
+              href={siteConfig.appStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+            >
+              Unlock the Full Question Bank
+            </a>
           </div>
+        </section>
+
+        <section className="mt-10">
+          <ProductEducationSections context="app" />
         </section>
 
         <section className="mt-10">
@@ -205,5 +221,4 @@ export default function AppPage() {
     </main>
   );
 }
-
 
