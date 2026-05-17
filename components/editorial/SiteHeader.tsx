@@ -16,11 +16,14 @@ const primaryLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Exam Prep', href: '/exam-prep' },
   { label: 'Free Practice', href: '/free-practice', accent: true },
+  { label: 'Foundations', href: '/foundations' },
+  { label: 'Tools', href: '/tools' },
   { label: 'App', href: '/app' }
 ];
 
 const knowledgeLinks: NavLink[] = [
   { label: 'Knowledge Hub Overview', href: '/knowledge' },
+  { label: 'Insurance Foundations', href: '/foundations' },
   { label: 'Life Insurance Basics', href: '/knowledge/life-insurance-basics' },
   { label: "Buyer's Guides", href: '/knowledge/buyers-guides' },
   { label: 'Annuities', href: '/knowledge/annuities' },
@@ -30,6 +33,7 @@ const knowledgeLinks: NavLink[] = [
 ];
 
 const newsLinks: NavLink[] = [
+  { label: 'Market Desk Hub', href: '/market-desk' },
   { label: 'All News', href: '/news' },
   { label: 'LifeForge Market Desk', href: '/news/market-desk' },
   { label: 'Regulation', href: '/news?category=Regulation' },
@@ -187,7 +191,7 @@ export default function SiteHeader() {
                 onClick={() => setNewsOpen((current) => !current)}
                 onFocus={() => setNewsOpen(true)}
               >
-                <span>News</span>
+                <span>Market Desk</span>
                 <Chevron open={newsOpen} />
               </button>
 
@@ -290,7 +294,7 @@ export default function SiteHeader() {
                   aria-expanded={mobileNewsOpen}
                   aria-controls="mobile-news"
                 >
-                  <span>News</span>
+                  <span>Market Desk</span>
                   <Chevron open={mobileNewsOpen} />
                 </button>
                 {mobileNewsOpen ? (

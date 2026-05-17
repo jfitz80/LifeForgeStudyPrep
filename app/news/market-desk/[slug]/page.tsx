@@ -17,6 +17,15 @@ function publishedIso(date: string) {
   return new Date(date).toISOString();
 }
 
+function getKeyTakeaways(article: ReturnType<typeof getMarketDeskArticle>) {
+  if (!article) return [];
+  const contentItems = article.content
+    .flatMap((block) => block.items ?? (block.text ? [block.text] : []))
+    .map((item) => item.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+  return contentItems.slice(0, 3);
+}
+
 export function generateStaticParams() {
   return marketDeskArticles.map((article) => ({ slug: article.slug }));
 }
@@ -57,6 +66,7 @@ export default async function MarketDeskArticlePage({ params }: Props) {
   if (!article) notFound();
 
   const related = getRelatedMarketDeskArticles(article);
+  const keyTakeaways = getKeyTakeaways(article);
   const canonicalUrl = `https://${siteConfig.domain}/news/market-desk/${article.slug}`;
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -117,6 +127,15 @@ export default async function MarketDeskArticlePage({ params }: Props) {
 
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_300px] lg:px-8">
         <article>
+          <section className="mb-8 rounded-2xl border border-slate-200 bg-[#F9FAFB] p-5">
+            <h2 className="text-xl font-bold text-[#1F2A44]">Key takeaways</h2>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-700">
+              {keyTakeaways.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
           <div className="space-y-6">
             {article.content.map((block, index) => {
               if (block.type === 'heading') {
@@ -153,6 +172,43 @@ export default async function MarketDeskArticlePage({ params }: Props) {
               );
             })}
           </div>
+
+          <section className="mt-10 grid gap-5 md:grid-cols-2">
+            <article className="rounded-2xl border border-slate-200 bg-[#F9FAFB] p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Why it matters</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-700">
+                This topic helps learners connect market commentary to practical insurance conversations, client understanding, and product mechanics.
+              </p>
+            </article>
+            <article className="rounded-2xl border border-slate-200 bg-[#F9FAFB] p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Exam connection</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-700">
+                Treat this as scenario practice: identify the client need, the policy rule, the advisor duty, and the trap answer before choosing.
+              </p>
+            </article>
+          </section>
+
+          <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 className="text-lg font-bold text-[#1F2A44]">Mini practice question</h2>
+            <p className="mt-2 text-sm font-semibold leading-7 text-slate-800">
+              A client asks whether a policy feature is automatically the best choice because it sounds flexible. What should the advisor do first?
+            </p>
+            <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-700">
+              {[
+                'A. Recommend the feature immediately',
+                'B. Compare the feature to the client need, budget, time horizon, and understanding',
+                'C. Avoid documenting the discussion',
+                'D. Assume flexibility always outweighs cost'
+              ].map((option) => (
+                <li key={option} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                  {option}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-sm leading-7 text-slate-700">
+              <strong>Correct answer:</strong> B. Suitability starts with the client profile and the reason for the recommendation, not a feature in isolation.
+            </p>
+          </section>
 
           <section className="mt-10 rounded-2xl border border-sky-100 bg-gradient-to-br from-white to-[#EEF6FF] p-6 shadow-sm">
             <h2 className="text-xl font-bold text-[#1F2A44]">Studying insurance concepts?</h2>

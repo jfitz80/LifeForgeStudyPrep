@@ -310,10 +310,36 @@ export default function QuestionProgressionSystem() {
   if (!selectedTest) {
     return (
       <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
-        <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
-        <p className="mt-2 text-sm text-slate-300">
-          Select a 5-question set that matches your focus: Canadian LLQP Life Insurance module logic or broader life insurance fundamentals.
-        </p>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+          <div>
+            <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
+            <p className="mt-2 text-sm text-slate-300">
+              Select a 5-question set that matches your focus: Canadian LLQP Life Insurance module logic or broader life insurance fundamentals.
+            </p>
+          </div>
+          <aside className="rounded-2xl border border-slate-700 bg-[#0E1628] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6BC4B8]">Study controls</p>
+            <div className="mt-3 grid grid-cols-2 gap-2 text-xs font-semibold text-slate-200">
+              {['Study streak', 'Timed quiz mode', 'Progress tracking', 'Difficulty filters'].map((item) => (
+                <span key={item} className="rounded-xl border border-slate-700 bg-[#111A2D] px-3 py-2">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </aside>
+        </div>
+        <div className="mt-5 grid gap-3 md:grid-cols-3">
+          {[
+            ['Exam simulation mode', 'Use a timed, no-notes mindset for quick sets.'],
+            ['Trap question category', 'Practise tempting answers and common wording traps.'],
+            ['Scenario drill category', 'Connect product logic to client facts.']
+          ].map(([title, text]) => (
+            <div key={title} className="rounded-2xl border border-slate-700 bg-[#0E1628] p-4">
+              <p className="text-sm font-semibold text-white">{title}</p>
+              <p className="mt-1 text-xs leading-5 text-slate-400">{text}</p>
+            </div>
+          ))}
+        </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {(Object.keys(QUIZ_SETS) as TestKey[]).map((key) => {
             const test = QUIZ_SETS[key];
