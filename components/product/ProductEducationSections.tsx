@@ -73,6 +73,45 @@ type ProductEducationSectionsProps = {
 };
 
 function ProductCtas({ context }: ProductEducationSectionsProps) {
+  if (context === 'app') {
+    return (
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a
+          href={siteConfig.appStoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-xl bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+        >
+          Download the Free App
+        </a>
+        <TrackedLink
+          href="/free-practice"
+          eventName="click_free_practice_cta"
+          eventPayload={{ source: `${context}_product_sections` }}
+          className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+        >
+          Try Web Practice
+        </TrackedLink>
+        <a
+          href={siteConfig.checkoutUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+        >
+          Download the Study Guide
+        </a>
+        <a
+          href={siteConfig.appStoreUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+        >
+          Unlock the Full Question Bank
+        </a>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       <TrackedLink

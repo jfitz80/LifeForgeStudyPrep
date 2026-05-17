@@ -8,8 +8,17 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
   title: 'LifeforgePrep App | Study On the Go',
   description:
-    'Practice life insurance concepts, strengthen your knowledge, and study with confidence wherever you are with the LifeforgePrep app.'
+    'Practice life insurance concepts with LifeForgePrep 5.0, including a rebuilt question bank, stronger explanations, topic tagging, and Timed Exam mode.'
 };
+
+const versionFiveUpdates = [
+  'Rebuilt question bank',
+  'Stronger explanations',
+  'Improved difficulty progression',
+  'Better topic tagging',
+  'More scenario-based questions',
+  'New Timed Exam mode'
+] as const;
 
 const appFeatures = [
   {
@@ -66,7 +75,7 @@ export default function AppPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Mobile App</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            LifeForgePrep’s app gives learners 15 free practice questions, then offers a one-time unlock for the full question bank. Use it to practise key life insurance concepts, review explanations, and study at your own pace.
+            LifeForgePrep 5.0 gives learners 15 free practice questions, then offers a one-time unlock for the full question bank. Use the rebuilt question bank, stronger explanations, topic tagging, and Timed Exam mode to practise key life insurance concepts at your own pace.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
@@ -75,15 +84,23 @@ export default function AppPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Download on the App Store
+              Download the Free App
             </a>
+            <TrackedLink
+              href="/app/version-5"
+              eventName="click_app_cta"
+              eventPayload={{ source: 'app_hero', action: 'version_5' }}
+              className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
+            >
+              See What&apos;s New in 5.0
+            </TrackedLink>
             <TrackedLink
               href="/free-practice"
               eventName="click_free_practice_cta"
               eventPayload={{ source: 'app_hero' }}
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Start Free Practice
+              Try Web Practice
             </TrackedLink>
             <a
               href={siteConfig.appStoreUrl}
@@ -94,6 +111,46 @@ export default function AppPage() {
               Unlock the Full Question Bank
             </a>
           </div>
+        </section>
+
+        <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+          <article className="rounded-3xl border border-[#CFEAE4] bg-[#F1FBF8] p-6 shadow-sm sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">New release</p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44]">New in LifeForgePrep 5.0</h2>
+            <p className="mt-3 text-sm leading-7 text-[#315A55]">
+              Version 5.0 sharpens the app around deeper practice: clearer explanations, stronger difficulty progression, more scenario-based questions, and better topic tagging for focused review.
+            </p>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {versionFiveUpdates.map((item) => (
+                <div key={item} className="rounded-2xl border border-[#CFEAE4] bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44]">
+                  {item}
+                </div>
+              ))}
+            </div>
+            <TrackedLink
+              href="/app/version-5"
+              eventName="click_app_cta"
+              eventPayload={{ source: 'app_version_5_section' }}
+              className="mt-6 inline-flex rounded-xl bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+            >
+              Read the 5.0 release notes
+            </TrackedLink>
+          </article>
+
+          <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Timed Exam mode</p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#1F2A44]">Practise Under Pressure with Timed Exam Mode</h2>
+            <p className="mt-3 text-sm leading-7 text-[#4A5568]">
+              Timed mode helps users practise pacing, focus, and exam-style decision-making. It is designed for learners who understand the concepts but want to get faster and calmer when questions feel close together.
+            </p>
+            <div className="mt-5 space-y-3 text-sm text-[#4A5568]">
+              {['Practise answering without overthinking every option', 'Build comfort with scenario wording and closer distractors', 'Review missed questions after the timed session'].map((item) => (
+                <div key={item} className="rounded-2xl border border-slate-200 bg-[#F9FAFB] px-4 py-3">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </article>
         </section>
 
         <section className="mt-10">
@@ -221,4 +278,3 @@ export default function AppPage() {
     </main>
   );
 }
-

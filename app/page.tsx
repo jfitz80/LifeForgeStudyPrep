@@ -1,22 +1,24 @@
 import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 import NewThisWeekSection from '@/components/home/NewThisWeekSection';
+import { siteConfig } from '@/config/site';
 import { marketDeskArticles } from '@/data/marketDeskArticles';
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Exam Prep and Insurance Foundations',
   description:
-    'Practice life insurance licensing questions, learn insurance fundamentals, and build confidence with LifeForgePrep.',
+    'Life insurance exam-style practice, rebuilt explanations, scenario-based questions, and Timed Exam mode with LifeForgePrep.',
   alternates: {
     canonical: '/'
   }
 };
 
 const trustBadges = [
-  '15 free questions',
+  'LifeForgePrep 5.0',
+  '15 free app questions',
   'Exam-style practice',
-  'Insurance fundamentals',
-  'Weekly study updates'
+  'Timed Exam mode',
+  'Scenario-based questions'
 ] as const;
 
 const sampleQuestions = [
@@ -87,6 +89,35 @@ export default function HomePage() {
     <main className="min-h-screen bg-slate-50 text-slate-950">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
+      <section className="border-b border-[#CFEAE4] bg-[#F1FBF8]">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-5 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div>
+            <p className="text-sm font-bold text-[#1F2A44]">New: LifeForgePrep 5.0 is here</p>
+            <p className="mt-1 max-w-4xl text-sm leading-6 text-[#315A55]">
+              Practise with a rebuilt question bank, stronger explanations, improved difficulty progression, better topic tagging, more scenario-based questions, and new Timed Exam mode.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <TrackedLink
+              href="/app/version-5"
+              eventName="click_app_cta"
+              eventPayload={{ source: 'home_launch_banner', action: 'version_5' }}
+              className="inline-flex items-center justify-center rounded-xl border border-[#9DD8CF] bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:-translate-y-0.5 hover:bg-slate-50"
+            >
+              See What&apos;s New in 5.0
+            </TrackedLink>
+            <a
+              href={siteConfig.appStoreUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-slate-800"
+            >
+              Download the App
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="overflow-hidden border-b border-slate-200 bg-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_430px] lg:px-8">
           <div>
@@ -99,19 +130,27 @@ export default function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={siteConfig.appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
+              >
+                Download the Free App
+              </a>
               <TrackedLink
                 href="/free-practice"
                 eventName="click_free_practice_cta"
                 eventPayload={{ source: 'home_hero' }}
-                className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50"
               >
-                Start Free Practice
+                Try Web Practice
               </TrackedLink>
               <TrackedLink
                 href="/exam-prep"
                 eventName="click_exam_prep_cta"
                 eventPayload={{ source: 'home_hero' }}
-                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-50"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-100"
               >
                 Explore Exam Prep
               </TrackedLink>
@@ -194,10 +233,10 @@ export default function HomePage() {
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2FAF9E]">15 Questions Free</p>
-              <h2 className="mt-2 text-3xl font-bold text-[#1F2A44]">Free practice preview</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#2FAF9E]">5-question web preview</p>
+              <h2 className="mt-2 text-3xl font-bold text-[#1F2A44]">Try a quick web practice set</h2>
               <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600">
-                Try focused question types with timer cues, difficulty labels, and scenario-style wording.
+                Sample focused question types on the web, then move into the app for 15 free questions, Timed Exam mode, and the rebuilt 5.0 question bank.
               </p>
             </div>
             <TrackedLink
@@ -206,7 +245,7 @@ export default function HomePage() {
               eventPayload={{ source: 'home_practice_preview' }}
               className="inline-flex rounded-xl bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Start Practicing
+              Try Web Practice
             </TrackedLink>
           </div>
 

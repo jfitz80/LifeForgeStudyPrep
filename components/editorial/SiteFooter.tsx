@@ -34,6 +34,7 @@ const footerColumns = [
     links: [
       { label: 'About', href: '/about' },
       { label: 'App', href: '/app' },
+      { label: "What's New in 5.0", href: '/app/version-5' },
       { label: 'Support', href: '/support' },
       { label: 'Contact', href: `mailto:${siteConfig.supportEmail}` }
     ]

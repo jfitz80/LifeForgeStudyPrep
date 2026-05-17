@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/free-practice/question-of-the-week',
     '/exam-prep',
     '/app',
+    '/app/version-5',
     '/about',
     '/support',
     '/privacy',
