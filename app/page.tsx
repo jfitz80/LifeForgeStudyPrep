@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import TrackedLink from '@/components/TrackedLink';
 import NewThisWeekSection from '@/components/home/NewThisWeekSection';
+import WeeklyExamWatch from '@/components/news/WeeklyExamWatch';
 import { siteConfig } from '@/config/site';
 import { marketDeskArticles } from '@/data/marketDeskArticles';
 
@@ -192,6 +193,8 @@ export default function HomePage() {
           </aside>
         </div>
       </section>
+
+      <WeeklyExamWatch source="home_exam_watch" />
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-2">

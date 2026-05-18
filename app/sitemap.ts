@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools',
     '/market-desk',
     '/news',
+    '/news/ontario-llqp-exams-in-person-2026',
     '/news/market-desk',
     '/knowledge',
     '/free-practice',

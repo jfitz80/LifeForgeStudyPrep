@@ -3,8 +3,8 @@
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import TrackedLink from "@/components/TrackedLink";
+import WeeklyExamWatch from "@/components/news/WeeklyExamWatch";
 import { marketDeskArticles } from "@/data/marketDeskArticles";
-import { weeklyContent } from "@/data/weeklyContent";
 import { trackEvent } from "@/lib/analytics";
 
 type NewsCategory =
@@ -81,10 +81,11 @@ const watchlistItems = [
 const contentBuckets = [
   {
     title: "This Week in Life Insurance",
-    label: "Updated weekly",
-    summary: weeklyContent.weeklyBrief.summary,
-    href: weeklyContent.weeklyBrief.href,
-    cta: "Read this week’s brief"
+    label: "Exam Updates",
+    summary:
+      "Ontario LLQP online exams are ending July 1, 2026, making timed, scenario-based preparation more important for candidates.",
+    href: "/news/ontario-llqp-exams-in-person-2026",
+    cta: "Read the study plan"
   },
   {
     title: "Regulation Watch",
@@ -298,6 +299,10 @@ export default function NewsPageClient() {
       </section>
 
       <section style={{ ...s.container, padding: "40px 0 20px" }}>
+        <WeeklyExamWatch compact source="news_exam_watch" />
+      </section>
+
+      <section style={{ ...s.container, padding: "24px 0 20px" }}>
         <div style={{ marginBottom: 18 }}>
           <p style={s.eyebrow}>This week’s focus</p>
           <h2 style={s.sectionTitle}>Market Desk study buckets</h2>
