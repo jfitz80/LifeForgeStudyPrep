@@ -1,4 +1,5 @@
 import { weeklyNewsItems, type WeeklyNewsItem } from '@/data/weeklyNews';
+import { normalizeHeadline } from '@/lib/news/feed-utils';
 import { isLiveNewsEnabled } from '@/lib/news/runtime';
 
 type PublishedNewsArticle = {
@@ -36,6 +37,44 @@ function toWeeklyNewsItem(article: PublishedNewsArticle): WeeklyNewsItem {
   };
 }
 
+function headlineTokens(title: string) {
+  return normalizeHeadline(title)
+    .split(' ')
+    .filter((token) => token.length > 2 && !['the', 'and', 'for', 'with', 'from', 'plans'].includes(token));
+}
+
+function isNearDuplicateTitle(left: string, right: string) {
+  const leftKey = normalizeHeadline(left);
+  const rightKey = normalizeHeadline(right);
+
+  if (!leftKey || !rightKey) return false;
+  if (leftKey === rightKey) return true;
+  if (leftKey.includes(rightKey) || rightKey.includes(leftKey)) return true;
+
+  const leftTokens = headlineTokens(left);
+  const rightTokens = headlineTokens(right);
+  if (leftTokens.length < 4 || rightTokens.length < 4) return false;
+
+  const rightSet = new Set(rightTokens);
+  const overlap = leftTokens.filter((token) => rightSet.has(token)).length;
+  const smaller = Math.min(leftTokens.length, rightTokens.length);
+
+  return overlap / smaller >= 0.62;
+}
+
+function dedupeWeeklyNewsItems(items: WeeklyNewsItem[]) {
+  const accepted: WeeklyNewsItem[] = [];
+
+  for (const item of items) {
+    if (accepted.some((existing) => existing.slug === item.slug || isNearDuplicateTitle(existing.title, item.title))) {
+      continue;
+    }
+    accepted.push(item);
+  }
+
+  return accepted;
+}
+
 export async function getPublishedNewsItems(): Promise<WeeklyNewsItem[]> {
   if (!isLiveNewsEnabled() || !process.env.DATABASE_URL) {
     return [];
@@ -58,7 +97,7 @@ export async function getPublishedNewsItems(): Promise<WeeklyNewsItem[]> {
       }
     });
 
-    return dbItems.map(toWeeklyNewsItem);
+    return dedupeWeeklyNewsItems(dbItems.map(toWeeklyNewsItem));
   } catch (error) {
     console.error('News DB fetch failed. Falling back to static weekly news.', error);
     return [];
@@ -70,7 +109,11 @@ export async function getWeeklyNewsItems(): Promise<WeeklyNewsItem[]> {
   if (dbItems.length === 0) return weeklyNewsItems;
 
   const curatedSlugs = new Set(weeklyNewsItems.map((item) => item.slug));
-  const supplementalDbItems = dbItems.filter((item) => !curatedSlugs.has(item.slug));
+  const supplementalDbItems = dbItems.filter(
+    (item) =>
+      !curatedSlugs.has(item.slug) &&
+      !weeklyNewsItems.some((curated) => isNearDuplicateTitle(curated.title, item.title))
+  );
 
-  return [...weeklyNewsItems, ...supplementalDbItems];
+  return dedupeWeeklyNewsItems([...weeklyNewsItems, ...supplementalDbItems]);
 }
