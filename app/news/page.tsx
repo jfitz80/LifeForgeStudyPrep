@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { getWeeklyNewsItems } from "@/lib/news/published";
 import NewsPageClient from "./NewsPageClient";
 
 export const metadata: Metadata = {
-  title: "LifeForge Market Desk | Life Insurance News and Trends",
+  title: "Life Insurance News & LLQP Study Insights | LifeForgePrep",
   description:
-    "Plain-English commentary on life insurance trends, regulation, products, and consumer issues.",
+    "Current life insurance and LLQP exam developments explained for future agents, with practical study insights, exam connections, and LifeForgePrep practice recommendations.",
   openGraph: {
     title: "LifeForge Market Desk",
     description:
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
   }
 };
 
-export default function NewsPage() {
-  return <NewsPageClient />;
+export const dynamic = "force-dynamic";
+
+export default async function NewsPage() {
+  const weeklyItems = await getWeeklyNewsItems();
+  return <NewsPageClient weeklyItems={weeklyItems} />;
 }

@@ -4,6 +4,7 @@ import NewThisWeekSection from '@/components/home/NewThisWeekSection';
 import WeeklyExamWatch from '@/components/news/WeeklyExamWatch';
 import { siteConfig } from '@/config/site';
 import { marketDeskArticles } from '@/data/marketDeskArticles';
+import { weeklyNewsItems } from '@/data/weeklyNews';
 
 export const metadata: Metadata = {
   title: 'LifeForgePrep | Life Insurance Exam Prep and Insurance Foundations',
@@ -194,7 +195,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <WeeklyExamWatch source="home_exam_watch" />
+      <WeeklyExamWatch source="home_exam_watch" items={weeklyNewsItems.slice(0, 3)} />
 
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-5 lg:grid-cols-2">

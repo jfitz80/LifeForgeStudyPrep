@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
   title: 'Ontario LLQP Exams Moving In-Person in 2026 | LifeForgePrep',
   description:
-    'Ontario LLQP online exams are ending July 1, 2026. Learn what this means for LLQP candidates and how to prepare with timed, scenario-based practice.',
+    'Ontario LLQP online exams are ending July 1, 2026. Learn what this means for candidates and how to prepare with timed, scenario-based practice.',
   alternates: {
     canonical: '/news/ontario-llqp-exams-in-person-2026'
   },

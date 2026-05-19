@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import TrackedLink from "@/components/TrackedLink";
 import WeeklyExamWatch from "@/components/news/WeeklyExamWatch";
 import { marketDeskArticles } from "@/data/marketDeskArticles";
+import type { WeeklyNewsItem } from "@/data/weeklyNews";
 import { trackEvent } from "@/lib/analytics";
 
 type NewsCategory =
@@ -253,7 +254,11 @@ function ArticleCard({ item }: { item: ArticleCard }) {
   );
 }
 
-export default function NewsPageClient() {
+type NewsPageClientProps = {
+  weeklyItems: WeeklyNewsItem[];
+};
+
+export default function NewsPageClient({ weeklyItems }: NewsPageClientProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>(() => {
     if (typeof window === "undefined") return "All";
     const category = new URLSearchParams(window.location.search).get("category");
@@ -299,15 +304,15 @@ export default function NewsPageClient() {
       </section>
 
       <section style={{ ...s.container, padding: "40px 0 20px" }}>
-        <WeeklyExamWatch compact source="news_exam_watch" />
+        <WeeklyExamWatch compact source="news_exam_watch" items={weeklyItems} />
       </section>
 
       <section style={{ ...s.container, padding: "24px 0 20px" }}>
         <div style={{ marginBottom: 18 }}>
           <p style={s.eyebrow}>This week’s focus</p>
-          <h2 style={s.sectionTitle}>Market Desk study buckets</h2>
+          <h2 style={s.sectionTitle}>Current developments by study category</h2>
           <p style={s.muted}>
-            Three recurring angles keep the page current without turning LifeForge Prep into a noisy news feed.
+            Current insurance developments, translated into practical study insights for future life insurance agents.
           </p>
         </div>
         <div style={s.grid}>
