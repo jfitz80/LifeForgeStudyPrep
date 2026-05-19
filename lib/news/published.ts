@@ -67,7 +67,10 @@ export async function getPublishedNewsItems(): Promise<WeeklyNewsItem[]> {
 
 export async function getWeeklyNewsItems(): Promise<WeeklyNewsItem[]> {
   const dbItems = await getPublishedNewsItems();
-  if (dbItems.length > 0) return dbItems;
+  if (dbItems.length === 0) return weeklyNewsItems;
 
-  return weeklyNewsItems;
+  const curatedSlugs = new Set(weeklyNewsItems.map((item) => item.slug));
+  const supplementalDbItems = dbItems.filter((item) => !curatedSlugs.has(item.slug));
+
+  return [...weeklyNewsItems, ...supplementalDbItems];
 }
