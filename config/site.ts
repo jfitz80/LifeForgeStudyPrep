@@ -1,7 +1,7 @@
 export const siteConfig = {
   brandName: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
-  productName: 'Life Insurance Exam Question Bank',
+  productName: 'Life Insurance Scenario Practice',
 
   regularPrice: 29,
   launchPrice: 8.99,
@@ -18,7 +18,7 @@ export const siteConfig = {
   domain: 'www.lifeforgeprep.com',
 
   seo: {
-    title: 'LifeForge Insurance Prep | Life Insurance Exam Question Bank',
+    title: 'LifeForgePrep | Life Insurance Exam Practice & Scenario-Based Study',
     description:
       'LLQP Life Insurance module study support with exam-style questions, clear explanations, and scenario-based practice.'
   },
@@ -34,16 +34,16 @@ export const siteConfig = {
 export const heroCopy = {
   eyebrow: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
-  headline: 'Prepare for the LLQP Life Insurance Module With Confidence',
+  headline: 'Life Insurance Exam Practice That Teaches You How to Think',
   subheadline:
-    'Practice with exam-style questions designed for future advisors. LifeForge Prep currently focuses on the Canadian LLQP Life Insurance module and supplements your official course material.',
+    "Don't just memorize life insurance terms. Learn how to reason through exam-style questions with scenario-based practice that supplements your official course material.",
   bullets: [
     '80+ Life Insurance module questions',
     'Clear explanations',
     'Scenario-based practice',
     'Designed to supplement official LLQP course material'
   ],
-  primaryCta: 'Start Practicing Questions',
+  primaryCta: 'Try 15 Free Questions',
   secondaryCta: 'Get the Life Insurance Practice Guide',
   trustLine: 'Independent exam prep resource. Instant digital access.'
 };

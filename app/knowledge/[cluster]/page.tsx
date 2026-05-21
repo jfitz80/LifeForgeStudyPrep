@@ -69,7 +69,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
             variant="studying"
             actions={[
               {
-                label: 'Try 5 Free Questions',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -80,7 +80,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Life Insurance Module Prep',
+                label: 'Explore Full Practice',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {
@@ -137,7 +137,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Try 5 Free Questions',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -148,7 +148,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Life Insurance Module Prep',
+                label: 'Explore Full Practice',
                 href: '/exam-prep',
                 style: 'secondary',
                 eventPayload: {

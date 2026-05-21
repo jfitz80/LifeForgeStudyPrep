@@ -65,7 +65,7 @@ export default async function GlossaryTermPage({ params }: Props) {
           <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:sticky lg:top-24">
             <h3 className="text-lg font-bold text-[#1F2A44]">Next steps</h3>
             <div className="mt-4 space-y-3 text-sm font-semibold">
-              <Link href="/free-practice" className="block text-[#2FAF9E] hover:text-[#1F2A44]">Try 5 Free Questions</Link>
+              <Link href="/free-practice" className="block text-[#2FAF9E] hover:text-[#1F2A44]">Try 15 Free Questions</Link>
               <Link href="/knowledge" className="block text-[#2FAF9E] hover:text-[#1F2A44]">Explore Knowledge Hub</Link>
               <Link href="/exam-prep" className="block text-[#2FAF9E] hover:text-[#1F2A44]">Explore Exam Prep</Link>
             </div>

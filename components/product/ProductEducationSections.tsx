@@ -7,8 +7,8 @@ const benefits = [
     text: 'Start with a focused preview before deciding whether to unlock more practice.'
   },
   {
-    title: 'Full question bank available by one-time unlock',
-    text: 'Use the app for expanded question access without a recurring subscription.'
+    title: 'Full scenario-based practice by one-time unlock',
+    text: 'Unlock deeper practice, harder scenarios, timed drills, and explanations that help you reason through the answer.'
   },
   {
     title: 'Exam-style multiple choice questions',
@@ -90,7 +90,7 @@ function ProductCtas({ context }: ProductEducationSectionsProps) {
           eventPayload={{ source: `${context}_product_sections` }}
           className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
         >
-          Try Web Practice
+          Try Free Practice Online
         </TrackedLink>
         <a
           href={siteConfig.checkoutUrl}
@@ -106,7 +106,7 @@ function ProductCtas({ context }: ProductEducationSectionsProps) {
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
         >
-          Unlock the Full Question Bank
+          Unlock Full Scenario-Based Practice
         </a>
       </div>
     );
@@ -120,7 +120,7 @@ function ProductCtas({ context }: ProductEducationSectionsProps) {
         eventPayload={{ source: `${context}_product_sections` }}
         className="inline-flex items-center justify-center rounded-xl bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
       >
-        Start Free Practice
+        Try 15 Free Questions
       </TrackedLink>
       <a
         href={siteConfig.checkoutUrl}
@@ -144,7 +144,7 @@ function ProductCtas({ context }: ProductEducationSectionsProps) {
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center rounded-xl bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
       >
-        Unlock the Full Question Bank
+        Unlock Full Scenario-Based Practice
       </a>
     </div>
   );
@@ -232,7 +232,7 @@ export default function ProductEducationSections({ context }: ProductEducationSe
           <article className="rounded-2xl border border-[#CFEAE4] bg-[#F1FBF8] p-5">
             <h3 className="text-xl font-bold text-[#1F2A44]">Full Access</h3>
             <ul className="mt-4 space-y-2 text-sm leading-6 text-[#315A55]">
-              <li>Full question bank</li>
+              <li>Full scenario-based practice</li>
               <li>Harder exam-style questions</li>
               <li>Detailed explanations</li>
               <li>One-time purchase</li>

@@ -236,7 +236,7 @@ export default function SiteHeader() {
               rel="noopener noreferrer"
               className="rounded-xl bg-[#2C3440] px-5 py-3 text-base font-semibold text-white transition hover:bg-slate-700 xl:text-[18px]"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
+              Unlock Full Practice - {siteConfig.launchPriceDisplay ?? siteConfig.price}
             </a>
           </div>
 
@@ -324,7 +324,7 @@ export default function SiteHeader() {
                 className="rounded-xl bg-[#2C3440] px-4 py-3 text-sm font-semibold text-white"
                 onClick={closeMobileMenu}
               >
-                Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
+                Unlock Full Practice - {siteConfig.launchPriceDisplay ?? siteConfig.price}
               </a>
             </div>
           </div>

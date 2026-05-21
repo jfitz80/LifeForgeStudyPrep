@@ -6,6 +6,7 @@ import BonusPracticeCapture from '@/components/free-practice/BonusPracticeCaptur
 import QuizProgressBar from '@/components/free-practice/QuizProgressBar';
 import QuizResultsCard from '@/components/free-practice/QuizResultsCard';
 import UpgradeCTA from '@/components/free-practice/UpgradeCTA';
+import StudyCTA from '@/components/StudyCTA';
 import { trackEvent } from '@/lib/analytics';
 
 type QuestionType = 'concept' | 'scenario' | 'calculation';
@@ -195,20 +196,6 @@ const QUIZ_SETS = {
 
 type TestKey = keyof typeof QUIZ_SETS;
 
-type ResultAction = {
-  label: string;
-  href?: string;
-  onClick?: () => void;
-  variant?: 'muted';
-};
-
-function getResultTier(score: number, total: number) {
-  const ratio = total > 0 ? score / total : 0;
-  if (ratio <= 0.4) return 'low' as const;
-  if (ratio <= 0.7) return 'mid' as const;
-  return 'high' as const;
-}
-
 export default function QuestionProgressionSystem() {
   const [selectedTest, setSelectedTest] = useState<TestKey | null>(null);
   const [index, setIndex] = useState(0);
@@ -242,6 +229,23 @@ export default function QuestionProgressionSystem() {
       return { typeLabel: type.charAt(0).toUpperCase() + type.slice(1), correct, total: typeQuestions };
     });
   }, [answers, questions]);
+
+  const weakestTopic = useMemo(() => {
+    const sorted = breakdown
+      .filter((item) => item.total > 0)
+      .sort((a, b) => a.correct / a.total - b.correct / b.total);
+
+    return sorted[0]?.typeLabel ?? 'Scenario reasoning';
+  }, [breakdown]);
+
+  const difficultyMix = useMemo(
+    () =>
+      breakdown
+        .filter((item) => item.total > 0)
+        .map((item) => `${item.typeLabel}: ${item.total}`)
+        .join(' • '),
+    [breakdown]
+  );
 
   useEffect(() => {
     setIndex(0);
@@ -283,29 +287,6 @@ export default function QuestionProgressionSystem() {
     }
     setIndex((prev) => prev + 1);
   }
-
-  const resultTier = getResultTier(score, total);
-
-  const resultActions = useMemo<{ primary: ResultAction; secondary: ResultAction }>(() => {
-    if (resultTier === 'low') {
-      return {
-        primary: { label: 'Read beginner guides', href: '/knowledge' },
-        secondary: { label: 'Try another practice set', onClick: () => restart() }
-      };
-    }
-
-    if (resultTier === 'mid') {
-      return {
-        primary: { label: 'Try another practice set', onClick: () => restart() },
-        secondary: { label: 'Try harder questions', href: '/exam-prep', variant: 'muted' }
-      };
-    }
-
-    return {
-      primary: { label: 'Explore Life Insurance Module Prep', href: '/exam-prep' },
-      secondary: { label: 'Download the LifeforgePrep app', href: '/app', variant: 'muted' }
-    };
-  }, [resultTier, restart]);
 
   if (!selectedTest) {
     return (
@@ -368,11 +349,50 @@ export default function QuestionProgressionSystem() {
       <section id="free-practice-quiz" className="scroll-mt-28 space-y-6">
         <QuizResultsCard score={score} total={total} breakdown={breakdown} />
 
-        <div className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 text-sm text-slate-200">
-          <p>
-            This is for learning, not just memorizing—focus on advisor thinking, product logic, and suitability reasoning with every question.
+        <section className="rounded-2xl border border-[#2FAF9E]/40 bg-[#13253A] p-6 shadow-xl sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Next step</p>
+          <h3 className="mt-2 text-2xl font-bold text-white">You&apos;ve completed your free practice session.</h3>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300">
+            You&apos;ve seen the basics. The real learning happens when questions get more scenario-based, time-limited, and judgment-driven.
           </p>
-        </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <article className="rounded-xl border border-slate-700 bg-[#0E1628] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Number correct</p>
+              <p className="mt-2 text-2xl font-bold text-white">{score}/{total}</p>
+            </article>
+            <article className="rounded-xl border border-slate-700 bg-[#0E1628] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Weakest topic</p>
+              <p className="mt-2 text-lg font-bold text-white">{weakestTopic}</p>
+            </article>
+            <article className="rounded-xl border border-slate-700 bg-[#0E1628] p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#6BC4B8]">Question mix</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-white">{difficultyMix}</p>
+            </article>
+          </div>
+          <ul className="mt-5 grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
+            {['Harder scenario questions', 'Timed exam practice', 'Detailed explanations', 'Topic and difficulty progression'].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#2FAF9E]" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/app"
+              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+            >
+              Unlock Full Practice
+            </Link>
+            <button
+              type="button"
+              onClick={restart}
+              className="inline-flex items-center justify-center rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              Try Another Free Set
+            </button>
+          </div>
+        </section>
 
         {wrongAnswers.length > 0 ? (
           <section className="rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
@@ -394,46 +414,6 @@ export default function QuestionProgressionSystem() {
           </section>
         ) : null}
 
-        <div className="grid gap-3 md:grid-cols-2">
-          {resultActions.primary.href ? (
-            <Link
-              href={resultActions.primary.href}
-              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              {resultActions.primary.label}
-            </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={resultActions.primary.onClick}
-              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              {resultActions.primary.label}
-            </button>
-          )}
-
-          {resultActions.secondary.href ? (
-            <Link
-              href={resultActions.secondary.href}
-              className={`inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition ${
-                resultActions.secondary.variant === 'muted'
-                  ? 'border-slate-500 text-slate-100 hover:border-white'
-                  : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
-              }`}
-            >
-              {resultActions.secondary.label}
-            </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={resultActions.secondary.onClick}
-              className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
-            >
-              {resultActions.secondary.label}
-            </button>
-          )}
-        </div>
-
         <section className="rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
           <h3 className="text-2xl font-bold text-white">Advanced scenario-based questions are available in Exam Prep</h3>
           <p className="mt-3 text-sm leading-7 text-slate-300">
@@ -450,6 +430,18 @@ export default function QuestionProgressionSystem() {
         </section>
 
         <UpgradeCTA />
+
+        <StudyCTA
+          variant="dark"
+          title="Studying life insurance? Test the concept."
+          body="Reading the explanation helps. Practice shows whether you can apply the concept under exam-style pressure."
+          primaryLabel="Try 15 Free Questions"
+          primaryHref="/free-practice"
+          secondaryLabel="Unlock Full Practice"
+          secondaryHref="/app"
+          location="free-practice-results"
+          campaign="exam-trap"
+        />
 
         <div className="flex justify-between text-sm text-slate-400">
           <button type="button" onClick={restart} className="underline-offset-4 hover:underline">

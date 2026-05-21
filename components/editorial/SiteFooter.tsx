@@ -109,7 +109,7 @@ export default function SiteFooter() {
 
         <div className="mt-10 border-t border-white/10 pt-6 text-xs leading-6 text-slate-400">
           <p>
-            Educational content only. LifeForgePrep is not a regulator, insurer, legal advisor, tax advisor, or financial advisor. Always confirm licensing and product decisions with official materials and licensed professionals.
+            LifeForgePrep is an independent study and practice tool. It is not affiliated with any regulator, licensing body, course provider, insurer, or official exam administrator. Use it alongside your approved course materials. No pass guarantee is provided.
           </p>
           <p className="mt-3">© 2026 LifeForgePrep. All rights reserved.</p>
         </div>

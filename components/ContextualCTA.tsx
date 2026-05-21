@@ -57,6 +57,9 @@ export default function ContextualCTA({
             href={action.href}
             eventName="contextual_cta_click"
             eventPayload={action.eventPayload}
+            data-cta={action.style === 'secondary' ? 'explore-full-practice' : 'try-free-practice'}
+            data-location={action.eventPayload.location ?? action.eventPayload.source_page ?? 'contextual-cta'}
+            data-campaign="exam-trap"
             className={
               action.style === 'secondary'
                 ? 'inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50'

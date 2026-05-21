@@ -139,10 +139,10 @@ export default function WhatIsLlqpSection() {
                 href="/free-practice"
                 className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
               >
-                Try 5 Free Questions
+                Try 15 Free Questions
               </Link>
               <Link href="/exam-prep" className="text-sm font-semibold text-[#1F2A44] underline-offset-2 hover:underline">
-                Explore Life Insurance Module Prep
+                Explore Full Practice
               </Link>
             </div>
           </article>

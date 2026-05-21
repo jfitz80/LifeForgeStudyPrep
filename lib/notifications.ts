@@ -76,7 +76,7 @@ export async function sendLeadMagnetEmail(lead: LeadSubmission): Promise<Deliver
       <p><a href="${freePackUrl}" style="display:inline-block;background:#2FAF9E;color:#ffffff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;">Open the free pack</a></p>
       <p>This includes 5 exam-style questions plus a product comparison cheat sheet to help you build practical life insurance understanding.</p>
       <p>When you are ready for more, you can continue with free practice or move into full exam prep.</p>
-      <p><a href="${siteConfig.siteUrl}/free-practice">Try 5 Free Questions</a> · <a href="${siteConfig.checkoutUrl}">Get Life Insurance Practice Guide</a></p>
+      <p><a href="${siteConfig.siteUrl}/free-practice">Try 15 Free Questions</a> · <a href="${siteConfig.checkoutUrl}">Get Life Insurance Practice Guide</a></p>
     </div>
   `;
 

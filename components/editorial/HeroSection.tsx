@@ -20,7 +20,7 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-700"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay}
+              Unlock Full Practice - {siteConfig.launchPriceDisplay}
             </a>
             <a
               href="#news-digest"

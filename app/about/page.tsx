@@ -91,7 +91,7 @@ export default function AboutPage() {
           <h2 className="text-2xl font-bold text-[#1F2A44]">Start with the path that fits you</h2>
           <div className="mt-5 flex flex-wrap gap-3">
             <TrackedLink href="/free-practice" eventName="hero_cta_click" eventPayload={{ cta: 'about_free_practice', location: 'about_page' }} className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]">
-              Try 5 Free Questions
+              Try 15 Free Questions
             </TrackedLink>
             <TrackedLink href="/knowledge" eventName="knowledge_hub_click" eventPayload={{ location: 'about_page' }} className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
               Explore Knowledge Hub

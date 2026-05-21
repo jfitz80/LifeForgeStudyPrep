@@ -19,7 +19,7 @@ export default function Navbar() {
           rel="noopener noreferrer"
           className="rounded-lg bg-brand-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-900"
         >
-          Get Question Bank - {siteConfig.launchPriceDisplay}
+          Unlock Full Practice - {siteConfig.launchPriceDisplay}
         </a>
       </nav>
     </header>

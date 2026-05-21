@@ -376,7 +376,7 @@ export default async function NewsArticlePage({ params }: Props) {
               variant="studying"
               actions={[
                 {
-                  label: 'Try 5 Free Questions',
+                  label: 'Try 15 Free Questions',
                   href: '/free-practice',
                   eventPayload: {
                     source_page: `/news/${item.slug}`,
@@ -387,7 +387,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   }
                 },
                 {
-                  label: 'Explore Life Insurance Module Prep',
+                  label: 'Explore Full Practice',
                   href: '/exam-prep',
                   style: 'secondary',
                   eventPayload: {

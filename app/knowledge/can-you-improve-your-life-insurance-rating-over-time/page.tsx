@@ -126,10 +126,10 @@ export default function ImproveLifeInsuranceRatingArticlePage() {
                 href="/free-practice"
                 className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#26988a]"
               >
-                Try 5 Free Questions
+                Try 15 Free Questions
               </Link>
               <Link href="/exam-prep" className="inline-flex items-center text-sm font-semibold text-[#1F2A44] hover:underline">
-                Explore Life Insurance Module Prep
+                Explore Full Practice
               </Link>
             </div>
           </section>

@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import LeadForm from '@/components/LeadForm';
+import StudyCTA from '@/components/StudyCTA';
 import TrackedLink from '@/components/TrackedLink';
 import ProductEducationSections from '@/components/product/ProductEducationSections';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'Exam Prep | LifeForgePrep',
-  description: 'LLQP Life Insurance module practice guide with scenario-based questions, explanations, and practical advisor reasoning.'
+  title: 'Life Insurance Exam Practice & Scenario-Based Study | LifeForgePrep',
+  description:
+    'Practise life insurance exam-style questions with clear explanations, timed drills, and scenario-based learning. Built as an independent companion study tool for insurance learners.'
 };
 
 const included = [
@@ -51,7 +53,7 @@ export default function ExamPrepPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LLQP Life Insurance Module</p>
           <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">Structured Life Insurance module prep for users who need reasoning, not just recall</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-[#4A5568]">
-            LifeForge Prep currently focuses on the LLQP Life Insurance module, with scenario-based practice questions, explanations, calculation drills, and exam-style traps. It is designed to supplement your official course material — not replace it.
+            Don&apos;t just memorize life insurance terms. Learn how to reason through exam-style questions. LifeForgePrep currently focuses on the LLQP Life Insurance module with scenario-based practice questions, explanations, calculation drills, and exam-style traps. It is designed to supplement your official course material - not replace it.
           </p>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
             Format: instant digital access to a focused Life Insurance practice guide and question bank.
@@ -63,7 +65,7 @@ export default function ExamPrepPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Download the Study Guide - {siteConfig.launchPriceDisplay}
+              Unlock Full Practice - {siteConfig.launchPriceDisplay}
             </a>
             <TrackedLink
               href="/free-practice"
@@ -71,7 +73,7 @@ export default function ExamPrepPage() {
               eventPayload={{ cta: 'exam_prep_try_free', location: 'exam_prep_hero' }}
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Try 5 Free Questions
+              Try 15 Free Questions
             </TrackedLink>
             <TrackedLink
               href="/app"
@@ -139,6 +141,42 @@ export default function ExamPrepPage() {
         </section>
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+          <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Exam trap challenge</p>
+              <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Can You Beat the Exam Trap?</h2>
+              <p className="mt-3 text-sm leading-7 text-[#4A5568]">
+                Many life insurance questions look easy until two answers both seem correct. LifeForgePrep helps you practise the judgment behind the answer.
+              </p>
+              <TrackedLink
+                href="/free-practice"
+                eventName="click_free_practice_cta"
+                eventPayload={{ source: 'exam_prep_trap_section', campaign: 'exam_trap' }}
+                data-cta="try-free-practice"
+                data-location="exam-prep-exam-trap"
+                data-campaign="exam-trap"
+                className="mt-5 inline-flex rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              >
+                Try 15 Free Questions
+              </TrackedLink>
+            </div>
+            <article className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-5">
+              <h3 className="text-lg font-bold leading-7 text-[#1F2A44]">
+                A client wants affordable coverage while their mortgage is highest and their children are financially dependent. Which product is usually the better starting point?
+              </h3>
+              <ul className="mt-4 space-y-2 text-sm text-[#4A5568]">
+                {['A. Whole life insurance', 'B. Term life insurance', 'C. Universal life insurance', 'D. Segregated fund contract'].map((option) => (
+                  <li key={option} className="rounded-lg border border-slate-200 bg-white px-3 py-2">{option}</li>
+                ))}
+              </ul>
+              <p className="mt-4 rounded-xl border border-[#D8ECE8] bg-[#F2FBF8] p-4 text-sm leading-7 text-[#315A55]">
+                The trap is assuming permanent coverage is always better. If the need is temporary, high-coverage, and affordability-sensitive, term insurance is often the more suitable starting point.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
           <h2 className="text-2xl font-bold text-[#1F2A44]">Topics covered</h2>
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {['Taxation, ACB, and policy loans', 'Beneficiaries, ownership, and claims', 'Underwriting, suitability, and product structure'].map((item) => (
@@ -185,7 +223,7 @@ export default function ExamPrepPage() {
               eventPayload={{ location: 'exam_prep_not_ready' }}
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Try 5 Free Questions
+              Try 15 Free Questions
             </TrackedLink>
             <TrackedLink
               href="/knowledge"
@@ -196,6 +234,25 @@ export default function ExamPrepPage() {
               Explore Knowledge Hub
             </TrackedLink>
           </div>
+        </section>
+
+        <div className="mt-8">
+          <StudyCTA
+            title="Built for learners who want to understand the why."
+            body="LifeForgePrep is designed for people studying life insurance concepts who want more than flashcards. Practise realistic scenarios, review explanations, and train yourself to spot the trap in the question."
+            primaryLabel="Start Free Practice"
+            primaryHref="/free-practice"
+            secondaryLabel="Unlock Full Practice"
+            secondaryHref="/app"
+            location="exam-prep-marketing"
+            campaign="exam-trap"
+          />
+        </div>
+
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 text-sm leading-7 text-[#4A5568] shadow-sm">
+          <p>
+            <span className="font-semibold text-[#1F2A44]">Independent study tool.</span> LifeForgePrep is an independent study and practice tool. It is not affiliated with any regulator, licensing body, course provider, insurer, or official exam administrator. Use it alongside your approved course materials. No pass guarantee is provided.
+          </p>
         </section>
 
         <div className="mt-8">

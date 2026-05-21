@@ -54,7 +54,7 @@ export default function ThanksPage() {
               href="/free-practice"
               className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Try 5 Free Questions
+              Try 15 Free Questions
             </Link>
           </div>
         </section>

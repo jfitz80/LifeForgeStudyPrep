@@ -75,7 +75,7 @@ export default function AppPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Mobile App</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            LifeForgePrep 5.0 gives learners 15 free practice questions, then offers a one-time unlock for the full question bank. Use the rebuilt question bank, stronger explanations, topic tagging, and Timed Exam mode to practise key life insurance concepts at your own pace.
+            Practise free questions, review explanations, track progress, and unlock deeper practice when you&apos;re ready. LifeForgePrep 5.0 uses a rebuilt question bank, stronger explanations, topic tagging, and Timed Exam mode to help you reason through life insurance concepts.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
@@ -100,7 +100,7 @@ export default function AppPage() {
               eventPayload={{ source: 'app_hero' }}
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Try Web Practice
+              Try Free Practice Online
             </TrackedLink>
             <a
               href={siteConfig.appStoreUrl}
@@ -108,7 +108,7 @@ export default function AppPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Unlock the Full Question Bank
+              Unlock Full Scenario-Based Practice
             </a>
           </div>
         </section>

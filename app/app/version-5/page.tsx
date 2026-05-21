@@ -63,7 +63,7 @@ function ReleaseCtas({ source }: { source: string }) {
         href="/free-practice"
         className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] shadow-sm transition hover:bg-slate-50"
       >
-        Try Web Practice
+        Try Free Practice Online
       </Link>
       <span className="sr-only">{source}</span>
     </div>

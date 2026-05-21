@@ -289,7 +289,7 @@ export default function NewsPageClient({ weeklyItems }: NewsPageClientProps) {
               eventPayload={{ source: "news_hero" }}
               style={s.linkButton}
             >
-              Try 5 Free LLQP Questions
+              Try 15 Free Questions
             </TrackedLink>
             <TrackedLink
               href="/exam-prep"
@@ -472,7 +472,7 @@ export default function NewsPageClient({ weeklyItems }: NewsPageClientProps) {
               eventPayload={{ source: "news_study_cta" }}
               style={{ ...s.linkButton, background: "#fff", color: "#0f172a" }}
             >
-              Try 5 Free Questions
+              Try 15 Free Questions
             </TrackedLink>
             <TrackedLink
               href="/exam-prep"
