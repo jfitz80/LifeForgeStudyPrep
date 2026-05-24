@@ -275,8 +275,8 @@ export default function HowAnnuitiesWorkPage() {
             <Link href="/news" className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
               Read News and Insights
             </Link>
-            <Link href="/exam-prep" className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
-              Explore Exam Prep
+            <Link href="/app" className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50">
+              Download Free App
             </Link>
           </div>
         </section>

@@ -24,7 +24,7 @@ const categories: CategoryFilter[] = [
   "Consumer Education"
 ];
 
-const weeklyBrief = [
+const studyBrief = [
   {
     headline: "Carriers tighten underwriting in selected risk segments",
     summary: "Several insurers signaled stricter evidence requirements in higher-risk profiles.",
@@ -111,7 +111,7 @@ function NewsletterForm() {
         <button type="submit" style={s.button}>Subscribe</button>
       </div>
       <p style={{ ...s.muted, margin: "12px 0 0", fontSize: 13 }}>
-        No spam. Just the weekly life insurance brief.
+        No spam. Just practical insurance learning notes.
       </p>
     </form>
   );
@@ -132,12 +132,11 @@ export default function NewsPage() {
           <p style={s.eyebrow}>LifeForge News Digest</p>
           <h1 style={s.title}>Life Insurance News, Explained Simply</h1>
           <p style={s.intro}>
-            A weekly digest of insurance headlines, product trends, regulation, and what they
-            mean for learners, advisors, and curious consumers.
+            Insurance headlines, product trends, regulation, and conduct themes translated into study insights for learners, advisors, and curious consumers.
           </p>
 
           <div style={{ ...s.card, marginTop: 28 }}>
-            <p style={s.muted}>Get the 2-minute insurance brief every week.</p>
+            <p style={s.muted}>Get practical life insurance study notes.</p>
             <NewsletterForm />
           </div>
         </div>
@@ -146,8 +145,8 @@ export default function NewsPage() {
       <section style={{ ...s.container, padding: "40px 0" }}>
         <div style={s.grid}>
           <article style={s.card}>
-            <h2>This Week&apos;s Brief</h2>
-            {weeklyBrief.map((item) => (
+            <h2>Latest Study Brief</h2>
+            {studyBrief.map((item) => (
               <div key={item.headline} style={{ ...s.card, background: "#f8fafc", marginTop: 14 }}>
                 <h3>{item.headline}</h3>
                 <p style={s.muted}>{item.summary}</p>

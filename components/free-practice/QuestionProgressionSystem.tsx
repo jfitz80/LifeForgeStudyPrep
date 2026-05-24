@@ -168,6 +168,76 @@ const BASICS_QUESTIONS: Question[] = [
   }
 ];
 
+const EXTRA_FREE_QUESTIONS: Question[] = [
+  {
+    id: 'free-11',
+    type: 'scenario',
+    prompt: 'A client wants affordable coverage while their mortgage and dependent children create a temporary high need. Which starting point is usually most suitable?',
+    options: [
+      { id: 'a', label: 'A', text: 'Whole life insurance' },
+      { id: 'b', label: 'B', text: 'Term life insurance' },
+      { id: 'c', label: 'C', text: 'Universal life insurance' },
+      { id: 'd', label: 'D', text: 'Segregated fund contract' }
+    ],
+    correctOptionId: 'b',
+    explanation: 'The need is temporary, high-coverage, and affordability-sensitive. Term insurance is often the stronger starting point.'
+  },
+  {
+    id: 'free-12',
+    type: 'scenario',
+    prompt: 'Before recommending a replacement policy, what should an advisor review most carefully?',
+    options: [
+      { id: 'a', label: 'A', text: 'Only the new premium' },
+      { id: 'b', label: 'B', text: 'Coverage, costs, exclusions, surrender values, and client impact' },
+      { id: 'c', label: 'C', text: 'Only the application signature page' },
+      { id: 'd', label: 'D', text: 'The product with the most features' }
+    ],
+    correctOptionId: 'b',
+    explanation: 'Replacement can create risks. The advisor must compare the existing and proposed policies and document the reasoning.'
+  },
+  {
+    id: 'free-13',
+    type: 'concept',
+    prompt: 'Who normally has the contractual right to request policy changes, subject to policy terms?',
+    options: [
+      { id: 'a', label: 'A', text: 'The policy owner' },
+      { id: 'b', label: 'B', text: 'The insured' },
+      { id: 'c', label: 'C', text: 'The beneficiary' },
+      { id: 'd', label: 'D', text: 'The medical examiner' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'The owner controls many policy rights, while the insured and beneficiary may be different people.'
+  },
+  {
+    id: 'free-14',
+    type: 'scenario',
+    prompt: 'A beneficiary asks why a claim is delayed. Which response is most appropriate?',
+    options: [
+      { id: 'a', label: 'A', text: 'Promise immediate payment' },
+      { id: 'b', label: 'B', text: 'Explain that claims may require documentation, policy review, and beneficiary verification' },
+      { id: 'c', label: 'C', text: 'Tell the beneficiary to cancel the policy' },
+      { id: 'd', label: 'D', text: 'Avoid communication until the insurer pays' }
+    ],
+    correctOptionId: 'b',
+    explanation: 'Claims handling requires documentation and review. Advisors should communicate clearly without promising outcomes they cannot control.'
+  },
+  {
+    id: 'free-15',
+    type: 'calculation',
+    prompt: 'Which is the safest general starting point about cash value taxation?',
+    options: [
+      { id: 'a', label: 'A', text: 'Every cash value transaction is tax-free' },
+      { id: 'b', label: 'B', text: 'Tax treatment depends on the transaction, policy structure, and applicable rules' },
+      { id: 'c', label: 'C', text: 'Policy loans are never relevant for tax' },
+      { id: 'd', label: 'D', text: 'Premiums are always personally deductible' }
+    ],
+    correctOptionId: 'b',
+    explanation: 'Tax treatment depends on the details. Exam-style questions often test overly broad assumptions.'
+  }
+];
+
+const FREE_QUESTIONS: Question[] = [...LLQP_QUESTIONS, ...BASICS_QUESTIONS, ...EXTRA_FREE_QUESTIONS];
+
 const ADVANCED_PREVIEW = [
   'A replacement scenario where affordability, underwriting, and disclosure all conflict',
   'A business-owner case requiring key-person protection and succession logic',
@@ -181,15 +251,10 @@ const TYPE_LABEL: Record<QuestionType, string> = {
 };
 
 const QUIZ_SETS = {
-  llqp: {
-    title: 'LLQP Quick Test',
-    description: 'Five candidate-style questions pulling from LLQP reasoning and taxation logic.',
-    questions: LLQP_QUESTIONS
-  },
-  basics: {
-    title: 'Life Insurance Basics Quick Test',
-    description: 'Five prompts that reinforce advisor thinking, product logic, and suitability reasoning.',
-    questions: BASICS_QUESTIONS
+  free15: {
+    title: '15-Question Free Practice',
+    description: 'Fifteen scenario-based questions covering LLQP logic, life insurance fundamentals, taxation, suitability, and advisor judgment.',
+    questions: FREE_QUESTIONS
   }
 } as const;
 
@@ -312,7 +377,7 @@ export default function QuestionProgressionSystem() {
       <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
         <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
         <p className="mt-2 text-sm text-slate-300">
-          Select the set that matches your focus: Canadian LLQP logic or broader life insurance fundamentals.
+          Start with 15 free questions designed to test life insurance concepts, scenario reasoning, and common exam-style traps.
         </p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {(Object.keys(QUIZ_SETS) as TestKey[]).map((key) => {
@@ -328,7 +393,7 @@ export default function QuestionProgressionSystem() {
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#6BC4B8]">{test.title}</p>
                   <p className="mt-3 text-lg font-semibold text-white">{test.description}</p>
                 </div>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">5 questions • start learning</p>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">15 free questions • start learning</p>
               </button>
             );
           })}
@@ -368,45 +433,28 @@ export default function QuestionProgressionSystem() {
           </section>
         ) : null}
 
-        <div className="grid gap-3 md:grid-cols-2">
-          {resultActions.primary.href ? (
-            <Link
-              href={resultActions.primary.href}
-              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              {resultActions.primary.label}
+        <section className="rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
+          <h3 className="text-2xl font-bold text-white">You&apos;ve completed your free practice session.</h3>
+          <p className="mt-3 text-sm leading-7 text-slate-300">
+            You&apos;ve seen the basics. The real learning happens when questions get more scenario-based, time-limited, and judgment-driven.
+          </p>
+          <ul className="mt-4 grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
+            {['Harder scenario questions', 'Timed exam practice', 'Detailed explanations', 'Topic and difficulty progression'].map((item) => (
+              <li key={item} className="flex items-start gap-2"><span className="mt-2 h-1.5 w-1.5 rounded-full bg-[#2FAF9E]" aria-hidden="true" /><span>{item}</span></li>
+            ))}
+          </ul>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link href="/app" data-cta="unlock-full-practice" data-location="free-practice-results" data-campaign="post-quiz-conversion" className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]">
+              Unlock Full Practice
             </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={resultActions.primary.onClick}
-              className="inline-flex items-center justify-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
-            >
-              {resultActions.primary.label}
-            </button>
-          )}
-
-          {resultActions.secondary.href ? (
-            <Link
-              href={resultActions.secondary.href}
-              className={`inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-semibold transition ${
-                resultActions.secondary.variant === 'muted'
-                  ? 'border-slate-500 text-slate-100 hover:border-white'
-                  : 'border-white/30 bg-white/10 text-white hover:bg-white/20'
-              }`}
-            >
-              {resultActions.secondary.label}
+            <Link href="/app" data-cta="download-free-app" data-location="free-practice-results" data-campaign="post-quiz-conversion" className="inline-flex items-center justify-center rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+              Download Free App
             </Link>
-          ) : (
-            <button
-              type="button"
-              onClick={resultActions.secondary.onClick}
-              className="inline-flex items-center justify-center rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
-            >
-              {resultActions.secondary.label}
+            <button type="button" onClick={restart} data-cta="try-another-free-set" data-location="free-practice-results" data-campaign="post-quiz-conversion" className="inline-flex items-center justify-center rounded-lg border border-slate-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+              Try Another Free Set
             </button>
-          )}
-        </div>
+          </div>
+        </section>
 
         <section className="rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
           <h3 className="text-2xl font-bold text-white">Advanced scenario-based questions are available in Exam Prep</h3>

@@ -78,7 +78,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
             variant="studying"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: sourcePath,
@@ -89,8 +89,8 @@ export default async function KnowledgeArticlePage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
-                href: '/exam-prep',
+                label: 'Download Free App',
+                href: '/app',
                 style: 'secondary',
                 eventPayload: {
                   source_page: sourcePath,
@@ -157,7 +157,7 @@ export default async function KnowledgeArticlePage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: sourcePath,
@@ -168,8 +168,8 @@ export default async function KnowledgeArticlePage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
-                href: '/exam-prep',
+                label: 'Download Free App',
+                href: '/app',
                 style: 'secondary',
                 eventPayload: {
                   source_page: sourcePath,

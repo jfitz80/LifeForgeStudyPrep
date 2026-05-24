@@ -27,8 +27,9 @@ export default function Footer() {
         </div>
       </div>
       <div className="mx-auto max-w-6xl px-4 pb-8 text-xs text-slate-500 sm:px-6 lg:px-8">
-        LifeForge Insurance Prep is an independent educational resource and is not affiliated with any regulator, licensing
-        body, or exam provider.
+        LifeForgePrep is an independent study and practice tool. It is not affiliated with any regulator, licensing body,
+        course provider, insurer, or official exam administrator. Use it alongside your approved course materials. No pass
+        guarantee is provided.
       </div>
     </footer>
   );

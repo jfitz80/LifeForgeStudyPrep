@@ -16,10 +16,10 @@ export function selectNewsCta(article: NewsArticleView): NewsCta {
   const isRegulatory = article.category === 'regulation-policy' || llqpKeywords.test(text);
   if (isRegulatory) {
     return {
-      heading: 'Preparing for the LLQP?',
-      subheading: 'Studying for the LLQP? Practice with focused exam-style material.',
-      primary: { label: 'Explore Exam Prep', href: '/exam-prep' },
-      secondary: { label: 'Try Free Practice', href: '/free-practice' }
+      heading: 'Studying life insurance? Test the concept.',
+      subheading: 'Reading the article helps. Practice shows whether you can apply the concept under exam-style pressure.',
+      primary: { label: 'Try 15 Free Questions', href: '/free-practice' },
+      secondary: { label: 'Download Free App', href: '/app' }
     };
   }
 
@@ -37,16 +37,16 @@ export function selectNewsCta(article: NewsArticleView): NewsCta {
     return {
       heading: 'Want to understand this topic better?',
       subheading: 'Build practical life insurance knowledge with guides and examples.',
-      primary: { label: 'Visit Knowledge Hub', href: '/knowledge' },
-      secondary: { label: 'Try Free Practice', href: '/free-practice' }
+      primary: { label: 'Try 15 Free Questions', href: '/free-practice' },
+      secondary: { label: 'Download Free App', href: '/app' }
     };
   }
 
   return {
     heading: 'See how this connects to coverage decisions',
     subheading: 'Learn how this topic connects to products, underwriting, and suitability.',
-    primary: { label: 'Read Related Guides', href: '/knowledge' },
-    secondary: { label: 'Try Free Practice', href: '/free-practice' }
+    primary: { label: 'Try 15 Free Questions', href: '/free-practice' },
+    secondary: { label: 'Download Free App', href: '/app' }
   };
 }
 
@@ -59,6 +59,9 @@ export default function NewsCtaBlock({ article, compact = false }: { article: Ne
       <div className="mt-3 flex flex-wrap gap-2">
         <Link
           href={cta.primary.href}
+          data-cta={cta.primary.label.includes('15') ? 'try-free-practice' : 'knowledge-guide'}
+          data-location="news-cta"
+          data-campaign="freemium-funnel"
           className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-3.5 py-2 text-xs font-semibold text-white transition hover:bg-[#26988a]"
         >
           {cta.primary.label}
@@ -66,6 +69,9 @@ export default function NewsCtaBlock({ article, compact = false }: { article: Ne
         {cta.secondary ? (
           <Link
             href={cta.secondary.href}
+            data-cta={cta.secondary.label.includes('Download') ? 'download-free-app' : 'try-free-practice'}
+            data-location="news-cta"
+            data-campaign="freemium-funnel"
             className="inline-flex items-center rounded-lg border border-[#8FA3B9] bg-white px-3.5 py-2 text-xs font-semibold text-[#1F2A44] transition hover:bg-slate-50"
           >
             {cta.secondary.label}

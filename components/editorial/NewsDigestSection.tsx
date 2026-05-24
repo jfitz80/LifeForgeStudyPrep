@@ -17,7 +17,7 @@ export default function NewsDigestSection({ items }: { items: readonly DigestIte
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">News Digest</p>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">This Week in Life Insurance</h2>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">Latest Life Insurance Study Signal</h2>
             <p className="mt-2 text-sm text-slate-600">Latest headlines with concise summaries and practical context.</p>
           </div>
           <Link href="/news" className="text-sm font-semibold text-slate-700 hover:text-slate-900">

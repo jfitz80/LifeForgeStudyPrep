@@ -69,7 +69,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
             variant="studying"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -80,8 +80,8 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
-                href: '/exam-prep',
+                label: 'Download Free App',
+                href: '/app',
                 style: 'secondary',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -137,7 +137,7 @@ export default async function KnowledgeClusterPage({ params }: Props) {
             variant="gap"
             actions={[
               {
-                label: 'Start Free Practice',
+                label: 'Try 15 Free Questions',
                 href: '/free-practice',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,
@@ -148,8 +148,8 @@ export default async function KnowledgeClusterPage({ params }: Props) {
                 }
               },
               {
-                label: 'Explore Full Exam Prep',
-                href: '/exam-prep',
+                label: 'Download Free App',
+                href: '/app',
                 style: 'secondary',
                 eventPayload: {
                   source_page: `/knowledge/${clusterData.slug}`,

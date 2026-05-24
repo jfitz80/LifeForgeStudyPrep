@@ -5,8 +5,9 @@ import Link from 'next/link';
 import QuestionProgressionSystem from '@/components/free-practice/QuestionProgressionSystem';
 
 export const metadata: Metadata = {
-  title: 'Free Practice | LifeForgePrep',
-  description: 'Practice exam-style questions and test your readiness before unlocking full access.'
+  title: 'Try 15 Free Life Insurance Practice Questions | LifeForgePrep',
+  description:
+    'Try 15 free life insurance practice questions with scenario-based explanations and common exam-style traps. Independent study support for insurance learners.'
 };
 
 const testedOn = [
@@ -25,9 +26,9 @@ export default function FreePracticePage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <header className="mb-6 rounded-2xl border border-slate-700 bg-[#111A2D] px-6 py-10 text-center shadow-sm sm:px-10">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">Free Practice</p>
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Test your life insurance readiness in 2 minutes</h1>
+            <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Try 15 Free Life Insurance Questions</h1>
             <p className="mx-auto mt-3 max-w-3xl text-slate-300">
-              Pick a quick test that matches your focus—LLQP-style logic or broader life insurance fundamentals—and see where to improve next.
+              See how LifeForgePrep teaches the reasoning behind the answer with scenario-based practice, common traps, and clear explanations.
             </p>
 
             <ul className="mx-auto mt-5 grid max-w-2xl gap-2 text-left text-sm text-slate-200 sm:grid-cols-3">
@@ -48,11 +49,23 @@ export default function FreePracticePage() {
             <div className="mt-6">
               <Link
                 href="#free-practice-quiz"
+                data-cta="try-free-practice"
+                data-location="free-practice-hero"
+                data-campaign="freemium-funnel"
                 className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
               >
-                Start Quick Test (5 Questions)
+                Start Free Practice
               </Link>
-              <p className="mt-3 text-sm text-slate-400">Most users score 2-3 out of 5</p>
+              <p className="mt-3 text-sm text-slate-400">15 free questions • start learning</p>
+              <Link
+                href="/app"
+                data-cta="download-free-app"
+                data-location="free-practice-hero"
+                data-campaign="freemium-funnel"
+                className="ml-0 mt-3 inline-flex items-center rounded-lg border border-slate-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 sm:ml-3 sm:mt-0"
+              >
+                Download Free App
+              </Link>
             </div>
           </header>
 

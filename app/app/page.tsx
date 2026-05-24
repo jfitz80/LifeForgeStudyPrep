@@ -4,27 +4,27 @@ import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'LifeforgePrep App | Study On the Go',
+  title: 'LifeForgePrep App | Free Life Insurance Practice Questions',
   description:
-    'Practice life insurance concepts, strengthen your knowledge, and study with confidence wherever you are with the LifeforgePrep app.'
+    'Download the free LifeForgePrep app, try 15 free questions, review explanations, and unlock full scenario-based practice when you’re ready.'
 };
 
 const appFeatures = [
   {
-    title: 'Practice questions',
-    text: 'Tackle exam-style drills that mirror LLQP wording, keeping your edge sharp between meetings.'
+    title: '15 free practice questions',
+    text: 'Start free before deciding whether full scenario-based practice is right for your study plan.'
   },
   {
-    title: 'Concept reviews',
-    text: 'Quick explanations reinforce core product mechanics so you can book calls with clarity.'
+    title: 'Scenario-based explanations',
+    text: 'Review reasoning that connects policy features, client needs, suitability, and advisor judgment.'
   },
   {
-    title: 'Quick study sessions',
-    text: 'Pocket-friendly bursts fit into commutes, lunch breaks, or waiting rooms.'
+    title: 'Timed exam mode',
+    text: 'Practise pacing, focus, and exam-style decision-making under pressure.'
   },
   {
-    title: 'Confidence building',
-    text: 'Track streaks, review results instantly, and feel prepared before you step into an exam.'
+    title: 'Full practice unlock',
+    text: 'Unlock deeper practice, harder scenarios, topic progression, and detailed explanations when you are ready.'
   }
 ] as const;
 
@@ -62,30 +62,36 @@ export default function AppPage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <section className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Mobile App</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go</h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go.</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            LifeforgePrep’s app delivers real practice questions, quick concept refreshers, and instant feedback wherever you have a minute.
+            Download the free LifeForgePrep app, try 15 free questions, and unlock deeper scenario-based practice when you&apos;re ready.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href={siteConfig.appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta="download-free-app"
+              data-location="app-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Download on the App Store
+              Download Free App
             </a>
             <Link
-              href="/support"
+              href="/free-practice"
+              data-cta="try-free-practice"
+              data-location="app-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Contact Support
+              Try Free Practice Online
             </Link>
           </div>
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">Feature benefits</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">What you get</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {appFeatures.map((feature) => (
               <article key={feature.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -136,7 +142,7 @@ export default function AppPage() {
         </section>
 
         <section className="mt-10 rounded-2xl border border-[#CFEAE4] bg-[#F1FBF8] p-6 sm:p-7">
-          <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">Why study on mobile?</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">How it helps</h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {mobileReasons.map((reason) => (
               <article key={reason} className="rounded-xl border border-slate-200 bg-white p-4 text-sm text-[#4A5568]">
@@ -152,15 +158,21 @@ export default function AppPage() {
               href={siteConfig.appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
+              data-cta="download-free-app"
+              data-location="app-bottom"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Download on the App Store
+              Download Free App
             </a>
             <Link
-              href="/support"
+              href="/free-practice"
+              data-cta="try-free-practice"
+              data-location="app-bottom"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Visit Support Page
+              Try Free Practice Online
             </Link>
             <a
               href={`mailto:${siteConfig.supportEmail}`}
@@ -171,7 +183,7 @@ export default function AppPage() {
           </div>
           <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm text-[#1F2A44]">
-              LifeforgePrep app is backed by the same editorial team that powers the knowledge hub and exam prep tools on the site.
+              LifeForgePrep is an independent study tool designed to support your approved course materials. No pass guarantee is provided.
             </p>
           </div>
         </section>
@@ -205,5 +217,3 @@ export default function AppPage() {
     </main>
   );
 }
-
-

@@ -38,7 +38,7 @@ export const featuredContent = [
     href: '#knowledge-hub'
   },
   {
-    title: 'What This Week in Life Insurance Means for Households',
+    title: 'Latest Life Insurance Study Signal for Households',
     description: 'Quick digest of regulation, pricing, and carrier trends with consumer context.',
     category: 'News Digest',
     href: '#news-digest'

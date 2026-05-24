@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Free Pack | LifeForgePrep',
-  description: 'Access 5 free exam-style life insurance questions and a quick product comparison cheat sheet from LifeForgePrep.'
+  description: 'Access free life insurance practice support and a quick product comparison cheat sheet from LifeForgePrep.'
 };
 
 const questions = [
@@ -42,14 +42,14 @@ export default function FreePackPage() {
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <section className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Free Pack</p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">5 exam-style questions + product comparison cheat sheet</h1>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">Free life insurance practice support + product comparison cheat sheet</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-[#4A5568]">
             Use this quick pack to sharpen your life insurance fundamentals, test basic advisor reasoning, and compare the main product directions before moving into deeper practice.
           </p>
         </section>
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-bold text-[#1F2A44]">5 free questions</h2>
+          <h2 className="text-2xl font-bold text-[#1F2A44]">Sample practice prompts</h2>
           <div className="mt-5 space-y-4">
             {questions.map((item, index) => (
               <article key={item.question} className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-4">

@@ -1,4 +1,4 @@
-import { siteConfig } from '@/config/site';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -14,20 +14,24 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={siteConfig.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/free-practice"
+              data-cta="try-free-practice"
+              data-location="editorial-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white hover:bg-slate-700"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay}
-            </a>
-            <a
-              href="#news-digest"
+              Try 15 Free Questions
+            </Link>
+            <Link
+              href="/app"
+              data-cta="download-free-app"
+              data-location="editorial-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
             >
-              Read Latest Digest
-            </a>
+              Download Free App
+            </Link>
           </div>
         </div>
 
@@ -38,14 +42,12 @@ export default function HeroSection() {
             <p className="mt-2 text-sm leading-7 text-slate-600">
               Scenario-based practice and clear explanations designed to help you prepare faster and more confidently.
             </p>
-            <a
-              href={siteConfig.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/free-practice"
               className="mt-4 inline-flex text-sm font-semibold text-brand-700 hover:text-brand-900"
             >
-              Get instant access →
-            </a>
+              Try 15 free questions →
+            </Link>
           </div>
         </div>
       </div>

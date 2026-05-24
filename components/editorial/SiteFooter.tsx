@@ -37,7 +37,7 @@ export default function SiteFooter() {
             <h3 className="text-2xl font-bold">LifeForgePrep</h3>
             <p className="mt-2 text-sm uppercase tracking-wide text-[#6BC4B8]">Life Insurance Explained Simply</p>
             <p className="mt-4 max-w-md text-base leading-7 text-slate-200">
-              Helping professionals and students understand life insurance products and prepare for certification exams.
+              Scenario-based life insurance practice for learners who want to understand the reasoning behind the answer.
             </p>
           </div>
 
@@ -93,7 +93,11 @@ export default function SiteFooter() {
         </div>
 
         <div className="mt-10 border-t border-white/15 pt-6">
-          <p className="text-sm text-slate-300">Built for life insurance professionals and LLQP candidates.</p>
+          <p className="text-sm text-slate-300">
+            LifeForgePrep is an independent study and practice tool. It is not affiliated with any regulator, licensing body,
+            course provider, insurer, or official exam administrator. Use it alongside your approved course materials. No pass
+            guarantee is provided.
+          </p>
           <p className="mt-2 text-sm text-slate-400">© 2026 LifeForgePrep. All rights reserved.</p>
         </div>
       </div>

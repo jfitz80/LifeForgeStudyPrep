@@ -275,7 +275,7 @@ export default async function NewsArticlePage({ params }: Props) {
               variant="studying"
               actions={[
                 {
-                  label: 'Start Free Practice',
+                  label: 'Try 15 Free Questions',
                   href: '/free-practice',
                   eventPayload: {
                     source_page: `/news/${item.slug}`,
@@ -286,8 +286,8 @@ export default async function NewsArticlePage({ params }: Props) {
                   }
                 },
                 {
-                  label: 'Explore Full Exam Prep',
-                  href: '/exam-prep',
+                  label: 'Download Free App',
+                  href: '/app',
                   style: 'secondary',
                   eventPayload: {
                     source_page: `/news/${item.slug}`,

@@ -4,7 +4,6 @@ import type { FocusEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { siteConfig } from '@/config/site';
 
 type NavLink = {
   label: string;
@@ -172,14 +171,24 @@ export default function SiteHeader() {
                 <path d="m20 20-3.5-3.5" />
               </svg>
             </Link>
-            <a
-              href={siteConfig.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/free-practice"
+              data-cta="try-free-practice"
+              data-location="site-header"
+              data-campaign="freemium-funnel"
               className="rounded-xl bg-[#2C3440] px-5 py-3 text-base font-semibold text-white transition hover:bg-slate-700 xl:text-[18px]"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
-            </a>
+              Try 15 Free Questions
+            </Link>
+            <Link
+              href="/app"
+              data-cta="download-free-app"
+              data-location="site-header"
+              data-campaign="freemium-funnel"
+              className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-base font-semibold text-[#1F2A44] transition hover:bg-slate-50 xl:text-[18px]"
+            >
+              Download Free App
+            </Link>
           </div>
 
           <button
@@ -232,15 +241,26 @@ export default function SiteHeader() {
                 <HeaderLink key={`mobile-${item.href}`} item={item} onNavigate={closeMobileMenu} />
               ))}
 
-              <a
-                href={siteConfig.checkoutUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/free-practice"
+                data-cta="try-free-practice"
+                data-location="mobile-header"
+                data-campaign="freemium-funnel"
                 className="rounded-xl bg-[#2C3440] px-4 py-3 text-sm font-semibold text-white"
                 onClick={closeMobileMenu}
               >
-                Buy Exam Prep - {siteConfig.launchPriceDisplay ?? siteConfig.price}
-              </a>
+                Try 15 Free Questions
+              </Link>
+              <Link
+                href="/app"
+                data-cta="download-free-app"
+                data-location="mobile-header"
+                data-campaign="freemium-funnel"
+                className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-[#1F2A44]"
+                onClick={closeMobileMenu}
+              >
+                Download Free App
+              </Link>
             </div>
           </div>
         ) : null}

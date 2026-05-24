@@ -71,14 +71,15 @@ export default function ThanksPage() {
             >
               Explore Knowledge Hub
             </Link>
-            <a
-              href={siteConfig.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/app"
+              data-cta="download-free-app"
+              data-location="thanks-page"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center justify-center rounded-lg border border-[#1F2A44] bg-[#1F2A44] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#162033]"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay}
-            </a>
+              Download Free App
+            </Link>
           </div>
         </section>
 

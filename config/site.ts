@@ -1,7 +1,7 @@
 export const siteConfig = {
   brandName: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
-  productName: 'Life Insurance Exam Question Bank',
+  productName: 'LifeForgePrep App',
 
   regularPrice: 29,
   launchPrice: 8.99,
@@ -18,9 +18,9 @@ export const siteConfig = {
   domain: 'www.lifeforgeprep.com',
 
   seo: {
-    title: 'LifeForge Insurance Prep | Life Insurance Exam Question Bank',
+    title: 'LifeForgePrep | Life Insurance Exam Practice & Scenario-Based Study',
     description:
-      'Life insurance licensing exam prep with realistic exam-style questions, clear explanations, and scenario-based practice. Especially helpful for LLQP Life Insurance candidates.'
+      'Practise life insurance exam-style questions with clear explanations, timed drills, and scenario-based learning. Built as an independent companion study tool for insurance learners.'
   },
 
   legalUrls: {
@@ -34,18 +34,19 @@ export const siteConfig = {
 export const heroCopy = {
   eyebrow: 'LifeForge Insurance Prep',
   tagline: 'Empowering Future Advisors',
-  headline: 'Pass Your Life Insurance Licensing Exam With Confidence',
+  headline: 'Life Insurance Exam Practice That Teaches You How to Think',
   subheadline:
-    'Practice with realistic exam-style questions designed for future advisors. Especially helpful for candidates preparing for the Canadian LLQP Life Insurance module.',
+    'Practise realistic life insurance questions, review clear explanations, and build confidence with scenario-based drills designed to test judgment — not just memorization.',
   bullets: [
-    '200+ exam-style questions',
+    '15 free questions',
     'Clear explanations',
     'Scenario-based practice',
-    'Especially helpful for LLQP candidates'
+    'Timed exam mode',
+    'Independent study tool'
   ],
-  primaryCta: 'Start Practicing Questions',
-  secondaryCta: 'Get the Study Guide',
-  trustLine: 'Independent exam prep resource. Instant digital access.'
+  primaryCta: 'Try 15 Free Questions',
+  secondaryCta: 'Download Free App',
+  trustLine: 'Independent study tool. Use alongside approved course materials. No pass guarantee.'
 };
 
 export const insideGuideItems = [
@@ -112,4 +113,3 @@ export const sampleQuestion = {
   reveal:
     'Correct answer: C — the death benefit is paid, but the unpaid premium is deducted.'
 } as const;
-

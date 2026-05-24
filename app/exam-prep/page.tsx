@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import LeadForm from '@/components/LeadForm';
+import StudyCTA from '@/components/StudyCTA';
 import TrackedLink from '@/components/TrackedLink';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'Exam Prep | LifeForgePrep',
-  description: 'Structured LLQP exam prep with scenario-based practice, explanations, and practical advisor reasoning.'
+  title: 'Life Insurance Exam Practice & Study Support | LifeForgePrep',
+  description:
+    'Scenario-based life insurance practice, clear explanations, timed drills, and optional study resources for learners using approved course materials.'
 };
 
 const included = [
@@ -30,12 +32,12 @@ const samplePreview = [
 ] as const;
 
 const comparisonRows = [
-  ['Number of questions', '5 quick questions', '80+ structured questions'],
-  ['Explanations', 'Short explanations', 'Deeper reasoning and review context'],
+  ['Questions', '15 free questions', 'Full scenario-based practice bank'],
+  ['Explanations', 'Introductory explanations', 'Deeper reasoning and review context'],
+  ['Timed mode', 'Preview / limited access', 'Included'],
   ['Advanced scenarios', 'Preview only', 'Included'],
-  ['Product comparison content', 'Light exposure', 'Integrated throughout'],
-  ['Advisor-oriented questions', 'Some', 'Core focus'],
-  ['Study support', 'Free entry point', 'Structured prep path']
+  ['Topic progression', 'Limited', 'Included'],
+  ['Best for', 'Trying the platform', 'Serious study and review']
 ] as const;
 
 export default function ExamPrepPage() {
@@ -43,27 +45,33 @@ export default function ExamPrepPage() {
     <main className="min-h-screen bg-[#F5F7FA] py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <header className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">LLQP Exam Prep</p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">Structured prep for users who need reasoning, not just recall</h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Exam Prep</p>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#1F2A44] sm:text-5xl">Start with the free app.</h1>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-[#4A5568]">
-            LifeForgePrep Exam Prep is built for Canadian LLQP candidates who want stronger judgment on product choice, underwriting, suitability, and scenario-based exam logic.
+            Try 15 free questions, review explanations, and see how LifeForgePrep teaches the reasoning behind the answer.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={siteConfig.checkoutUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <TrackedLink
+              href="/app"
+              eventName="download_app_cta_click"
+              eventPayload={{ cta: 'download_free_app', location: 'exam_prep_hero' }}
+              data-cta="download-free-app"
+              data-location="exam-prep-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Buy Exam Prep - {siteConfig.launchPriceDisplay}
-            </a>
+              Download Free App
+            </TrackedLink>
             <TrackedLink
               href="/free-practice"
               eventName="hero_cta_click"
               eventPayload={{ cta: 'exam_prep_try_free', location: 'exam_prep_hero' }}
+              data-cta="try-free-practice"
+              data-location="exam-prep-hero"
+              data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-[#1F2A44] transition hover:bg-slate-50"
             >
-              Start Free Practice
+              Try 15 Free Questions
             </TrackedLink>
           </div>
         </header>
@@ -107,14 +115,14 @@ export default function ExamPrepPage() {
         </section>
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-          <h2 className="text-2xl font-bold text-[#1F2A44]">Free Practice vs Paid Exam Prep</h2>
+          <h2 className="text-2xl font-bold text-[#1F2A44]">Free Practice vs Full Practice Unlock</h2>
           <div className="mt-5 overflow-x-auto">
             <table className="min-w-full border-separate border-spacing-y-2 text-sm">
               <thead>
                 <tr className="text-left text-[#1F2A44]">
                   <th className="px-4 py-2 font-semibold">Feature</th>
                   <th className="px-4 py-2 font-semibold">Free Practice</th>
-                  <th className="px-4 py-2 font-semibold">Paid Exam Prep</th>
+                  <th className="px-4 py-2 font-semibold">Full Practice Unlock</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,19 +139,22 @@ export default function ExamPrepPage() {
         </section>
 
         <section className="mt-8 rounded-2xl border border-[#D4E6E2] bg-[#EEF9F6] p-8 shadow-sm">
-          <h2 className="text-3xl font-bold text-[#1F2A44]">Not ready to buy yet?</h2>
+          <h2 className="text-3xl font-bold text-[#1F2A44]">Prefer a PDF study resource?</h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-[#315A55]">
-            Start with the free set or request the free question pack. Use that to see whether the platform’s style of reasoning fits how you learn best.
+            The optional PDF guide is available for learners who want a separate review document alongside app-based practice.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <TrackedLink
-              href="/free-practice"
-              eventName="free_practice_start"
-              eventPayload={{ location: 'exam_prep_not_ready' }}
+            <a
+              href={siteConfig.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta="optional-pdf-guide"
+              data-location="exam-prep-secondary"
+              data-campaign="pdf-secondary-offer"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
             >
-              Start Free Practice
-            </TrackedLink>
+              View Optional PDF Guide
+            </a>
             <TrackedLink
               href="/knowledge"
               eventName="knowledge_hub_click"
@@ -154,6 +165,23 @@ export default function ExamPrepPage() {
             </TrackedLink>
           </div>
         </section>
+
+        <div className="mt-8">
+          <StudyCTA
+            title="Study on the go with the LifeForgePrep app."
+            body="Download the free app, try 15 practice questions, review explanations, and unlock deeper scenario-based practice when you’re ready."
+            primaryLabel="Download Free App"
+            primaryHref="/app"
+            secondaryLabel="Try 15 Free Questions"
+            secondaryHref="/free-practice"
+            location="exam-prep-app-cta"
+            campaign="freemium-funnel"
+          />
+        </div>
+
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-5 text-sm leading-7 text-[#4A5568]">
+          LifeForgePrep is an independent study and practice tool. It is not affiliated with any regulator, licensing body, course provider, insurer, or official exam administrator. Use it alongside your approved course materials. No pass guarantee is provided.
+        </div>
 
         <div className="mt-8">
           <LeadForm
