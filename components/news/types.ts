@@ -18,6 +18,9 @@ export type NewsArticleView = {
   title: string;
   summary: string;
   whyThisMatters: string;
+  marketDeskView?: string;
+  whyAdvisorsShouldCare?: string;
+  learnerConnection?: string;
   publishedAtLabel: string;
   source: string;
   tag: string;

@@ -42,7 +42,7 @@ export default function NewsLeadSticky() {
       <p className="text-xs font-semibold uppercase tracking-wide text-brand-700">Free study support</p>
       <h3 className="mt-2 text-lg font-bold text-slate-900">Get free life insurance practice questions</h3>
       <p className="mt-2 text-sm text-slate-600">
-        Join the newsletter for practical exam prep updates and weekly question breakdowns.
+        Join the newsletter for practical life insurance commentary and plain-English context.
       </p>
 
       <form onSubmit={submit} className="mt-4 space-y-2">

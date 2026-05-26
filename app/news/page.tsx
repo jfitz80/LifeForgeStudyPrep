@@ -3,175 +3,71 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
+import { marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
 
-type NewsCategory =
-  | "Life Insurance"
-  | "Annuities"
-  | "Regulation"
-  | "Industry Trends"
-  | "Claims"
-  | "Consumer Education";
-
-type CategoryFilter = "All" | NewsCategory;
+type CategoryFilter = "All" | MarketDeskCategory;
 
 const categories: CategoryFilter[] = [
   "All",
-  "Life Insurance",
-  "Annuities",
-  "Regulation",
-  "Industry Trends",
+  "Market Watch",
+  "Regulation & Compliance",
+  "Product Trends",
+  "Advisor Practice",
+  "Retirement Income",
+  "Underwriting",
+  "Carrier Moves",
   "Claims",
-  "Consumer Education"
-];
-
-const studyBrief = [
-  {
-    headline: "Carriers tighten underwriting in selected risk segments",
-    summary: "Several insurers signaled stricter evidence requirements in higher-risk profiles.",
-    why: "This affects recommendation strategy and expectation setting."
-  },
-  {
-    headline: "Disclosure language updates continue",
-    summary: "Plain-language policy communications are expanding across providers.",
-    why: "Clear communication helps reduce confusion and complaint risk."
-  },
-  {
-    headline: "Claims servicing turnaround improves",
-    summary: "Workflow updates are reducing delays in common claims scenarios.",
-    why: "Faster servicing supports client trust and retention."
-  }
-];
-
-const articles = [
-  {
-    id: "1",
-    category: "Life Insurance" as const,
-    title: "Term product comparisons are shifting in 2026",
-    date: "April 28, 2026",
-    summary: "Carriers are repositioning term offerings for younger families and digital buyers.",
-    whyItMatters: "Helps connect pricing dynamics to recommendation logic.",
-    href: "/news/carrier-pricing-updates-term-comparisons"
-  },
-  {
-    id: "2",
-    category: "Regulation" as const,
-    title: "Suitability and disclosure remain a policy focus",
-    date: "April 27, 2026",
-    summary: "Guidance continues to emphasize clear explanations and stronger documentation.",
-    whyItMatters: "Directly relevant to ethics and suitability scenarios.",
-    href: "/news/regulatory-disclosure-suitability-focus"
-  },
-  {
-    id: "3",
-    category: "Industry Trends" as const,
-    title: "Underwriting modernization expands with human review controls",
-    date: "April 26, 2026",
-    summary: "Automation is growing, with stronger manual quality checkpoints.",
-    whyItMatters: "Supports understanding of underwriting and risk classification.",
-    href: "/news/underwriting-modernization-human-review-critical"
-  },
-  {
-    id: "4",
-    category: "Claims" as const,
-    title: "Claims servicing updates improve response expectations",
-    date: "April 25, 2026",
-    summary: "Process improvements target faster communication and clearer claim status tracking.",
-    whyItMatters: "Useful for client communication during sensitive claim periods.",
-    href: "/news/claims-communication-consumer-pain-point"
-  }
+  "Learner Corner"
 ];
 
 const s: Record<string, CSSProperties> = {
   page: { minHeight: "100vh", background: "#f8fafc", color: "#0f172a", fontFamily: "Arial, sans-serif" },
   container: { width: "min(100% - 32px, 1120px)", margin: "0 auto" },
-  hero: { background: "#fff", borderBottom: "1px solid #e2e8f0", padding: "56px 0" },
+  hero: { background: "#fff", borderBottom: "1px solid #e2e8f0", padding: "64px 0 44px" },
   eyebrow: { color: "#0f766e", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" },
-  title: { maxWidth: 880, margin: "12px 0 0", fontSize: "clamp(36px, 6vw, 72px)", lineHeight: 1 },
-  intro: { maxWidth: 760, color: "#475569", lineHeight: 1.8 },
-  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 },
-  card: { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 8, padding: 24 },
+  title: { maxWidth: 880, margin: "12px 0 0", fontSize: "clamp(38px, 6vw, 76px)", lineHeight: 1 },
+  intro: { maxWidth: 840, color: "#475569", lineHeight: 1.8, fontSize: 17 },
+  note: { marginTop: 18, color: "#64748b", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" },
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 },
+  card: { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 24, boxShadow: "0 1px 2px rgba(15,23,42,0.04)" },
+  leadCard: { background: "linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%)", border: "1px solid #99f6e4", borderRadius: 14, padding: 28 },
   muted: { color: "#475569", lineHeight: 1.65 },
-  button: { border: 0, borderRadius: 6, background: "#0f172a", color: "#fff", padding: "12px 18px", fontWeight: 700 },
+  pill: { display: "inline-flex", borderRadius: 999, background: "#ecfeff", color: "#0f766e", padding: "5px 10px", fontSize: 12, fontWeight: 800 },
   linkButton: { display: "inline-flex", borderRadius: 8, background: "#0f172a", color: "#fff", padding: "12px 18px", fontWeight: 700, textDecoration: "none" },
-  categoryButton: { border: "1px solid #cbd5e1", borderRadius: 999, background: "#fff", padding: "9px 16px", cursor: "pointer" }
+  textLink: { color: "#0f766e", fontWeight: 800, textDecoration: "none" },
+  categoryButton: { border: "1px solid #cbd5e1", borderRadius: 999, background: "#fff", padding: "9px 16px", cursor: "pointer", color: "#334155" },
+  disclaimer: { marginTop: 28, borderTop: "1px solid #e2e8f0", color: "#64748b", fontSize: 13, lineHeight: 1.7, paddingTop: 18 }
 };
-
-function NewsletterForm() {
-  return (
-    <form action="https://app.kit.com/forms/9376932/subscriptions" method="post" acceptCharset="UTF-8">
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 10 }}>
-        <input
-          name="email_address"
-          type="email"
-          autoComplete="email"
-          placeholder="Enter your email"
-          required
-          style={{ minWidth: 0, border: "1px solid #cbd5e1", borderRadius: 6, padding: 12 }}
-        />
-        <button type="submit" style={s.button}>Subscribe</button>
-      </div>
-      <p style={{ ...s.muted, margin: "12px 0 0", fontSize: 13 }}>
-        No spam. Just practical insurance learning notes.
-      </p>
-    </form>
-  );
-}
 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
 
   const filteredArticles = useMemo(() => {
-    if (activeCategory === "All") return articles;
-    return articles.filter((item) => item.category === activeCategory);
+    if (activeCategory === "All") return newsItems;
+    return newsItems.filter((item) => item.tag === activeCategory);
   }, [activeCategory]);
+
+  const [lead, ...rest] = filteredArticles;
 
   return (
     <main style={s.page}>
       <section style={s.hero}>
         <div style={s.container}>
-          <p style={s.eyebrow}>LifeForge News Digest</p>
-          <h1 style={s.title}>Life Insurance News, Explained Simply</h1>
+          <p style={s.eyebrow}>Market Desk Commentary</p>
+          <h1 style={s.title}>LifeForge Market Desk</h1>
           <p style={s.intro}>
-            Insurance headlines, product trends, regulation, and conduct themes translated into study insights for learners, advisors, and curious consumers.
+            Life insurance news, market commentary, and practical advisor-focused insight — written for agents, brokers, advisors, and serious learners who want to understand the business behind the policy.
           </p>
-
-          <div style={{ ...s.card, marginTop: 28 }}>
-            <p style={s.muted}>Get practical life insurance study notes.</p>
-            <NewsletterForm />
-          </div>
+          <p style={s.intro}>
+            Market Desk looks beyond the headline and asks what a development could mean for client conversations, product suitability, regulation, underwriting, retirement income, and advisor practice.
+          </p>
+          <p style={s.note}>Updated regularly.</p>
         </div>
       </section>
 
-      <section style={{ ...s.container, padding: "40px 0" }}>
-        <div style={s.grid}>
-          <article style={s.card}>
-            <h2>Latest Study Brief</h2>
-            {studyBrief.map((item) => (
-              <div key={item.headline} style={{ ...s.card, background: "#f8fafc", marginTop: 14 }}>
-                <h3>{item.headline}</h3>
-                <p style={s.muted}>{item.summary}</p>
-                <p style={{ color: "#0f766e", fontWeight: 700 }}>Why it matters: {item.why}</p>
-              </div>
-            ))}
-          </article>
-
-          <article style={s.card}>
-            <p style={s.eyebrow}>Featured Insight</p>
-            <h2>How claims communication quality is becoming a competitive advantage</h2>
-            <p style={s.muted}>
-              Insurers are improving timelines, status updates, and plain-language claims
-              communication to reduce friction for policyholders and beneficiaries.
-            </p>
-            <Link href="/news/claims-communication-consumer-pain-point" style={s.linkButton}>
-              Read analysis
-            </Link>
-          </article>
-        </div>
-      </section>
-
-      <section style={{ ...s.container, paddingBottom: 24 }}>
-        <h2>News Categories</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      <section style={{ ...s.container, padding: "34px 0 18px" }}>
+        <h2>Market Desk Categories</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 }}>
           {categories.map((category) => (
             <button
               key={category}
@@ -188,19 +84,52 @@ export default function NewsPage() {
         </div>
       </section>
 
-      <section id="latest-news" style={{ ...s.container, padding: "24px 0 40px" }}>
+      <section style={{ ...s.container, padding: "24px 0 52px" }}>
+        {lead ? (
+          <article style={{ ...s.leadCard, marginBottom: 24 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+              <span style={s.pill}>{lead.tag}</span>
+              <span style={{ color: "#64748b", fontSize: 13 }}>{lead.publishedAtLabel}</span>
+            </div>
+            <h2 style={{ maxWidth: 820, margin: "16px 0 0", fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.05 }}>
+              {lead.title}
+            </h2>
+            <p style={{ ...s.muted, maxWidth: 780 }}>{lead.summary}</p>
+            <div style={{ marginTop: 18, borderLeft: "4px solid #0f766e", paddingLeft: 16 }}>
+              <p style={{ ...s.eyebrow, margin: 0 }}>Market Desk view</p>
+              <p style={{ ...s.muted, margin: "8px 0 0" }}>{lead.marketDeskView}</p>
+            </div>
+            <Link href={`/news/${lead.slug}`} style={{ ...s.linkButton, marginTop: 20 }}>
+              Read Commentary
+            </Link>
+          </article>
+        ) : null}
+
         <div style={s.grid}>
-          {filteredArticles.map((item) => (
-            <article key={item.id} style={s.card}>
-              <p style={{ color: "#64748b", fontSize: 13 }}>{item.category} - {item.date}</p>
-              <h3>{item.title}</h3>
+          {rest.map((item) => (
+            <article key={item.slug} style={s.card}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+                <span style={s.pill}>{item.tag}</span>
+                <span style={{ color: "#64748b", fontSize: 13 }}>{item.publishedAtLabel}</span>
+              </div>
+              <h3 style={{ marginTop: 14, fontSize: 22, lineHeight: 1.2 }}>{item.title}</h3>
               <p style={s.muted}>{item.summary}</p>
-              <p style={s.muted}><strong>Why it matters:</strong> {item.whyItMatters}</p>
-              <Link href={item.href} style={{ color: "#0f766e", fontWeight: 700 }}>
-                Read More
+              <div style={{ marginTop: 14, borderRadius: 10, background: "#f8fafc", padding: 14 }}>
+                <p style={{ ...s.eyebrow, margin: 0 }}>Market Desk view</p>
+                <p style={{ ...s.muted, margin: "8px 0 0", fontSize: 14 }}>{item.marketDeskView}</p>
+              </div>
+              <Link href={`/news/${item.slug}`} style={{ ...s.textLink, display: "inline-flex", marginTop: 18 }}>
+                Read Commentary
               </Link>
             </article>
           ))}
+        </div>
+
+        <p style={s.disclaimer}>{marketDeskDisclaimer}</p>
+        <div style={{ marginTop: 18 }}>
+          <Link href="/free-practice" style={s.textLink}>
+            New to life insurance? Try 15 free questions.
+          </Link>
         </div>
       </section>
     </main>
