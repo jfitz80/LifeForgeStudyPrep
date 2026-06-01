@@ -19,12 +19,19 @@ type ArticleView = {
   title: string;
   summary: string;
   publishedAtLabel: string;
+  readingTime?: string;
   source: string;
   originalUrl?: string;
+  sourceName?: string;
+  sourceDate?: string;
   whatHappened: string;
   marketDeskView: string;
   whyAdvisorsShouldCare: string;
   learnerConnection: string;
+  bodySections?: Array<{
+    heading?: string;
+    paragraphs: string[];
+  }>;
   consumerTakeaway: string;
   relatedTopics: Array<{ label: string; href: string }>;
   keyPoints: string[];
@@ -117,12 +124,16 @@ function fromStatic(slug: string): ArticleView | null {
     title: item.title,
     summary: item.summary,
     publishedAtLabel: item.publishedAtLabel,
+    readingTime: item.readingTime,
     source: item.source,
     originalUrl: item.sourceUrl,
+    sourceName: item.sourceName,
+    sourceDate: item.sourceDate,
     whatHappened: item.whatHappened,
     marketDeskView: item.marketDeskView,
     whyAdvisorsShouldCare: item.whyAdvisorsShouldCare,
     learnerConnection: item.learnerConnection,
+    bodySections: item.bodySections,
     consumerTakeaway: buildConsumerTakeaway(category, item.whatItMeans),
     relatedTopics: getRelatedTopics(category),
     keyPoints: item.keyPoints,
@@ -212,6 +223,12 @@ export default async function NewsArticlePage({ params }: Props) {
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
             <CategoryTag category={item.category} />
             <span>{item.publishedAtLabel}</span>
+            {item.readingTime ? (
+              <>
+                <span>•</span>
+                <span>{item.readingTime}</span>
+              </>
+            ) : null}
             <span>•</span>
             <span>{item.source}</span>
           </div>
@@ -232,16 +249,48 @@ export default async function NewsArticlePage({ params }: Props) {
             </p>
           ) : null}
 
-          <section id="what-happened" className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
-            <h2 className="text-lg font-bold text-[#1F2A44]">What happened</h2>
-            <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatHappened}</p>
-          </section>
+          {item.sourceName ? (
+            <p className="mt-3 text-xs leading-6 text-slate-500">
+              Source context: {item.sourceName}
+              {item.sourceDate ? ` (${item.sourceDate})` : ''}
+            </p>
+          ) : null}
+
+          {item.bodySections?.length ? (
+            <section id="what-happened" className="mt-8 space-y-8">
+              {item.bodySections.map((section, index) => (
+                <div
+                  key={`${section.heading ?? 'intro'}-${index}`}
+                  id={section.heading === 'My view' ? 'market-desk-view' : undefined}
+                  className={section.heading === 'My view' ? 'rounded-xl border border-[#CFEAE4] bg-[#F1FBF8] p-5' : ''}
+                >
+                  {section.heading ? (
+                    <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">{section.heading}</h2>
+                  ) : null}
+                  <div className="mt-3 space-y-4">
+                    {section.paragraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 48)} className="text-base leading-8 text-slate-700">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </section>
+          ) : (
+            <section id="what-happened" className="mt-8 rounded-xl border border-slate-200 bg-slate-50 p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">What happened</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-700">{item.whatHappened}</p>
+            </section>
+          )}
 
           <section className="mt-8 grid gap-6">
-            <div id="market-desk-view" className="rounded-xl border border-[#CFEAE4] bg-[#F1FBF8] p-5">
-              <h2 className="text-lg font-bold text-[#1F2A44]">My view</h2>
-              <p className="mt-2 text-sm leading-7 text-slate-700">{item.marketDeskView}</p>
-            </div>
+            {item.bodySections?.length ? null : (
+              <div id="market-desk-view" className="rounded-xl border border-[#CFEAE4] bg-[#F1FBF8] p-5">
+                <h2 className="text-lg font-bold text-[#1F2A44]">My view</h2>
+                <p className="mt-2 text-sm leading-7 text-slate-700">{item.marketDeskView}</p>
+              </div>
+            )}
 
             <div id="advisor-relevance" className="rounded-xl border border-slate-200 bg-slate-50 p-5">
               <h2 className="text-lg font-bold text-[#1F2A44]">Why advisors should care</h2>
