@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { cache } from 'react';
 import { CategoryTag, classifyNewsCategory } from '@/components/news/category-system';
 import type { NewsArticleView } from '@/components/news/types';
-import { getNewsBySlug, marketDeskDisclaimer, newsItems } from '@/data/news';
+import { getNewsBySlug, getRelatedNewsItems, marketDeskDisclaimer, newsItems } from '@/data/news';
 
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
@@ -19,6 +19,7 @@ type ArticleView = {
   title: string;
   summary: string;
   publishedAtLabel: string;
+  updatedAtLabel?: string;
   readingTime?: string;
   source: string;
   originalUrl?: string;
@@ -32,6 +33,7 @@ type ArticleView = {
   metaDescription?: string;
   openGraphTitle?: string;
   openGraphDescription?: string;
+  archiveNotice?: string;
   whatHappened: string;
   marketDeskView: string;
   whyAdvisorsShouldCare: string;
@@ -42,6 +44,13 @@ type ArticleView = {
   }>;
   consumerTakeaway: string;
   relatedTopics: Array<{ label: string; href: string }>;
+  relatedCommentary?: Array<{
+    slug: string;
+    title: string;
+    summary: string;
+    tag: string;
+    publishedAtLabel: string;
+  }>;
   keyPoints: string[];
   category: NewsArticleView['category'];
   tag: string;
@@ -132,6 +141,7 @@ function fromStatic(slug: string): ArticleView | null {
     title: item.title,
     summary: item.summary,
     publishedAtLabel: item.publishedAtLabel,
+    updatedAtLabel: item.updatedAtLabel,
     readingTime: item.readingTime,
     source: item.source,
     originalUrl: item.sourceUrl,
@@ -142,6 +152,7 @@ function fromStatic(slug: string): ArticleView | null {
     metaDescription: item.metaDescription,
     openGraphTitle: item.openGraphTitle,
     openGraphDescription: item.openGraphDescription,
+    archiveNotice: item.archiveNotice,
     whatHappened: item.whatHappened,
     marketDeskView: item.marketDeskView,
     whyAdvisorsShouldCare: item.whyAdvisorsShouldCare,
@@ -149,6 +160,13 @@ function fromStatic(slug: string): ArticleView | null {
     bodySections: item.bodySections,
     consumerTakeaway: buildConsumerTakeaway(category, item.whatItMeans),
     relatedTopics: getRelatedTopics(category),
+    relatedCommentary: getRelatedNewsItems(item).map((related) => ({
+      slug: related.slug,
+      title: related.title,
+      summary: related.summary,
+      tag: related.tag,
+      publishedAtLabel: related.publishedAtLabel
+    })),
     keyPoints: item.keyPoints,
     category,
     tag: item.tag
@@ -245,6 +263,12 @@ export default async function NewsArticlePage({ params }: Props) {
           <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
             <CategoryTag category={item.category} />
             <span>{item.publishedAtLabel}</span>
+            {item.updatedAtLabel ? (
+              <>
+                <span>•</span>
+                <span>Updated {item.updatedAtLabel}</span>
+              </>
+            ) : null}
             {item.readingTime ? (
               <>
                 <span>•</span>
@@ -257,6 +281,12 @@ export default async function NewsArticlePage({ params }: Props) {
 
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">{item.title}</h1>
           <p className="mt-6 text-lg leading-8 text-slate-700">{item.summary}</p>
+
+          {item.archiveNotice ? (
+            <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-900">
+              {item.archiveNotice}
+            </p>
+          ) : null}
 
           {item.originalUrl ? (
             <p className="mt-3">
@@ -372,6 +402,26 @@ export default async function NewsArticlePage({ params }: Props) {
               ))}
             </div>
           </section>
+
+          {item.relatedCommentary?.length ? (
+            <section className="mt-8 rounded-xl border border-slate-200 bg-white p-5">
+              <h2 className="text-lg font-bold text-[#1F2A44]">Related commentary</h2>
+              <div className="mt-4 grid gap-3">
+                {item.relatedCommentary.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/news/${related.slug}`}
+                    className="rounded-lg border border-slate-200 bg-[#F9FAFB] px-4 py-3 transition hover:border-[#2FAF9E] hover:bg-white"
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-wide text-[#2FAF9E]">{related.tag}</span>
+                    <span className="ml-2 text-xs text-slate-500">{related.publishedAtLabel}</span>
+                    <span className="mt-1 block text-sm font-bold text-[#1F2A44]">{related.title}</span>
+                    <span className="mt-1 block text-xs leading-6 text-slate-600">{related.summary}</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="mt-8 rounded-xl border border-slate-200 bg-white p-5">
             <h2 className="text-lg font-bold text-[#1F2A44]">New to life insurance?</h2>

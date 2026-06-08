@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
-import { marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
+import { getSortedNewsItems, marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
 
 type CategoryFilter = "All" | MarketDeskCategory;
 
@@ -15,6 +15,7 @@ const categories: CategoryFilter[] = [
   "Advisor Practice",
   "Retirement Income",
   "Underwriting",
+  "Technology & Risk",
   "Carrier Moves",
   "Claims",
   "Learner Corner"
@@ -43,8 +44,9 @@ export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
 
   const filteredArticles = useMemo(() => {
-    if (activeCategory === "All") return newsItems;
-    return newsItems.filter((item) => item.tag === activeCategory);
+    const sortedItems = getSortedNewsItems(newsItems);
+    if (activeCategory === "All") return sortedItems;
+    return sortedItems.filter((item) => item.tag === activeCategory || item.secondaryCategory === activeCategory);
   }, [activeCategory]);
 
   const [lead, ...rest] = filteredArticles;
@@ -90,6 +92,8 @@ export default function NewsPage() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
               <span style={s.pill}>{lead.tag}</span>
               <span style={{ color: "#64748b", fontSize: 13 }}>{lead.publishedAtLabel}</span>
+              {lead.updatedAtLabel ? <span style={{ color: "#64748b", fontSize: 13 }}>Updated {lead.updatedAtLabel}</span> : null}
+              {lead.readingTime ? <span style={{ color: "#64748b", fontSize: 13 }}>{lead.readingTime}</span> : null}
             </div>
             <h2 style={{ maxWidth: 820, margin: "16px 0 0", fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.05 }}>
               {lead.title}
@@ -111,6 +115,8 @@ export default function NewsPage() {
               <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
                 <span style={s.pill}>{item.tag}</span>
                 <span style={{ color: "#64748b", fontSize: 13 }}>{item.publishedAtLabel}</span>
+                {item.updatedAtLabel ? <span style={{ color: "#64748b", fontSize: 13 }}>Updated {item.updatedAtLabel}</span> : null}
+                {item.readingTime ? <span style={{ color: "#64748b", fontSize: 13 }}>{item.readingTime}</span> : null}
               </div>
               <h3 style={{ marginTop: 14, fontSize: 22, lineHeight: 1.2 }}>{item.title}</h3>
               <p style={s.muted}>{item.summary}</p>

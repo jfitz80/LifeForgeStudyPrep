@@ -11,20 +11,29 @@ export type MarketDeskCategory =
   | 'Learner Corner';
 
 export type NewsItem = {
+  id?: string;
   slug: string;
   title: string;
   summary: string;
+  publishedAt?: string;
   publishedAtLabel: string;
+  updatedAt?: string;
+  updatedAtLabel?: string;
   readingTime?: string;
   featured?: boolean;
+  auditStatus?: 'Current' | 'Needs editorial update' | 'Needs source verification' | 'Needs expansion' | 'Archive only';
+  sourceStatus?: 'verified' | 'needs verification';
   source: string;
   tag: MarketDeskCategory;
   secondaryCategory?: MarketDeskCategory;
+  tags?: string[];
   whatHappened: string;
   marketDeskView: string;
   whyAdvisorsShouldCare: string;
   learnerConnection: string;
   relatedTopics?: string[];
+  relatedSlugs?: string[];
+  archiveNotice?: string;
   sourceName?: string;
   sourceUrl?: string;
   sourceDate?: string;
@@ -51,16 +60,20 @@ export const marketDeskDisclaimer =
 
 export const newsItems: NewsItem[] = [
   {
+    id: 'md-2026-06-07-ai-underwriting',
     slug: 'ai-underwriting-faster-application-trust-problem',
     title: 'AI in Underwriting: The Faster Application Has a Trust Problem',
     summary:
       'The life insurance application may be getting shorter, but the risk assessment has not disappeared. As underwriting becomes more automated, clear disclosure and client trust become more important.',
+    publishedAt: '2026-06-07',
     publishedAtLabel: 'June 7, 2026',
     readingTime: '7 min read',
     featured: true,
     source: 'LifeForge Market Desk',
     tag: 'Underwriting',
     secondaryCategory: 'Technology & Risk',
+    auditStatus: 'Current',
+    sourceStatus: 'verified',
     sourceName:
       'NAIC accelerated underwriting and AI materials; Munich Re life underwriting data-source research; Society of Actuaries accelerated underwriting survey material',
     sourceDate: '2022-2026',
@@ -103,6 +116,23 @@ export const newsItems: NewsItem[] = [
       'Insurability',
       'Algorithmic risk',
       'Consumer trust'
+    ],
+    tags: [
+      'Artificial intelligence',
+      'Accelerated underwriting',
+      'Life insurance',
+      'Risk classification',
+      'Client disclosure',
+      'Data privacy',
+      'Advisor practice',
+      'Insurability',
+      'Algorithmic risk',
+      'Consumer trust'
+    ],
+    relatedSlugs: [
+      'ai-underwriting-faster-applications-trust-questions',
+      'rilas-growing-simplicity-still-matters',
+      'private-capital-moving-toward-life-insurance'
     ],
     whatHappened:
       'Life insurance applications are becoming faster and more digital, but speed does not remove underwriting. In many cases, more of the assessment now happens through data, automation, routing rules, and insurer review behind the screen.',
@@ -226,19 +256,37 @@ export const newsItems: NewsItem[] = [
       'Review underwriting, risk classification, adverse selection, disclosure, insurability, consumer information, and advisor communication.'
   },
   {
+    id: 'md-2026-05-31-annuity-capital',
     slug: 'annuity-boom-capital-story',
     title: 'The Annuity Boom Is Becoming a Capital Story',
     summary:
       'Annuities are no longer just a product story. Their growth is increasingly tied to retirement-income demand, product complexity, private capital, reinsurance, and advisor suitability risk.',
+    publishedAt: '2026-05-31',
     publishedAtLabel: 'May 31, 2026',
     readingTime: '6 min read',
     featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Retirement Income',
     secondaryCategory: 'Market Watch',
+    auditStatus: 'Current',
+    sourceStatus: 'verified',
     sourceName:
       'Barron’s Advisor / LIMRA annuity sales reporting; Reuters / Moody’s offshore reinsurance and private credit reporting; Reuters reporting on MetLife and General Atlantic’s reinsurance venture',
     sourceDate: '2026',
+    sources: [
+      {
+        name: 'LIMRA: Final U.S. Retail Annuity Sales Set New Sales High in 2025',
+        url: 'https://www.limra.com/en/newsroom/news-releases/2026/limra-final-u.s.-retail-annuity-sales-set-new-sales-high-totaling-%24464.1-billion-in-2025/'
+      },
+      {
+        name: 'LIMRA: U.S. Annuity Sales Exceed $100 Billion for Seventh Consecutive Quarter',
+        url: 'https://www.limra.com/en/newsroom/news-releases/2025/limra-u.s.-annuity-sales-exceed-%24100-billion-for-seventh-consecutive-quarter/'
+      },
+      {
+        name: 'LIMRA: Updated 2Q 2025 Top 20 Annuity Sales Rankings',
+        url: 'https://www.limra.com/siteassets/newsroom/fact-tank/sales-data/2025/2q/u.s.-individual-annuity-sales-second-quarter-ytd-2025-results.pdf'
+      }
+    ],
     relatedTopics: [
       'Annuities',
       'Retirement income',
@@ -248,6 +296,21 @@ export const newsItems: NewsItem[] = [
       'Reinsurance',
       'Suitability',
       'Advisor disclosure'
+    ],
+    tags: [
+      'Annuities',
+      'Retirement income',
+      'RILAs',
+      'Fixed indexed annuities',
+      'Private capital',
+      'Reinsurance',
+      'Suitability',
+      'Advisor disclosure'
+    ],
+    relatedSlugs: [
+      'annuities-no-longer-quiet-corner-market',
+      'return-guaranteed-income-clients-listening-again',
+      'rilas-growing-simplicity-still-matters'
     ],
     whatHappened:
       'Annuities are no longer sitting quietly in the background of the life insurance market. Demand for retirement income is rising at the same time product design, reinsurance, private capital, and asset-management strategies are changing the industry behind the product.',
@@ -343,15 +406,24 @@ export const newsItems: NewsItem[] = [
       'Review annuities, retirement income, suitability, guarantees, liquidity, insurer financial strength, reinsurance, and explaining product trade-offs.'
   },
   {
+    id: 'md-2026-05-25-annuity-intro',
     slug: 'annuities-no-longer-quiet-corner-market',
     title: 'Annuities Are No Longer a Quiet Corner of the Market',
     summary:
-      'Retirement income is becoming one of the most important conversations in insurance and advice.',
+      'This introductory commentary explains why annuities have moved back into mainstream retirement-income conversations, while the deeper capital-market story is covered in the newer Market Desk feature.',
+    publishedAt: '2026-05-25',
     publishedAtLabel: 'May 25, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '4 min read',
     source: 'LifeForge Market Desk',
     tag: 'Retirement Income',
+    auditStatus: 'Current',
+    sourceStatus: 'needs verification',
+    tags: ['Annuities', 'Retirement income', 'Longevity risk', 'Suitability', 'Client needs analysis'],
+    relatedSlugs: ['annuity-boom-capital-story', 'return-guaranteed-income-clients-listening-again', 'rilas-growing-simplicity-still-matters'],
     whatHappened:
-      'Annuity and retirement-income conversations are moving closer to the centre of insurance planning as more clients look for income certainty after work.',
+      'Annuity and retirement-income conversations have moved closer to the centre of insurance planning as more clients look for income certainty after work.',
     marketDeskView:
       'As more clients approach retirement without traditional pensions, guaranteed income is becoming easier to discuss but harder to explain well. Advisors need to be clear about the trade-off between certainty, liquidity, flexibility, and estate value.',
     whyAdvisorsShouldCare:
@@ -363,19 +435,81 @@ export const newsItems: NewsItem[] = [
       'Guaranteed income requires careful explanation of trade-offs.',
       'Suitability depends on income needs, liquidity, flexibility, and estate goals.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Annuities used to be easy for many advisors to leave in the specialist corner. They were important, but they were not always central to everyday protection conversations.',
+          'That is changing because retirement planning itself is changing. More clients are trying to turn savings into dependable income without the comfort of a traditional pension. That makes guarantees more interesting, but it does not make the product conversation simpler.'
+        ]
+      },
+      {
+        heading: 'What is changing',
+        paragraphs: [
+          'The renewed annuity conversation is not only about product demand. It is about the client problem underneath the product. Retirees and near-retirees want to know which part of their income is predictable, which part is exposed to market risk, and how much flexibility they give up when they buy certainty.',
+          'That is why annuity recommendations should start with income needs, essential expenses, existing pensions, registered savings, tax position, health, liquidity, and estate objectives. The product should come after the retirement-income problem is understood.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view is that annuities are neither boring nor automatically suitable. They are trade-off products. The advisor has to explain what the client is protecting against and what the client is giving up.',
+          'That is also why this earlier commentary now sits beside the deeper feature on private capital, reinsurance, product design, and insurer strategy. The first question is whether guaranteed income fits the client. The next question is what kind of market is now producing those guarantees.'
+        ]
+      },
+      {
+        heading: 'Advisor angle',
+        paragraphs: [
+          'The practical advisor issue is that many clients like the sound of certainty before they understand the cost of certainty. A monthly income figure may feel reassuring, but the client also needs to understand liquidity, access to capital, taxation, beneficiary treatment, inflation exposure, and how the contract behaves if circumstances change.',
+          'This is where annuity conversations can become more professional than promotional. The advisor should be able to compare the income need against other resources: pensions, government benefits, registered savings, non-registered investments, cash reserves, and insurance already in force. If the annuity only solves a small part of the problem, the recommendation should say so.',
+          'Documentation matters because retirement-income recommendations often involve irreversible or hard-to-reverse choices. A file should show why the client valued income certainty, what alternatives were considered, what liquidity was preserved, and how estate goals were discussed. That is not paperwork for its own sake. It is evidence that the recommendation was built around the client rather than the product.'
+        ]
+      },
+      {
+        heading: 'Connection to the deeper feature',
+        paragraphs: [
+          'This introductory article is intentionally narrower than “The Annuity Boom Is Becoming a Capital Story.” It focuses on the client-facing planning conversation: why annuities are being discussed again and what trade-offs advisors need to explain.',
+          'The deeper feature looks behind the product shelf at product innovation, RILAs, indexed annuities, private capital, reinsurance, and insurer investment strategy. Both angles matter. A client recommendation depends on suitability at the front end, but the advisor also benefits from understanding the market forces shaping the products available.'
+        ]
+      },
+      {
+        heading: 'What to watch in client conversations',
+        paragraphs: [
+          'A useful annuity conversation often starts with the client’s income floor. Which expenses must be covered regardless of market performance? Which income sources are already guaranteed? Which assets are available for flexibility? Without that map, an annuity can look either too attractive or too restrictive.',
+          'Advisors should also listen for estate expectations. Some clients are comfortable using capital to support lifetime income. Others want to preserve value for beneficiaries. Neither preference is wrong, but the recommendation changes when estate value is a central objective.',
+          'The final issue is timing. Buying certainty too early may reduce flexibility. Waiting too long may leave the client exposed to sequence risk, health changes, or planning inertia. That is why annuities belong in a planning conversation rather than a product pitch.',
+          'A simple test is whether the client can describe the reason for the annuity without using the product name. If the answer is “I need part of my retirement income to be predictable,” the conversation is clearer than “I bought an annuity because rates were attractive.”'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For advisors, annuities require a conversation about certainty, liquidity, inflation, estate value, guarantees, and client psychology. For learners, the topic connects to suitability, income planning, guarantees, longevity risk, and client needs analysis.',
+          'The article remains as an introductory companion to the deeper capital-market feature, not as a replacement for it.'
+        ]
+      }
+    ],
     whatItMeans:
       'Retirement income planning increasingly requires advisors to explain certainty, liquidity, flexibility, and estate trade-offs clearly.',
     llqpAngle:
       'Review annuities, income planning, suitability, guarantees, and client needs analysis.'
   },
   {
+    id: 'md-2026-05-24-guaranteed-income',
     slug: 'return-guaranteed-income-clients-listening-again',
     title: 'The Return of Guaranteed Income: Why Clients Are Listening Again',
     summary:
-      'Higher-rate environments have made guaranteed income products more relevant in planning conversations.',
+      'Guaranteed income is back in client conversations, but the advisor’s job is to explain the exchange between certainty, flexibility, liquidity, and estate value.',
+    publishedAt: '2026-05-24',
     publishedAtLabel: 'May 24, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '4 min read',
     source: 'LifeForge Market Desk',
     tag: 'Retirement Income',
+    auditStatus: 'Current',
+    sourceStatus: 'needs verification',
+    tags: ['Guaranteed income', 'Annuities', 'Retirement planning', 'Suitability', 'Liquidity'],
+    relatedSlugs: ['annuity-boom-capital-story', 'annuities-no-longer-quiet-corner-market', 'private-capital-moving-toward-life-insurance'],
     whatHappened:
       'Guaranteed income products are getting renewed attention as clients compare market uncertainty, retirement timing, and income gaps.',
     marketDeskView:
@@ -389,19 +523,82 @@ export const newsItems: NewsItem[] = [
       'The planning issue is the exchange between flexibility and certainty.',
       'Client objectives and liquidity needs still drive suitability.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Guaranteed income is easier to discuss when clients are worried about retirement uncertainty. The appeal is direct: convert a portion of capital into a stream of income that can be planned around.',
+          'But the advisor conversation should not stop at the word “guaranteed.” A guarantee has a cost, and that cost may show up as reduced liquidity, less upside flexibility, a lower estate value, surrender limits, or a structure the client needs time to understand.'
+        ]
+      },
+      {
+        heading: 'Market context',
+        paragraphs: [
+          'The retirement-income market has become more active because clients are facing a practical question: how do savings become income? Portfolio withdrawals, annuities, pension income, government benefits, and cash reserves all solve different parts of that problem.',
+          'An annuity can be useful when the client values certainty and wants to transfer some longevity risk to an insurer. It can be a poor fit when the client needs flexibility, expects large near-term withdrawals, or has estate objectives that conflict with locking in capital.'
+        ]
+      },
+      {
+        heading: 'Why advisors should care',
+        paragraphs: [
+          'The professional risk is oversimplification. If the recommendation is framed only as “safe income,” the client may not understand the trade-off. Advisors should document why income certainty matters, what alternatives were considered, and how liquidity, tax position, health, estate goals, and time horizon were weighed.',
+          'The better conversation is not “annuities are back.” It is “which retirement risk is the client trying to solve, and what is the cleanest way to solve it?”'
+        ]
+      },
+      {
+        heading: 'Where the conversation can go wrong',
+        paragraphs: [
+          'Guaranteed income can sound like a complete solution when it is really a specific tool. It can help create an income floor, but it may not solve inflation risk, emergency liquidity, long-term-care costs, estate planning, or the need for flexible withdrawals.',
+          'Clients may also compare income products using only the quoted payment. That can be misleading if the contracts have different guarantees, return-of-premium features, indexing provisions, surrender terms, issuer strength, or tax treatment. The headline payment is only one part of the recommendation.',
+          'Another risk is emotional timing. Clients who have just experienced volatility may be more receptive to certainty, but a recommendation still needs to be based on durable needs rather than a temporary reaction to markets. A careful advisor separates the client’s long-term income problem from the anxiety of the moment.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view is that the return of guaranteed income is best understood as a planning response to uncertainty, not as a product trend by itself. The client is not buying an abstract guarantee. They are trying to reduce a specific risk: running short of dependable income later in life.',
+          'That makes the advisor’s explanation central. The most useful conversation is plain: what income is needed, what income is already secure, what gap remains, what capital is available, and what flexibility the client is willing to give up to close the gap.'
+        ]
+      },
+      {
+        heading: 'What to watch in product discussions',
+        paragraphs: [
+          'The phrase “guaranteed income” can hide important product differences. Some contracts focus on immediate income. Others defer income. Some include death-benefit or guarantee-period features. Some are designed around accumulation before income begins. Advisors need to explain the actual contract, not the category label.',
+          'Clients may also assume that a guarantee removes all risk. It does not. A guarantee may address longevity risk or income certainty, but the client may still face inflation risk, liquidity risk, opportunity cost, tax considerations, or the risk that the product simply does not fit their household plan.',
+          'That is why comparison matters. A suitable recommendation should be able to stand beside alternatives such as systematic withdrawals, laddered fixed-income strategies, cash reserves, partial annuitization, or a decision to delay. The better file shows why guaranteed income was chosen, not merely that it was available.',
+          'This also helps manage expectations after the sale. If the client later questions the loss of flexibility, the original explanation should show that the trade-off was discussed and accepted as part of solving the income problem.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'Guaranteed income products can help with retirement confidence, but they also demand careful suitability work. For learners, this connects to annuities, risk transfer, client objectives, needs analysis, and the difference between product features and client fit.',
+          'The advisor’s real value is not naming the product category. It is helping the client understand whether the income guarantee solves a problem that actually exists.'
+        ]
+      }
+    ],
     whatItMeans:
       'Guaranteed income may be more relevant, but suitability still turns on client goals, liquidity, time horizon, and risk tolerance.',
     llqpAngle:
       'Review annuities, retirement income, risk transfer, product suitability, and client objectives.'
   },
   {
+    id: 'md-2026-05-23-rilas',
     slug: 'rilas-growing-simplicity-still-matters',
     title: 'RILAs Are Growing — But Simplicity Still Matters',
     summary:
-      'Registered index-linked annuities and similar structured products are attracting attention because they combine market exposure with downside protection features.',
+      'Index-linked and structured annuity designs can meet real planning needs, but buffers, caps, floors, and participation rates raise the standard for explanation and documentation.',
+    publishedAt: '2026-05-23',
     publishedAtLabel: 'May 23, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '4 min read',
     source: 'LifeForge Market Desk',
     tag: 'Product Trends',
+    secondaryCategory: 'Retirement Income',
+    auditStatus: 'Current',
+    sourceStatus: 'needs verification',
+    tags: ['RILAs', 'Indexed annuities', 'Product complexity', 'Suitability', 'Disclosure'],
+    relatedSlugs: ['annuity-boom-capital-story', 'return-guaranteed-income-clients-listening-again', 'annuities-no-longer-quiet-corner-market'],
     whatHappened:
       'Structured annuity products with buffers, caps, floors, and participation rates continue to attract market attention.',
     marketDeskView:
@@ -415,19 +612,84 @@ export const newsItems: NewsItem[] = [
       'Complexity can become a suitability and disclosure risk.',
       'Plain-language explanation is part of professional product advice.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Registered index-linked annuities and similar structured designs are attracting attention because they promise a middle ground: some market participation with some form of downside structure.',
+          'That middle ground can be useful, but it also creates explanation risk. Clients may remember the protection language and forget the limits. They may understand the upside story better than the mechanics that shape the outcome.'
+        ]
+      },
+      {
+        heading: 'What is changing',
+        paragraphs: [
+          'A traditional guarantee is usually easier to explain than a product built around buffers, caps, floors, participation rates, crediting periods, surrender schedules, and index-linked outcomes. None of those features is automatically bad. The issue is whether the client understands how they work together.',
+          'The more moving parts a product has, the more important it becomes to explain what risk remains with the client, what risk has been transferred to the insurer, and what conditions could make the result feel disappointing.'
+        ]
+      },
+      {
+        heading: 'Product complexity is not the same as product value',
+        paragraphs: [
+          'A structured annuity can be designed for a real planning purpose. Some clients may want a measure of downside protection without giving up all market-linked potential. Others may be looking for a retirement-income conversation that feels less binary than “all market risk” or “no market risk.”',
+          'The problem is that complexity can make the client focus on the most attractive part of the story. A cap may limit upside. A buffer may protect only a defined layer of loss. A floor may work differently from a guarantee of principal. Participation rates may change the client’s actual exposure to the index. Crediting periods and surrender schedules can shape the experience just as much as the headline feature.',
+          'That means the advisor needs to slow the conversation down. If the product cannot be explained without jargon, the suitability work is not finished. The client should understand what happens in a strong market, a flat market, and a weak market.'
+        ]
+      },
+      {
+        heading: 'Advisor relevance',
+        paragraphs: [
+          'The file should show why this product structure was suitable compared with simpler options. Was the client seeking income, accumulation, protection from a specific level of downside, or behavioural confidence? Did the client need access to funds? How were surrender charges, fees, caps, and renewal terms explained?',
+          'Structured products create a particular documentation challenge because the recommendation may depend on multiple conditions. A good file does not merely list features. It explains why those features match the client’s need and why simpler or more liquid alternatives were not selected.'
+        ]
+      },
+      {
+        heading: 'Questions advisors should be ready to answer',
+        paragraphs: [
+          'A client should know what index is being referenced, whether they receive dividends or only price movement, how gains are credited, and what happens if the index is flat or negative. They should also understand whether caps, buffers, floors, spreads, or participation rates can change after the initial term.',
+          'Another practical question is access. Structured annuity designs may include surrender schedules or market-value adjustments. A client who may need funds for health costs, family support, business needs, or housing changes should understand what flexibility is preserved and what flexibility is given up.',
+          'The strongest advisors do not avoid these questions. They invite them. If the product still makes sense after the client understands the limits, the recommendation is stronger. If the explanation causes hesitation, that may be a sign that a simpler structure fits better.',
+          'That is the standard sophisticated products should meet. Complexity may be acceptable, but only when it serves a client purpose that simpler tools do not meet as cleanly. The advisor should be able to name that purpose in one sentence.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view is that product innovation is valuable only when the client can explain it back in plain language. A product can be technically sound and still be poorly sold if the client remembers only the headline benefit.',
+          'For advisors, the professional work is not to make complex products sound simple. It is to make the trade-offs clear enough that the client can make an informed decision.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'As annuity designs become more sophisticated, suitability and disclosure become more important. For learners, this connects to product structure, guarantees, risk sharing, client explanation, and the difference between a feature and a recommendation.',
+          'The market may reward innovation, but clients still need plain-language advice that separates useful design from unnecessary complexity.'
+        ]
+      }
+    ],
     whatItMeans:
       'Complex product growth raises the bar for disclosure, documentation, and client understanding.',
     llqpAngle:
       'Review product structure, guarantees, risk sharing, suitability, disclosure, and product-feature explanations.'
   },
   {
+    id: 'md-2026-05-22-ai-archive',
     slug: 'ai-underwriting-faster-applications-trust-questions',
     title: 'AI in Underwriting: Faster Applications, Bigger Trust Questions',
     summary:
-      'Insurers continue to explore automation and AI-driven tools to speed up underwriting and improve application workflows.',
+      'This earlier Market Desk brief introduced the trust questions created by faster underwriting workflows. A fuller June 7 feature now expands the topic in more depth.',
+    publishedAt: '2026-05-22',
     publishedAtLabel: 'May 22, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '3 min read',
     source: 'LifeForge Market Desk',
     tag: 'Underwriting',
+    secondaryCategory: 'Technology & Risk',
+    auditStatus: 'Archive only',
+    sourceStatus: 'needs verification',
+    archiveNotice:
+      'This commentary reflects the market information available at the original publication date. For the fuller current feature, read “AI in Underwriting: The Faster Application Has a Trust Problem.”',
+    tags: ['AI underwriting', 'Accelerated underwriting', 'Client trust', 'Disclosure', 'Risk classification'],
+    relatedSlugs: ['ai-underwriting-faster-application-trust-problem', 'climate-risk-insurance-conversation-outside-pc', 'private-capital-moving-toward-life-insurance'],
     whatHappened:
       'Carriers continue testing automated underwriting and AI-supported workflows to reduce friction and shorten decision timelines.',
     marketDeskView:
@@ -441,19 +703,55 @@ export const newsItems: NewsItem[] = [
       'Trust and explanation remain central to underwriting conversations.',
       'Disclosure quality still matters when technology changes the workflow.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'This brief introduced a simple point that remains important: faster underwriting is not automatically more trusted underwriting.',
+          'Automated workflows can reduce friction, especially for straightforward applications, but the client still needs to understand that risk assessment is happening and that application answers remain serious.'
+        ]
+      },
+      {
+        heading: 'What changed',
+        paragraphs: [
+          'The visible application experience has become shorter in many pathways. Clients may answer fewer questions, avoid a traditional exam, or receive a quicker decision. That convenience can be valuable, but it can also make the process feel more mysterious when a case is referred for further evidence.',
+          'This brief has been kept as historical commentary because the fuller June 7 feature now covers the topic in greater depth, including data sources, disclosure, fairness, governance, and the advisor’s changing role.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view remains that speed is useful only when it is paired with explanation. If clients feel assessed by a process they cannot understand, the advisor may have to spend more time building trust, not less.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'Underwriting modernization changes client expectations. For advisors and learners, the enduring issue is still disclosure quality, risk classification, insurability, and advisor-client communication.'
+        ]
+      }
+    ],
     whatItMeans:
       'Underwriting modernization may improve speed, but advisors still need to manage expectations and explain disclosure requirements.',
     llqpAngle:
       'Review underwriting, risk classification, disclosure, insurability, and advisor-client communication.'
   },
   {
+    id: 'md-2026-05-21-climate-risk',
     slug: 'climate-risk-insurance-conversation-outside-pc',
     title: 'Climate Risk Is Becoming an Insurance Conversation, Even Outside P&C',
     summary:
-      'Climate risk is often discussed as a property and casualty issue, but it also shapes how consumers think about protection, risk, and insurance costs more broadly.',
+      'Climate risk is usually framed as a property-and-casualty problem, but it also affects how clients think about protection, uncertainty, affordability, and the purpose of insurance.',
+    publishedAt: '2026-05-21',
     publishedAtLabel: 'May 21, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '4 min read',
     source: 'LifeForge Market Desk',
     tag: 'Market Watch',
+    auditStatus: 'Current',
+    sourceStatus: 'needs verification',
+    tags: ['Climate risk', 'Consumer behaviour', 'Protection needs', 'Affordability', 'Insurance trust'],
+    relatedSlugs: ['private-capital-moving-toward-life-insurance', 'ai-underwriting-faster-application-trust-problem', 'annuities-no-longer-quiet-corner-market'],
     whatHappened:
       'Consumers are hearing more about climate-driven insurance pressure, affordability, and protection gaps across the broader insurance market.',
     marketDeskView:
@@ -467,19 +765,82 @@ export const newsItems: NewsItem[] = [
       'Protection conversations do not happen in a vacuum.',
       'Affordability and uncertainty can shape life insurance discussions too.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Climate risk is most visible in property and casualty insurance. Wildfire, flood, storm, rebuilding costs, and availability of coverage are not life-insurance underwriting issues in the ordinary sense.',
+          'But consumer trust does not divide neatly by product line. When clients hear that insurance is becoming more expensive or harder to obtain in one part of the market, it can shape how they think about protection generally.'
+        ]
+      },
+      {
+        heading: 'Market context',
+        paragraphs: [
+          'Life agents are not usually pricing climate exposure directly, but they do work in a market where clients are more aware of uncertainty. That awareness can make protection conversations more urgent. It can also make affordability concerns sharper.',
+          'A client who is already worried about rising household costs may be more sensitive to premium levels, coverage trade-offs, and the idea of paying now for a future risk. That does not change the purpose of life insurance, but it changes the emotional environment in which advice happens.'
+        ]
+      },
+      {
+        heading: 'Why this reaches life insurance conversations',
+        paragraphs: [
+          'Insurance is a promise about an uncertain future. When consumers see pressure in one part of the insurance system, they may bring that anxiety into other conversations. They may ask whether protection will remain affordable, whether insurers can keep promises, or whether applying sooner matters.',
+          'For life advisors, this does not mean turning a life insurance meeting into a property-risk lecture. It means recognizing that clients are often reacting to a broader protection environment. The advisor may need to explain why life insurance is priced differently, why underwriting is different, and why product suitability still depends on the client’s personal need.',
+          'This also matters for younger clients. A person who sees insurance as expensive or unpredictable may delay coverage, choose too little, or misunderstand the role of temporary protection. Advisors can help by bringing the conversation back to needs, affordability, duration, and trade-offs.'
+        ]
+      },
+      {
+        heading: 'Advisor relevance',
+        paragraphs: [
+          'The risk for advisors is using uncertainty as a sales pressure point. Climate-related insurance stories can make clients anxious, but anxiety is not a needs analysis. The professional response is to clarify the client’s actual exposure: income replacement, debt, dependants, business continuity, estate liquidity, or final expenses.',
+          'A calm explanation can build trust. It shows the client that insurance planning is not about reacting to every headline. It is about identifying which risks would create serious financial harm and choosing protection that fits the client’s budget and time horizon.'
+        ]
+      },
+      {
+        heading: 'The practical communication issue',
+        paragraphs: [
+          'Clients may ask broader questions when insurance appears in the news: Are insurers stable? Will coverage become harder to obtain? Should I buy now before prices rise? Those questions may be imprecise, but they reveal a real concern about protection and affordability.',
+          'The advisor’s answer should be product-specific and fact-specific. Life insurance underwriting, pricing, and claims are not the same as home or auto insurance. Still, the client’s worry may be genuine. A good advisor acknowledges the broader concern, then brings the discussion back to the client’s actual need.',
+          'That kind of communication matters because trust is fragile. If an advisor dismisses the concern, the client may feel unheard. If the advisor exaggerates the concern, the recommendation may feel pressured. The professional middle ground is context.',
+          'This is also an opportunity to explain diversification of risk. A client may need emergency savings, property coverage, disability protection, life insurance, and estate planning for different reasons. One headline should not collapse those different needs into a single fear, and one product should not be made to solve every exposure. Clear boundaries make the advice more credible.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view is that climate risk matters to life advisors because it changes the broader insurance conversation. Clients may not separate “life insurance” from “insurance” as cleanly as the industry does.',
+          'Advisors who can explain protection calmly, without scare tactics, may be better positioned in a market where consumers are hearing more about risk, uncertainty, and cost pressure.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For advisors, climate risk is a reminder that protection discussions happen inside a wider consumer trust environment. For learners, the connection is risk awareness, affordability, client behaviour, and the basic purpose of insurance.',
+          'The headline may come from another line of insurance, but the trust question can follow the client into every protection conversation.'
+        ]
+      }
+    ],
     whatItMeans:
       'Broader insurance affordability and risk awareness can influence how clients think about life insurance protection.',
     llqpAngle:
       'Review risk awareness, consumer behaviour, protection needs, affordability, and the purpose of insurance.'
   },
   {
+    id: 'md-2026-05-20-private-capital',
     slug: 'private-capital-moving-toward-life-insurance',
     title: 'Private Capital Keeps Moving Toward Life Insurance',
     summary:
-      'Large asset managers and private capital firms continue to show interest in life insurance, retirement income, and pension-risk-transfer markets.',
+      'Large asset managers and private capital firms are increasingly connected to life insurance, annuities, reinsurance, retirement income, and long-duration liabilities.',
+    publishedAt: '2026-05-20',
     publishedAtLabel: 'May 20, 2026',
+    updatedAt: '2026-06-07',
+    updatedAtLabel: 'June 7, 2026',
+    readingTime: '4 min read',
     source: 'LifeForge Market Desk',
     tag: 'Market Watch',
+    secondaryCategory: 'Retirement Income',
+    auditStatus: 'Current',
+    sourceStatus: 'needs verification',
+    tags: ['Private capital', 'Reinsurance', 'Annuities', 'Insurer assets', 'Retirement income'],
+    relatedSlugs: ['annuity-boom-capital-story', 'return-guaranteed-income-clients-listening-again', 'rilas-growing-simplicity-still-matters'],
     whatHappened:
       'Private capital and large asset managers continue to pursue opportunities connected to life insurers, retirement income, and long-duration liabilities.',
     marketDeskView:
@@ -493,6 +854,59 @@ export const newsItems: NewsItem[] = [
       'Retirement income and pension risk transfer remain attractive markets.',
       'Advisor awareness should extend beyond individual policy mechanics.'
     ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Private capital interest in life insurance is not just a Wall Street story. It is connected to how insurers manage long-term promises, investment assets, annuity liabilities, pension-risk-transfer opportunities, and reinsurance arrangements.',
+          'For advisors, the point is not to become capital-market analysts. The point is to understand that the products on the shelf are backed by institutions, assets, reserves, reinsurance, and investment strategies.'
+        ]
+      },
+      {
+        heading: 'Market context',
+        paragraphs: [
+          'Life and annuity business can create long-duration liabilities and large pools of assets. That makes the sector attractive to firms with asset-management capabilities. Reinsurance can also move risk and capital responsibilities between entities, sometimes across jurisdictions.',
+          'Those structures can support growth and competitiveness, but they also make the background of the industry more complex. Advisors do not need to explain every capital arrangement to a client, but they should understand why financial strength, product design, guarantees, and insurer obligations belong in the same conversation.'
+        ]
+      },
+      {
+        heading: 'Why capital wants insurance risk',
+        paragraphs: [
+          'Life insurance and retirement-income businesses can produce long-term cash flows and investable assets. That can appeal to asset managers and private capital firms that specialize in credit, infrastructure, structured assets, or other long-duration strategies.',
+          'Reinsurance is one route into that opportunity. A reinsurer may assume part of the risk or economics of a block of business, while the original insurer continues to manage distribution or client relationships. These arrangements can be legitimate tools for capital management, but they also make the chain of responsibility harder for outsiders to see.',
+          'The advisor does not need to turn this into a client seminar on capital structure. Still, understanding the background helps explain why rating agencies, regulators, reserving, asset quality, and reinsurance relationships matter in a business built on long-term promises.'
+        ]
+      },
+      {
+        heading: 'Advisor relevance',
+        paragraphs: [
+          'When a client buys a policy or annuity, they are not buying only a document. They are relying on an insurer’s ability to keep a promise over many years. That is why financial strength, claims-paying ability, guarantees, and product terms belong in the conversation.',
+          'Private capital involvement can influence product design, pricing competition, distribution, and risk appetite. It may support innovation, but it can also raise questions about transparency, asset strategy, and how risks are managed during stress. Advisors should avoid alarmist claims, but they should not treat the insurer behind the product as irrelevant.'
+        ]
+      },
+      {
+        heading: 'What advisors can explain without overreaching',
+        paragraphs: [
+          'Most client conversations do not need a detailed explanation of offshore reinsurance, asset origination, or private-credit strategy. They do need plain language about the insurer’s role, the nature of guarantees, the limits of guarantees, and why financial strength matters.',
+          'Advisors should be careful not to imply that private capital involvement automatically weakens an insurer or automatically improves a product. The better framing is that capital structures are part of the market background, while suitability still depends on the client’s objective and the insurer’s ability to support its promises.',
+          'This is especially relevant in annuity conversations because the client may be transferring longevity or market risk to an insurer. If the product is built around a long-term guarantee, the quality of the promise is part of the recommendation.',
+          'A clean explanation can be modest: insurers hold reserves, invest assets, use reinsurance, and are subject to oversight. Those concepts help clients understand that an insurance product is backed by a financial system, not just a sales illustration. The details can be complex, but the client deserves to know that the promise has an institutional foundation.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'My view is that private capital is neither automatically a problem nor automatically a solution. The issue is governance, transparency, asset quality, risk management, and whether long-term promises remain well supported.',
+          'The client conversation still has to come back to suitability. If a product depends on guarantees, the advisor should be able to explain what is guaranteed, by whom, under what conditions, and why the product fits the client’s need.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'Private capital’s interest in life insurance shows that policies and annuities are part of a larger market for risk, assets, and long-term obligations. For learners, this connects to insurer financial strength, reserves, reinsurance, annuities, and the promises behind policy contracts.',
+          'The advisor does not need to explain every deal, but should understand why the financial institution behind a promise matters.'
+        ]
+      }
+    ],
     whatItMeans:
       'Capital flows into life and retirement markets show how insurance connects individual protection with long-term financial promises.',
     llqpAngle:
@@ -502,4 +916,34 @@ export const newsItems: NewsItem[] = [
 
 export function getNewsBySlug(slug: string) {
   return newsItems.find((item) => item.slug === slug);
+}
+
+export function getNewsPublishedTime(item: NewsItem) {
+  const date = item.publishedAt ?? item.publishedAtLabel;
+  const time = new Date(date).getTime();
+  return Number.isNaN(time) ? 0 : time;
+}
+
+export function getSortedNewsItems(items: NewsItem[] = newsItems) {
+  return [...items].sort((left, right) => getNewsPublishedTime(right) - getNewsPublishedTime(left));
+}
+
+export function getRelatedNewsItems(item: NewsItem, limit = 3) {
+  const selected = new Map<string, NewsItem>();
+
+  for (const slug of item.relatedSlugs ?? []) {
+    const related = getNewsBySlug(slug);
+    if (related && related.slug !== item.slug) selected.set(related.slug, related);
+    if (selected.size >= limit) return [...selected.values()];
+  }
+
+  for (const candidate of getSortedNewsItems()) {
+    if (candidate.slug === item.slug || selected.has(candidate.slug)) continue;
+    const sharesTag = candidate.tag === item.tag || candidate.secondaryCategory === item.tag || candidate.tag === item.secondaryCategory;
+    const sharesTopic = candidate.tags?.some((tag) => item.tags?.includes(tag));
+    if (sharesTag || sharesTopic) selected.set(candidate.slug, candidate);
+    if (selected.size >= limit) break;
+  }
+
+  return [...selected.values()];
 }
