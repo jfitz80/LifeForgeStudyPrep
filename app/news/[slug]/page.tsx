@@ -24,6 +24,14 @@ type ArticleView = {
   originalUrl?: string;
   sourceName?: string;
   sourceDate?: string;
+  sources?: Array<{
+    name: string;
+    url?: string;
+  }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
   whatHappened: string;
   marketDeskView: string;
   whyAdvisorsShouldCare: string;
@@ -129,6 +137,11 @@ function fromStatic(slug: string): ArticleView | null {
     originalUrl: item.sourceUrl,
     sourceName: item.sourceName,
     sourceDate: item.sourceDate,
+    sources: item.sources,
+    seoTitle: item.seoTitle,
+    metaDescription: item.metaDescription,
+    openGraphTitle: item.openGraphTitle,
+    openGraphDescription: item.openGraphDescription,
     whatHappened: item.whatHappened,
     marketDeskView: item.marketDeskView,
     whyAdvisorsShouldCare: item.whyAdvisorsShouldCare,
@@ -201,8 +214,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = await getArticle(slug);
   if (!item) return { title: 'News Analysis | LifeForgePrep' };
   return {
-    title: `${item.title} | LifeForge Market Desk`,
-    description: item.summary
+    title: item.seoTitle ?? `${item.title} | LifeForge Market Desk`,
+    description: item.metaDescription ?? item.summary,
+    alternates: {
+      canonical: `/news/${item.slug}`
+    },
+    openGraph: {
+      title: item.openGraphTitle ?? item.title,
+      description: item.openGraphDescription ?? item.summary,
+      type: 'article',
+      url: `/news/${item.slug}`
+    }
   };
 }
 
@@ -301,6 +323,30 @@ export default async function NewsArticlePage({ params }: Props) {
               <h2 className="text-lg font-bold text-[#1F2A44]">Learner connection</h2>
               <p className="mt-2 text-sm leading-7 text-slate-700">{item.learnerConnection}</p>
             </div>
+
+            {item.sources?.length ? (
+              <div className="rounded-xl border border-slate-200 bg-white p-5">
+                <h2 className="text-lg font-bold text-[#1F2A44]">Sources and further reading</h2>
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-700">
+                  {item.sources.map((source) => (
+                    <li key={source.name}>
+                      {source.url ? (
+                        <a
+                          href={source.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-[#2FAF9E] hover:text-[#1F2A44]"
+                        >
+                          {source.name}
+                        </a>
+                      ) : (
+                        source.name
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
 
             <div className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-5">
               <h2 className="text-lg font-bold text-[#1F2A44]">Key points</h2>

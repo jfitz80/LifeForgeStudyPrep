@@ -5,6 +5,7 @@ export type MarketDeskCategory =
   | 'Advisor Practice'
   | 'Retirement Income'
   | 'Underwriting'
+  | 'Technology & Risk'
   | 'Carrier Moves'
   | 'Claims'
   | 'Learner Corner';
@@ -27,6 +28,14 @@ export type NewsItem = {
   sourceName?: string;
   sourceUrl?: string;
   sourceDate?: string;
+  sources?: Array<{
+    name: string;
+    url?: string;
+  }>;
+  seoTitle?: string;
+  metaDescription?: string;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
   keyPoints: string[];
   bodySections?: Array<{
     heading?: string;
@@ -38,9 +47,184 @@ export type NewsItem = {
 };
 
 export const marketDeskDisclaimer =
-  'LifeForge Market Desk is educational commentary for general information only. It is not financial, legal, tax, licensing, regulatory, or exam advice.';
+  'LifeForge Market Desk provides educational commentary for general information only. It is not financial, legal, tax, medical, licensing, regulatory, or exam advice.';
 
 export const newsItems: NewsItem[] = [
+  {
+    slug: 'ai-underwriting-faster-application-trust-problem',
+    title: 'AI in Underwriting: The Faster Application Has a Trust Problem',
+    summary:
+      'The life insurance application may be getting shorter, but the risk assessment has not disappeared. As underwriting becomes more automated, clear disclosure and client trust become more important.',
+    publishedAtLabel: 'June 7, 2026',
+    readingTime: '7 min read',
+    featured: true,
+    source: 'LifeForge Market Desk',
+    tag: 'Underwriting',
+    secondaryCategory: 'Technology & Risk',
+    sourceName:
+      'NAIC accelerated underwriting and AI materials; Munich Re life underwriting data-source research; Society of Actuaries accelerated underwriting survey material',
+    sourceDate: '2022-2026',
+    sources: [
+      {
+        name: 'NAIC Insurance Topics: Accelerated Underwriting',
+        url: 'https://content.naic.org/insurance-topics/accelerated-underwriting'
+      },
+      {
+        name: 'NAIC Insurance Topics: Artificial Intelligence',
+        url: 'https://content.naic.org/cipr-topics/artificial-intelligence'
+      },
+      {
+        name: 'NAIC Model Bulletin: Use of Artificial Intelligence Systems by Insurers',
+        url: 'https://content.naic.org/sites/default/files/2023-12-4%252520Model%252520Bulletin_Adopted_0.pdf'
+      },
+      {
+        name: 'Munich Re: Next-gen data sources in life underwriting',
+        url: 'https://www.munichre.com/us-life/en/insights/future-of-risk/Next-gen-data-sources-life-underwriting-overview-and-methodology.html'
+      },
+      {
+        name: 'Society of Actuaries: Accelerated Underwriting Survey',
+        url: 'https://www.soa.org/globalassets/assets/files/resources/research-report/2019/accelerated-underwriting-survey.pdf'
+      }
+    ],
+    seoTitle: 'AI in Life Insurance Underwriting: Speed, Data and Trust | LifeForge Market Desk',
+    metaDescription:
+      'Accelerated underwriting can shorten the life insurance application, but it also raises questions about disclosure, data accuracy, fairness and client trust.',
+    openGraphTitle: 'AI in Underwriting: The Faster Application Has a Trust Problem',
+    openGraphDescription:
+      'As life insurance underwriting becomes faster and more automated, advisors face a growing responsibility to explain data use, disclosure and risk decisions clearly.',
+    relatedTopics: [
+      'Artificial intelligence',
+      'Accelerated underwriting',
+      'Life insurance',
+      'Risk classification',
+      'Client disclosure',
+      'Data privacy',
+      'Advisor practice',
+      'Insurability',
+      'Algorithmic risk',
+      'Consumer trust'
+    ],
+    whatHappened:
+      'Life insurance applications are becoming faster and more digital, but speed does not remove underwriting. In many cases, more of the assessment now happens through data, automation, routing rules, and insurer review behind the screen.',
+    marketDeskView:
+      'Speed improves the process only when applicants still understand what information is being assessed and why.',
+    whyAdvisorsShouldCare:
+      'Advisors increasingly have to explain the underwriting pathway, data use, disclosure expectations, follow-up requirements, and the limits of no-exam or accelerated decisions.',
+    learnerConnection:
+      'This topic connects to underwriting, risk classification, adverse selection, applicant disclosure, insurability, consumer information, and the role of the advisor during the application process.',
+    keyPoints: [
+      'A shorter application does not necessarily mean a smaller risk assessment.',
+      'Accelerated underwriting is different from simplified issue and guaranteed issue coverage.',
+      'Advisor trust work now includes explaining disclosure, data use, follow-up evidence, and underwriting outcomes.',
+      'Responsible automation still needs governance, validation, audit trails, human review, and fair-treatment controls.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Life insurance underwriting used to feel highly visible. An applicant completed a long form, answered medical and lifestyle questions, scheduled a paramedical appointment, supplied blood or urine, and waited while an underwriter reviewed the file.',
+          'That process was not always pleasant, but it was tangible. The newer digital experience can feel very different. Some applicants now answer fewer questions, never complete a traditional medical exam, and receive a decision much faster.',
+          'But the risk assessment has not disappeared. In many cases, part of it has moved behind the screen.',
+          'That is why AI and accelerated underwriting are not merely technology stories. They raise practical questions about trust, disclosure, data use, client communication, and the consequences of inaccurate information.'
+        ]
+      },
+      {
+        heading: 'The application is getting shorter',
+        paragraphs: [
+          'Accelerated underwriting is best understood as a faster pathway through risk assessment. Depending on the insurer, jurisdiction, product, and applicant authorization, it may use application answers, automation, underwriting rules, and available data to decide whether an applicant can receive a quicker decision or should be routed for further review.',
+          'That is different from traditional fully underwritten insurance, where the insurer usually collects more extensive evidence before making a decision. Traditional underwriting may involve medical records, paramedical exams, laboratory testing, financial evidence, and direct underwriter review.',
+          'It is also different from simplified-issue insurance, which generally asks fewer questions but still involves underwriting. Guaranteed-issue insurance is different again because it is designed to remove most individual risk selection, often with lower coverage amounts, higher pricing, waiting periods, or other limits.',
+          'That distinction matters because clients often hear "no exam" and mentally translate it into "easy approval." A faster or no-exam pathway can still lead to additional questions, medical records, laboratory work, traditional review, a changed quote, or a declined application.',
+          'Faster does not mean automatic, guaranteed, or free from underwriting. A shorter application does not necessarily mean a smaller risk assessment. In many cases, part of the assessment has moved behind the screen.'
+        ]
+      },
+      {
+        heading: 'The data trail is becoming less visible',
+        paragraphs: [
+          'Modern underwriting can involve a broader data trail than the client sees on the screen. Depending on the insurer, jurisdiction, product, and applicant authorization, the process may use application answers, electronic health information where available, prescription histories, previous insurance-application information, motor-vehicle records, consumer or public-record information, automated risk models, and insurer underwriting rules.',
+          'Not every insurer uses every source. Not every product uses the same pathway. Not every applicant is assessed in the same way. The point is that the client experience can become simpler while the insurer is processing more information in the background.',
+          'That may improve convenience, reduce delays for straightforward applications, and reserve deeper review for cases that need it.',
+          'But the same convenience can create a communication gap. The applicant may not understand what information was reviewed, what they authorized, why a decision changed, or why they were referred for more evidence after expecting a quick result.',
+          'This is where advisor explanation becomes important. Clients do not need a technical model walkthrough, but they do need a plain-English understanding that an easier application is still a serious risk-assessment process.'
+        ]
+      },
+      {
+        heading: 'Why convenience can become a trust problem',
+        paragraphs: [
+          'From a client perspective, a faster application can feel almost too smooth. But when a decision is delayed, rated, changed, or referred, the client may suddenly ask questions that were not front of mind at the beginning.',
+          'What information was reviewed? Did I authorize it? Was it accurate? Can an error be challenged? Why did the application need more evidence? Why did the quoted rate change? Was the decision made by a person, a model, or both?',
+          'None of those questions assumes misconduct. Insurers can use technology responsibly and still face a trust problem if the process is hard to explain.',
+          'Trust weakens when convenience is visible but decision-making is not. A quick process is a benefit only if the client understands that the insurer is still assessing risk, authorization matters, and accurate answers remain the applicant’s responsibility.'
+        ]
+      },
+      {
+        heading: 'A digital application is still a serious disclosure',
+        paragraphs: [
+          'One practical risk is that applicants may treat a short digital form more casually than a traditional medical application. The interface feels lighter. The questions may be shorter. The process may happen on a phone or laptop instead of across a desk.',
+          'But a digital application is still a serious disclosure. Answers must be accurate. Uncertainty should not be replaced with guessing. Omissions can lead to follow-up questions. Inconsistencies may delay the application. Depending on the policy terms, jurisdiction, and facts, material inaccuracies can create serious policy or claim concerns.',
+          'The advisor should not try to make the application look cleaner than reality. The better approach is to encourage careful, complete answers and to set expectations that the insurer may compare application information with other authorized evidence. A fast application built on weak disclosure is not a better client experience.'
+        ]
+      },
+      {
+        heading: 'The advisor’s role is changing',
+        paragraphs: [
+          'The advisor’s role is increasingly becoming an interpretation role.',
+          'In the older process, helping the client complete forms was a large part of the visible work. In the newer process, the work includes explaining the underwriting pathway before the application begins: fully underwritten, accelerated, simplified, or guaranteed issue.',
+          'Advisors also need to explain that third-party information may be reviewed where authorized and available, and that accurate disclosure is still essential. They may need to help clients respond to follow-up requests, explain why further evidence is required, and help the client understand an underwriting outcome without promising a result they do not control.',
+          'Documentation matters too. If an advisor explains that a faster pathway is not guaranteed approval, that application answers must be accurate, and that additional evidence may be requested, the file should reflect those important conversations.',
+          'The advisor is becoming an interpreter between the client’s experience and the insurer’s risk process.',
+          'That does not make the advisor responsible for the insurer’s underwriting decision. It does make the advisor central to the client’s understanding of the process.'
+        ]
+      },
+      {
+        heading: 'Faster decisions still depend on reliable data',
+        paragraphs: [
+          'Automation is only as useful as the data and rules behind it. When underwriting draws from multiple sources, potential problems can include outdated information, incomplete records, matching errors, misunderstood medical codes, missing context, model limitations, inconsistent application answers, and overreliance on automated recommendations.',
+          'These problems do not occur in every case, and they are not unique to AI. Traditional underwriting can also deal with incomplete or confusing evidence.',
+          'That makes governance important. Insurers using advanced analytics need controls around data quality, third-party vendors, audit trails, validation, escalation, human review, and methods for correcting information. They also need to understand how models perform over time, not merely how they were intended to perform when first deployed.',
+          'For advisors, the practical takeaway is simpler: do not oversell the certainty of speed. A fast process can still slow down when the data conflicts, when application answers raise questions, or when the case falls outside the assumptions of an accelerated pathway.'
+        ]
+      },
+      {
+        heading: 'Better prediction does not automatically mean fairer decisions',
+        paragraphs: [
+          'Insurance underwriting legitimately distinguishes among levels of risk. That is part of how insurance pricing and eligibility work. A person’s health, age, occupation, lifestyle, finances, and coverage amount may all matter, depending on the product and underwriting rules.',
+          'The harder question is what happens when models become more precise. When does better differentiation become unfair, difficult to explain, or dependent on information that acts as a proxy for protected or irrelevant characteristics?',
+          'That question deserves care. More data is not always better, and automated differentiation is not automatically unfair. The real issue is whether the inputs, model design, outcomes, and review processes are consistent with fair treatment and applicable rules.',
+          'Algorithmic discrimination risk can arise when variables correlate with characteristics that should not drive the decision, when data quality is uneven across groups, when a model cannot be explained adequately, or when outcomes are not tested after deployment. Responsible governance has to test outcomes, not only intentions.',
+          'For the client, fairness affects whether the decision can be understood, whether bad information can be corrected, and whether the process feels legitimate.'
+        ]
+      },
+      {
+        heading: 'Human judgment still matters',
+        paragraphs: [
+          'The easy headline is that AI will replace underwriters. The more realistic view is that responsible automation can remove repetitive work, route cases, identify inconsistencies, apply underwriting rules, recommend next steps, and accelerate straightforward applications.',
+          'But human judgment still matters when evidence conflicts, when medical history requires context, when the case falls outside model assumptions, when an exception is requested, when a decision could materially affect the applicant, or when the model cannot explain the result adequately.',
+          'The best use of AI may be to remove repetitive work without removing accountable human judgment.',
+          'That is especially important in life insurance because the underwriting decision is not just a technical output. It affects confidence that a long-term promise will be there when needed.'
+        ]
+      },
+      {
+        heading: 'My view',
+        paragraphs: [
+          'Faster underwriting is broadly positive when it removes unnecessary delay and friction. But speed should not be treated as the only measure of improvement. A good underwriting process must also be understandable, accurate, reviewable, fair, secure, and appropriately supervised.',
+          'The danger is not simply that an algorithm may ask or assess questions. The deeper danger is that applicants may stop realizing they are making important representations because the process feels as casual as completing an online form.',
+          'That is where advisors can become more valuable, not less. The advisor who explains the process clearly, encourages accurate disclosure, distinguishes no-exam from guaranteed approval, and helps the client understand follow-up requests is doing real trust work.',
+          'As underwriting becomes more automated, the strongest advisors will not be the ones who promise the fastest path. They will be the ones who make the faster path understandable.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For agents and brokers, accelerated underwriting changes client expectations, disclosure conversations, application support, and the explanation of underwriting outcomes. A quick decision may improve the client experience, but a process the client does not understand can damage trust just as quickly.',
+          'For learners, the issue connects to underwriting, risk classification, adverse selection, material disclosure, insurability, privacy, and the relationship between the insurer, advisor, and applicant. Underwriting technology may change, but insurance still depends on accurate information and confidence in the promise being made.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'Accelerated underwriting can shorten the application, but it also raises questions about disclosure, data accuracy, fairness, and client trust.',
+    llqpAngle:
+      'Review underwriting, risk classification, adverse selection, disclosure, insurability, consumer information, and advisor communication.'
+  },
   {
     slug: 'annuity-boom-capital-story',
     title: 'The Annuity Boom Is Becoming a Capital Story',
@@ -48,7 +232,7 @@ export const newsItems: NewsItem[] = [
       'Annuities are no longer just a product story. Their growth is increasingly tied to retirement-income demand, product complexity, private capital, reinsurance, and advisor suitability risk.',
     publishedAtLabel: 'May 31, 2026',
     readingTime: '6 min read',
-    featured: true,
+    featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Retirement Income',
     secondaryCategory: 'Market Watch',
