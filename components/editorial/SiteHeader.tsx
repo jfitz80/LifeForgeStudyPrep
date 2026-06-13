@@ -9,13 +9,14 @@ type NavLink = {
   label: string;
   href: string;
   accent?: boolean;
+  cta?: string;
 };
 
 const primaryLinks: NavLink[] = [
-  { label: 'Home', href: '/' },
-  { label: 'Exam Prep', href: '/exam-prep' },
-  { label: 'Free Practice', href: '/free-practice', accent: true },
-  { label: 'News', href: '/news' }
+  { label: 'Practice Questions', href: '/free-practice', accent: true, cta: 'try-free-practice' },
+  { label: 'U.S. Learners', href: '/us-life-insurance-practice', cta: 'us-landing-page' },
+  { label: 'Canadian LLQP', href: '/canada-llqp-practice', cta: 'canada-llqp-landing-page' },
+  { label: 'Market Desk', href: '/news' }
 ];
 
 const knowledgeLinks: NavLink[] = [
@@ -47,6 +48,9 @@ function HeaderLink({ item, onNavigate }: { item: NavLink; onNavigate?: () => vo
   return (
     <Link
       href={item.href}
+      data-cta={item.cta}
+      data-location="site-header-nav"
+      data-campaign={item.cta ? 'audience-routing' : undefined}
       className={
         item.accent
           ? 'inline-flex items-center rounded-full bg-[#E8F7F4] px-4 py-2 text-sm font-semibold text-[#1E887B] transition hover:bg-[#D9F1EC]'

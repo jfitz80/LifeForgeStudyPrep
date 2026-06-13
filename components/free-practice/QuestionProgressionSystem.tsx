@@ -32,71 +32,71 @@ type AnswerRecord = {
   isCorrect: boolean;
 };
 
-const LLQP_QUESTIONS: Question[] = [
+const CORE_QUESTIONS: Question[] = [
   {
-    id: 'llqp-1',
+    id: 'core-1',
     type: 'concept',
-    prompt: 'A client takes a policy loan from their permanent life insurance policy. Which is TRUE?',
+    prompt: 'A client buys life insurance mainly to transfer the financial risk of premature death. Which statement best describes the purpose of the coverage?',
     options: [
-      { id: 'a', label: 'A', text: 'Always tax-free' },
-      { id: 'b', label: 'B', text: 'Taxable only at maturity' },
-      { id: 'c', label: 'C', text: 'May be taxable if it exceeds ACB' },
-      { id: 'd', label: 'D', text: 'No tax impact' }
-    ],
-    correctOptionId: 'c',
-    explanation: 'Policy loans can trigger taxable consequences when values exceed adjusted cost basis thresholds.'
-  },
-  {
-    id: 'llqp-2',
-    type: 'scenario',
-    prompt: 'An applicant discloses a serious condition. What is MOST likely?',
-    options: [
-      { id: 'a', label: 'A', text: 'Automatic decline' },
-      { id: 'b', label: 'B', text: 'Ignored' },
-      { id: 'c', label: 'C', text: 'Rated or excluded' },
-      { id: 'd', label: 'D', text: 'Standard issue' }
-    ],
-    correctOptionId: 'c',
-    explanation: 'Disclosed conditions typically receive ratings or exclusions once underwriting assesses severity.'
-  },
-  {
-    id: 'llqp-3',
-    type: 'concept',
-    prompt: 'Revocable beneficiary means:',
-    options: [
-      { id: 'a', label: 'A', text: 'Cannot change' },
-      { id: 'b', label: 'B', text: 'Can change anytime' },
-      { id: 'c', label: 'C', text: 'Owns policy' },
-      { id: 'd', label: 'D', text: 'Permanent' }
+      { id: 'a', label: 'A', text: 'It eliminates every financial risk the family faces' },
+      { id: 'b', label: 'B', text: 'It shifts a specified death-risk cost to the insurer in exchange for premiums' },
+      { id: 'c', label: 'C', text: 'It guarantees investment profit for the policyowner' },
+      { id: 'd', label: 'D', text: 'It replaces the need for beneficiary planning' }
     ],
     correctOptionId: 'b',
-    explanation: 'Revocable beneficiaries can generally be changed by the policy owner without consent.'
+    explanation: 'Life insurance transfers a defined financial risk to the insurer. It does not remove every risk or guarantee investment results.'
   },
   {
-    id: 'llqp-4',
+    id: 'core-2',
+    type: 'scenario',
+    prompt: 'An applicant has a health history that may increase mortality risk. What is the most likely underwriting response?',
+    options: [
+      { id: 'a', label: 'A', text: 'Automatic decline' },
+      { id: 'b', label: 'B', text: 'The information is ignored if premiums are paid' },
+      { id: 'c', label: 'C', text: 'The insurer reviews the risk and may rate, modify, postpone, decline, or issue coverage' },
+      { id: 'd', label: 'D', text: 'The applicant is always issued standard coverage' }
+    ],
+    correctOptionId: 'c',
+    explanation: 'Underwriting assesses risk. A health condition does not create one automatic result; the insurer reviews severity, context, and product rules.'
+  },
+  {
+    id: 'core-3',
     type: 'concept',
-    prompt: 'Group life insurance coverage is usually:',
+    prompt: 'What does a revocable beneficiary designation generally allow the policyowner to do?',
     options: [
-      { id: 'a', label: 'A', text: 'Health-based' },
-      { id: 'b', label: 'B', text: 'Fixed' },
-      { id: 'c', label: 'C', text: 'Salary multiple' },
-      { id: 'd', label: 'D', text: 'Investment-based' }
+      { id: 'a', label: 'A', text: 'Change the beneficiary subject to policy rules' },
+      { id: 'b', label: 'B', text: 'Transfer ownership automatically to the beneficiary' },
+      { id: 'c', label: 'C', text: 'Prevent all future policy changes' },
+      { id: 'd', label: 'D', text: 'Make the beneficiary responsible for premiums' }
     ],
-    correctOptionId: 'c',
-    explanation: 'Most employer plans are expressed as a multiple of salary rather than health-based benefit.'
+    correctOptionId: 'a',
+    explanation: 'A revocable beneficiary can generally be changed by the policyowner, subject to policy terms and applicable law.'
   },
   {
-    id: 'llqp-5',
-    type: 'calculation',
-    prompt: 'Which creates a taxable event?',
+    id: 'core-4',
+    type: 'concept',
+    prompt: 'Why does insurable interest matter when life insurance is purchased?',
     options: [
-      { id: 'a', label: 'A', text: 'Naming beneficiary' },
-      { id: 'b', label: 'B', text: 'Paying premiums' },
-      { id: 'c', label: 'C', text: 'Withdrawal' },
-      { id: 'd', label: 'D', text: 'Increasing benefit' }
+      { id: 'a', label: 'A', text: 'It helps ensure the policy is connected to a legitimate financial or recognized interest' },
+      { id: 'b', label: 'B', text: 'It guarantees that the policy will never lapse' },
+      { id: 'c', label: 'C', text: 'It lets anyone insure any stranger for any amount' },
+      { id: 'd', label: 'D', text: 'It removes the need for underwriting' }
     ],
-    correctOptionId: 'c',
-    explanation: 'Withdrawals can trigger taxable gains depending on the adjusted cost basis and policy structure.'
+    correctOptionId: 'a',
+    explanation: 'Insurable interest supports legitimate coverage and helps distinguish insurance from wagering on another person’s life.'
+  },
+  {
+    id: 'core-5',
+    type: 'concept',
+    prompt: 'A policy grace period is best described as:',
+    options: [
+      { id: 'a', label: 'A', text: 'A period after a missed premium when coverage may remain in force if payment is made' },
+      { id: 'b', label: 'B', text: 'A permanent waiver of every future premium' },
+      { id: 'c', label: 'C', text: 'A guarantee that claims can never be reviewed' },
+      { id: 'd', label: 'D', text: 'An automatic conversion to an annuity' }
+    ],
+    correctOptionId: 'a',
+    explanation: 'A grace period gives limited time to pay a missed premium before coverage may lapse, depending on policy terms.'
   }
 ];
 
@@ -104,7 +104,7 @@ const BASICS_QUESTIONS: Question[] = [
   {
     id: 'basics-1',
     type: 'concept',
-    prompt: 'Term life insurance is best suited for clients who:',
+    prompt: 'Term life insurance is often best suited for clients who:',
     options: [
       { id: 'a', label: 'A', text: 'Need coverage for a specific period such as a mortgage' },
       { id: 'b', label: 'B', text: 'Want a permanent investment vehicle' },
@@ -117,7 +117,7 @@ const BASICS_QUESTIONS: Question[] = [
   {
     id: 'basics-2',
     type: 'calculation',
-    prompt: 'Which factor most directly adjusts the premium for a new policy?',
+    prompt: 'Which factor commonly affects the premium for a new individually underwritten life insurance policy?',
     options: [
       { id: 'a', label: 'A', text: 'The applicant’s age at issue' },
       { id: 'b', label: 'B', text: 'The agent’s commission structure' },
@@ -177,7 +177,7 @@ const EXTRA_FREE_QUESTIONS: Question[] = [
       { id: 'a', label: 'A', text: 'Whole life insurance' },
       { id: 'b', label: 'B', text: 'Term life insurance' },
       { id: 'c', label: 'C', text: 'Universal life insurance' },
-      { id: 'd', label: 'D', text: 'Segregated fund contract' }
+      { id: 'd', label: 'D', text: 'An annuity contract' }
     ],
     correctOptionId: 'b',
     explanation: 'The need is temporary, high-coverage, and affordability-sensitive. Term insurance is often the stronger starting point.'
@@ -236,7 +236,7 @@ const EXTRA_FREE_QUESTIONS: Question[] = [
   }
 ];
 
-const FREE_QUESTIONS: Question[] = [...LLQP_QUESTIONS, ...BASICS_QUESTIONS, ...EXTRA_FREE_QUESTIONS];
+const FREE_QUESTIONS: Question[] = [...CORE_QUESTIONS, ...BASICS_QUESTIONS, ...EXTRA_FREE_QUESTIONS];
 
 const ADVANCED_PREVIEW = [
   'A replacement scenario where affordability, underwriting, and disclosure all conflict',
@@ -252,8 +252,8 @@ const TYPE_LABEL: Record<QuestionType, string> = {
 
 const QUIZ_SETS = {
   free15: {
-    title: '15-Question Free Practice',
-    description: 'Fifteen scenario-based questions covering LLQP logic, life insurance fundamentals, taxation, suitability, and advisor judgment.',
+    title: 'Free Life Insurance Practice',
+    description: 'Fifteen scenario-based questions covering core insurance concepts, policy provisions, underwriting, beneficiaries, annuities, and advisor judgment.',
     questions: FREE_QUESTIONS
   }
 } as const;
@@ -275,7 +275,7 @@ function getResultTier(score: number, total: number) {
 }
 
 export default function QuestionProgressionSystem() {
-  const [selectedTest, setSelectedTest] = useState<TestKey | null>(null);
+  const [selectedTest] = useState<TestKey>('free15');
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [finished, setFinished] = useState(false);
@@ -314,16 +314,15 @@ export default function QuestionProgressionSystem() {
     setFinished(false);
   }, [selectedTest]);
 
+  useEffect(() => {
+    trackEvent('start_free_practice', { quiz_set: selectedTest, source_page: 'free-practice' });
+  }, [selectedTest]);
+
   const restart = useCallback(() => {
     setIndex(0);
     setAnswers([]);
     setFinished(false);
   }, []);
-
-  function chooseTest(test: TestKey) {
-    trackEvent('free_practice_start', { quiz_set: test });
-    setSelectedTest(test);
-  }
 
   function handleSelect(optionId: string) {
     if (!current || currentAnswer) return;
@@ -339,6 +338,13 @@ export default function QuestionProgressionSystem() {
     if (index === total - 1) {
       trackEvent('free_practice_complete', {
         quiz_set: selectedTest ?? 'unknown',
+        score,
+        total,
+        percentage: Math.round((score / Math.max(total, 1)) * 100)
+      });
+      trackEvent('complete_free_practice', {
+        quiz_set: selectedTest ?? 'unknown',
+        source_page: 'free-practice',
         score,
         total,
         percentage: Math.round((score / Math.max(total, 1)) * 100)
@@ -367,40 +373,10 @@ export default function QuestionProgressionSystem() {
     }
 
     return {
-      primary: { label: 'Explore LLQP Exam Prep', href: '/exam-prep' },
+      primary: { label: 'Explore Exam Prep', href: '/exam-prep' },
       secondary: { label: 'Download the LifeforgePrep app', href: '/app', variant: 'muted' }
     };
   }, [resultTier, restart]);
-
-  if (!selectedTest) {
-    return (
-      <section id="free-practice-quiz" className="scroll-mt-28 rounded-2xl border border-slate-700 bg-[#111A2D] p-6 shadow-xl sm:p-8">
-        <h2 className="text-2xl font-bold text-white">Choose your quick test</h2>
-        <p className="mt-2 text-sm text-slate-300">
-          Start with 15 free questions designed to test life insurance concepts, scenario reasoning, and common exam-style traps.
-        </p>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {(Object.keys(QUIZ_SETS) as TestKey[]).map((key) => {
-            const test = QUIZ_SETS[key];
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => chooseTest(key)}
-                className="flex h-full flex-col justify-between rounded-2xl border border-slate-700 bg-[#0E1628] p-5 text-left transition hover:border-[#2FAF9E] hover:bg-[#142039]"
-              >
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#6BC4B8]">{test.title}</p>
-                  <p className="mt-3 text-lg font-semibold text-white">{test.description}</p>
-                </div>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">15 free questions • start learning</p>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
 
   if (finished && currentSet) {
     return (
@@ -477,9 +453,9 @@ export default function QuestionProgressionSystem() {
           <button type="button" onClick={restart} className="underline-offset-4 hover:underline">
             Try the same quick test again
           </button>
-          <button type="button" onClick={() => setSelectedTest(null)} className="underline-offset-4 hover:underline">
-            Choose a different quick test
-          </button>
+          <Link href="/app" className="underline-offset-4 hover:underline">
+            Choose your study path in the app
+          </Link>
         </div>
 
         <BonusPracticeCapture />
@@ -497,13 +473,6 @@ export default function QuestionProgressionSystem() {
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#6BC4B8]">{currentSet.title}</p>
             <p className="text-sm text-slate-300">{currentSet.description}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => setSelectedTest(null)}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-[#4A5568]"
-          >
-            Change test
-          </button>
         </div>
 
         <QuizProgressBar current={index + 1} total={total} />

@@ -169,7 +169,7 @@ export default function ExamPrepPage() {
         <div className="mt-8">
           <StudyCTA
             title="Study on the go with the LifeForgePrep app."
-            body="Download the free app, try 15 practice questions, review explanations, and unlock deeper scenario-based practice when you’re ready."
+            body="Start with 15 free questions. Then choose your path in the app: U.S. Life Insurance Practice, Canadian LLQP Practice, or Insurance Foundations."
             primaryLabel="Download Free App"
             primaryHref="/app"
             secondaryLabel="Try 15 Free Questions"

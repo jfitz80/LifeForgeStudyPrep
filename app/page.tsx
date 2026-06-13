@@ -24,6 +24,27 @@ const whyCards = [
   }
 ];
 
+const studyPaths = [
+  {
+    title: 'U.S. Life Insurance Practice',
+    text: 'Core life insurance concepts for U.S. learners using LifeForgePrep as a supplemental study tool.',
+    href: '/us-life-insurance-practice',
+    cta: 'us-landing-page'
+  },
+  {
+    title: 'Canadian LLQP Practice',
+    text: 'Life insurance practice for Canadian LLQP learners who want clearer explanations and scenario-style questions.',
+    href: '/canada-llqp-practice',
+    cta: 'canada-llqp-landing-page'
+  },
+  {
+    title: 'Insurance Foundations',
+    text: 'Build the fundamentals behind risk, contracts, underwriting, premiums, policy provisions, annuities, and group insurance.',
+    href: '/knowledge',
+    cta: 'knowledge-foundations'
+  }
+] as const;
+
 export default function HomePage() {
   return (
     <>
@@ -69,6 +90,45 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">App pathways</p>
+                <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Choose your study path in the app</h2>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+                  Start the website quiz right away, then use the app to focus on the path that fits your market and study goals.
+                </p>
+              </div>
+              <Link
+                href="/app"
+                data-cta="download-free-app"
+                data-location="homepage-study-paths"
+                data-campaign="freemium-funnel"
+                className="inline-flex items-center justify-center rounded-xl bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+              >
+                Download Free App
+              </Link>
+            </div>
+
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {studyPaths.map((path) => (
+                <Link
+                  key={path.title}
+                  href={path.href}
+                  data-cta={path.cta}
+                  data-location="homepage-study-paths"
+                  data-campaign="audience-routing"
+                  className="rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-sm"
+                >
+                  <h3 className="text-lg font-semibold text-slate-900">{path.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">{path.text}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
           <VisualBreak
             variant="gradient"
@@ -107,7 +167,7 @@ export default function HomePage() {
         <section className="mx-auto max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
           <StudyCTA
             title="Study on the go with the LifeForgePrep app."
-            body="Download the free app, try 15 practice questions, review explanations, and unlock deeper scenario-based practice when you’re ready."
+            body="Start with 15 free questions. Then choose your path in the app: U.S. Life Insurance Practice, Canadian LLQP Practice, or Insurance Foundations."
             primaryLabel="Download Free App"
             primaryHref="/app"
             secondaryLabel="Try 15 Free Questions"

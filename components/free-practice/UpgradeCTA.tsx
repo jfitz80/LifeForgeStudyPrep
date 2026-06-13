@@ -5,7 +5,7 @@ export default function UpgradeCTA() {
     <section className="mt-6 rounded-2xl border border-slate-700 bg-[#0F1A2E] p-6 sm:p-8">
       <h3 className="text-2xl font-bold text-white">Unlock deeper practice when you&apos;re ready</h3>
       <p className="mt-3 text-sm leading-7 text-slate-300">
-        Unlock deeper practice, harder scenarios, timed drills, and explanations that help you reason through the answer.
+        Start with 15 free questions. Then choose your path in the app: U.S. Life Insurance Practice, Canadian LLQP Practice, or Insurance Foundations.
       </p>
 
       <ul className="mt-4 grid gap-2 text-sm text-slate-200 sm:grid-cols-2">

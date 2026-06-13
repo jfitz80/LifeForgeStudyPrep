@@ -63,6 +63,9 @@ export default function SampleQuestionCard() {
           <div className="mt-3">
             <Link
               href="/free-practice"
+              data-cta="try-free-practice"
+              data-location="homepage-sample-question"
+              data-campaign="freemium-funnel"
               className="inline-flex rounded-lg bg-slate-900 px-4 py-2 font-semibold text-white hover:bg-slate-700"
             >
               Continue Free Practice

@@ -64,14 +64,14 @@ export default function AppPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Mobile App</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#1F2A44] sm:text-4xl">Study life insurance on the go.</h1>
           <p className="mt-4 max-w-3xl text-base leading-8 text-[#4A5568]">
-            Download the free LifeForgePrep app, try 15 free questions, and unlock deeper scenario-based practice when you&apos;re ready.
+            Start with 15 free questions. Then choose your path in the app: U.S. Life Insurance Practice, Canadian LLQP Practice, or Insurance Foundations.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               href={siteConfig.appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              data-cta="download-free-app"
+              data-cta="app-store"
               data-location="app-hero"
               data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
@@ -151,14 +151,14 @@ export default function AppPage() {
             ))}
           </div>
           <p className="mt-5 text-sm leading-7 text-[#4A5568]">
-            For technical issues, questions, or feedback, contact us or visit the support page.
+            Start with 15 free questions. Then choose your path in the app: U.S. Life Insurance Practice, Canadian LLQP Practice, or Insurance Foundations.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <a
               href={siteConfig.appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              data-cta="download-free-app"
+              data-cta="app-store"
               data-location="app-bottom"
               data-campaign="freemium-funnel"
               className="inline-flex items-center rounded-lg bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
@@ -202,7 +202,7 @@ export default function AppPage() {
               with device type, app version, and a brief issue description.
             </p>
             <p>
-              <span className="font-semibold text-[#1F2A44]">Updates:</span> Question banks refresh regularly to reflect LLQP focus areas and core product logic.
+              <span className="font-semibold text-[#1F2A44]">Updates:</span> Question banks refresh regularly to support U.S. life insurance practice, Canadian LLQP study, and core product logic.
             </p>
             <p>
               <span className="font-semibold text-[#1F2A44]">Privacy:</span>{' '}

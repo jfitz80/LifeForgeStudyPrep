@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 import { Analytics } from '@vercel/analytics/react';
+import AnalyticsClickTracker from '@/components/AnalyticsClickTracker';
 import SiteHeader from '@/components/editorial/SiteHeader';
 import SiteFooter from '@/components/editorial/SiteFooter';
 
@@ -32,6 +33,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
+        <AnalyticsClickTracker />
         <Analytics />
       </body>
     </html>

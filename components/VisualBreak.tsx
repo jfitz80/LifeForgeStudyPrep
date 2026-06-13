@@ -39,6 +39,9 @@ export default function VisualBreak({
             <div className="mt-6">
               <Link
                 href={cta.href}
+                data-cta={cta.label.toLowerCase().includes('15 free') ? 'try-free-practice' : undefined}
+                data-location="homepage-visual-break"
+                data-campaign="freemium-funnel"
                 className="inline-flex rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-500"
               >
                 {cta.label}
