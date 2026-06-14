@@ -16,6 +16,7 @@ const categories: CategoryFilter[] = [
   "Retirement Income",
   "Underwriting",
   "Technology & Risk",
+  "Professional Practice",
   "Carrier Moves",
   "Claims",
   "Learner Corner"

@@ -6,6 +6,7 @@ export type MarketDeskCategory =
   | 'Retirement Income'
   | 'Underwriting'
   | 'Technology & Risk'
+  | 'Professional Practice'
   | 'Carrier Moves'
   | 'Claims'
   | 'Learner Corner';
@@ -56,7 +57,7 @@ export type NewsItem = {
 };
 
 export const marketDeskDisclaimer =
-  'LifeForge Market Desk provides educational commentary for general information only. It is not financial, legal, tax, medical, licensing, regulatory, or exam advice.';
+  'LifeForge Market Desk provides educational commentary for general information only. It is not financial, legal, tax, medical, licensing, regulatory, or exam advice. LifeForgePrep is independent and is not affiliated with any regulator, licensing body, insurer, exam administrator, or course provider.';
 
 export const newsItems: NewsItem[] = [
   {
@@ -404,6 +405,120 @@ export const newsItems: NewsItem[] = [
       'Annuities are increasingly tied to retirement-income demand, product innovation, private capital, reinsurance, asset management, and the suitability risks advisors need to explain clearly.',
     llqpAngle:
       'Review annuities, retirement income, suitability, guarantees, liquidity, insurer financial strength, reinsurance, and explaining product trade-offs.'
+  },
+  {
+    id: 'md-2026-06-04-compliance-value',
+    slug: 'compliance-insurance-value-proposition',
+    title: 'Why Compliance Is Becoming Part of the Insurance Value Proposition',
+    summary:
+      'Compliance is often treated as a back-office function, but for life insurance professionals it increasingly shapes client trust, product distribution, complaint handling, privacy, and the quality of advice.',
+    publishedAt: '2026-06-04',
+    publishedAtLabel: 'June 4, 2026',
+    readingTime: '5 min read',
+    featured: false,
+    source: 'LifeForge Market Desk',
+    tag: 'Professional Practice',
+    secondaryCategory: 'Regulation & Compliance',
+    auditStatus: 'Current',
+    sourceStatus: 'verified',
+    sourceName: 'NAIC artificial intelligence, life insurance, and consumer protection materials',
+    sourceDate: '2025-2026',
+    sources: [
+      {
+        name: 'NAIC Insurance Topics: Artificial Intelligence',
+        url: 'https://content.naic.org/insurance-topics/artificial-intelligence'
+      },
+      {
+        name: 'NAIC Insurance Topics: Life Insurance',
+        url: 'https://content.naic.org/insurance-topics/life-insurance'
+      }
+    ],
+    relatedTopics: [
+      'Compliance',
+      'Market conduct',
+      'Advisor practice',
+      'Privacy',
+      'Complaint handling',
+      'Training',
+      'Client trust',
+      'Suitability'
+    ],
+    tags: [
+      'Compliance',
+      'Market conduct',
+      'Advisor practice',
+      'Privacy',
+      'Complaint handling',
+      'Training',
+      'Client trust',
+      'Suitability'
+    ],
+    relatedSlugs: [
+      'what-new-advisors-should-understand-consumer-trust',
+      'ai-underwriting-faster-application-trust-problem',
+      'how-underwriting-connects-risk-pricing-and-fairness'
+    ],
+    whatHappened:
+      'Compliance is increasingly visible in the client experience because it shapes disclosure, privacy, complaint handling, product distribution, sales material review, advisor training, and the quality of advice.',
+    marketDeskView:
+      'Good compliance is not just about avoiding penalties. It is part of how insurers and advisors prove they can be trusted with long-term promises.',
+    whyAdvisorsShouldCare:
+      'Advisors need to treat compliance as part of professional practice: clear documentation, plain-language explanation, careful recommendations, privacy awareness, and accountability after the sale.',
+    learnerConnection:
+      'This topic connects to ethics, suitability, disclosure, privacy, complaint handling, advisor accountability, professional conduct, and market regulation.',
+    keyPoints: [
+      'Compliance is moving closer to the client experience, not farther away from it.',
+      'Good documentation helps show why a recommendation was suitable and understandable.',
+      'Privacy and data use are becoming trust issues as insurance workflows become more digital.',
+      'Professional training and complaint handling are part of long-term insurance credibility.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Compliance is often described as the part of insurance that slows things down. Forms need to be completed. Disclosures need to be reviewed. Sales material needs approval. Complaints need documentation. Advisors need training. Files need to show why a recommendation was suitable.',
+          'That view is too narrow. In life insurance, compliance is becoming part of the value proposition because the product itself depends on trust. A life policy can last decades. An annuity may become a central part of retirement income. A beneficiary claim may arise when a family is under stress.',
+          'The client is buying a promise, and compliance is one way the industry proves the promise is being handled responsibly.'
+        ]
+      },
+      {
+        heading: 'Compliance now shapes the client experience',
+        paragraphs: [
+          'Clients may never see the full compliance system, but they feel its effects. They notice whether explanations are clear, whether forms are consistent, whether privacy is respected, whether a recommendation appears tailored, and whether questions are answered before a signature is requested.',
+          'That makes compliance more than an internal checklist. It becomes part of distribution quality. A clean process can help clients understand what they are buying. A weak process can create confusion, complaints, replacement risk, privacy concerns, and reputational damage.'
+        ]
+      },
+      {
+        heading: 'Advisor accountability is becoming more visible',
+        paragraphs: [
+          'The advisor’s file matters because it is the record of the conversation. It should show the client’s needs, objectives, time horizon, affordability, existing coverage, product alternatives, and the reasoning behind the recommendation.',
+          'This is especially important when products are complex, when replacement is involved, when liquidity is limited, or when the client is relying heavily on the advisor’s explanation. The compliance standard is not simply whether a product could be sold. It is whether the recommendation can be defended as suitable and understandable.'
+        ]
+      },
+      {
+        heading: 'Privacy and data use raise the standard',
+        paragraphs: [
+          'As insurance processes become more digital, privacy and data governance become harder to separate from client trust. Underwriting, marketing, service, fraud detection, and claims handling may all involve data. The client may not know which teams, vendors, or systems touch their information.',
+          'That does not make digital insurance wrong. It makes explanation and controls more important. Clients need to know when information is collected, why it is needed, how it may be used, and what rights or review processes may apply.'
+        ]
+      },
+      {
+        heading: 'My view',
+        paragraphs: [
+          'In Market Desk’s view, the strongest compliance cultures do not treat controls as an obstacle to sales. They treat controls as part of the product experience. The client may not care about the internal workflow, but they care deeply about being treated fairly, understanding the recommendation, and trusting that sensitive information is handled properly.',
+          'That is why compliance is becoming part of the insurance value proposition. A policy is a long-term promise. The process around that promise needs to be as credible as the contract itself.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For agents, brokers, and advisors, compliance affects client conversations, documentation, product explanations, privacy expectations, complaint handling, and professional accountability. For learners, it connects ethics, suitability, disclosure, market conduct, privacy, and the practical responsibilities that continue after licensing.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'Compliance increasingly shapes client trust, distribution quality, privacy expectations, complaint handling, and advisor accountability.',
+    llqpAngle:
+      'Review ethics, suitability, disclosure, complaint handling, privacy, advisor accountability, and professional conduct.'
   },
   {
     id: 'md-2026-05-25-annuity-intro',
