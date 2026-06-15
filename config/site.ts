@@ -20,7 +20,7 @@ export const siteConfig = {
   seo: {
     title: 'LifeForgePrep | Life Insurance Exam Practice & Scenario-Based Study',
     description:
-      'Practise life insurance exam-style questions with clear explanations, timed drills, and scenario-based learning. Built as an independent companion study tool for insurance learners.'
+      'Life insurance exam prep with scenario-based practice, timed exam preparation, plain-English explanations, insurance compliance, and professional-practice study support for U.S. and Canadian learners.'
   },
 
   legalUrls: {

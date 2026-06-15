@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
   title: 'LifeForgePrep App | Free Life Insurance Practice Questions',
   description:
-    'Download the free LifeForgePrep app, try 15 free questions, review explanations, and unlock full scenario-based practice when you’re ready.'
+    'Life insurance exam prep app with scenario-based practice, timed exam preparation, progressive difficulty, insurance compliance, and professional-practice study support for U.S. and Canadian learners.'
 };
 
 const appFeatures = [
@@ -56,6 +56,15 @@ const mobileReasons = [
   'Momentum from daily streak tracking'
 ] as const;
 
+const whatsNew = [
+  'New professional practice and compliance practice questions',
+  'More scenario-based questions',
+  'Stronger explanations that explain the trap, deciding fact, and why the answer matters',
+  'Improved Easy / Medium / Hard progression',
+  'Timed exam practice',
+  'Better preparation for judgment-based insurance questions'
+] as const;
+
 export default function AppPage() {
   return (
     <main className="min-h-screen bg-[#F5F7FA] py-12">
@@ -87,6 +96,21 @@ export default function AppPage() {
             >
               Try Free Practice Online
             </Link>
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-[#CFEAE4] bg-white p-6 shadow-sm sm:p-7">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Coming in the next app update</p>
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#1F2A44]">What&apos;s new</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-[#4A5568]">
+            LifeForgePrep is becoming a deeper insurance exam preparation tool, focused on judgment, application, and professional understanding, not just memorization.
+          </p>
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            {whatsNew.map((item) => (
+              <article key={item} className="rounded-xl border border-slate-200 bg-[#F9FAFB] p-4 text-sm leading-6 text-[#1F2A44]">
+                {item}
+              </article>
+            ))}
           </div>
         </section>
 
@@ -202,7 +226,7 @@ export default function AppPage() {
               with device type, app version, and a brief issue description.
             </p>
             <p>
-              <span className="font-semibold text-[#1F2A44]">Updates:</span> Question banks refresh regularly to support U.S. life insurance practice, Canadian LLQP study, and core product logic.
+              <span className="font-semibold text-[#1F2A44]">Updates:</span> The next app update is designed to add deeper scenario practice, professional-practice and compliance content, stronger explanations, and improved difficulty progression for U.S. life insurance learners, Canadian LLQP candidates, and insurance foundations study.
             </p>
             <p>
               <span className="font-semibold text-[#1F2A44]">Privacy:</span>{' '}

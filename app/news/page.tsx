@@ -17,6 +17,7 @@ const categories: CategoryFilter[] = [
   "Underwriting",
   "Technology & Risk",
   "Professional Practice",
+  "Exam Preparation",
   "Carrier Moves",
   "Claims",
   "Learner Corner"

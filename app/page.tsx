@@ -91,6 +91,40 @@ export default function HomePage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-teal-100 bg-gradient-to-br from-white via-teal-50 to-sky-50 p-6 shadow-sm sm:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">App update preview</p>
+            <div className="mt-3 grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Coming in the next app update</h2>
+                <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
+                  The next LifeForgePrep update expands the app with deeper scenario-based practice, clearer explanations, improved difficulty progression, timed exam practice, and new professional-practice questions focused on compliance, ethics, market conduct, controls, and regulatory oversight.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <Link
+                  href="/app"
+                  data-cta="download-free-app"
+                  data-location="homepage-next-update"
+                  data-campaign="next-app-update"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#2FAF9E] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#26988a]"
+                >
+                  Explore the App
+                </Link>
+                <Link
+                  href="/free-practice"
+                  data-cta="try-free-practice"
+                  data-location="homepage-next-update"
+                  data-campaign="next-app-update"
+                  className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-50"
+                >
+                  Try Free Practice
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>

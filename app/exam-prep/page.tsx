@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
   title: 'Life Insurance Exam Practice & Study Support | LifeForgePrep',
   description:
-    'Scenario-based life insurance practice, clear explanations, timed drills, and optional study resources for learners using approved course materials.'
+    'Scenario-based life insurance exam prep with timed practice, plain-English explanations, professional-practice content, insurance compliance, and LLQP study support.'
 };
 
 const included = [
@@ -100,6 +100,14 @@ export default function ExamPrepPage() {
               </p>
             </div>
           </article>
+        </section>
+
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2FAF9E]">Updated question style</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#1F2A44]">Built for more than memorization</h2>
+          <p className="mt-3 max-w-4xl text-sm leading-7 text-[#4A5568]">
+            Many insurance exam questions are not just definition checks. They test whether you can apply concepts, spot traps, and choose the most appropriate answer in a practical situation. LifeForgePrep&apos;s updated question style is designed to help learners understand why an answer is right, why the distractors are wrong, and what fact should drive the decision.
+          </p>
         </section>
 
         <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
