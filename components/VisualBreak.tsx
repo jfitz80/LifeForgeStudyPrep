@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import HeroInsightTiles from '@/components/HeroInsightTiles';
 
 type VisualBreakProps = {
   title: string;
@@ -55,13 +56,8 @@ export default function VisualBreak({
             <Image src={imageSrc} alt={imageAlt ?? title} fill className="object-cover" />
           </div>
         ) : (
-          <div className="h-56 rounded-2xl border border-white/20 bg-white/10 p-6">
-            <div className="grid h-full grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/20" />
-              <div className="rounded-xl bg-white/10" />
-              <div className="rounded-xl bg-white/10" />
-              <div className="rounded-xl bg-white/20" />
-            </div>
+          <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-5">
+            <HeroInsightTiles />
           </div>
         )}
       </div>

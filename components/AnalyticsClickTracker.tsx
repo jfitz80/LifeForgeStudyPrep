@@ -9,7 +9,11 @@ const CTA_EVENT_MAP: Record<string, string> = {
   'download-free-app': 'click_download_app',
   'app-store': 'click_app_store',
   'us-landing-page': 'click_us_landing_page',
-  'canada-llqp-landing-page': 'click_canada_llqp_landing_page'
+  'canada-llqp-landing-page': 'click_canada_llqp_landing_page',
+  'hero-question-preview': 'click_hero_question_preview',
+  'hero-latest-commentary': 'click_hero_latest_commentary',
+  'hero-app-update-preview': 'click_hero_app_update_preview',
+  'hero-tough-topic': 'click_hero_tough_topic'
 };
 
 export default function AnalyticsClickTracker() {
@@ -27,6 +31,8 @@ export default function AnalyticsClickTracker() {
 
       trackEvent(eventName, {
         cta,
+        tile_label: element.dataset.tileLabel,
+        source: element.dataset.location ?? window.location.pathname,
         source_page: element.dataset.location ?? window.location.pathname,
         campaign: element.dataset.campaign,
         destination: element instanceof HTMLAnchorElement ? element.href : undefined
