@@ -62,6 +62,144 @@ export const marketDeskDisclaimer =
 
 export const newsItems: NewsItem[] = [
   {
+    id: 'md-2026-06-17-policyme-unified-application',
+    slug: 'policyme-unified-application-product-matching',
+    title: 'PolicyMe Wants to Choose the Life Insurance Product for You. Is That Progress?',
+    summary:
+      'PolicyMe’s new unified application promises to match Canadians with the best-priced coverage for which they qualify. It could reduce a genuine barrier to buying insurance, but automated product matching introduces important questions about transparency, choice and advice.',
+    publishedAt: '2026-06-17',
+    publishedAtLabel: 'June 17, 2026',
+    readingTime: '6 min read',
+    featured: true,
+    source: 'LifeForge Market Desk',
+    tag: 'Product Trends',
+    secondaryCategory: 'Technology & Risk',
+    auditStatus: 'Needs source verification',
+    sourceStatus: 'needs verification',
+    sourceName:
+      'PolicyMe June 16 announcement and Canadian individual life insurance sales reporting require manual source verification',
+    sourceDate: 'June 2026',
+    seoTitle: 'PolicyMe Unified Life Insurance Application: Progress or New Advice Risk? | LifeForge Market Desk',
+    metaDescription:
+      'PolicyMe’s unified life insurance application may reduce buying friction for Canadian consumers, but automated product matching raises questions about transparency, choice, underwriting pathways and advice.',
+    openGraphTitle: 'PolicyMe Wants to Choose the Life Insurance Product for You. Is That Progress?',
+    openGraphDescription:
+      'PolicyMe’s unified application could reduce buying friction, but automated product matching creates questions about transparency, choice and advice.',
+    relatedTopics: [
+      'Digital distribution',
+      'Automated underwriting',
+      'Product matching',
+      'Simplified issue',
+      'Guaranteed issue',
+      'Consumer choice',
+      'Advisor practice',
+      'Life insurance',
+      'Securian Canada',
+      'Insurance transparency'
+    ],
+    tags: [
+      'Digital distribution',
+      'Automated underwriting',
+      'Product matching',
+      'Simplified issue',
+      'Guaranteed issue',
+      'Consumer choice',
+      'Advisor practice',
+      'Life insurance',
+      'Securian Canada',
+      'Insurance transparency'
+    ],
+    relatedSlugs: [
+      'ai-underwriting-faster-application-trust-problem',
+      'compliance-insurance-value-proposition',
+      'what-new-advisors-should-understand-about-consumer-trust'
+    ],
+    whatHappened:
+      'PolicyMe has announced what it describes as Canada’s first unified life-insurance application. Instead of asking consumers to choose between fully underwritten, simplified-issue and guaranteed-issue insurance before applying, the platform evaluates applicants through one digital process and directs each person toward the coverage and risk-adjusted price for which they qualify.',
+    marketDeskView:
+      'A unified application can improve access, but automated matching should not be confused with independent advice or a full-market comparison.',
+    whyAdvisorsShouldCare:
+      'Digital product routing can reduce friction, but advisors still need to explain product trade-offs, recommendation limits, underwriting pathways and when a consumer may need broader advice.',
+    learnerConnection:
+      'This topic connects to underwriting pathways, simplified issue, guaranteed issue, product suitability, digital distribution, disclosure and explaining policy trade-offs to clients.',
+    keyPoints: [
+      'A unified application can reduce the need for consumers to self-select an underwriting path before they know what they qualify for.',
+      'Automated product matching may improve access, but it depends on clear boundaries around what products and insurers were considered.',
+      'Price is important, but suitability can also involve duration, renewability, conversion rights, exclusions, liquidity, policy features and long-term objectives.',
+      'The more automated the recommendation, the more important transparency, reviewability and plain-language explanation become.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'PolicyMe has announced what it describes as Canada’s first unified life-insurance application.',
+          'Instead of asking consumers to choose between fully underwritten, simplified-issue and guaranteed-issue insurance before applying, the platform evaluates them through one digital process. An automated system then directs each applicant toward the coverage and risk-adjusted price for which they qualify.',
+          'According to the announcement details provided to Market Desk, the system was developed with Securian Canada and reportedly uses more than 1,000 reflexive underwriting rules. Most applicants answer approximately 30 questions. Those who do not qualify for traditional or simplified coverage may be offered a new guaranteed-issue permanent policy providing up to $100,000 of coverage.',
+          'The immediate benefit is easy to understand: applicants no longer need to diagnose their own insurability before approaching an insurer. The more consequential development is that PolicyMe is moving beyond digital distribution and into automated product matching.'
+        ]
+      },
+      {
+        heading: 'Where PolicyMe sits in the market',
+        paragraphs: [
+          'PolicyMe is not competing solely as another insurer with another policy. Its stronger position is as a digital layer connecting consumers, underwriting rules and insurance products.',
+          'That places it between three established parts of the market: traditional underwriting, simplified-issue insurance and guaranteed-issue insurance. Traditional underwriting can offer broader coverage and better pricing but may require more medical and financial information. Simplified-issue insurance reduces underwriting requirements but can involve higher premiums or lower coverage limits. Guaranteed-issue insurance generally asks few or no medical questions but usually costs more per dollar of coverage.',
+          'Historically, consumers have often had to choose a category before knowing where their health profile would place them. Someone concerned about a medical condition might apply directly for guaranteed-issue coverage even though traditional underwriting could have produced a better-priced offer.',
+          'PolicyMe is attempting to reverse that process: assess the applicant first and recommend the product second.',
+          'That distinction matters because digital life insurance is no longer unusual. Other Canadian insurers already promote streamlined or automated underwriting experiences. PolicyMe’s competitive claim is therefore not simply speed. It is that one application can search across different underwriting pathways and prevent applicants from unnecessarily selecting a more expensive form of coverage.'
+        ]
+      },
+      {
+        heading: 'A growing market with persistent friction',
+        paragraphs: [
+          'The launch arrives while Canadian individual life-insurance sales have been performing strongly. Market Desk has treated the cited sales context as reporting that should be source-checked before being used as a standalone statistical claim in sales material. The broader point remains: a growing market does not mean the buying process works equally well for everyone.',
+          'Life insurance remains difficult to compare because price depends on health, age, lifestyle, coverage amount, underwriting pathway and product design. A consumer may see an attractive quote without knowing whether it reflects the policy they will actually be offered.',
+          'PolicyMe’s model addresses this friction by making product selection part of the underwriting journey. If it works as intended, consumers receive a realistic offer without navigating several separate applications.',
+          'That is a meaningful improvement in access. However, access is only one measure of a good outcome.'
+        ]
+      },
+      {
+        heading: 'The recommendation problem',
+        paragraphs: [
+          'When a platform claims to match someone with the best-priced coverage they qualify for, consumers need to understand the boundaries of that promise.',
+          'Does best-priced mean the least expensive option available through PolicyMe, the best option offered by its insurance partners or the best option across the entire Canadian market? Those are very different claims.',
+          'A recommendation can be accurate within a platform while still excluding suitable products available elsewhere. Price is also not the only consideration. Conversion rights, renewability, exclusions, coverage duration, contestability provisions and long-term policy objectives may all affect suitability.',
+          'The platform should therefore explain which insurers and products were considered, why the applicant received a particular recommendation, whether other underwriting pathways were available, what information affected the decision, whether a person can review or challenge the result and when professional advice may still be appropriate.',
+          'The risk is not necessarily that the algorithm makes an incorrect decision. It is that consumers may interpret a limited recommendation as a complete market comparison.'
+        ]
+      },
+      {
+        heading: 'Where the market is going',
+        paragraphs: [
+          'In Market Desk’s view, the single digital application is likely to become more important than the single digital product.',
+          'The first phase of insurance digitization placed existing applications online. The second accelerated underwriting decisions. The emerging third phase will attempt to route each applicant toward the product, underwriting path and insurer most likely to accept them.',
+          'This could produce several changes. Consumers may increasingly expect to provide their information once rather than begin again after a decline or modified offer. Platforms may compete on the accuracy and breadth of their product recommendations, not merely quotation speed. Established insurers can provide capital and underwriting expertise while technology platforms control the consumer journey.',
+          'It could also change the advisor role. Advisors may spend less time collecting routine application information and more time explaining recommendations, handling complex cases and comparing long-term policy features.',
+          'The transparency standard will likely rise with the convenience standard. Regulators and consumers will likely expect clearer explanations of how automated underwriting and product-routing decisions are made.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'PolicyMe’s launch addresses a real weakness in life insurance: consumers are often asked to choose a product before the insurer has assessed what they can qualify for.',
+          'A unified application is a logical response. It may reduce abandoned applications, prevent some consumers from buying unnecessarily expensive guaranteed-issue coverage and extend protection to applicants who assume they will be declined.',
+          'But automated matching should not be confused with independent advice.',
+          'The winning platforms will not simply produce the fastest decision. They will show consumers what was considered, why a recommendation was made and what the recommendation does - and does not - cover.',
+          'The future of digital life insurance is likely to be faster. Whether it is also better will depend on how clearly that speed is explained.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For life agents, brokers, advisors and serious learners, this is not just a product-launch story. It connects digital distribution, underwriting pathways, product suitability, consumer transparency, platform limits and the difference between a price match and an advice process.',
+          'A better application can remove friction, but the client still needs to understand the choice being made.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'Automated product matching can improve access, but it also raises the standard for transparency, suitability explanation and consumer understanding.',
+    llqpAngle:
+      'Learners should understand underwriting pathways, simplified issue, guaranteed issue, product suitability and the difference between product access and advice.'
+  },
+  {
     id: 'md-2026-06-07-ai-underwriting',
     slug: 'ai-underwriting-faster-application-trust-problem',
     title: 'AI in Underwriting: The Faster Application Has a Trust Problem',
@@ -70,7 +208,7 @@ export const newsItems: NewsItem[] = [
     publishedAt: '2026-06-07',
     publishedAtLabel: 'June 7, 2026',
     readingTime: '7 min read',
-    featured: true,
+    featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Underwriting',
     secondaryCategory: 'Technology & Risk',
