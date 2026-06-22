@@ -13,6 +13,7 @@ const categories: CategoryFilter[] = [
   "Regulation & Compliance",
   "Product Trends",
   "Advisor Practice",
+  "Annuities & Retirement Income",
   "Retirement Income",
   "Underwriting",
   "Technology & Risk",

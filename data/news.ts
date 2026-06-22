@@ -3,6 +3,7 @@ export type MarketDeskCategory =
   | 'Regulation & Compliance'
   | 'Product Trends'
   | 'Advisor Practice'
+  | 'Annuities & Retirement Income'
   | 'Retirement Income'
   | 'Underwriting'
   | 'Technology & Risk'
@@ -62,6 +63,192 @@ export const marketDeskDisclaimer =
 
 export const newsItems: NewsItem[] = [
   {
+    id: 'md-2026-06-21-fastest-growing-annuities-risk',
+    slug: 'fastest-growing-annuities-taking-more-risk',
+    title: 'Americans Want Guarantees. Why Are the Fastest-Growing Annuities Taking On More Risk?',
+    summary:
+      'A powerful annuity market is revealing an uncomfortable truth: retirement security is selling, but so is complexity.',
+    publishedAt: '2026-06-21',
+    publishedAtLabel: 'June 21, 2026',
+    readingTime: '7 minutes',
+    featured: true,
+    source: 'LifeForge Market Desk',
+    tag: 'Annuities & Retirement Income',
+    secondaryCategory: 'Product Trends',
+    auditStatus: 'Current',
+    sourceStatus: 'verified',
+    sourceName:
+      'LIMRA first-quarter 2026 annuity sales reporting, FINRA annuity oversight materials, FINRA investor education, and NAIC consumer annuity guidance',
+    sourceDate: '2022-2026',
+    seoTitle: 'Why Fast-Growing Annuities Are Taking On More Risk | LifeForgePrep',
+    metaDescription:
+      'U.S. annuity sales reached $107.4 billion in Q1 2026 as RILAs surged. Learn why retirement guarantees increasingly come with market risk and added complexity.',
+    openGraphTitle: 'Americans Want Guarantees. Why Are the Fastest-Growing Annuities Taking On More Risk?',
+    openGraphDescription:
+      'U.S. annuity sales remain powerful, but RILA growth shows that retirement security demand is increasingly tied to limited downside protection, market risk and product complexity.',
+    relatedTopics: [
+      'annuities',
+      'retirement income',
+      'RILA',
+      'registered index-linked annuity',
+      'market risk',
+      'suitability',
+      'consumer protection',
+      'advisor practice'
+    ],
+    tags: [
+      'annuities',
+      'retirement income',
+      'RILA',
+      'registered index-linked annuity',
+      'market risk',
+      'suitability',
+      'consumer protection',
+      'advisor practice'
+    ],
+    relatedSlugs: [
+      'annuity-boom-capital-story',
+      'rilas-growing-simplicity-still-matters',
+      'compliance-insurance-value-proposition'
+    ],
+    sources: [
+      {
+        name: 'LIMRA — U.S. Annuity Sales Top $107 Billion in First Quarter 2026 (June 11, 2026)',
+        url: 'https://www.limra.com/en/newsroom/news-releases/2026/limra-u.s.-annuity-sales-top-%24107-billion-in-first-quarter-2026/'
+      },
+      {
+        name: 'LIMRA — Final U.S. Retail Annuity Sales Set New Sales High, Totaling $464.1 Billion in 2025 (March 23, 2026)',
+        url: 'https://www.limra.com/en/newsroom/news-releases/2026/limra-final-u.s.-retail-annuity-sales-set-new-sales-high-totaling-%24464.1-billion-in-2025/'
+      },
+      {
+        name: 'FINRA — Annuities, 2026 Annual Regulatory Oversight Report',
+        url: 'https://www.finra.org/rules-guidance/guidance/reports/2026-finra-annual-regulatory-oversight-report/annuities'
+      },
+      {
+        name: 'FINRA — The Complicated Risks and Rewards of Indexed Annuities (July 14, 2022)',
+        url: 'https://www.finra.org/investors/insights/complicated-risks-and-rewards-indexed-annuities'
+      },
+      {
+        name: 'NAIC — Buyer’s Guide to Fixed Deferred Annuities',
+        url: 'https://content.naic.org/sites/default/files/publication-anb-lp-consumer-annuities.pdf'
+      }
+    ],
+    whatHappened:
+      'U.S. annuity sales remained above $100 billion for the tenth consecutive quarter in early 2026, while registered index-linked annuities grew faster than several more traditional annuity categories.',
+    marketDeskView:
+      'Annuities can solve genuine retirement problems, but limited downside protection must not be presented as a complete guarantee. The more complicated the product becomes, the greater the obligation to explain what the consumer can still lose.',
+    whyAdvisorsShouldCare:
+      'RILA growth increases the need for careful suitability analysis, plain-language explanation of buffers and floors, documentation of retirement needs, and clear disclosure of retained market risk.',
+    learnerConnection:
+      'This topic connects to annuities, retirement income, suitability, market risk, consumer protection, disclosure, advisor practice, and the difference between limited downside protection and a complete guarantee.',
+    keyPoints: [
+      'U.S. annuity sales reached $107.4 billion in the first quarter of 2026, according to LIMRA.',
+      'RILA sales grew 20% year over year to $21.1 billion, while fixed-rate deferred annuity sales fell 12% but remained the largest individual category.',
+      'A RILA can limit some downside risk, but it is not the same as a traditional fixed annuity and can still expose the owner to losses.',
+      'Suitability depends on the client’s retirement problem, liquidity needs, time horizon, income objective, risk tolerance and understanding of trade-offs.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'Americans placed $107.4 billion into annuities during the first quarter of 2026. It was the tenth consecutive quarter in which sales exceeded $100 billion.',
+          'That sounds like a decisive vote for guarantees. But the fastest-growing part of the market tells a more complicated story.',
+          'Sales of registered index-linked annuities, or RILAs, increased 20% from a year earlier to $21.1 billion. Traditional variable annuity sales rose 17%. By comparison, fixed-rate deferred annuity sales fell 12%, although they remained the largest individual category at $35.6 billion.',
+          'The shift matters because a RILA does not offer the same protection as a traditional fixed annuity. It links returns to a market index and limits some losses, but the contract owner can still lose money.',
+          'Buyers seeking security are increasingly selecting products that sit between fixed annuities and direct market exposure. This does not mean RILAs are bad products. It means the word “protection” is doing a great deal of work.'
+        ]
+      },
+      {
+        heading: 'The boom is real, but it is changing shape',
+        paragraphs: [
+          'The headline number needs context. Total annuity sales increased only 1% from the first quarter of 2025.',
+          'This is not a sudden rush into a forgotten product. It is the continuation of an unusually strong market, accompanied by a change in what people are buying.',
+          'Higher interest rates helped revive fixed annuities by allowing insurers to offer more attractive rates. Market volatility and retirement anxiety also increased the appeal of products offering some protection without eliminating every opportunity for growth.',
+          'RILAs occupy that emotional and financial middle ground. They can appeal to someone who is uncomfortable accepting the full loss of a market decline but equally uncomfortable moving entirely into a fixed return.',
+          'LIMRA reported that the first quarter of 2026 marked the 30th consecutive quarter of year-over-year RILA growth. It projects annual RILA sales will exceed $85 billion in 2026 and continue growing through 2028.',
+          'The important question is whether consumer understanding is growing at the same rate.'
+        ]
+      },
+      {
+        heading: 'What does a RILA actually guarantee?',
+        paragraphs: [
+          'A RILA is an insurance contract whose value can rise or fall based partly on the performance of a selected market index.',
+          'The owner does not usually receive the index’s exact return. The contract applies features that can include caps, participation rates, buffers, floors and defined crediting periods.',
+          'A buffer commonly protects the owner from an initial portion of a market decline. If a contract has a 10% buffer and the relevant index falls by more than that amount, the owner may absorb losses beyond the protected portion.',
+          'A floor works differently by limiting the maximum loss over the measurement period. Exact calculations and protections vary by contract.',
+          'The insurer receives something in exchange for providing downside protection. Growth may be restricted by a cap, reduced through a participation rate or calculated over a specific period. Withdrawals can also be subject to surrender charges, adjustments and other contract provisions.',
+          'The exchange can be reasonable: give up part of the market’s potential gain in return for protection against part of its potential loss. But that is not the same as a guaranteed investment return. It is also not automatically a guarantee of lifetime income. Income benefits may depend on the contract, an annuitization decision or an optional rider.'
+        ]
+      },
+      {
+        heading: 'Why are buyers accepting more risk?',
+        paragraphs: [
+          'Retirement planning forces people to manage two fears that pull in opposite directions.',
+          'The first is market loss. A severe decline near the beginning of retirement can be especially damaging when withdrawals continue while investments are down.',
+          'The second is falling short. Retirees may live longer than expected, encounter inflation or face higher healthcare and care expenses. Moving entirely into low-growth assets can make that problem worse.',
+          'RILAs are designed for the space between those fears. They offer an attractive proposition: participate when markets rise, receive some shelter when they fall and potentially retain access to future income features.',
+          'That can be a legitimate planning solution. It can also be difficult to evaluate because the most important features may not become apparent until the market falls sharply, a crediting period ends or the owner needs access to the money.',
+          'The risk is not only that a buyer loses money. It is that the buyer misunderstands which risk was retained.'
+        ]
+      },
+      {
+        heading: 'The advice problem',
+        paragraphs: [
+          'The growth of RILAs places additional responsibility on advisors, insurers and distributors.',
+          'FINRA’s 2026 regulatory oversight report directs firms to consider whether a RILA and its individual features are in a retail customer’s best interest. Its areas of focus include how interest is calculated and credited, bounded-return structures, automatic renewals, surrender charges, investment options and whether particular features serve the customer’s needs.',
+          'These are not minor administrative details. They determine the bargain the consumer is making.',
+          'An appropriate recommendation should begin with the retirement problem, not the product illustration. Is the client attempting to generate income, reduce portfolio volatility, defer tax, protect part of their savings or preserve access to cash?',
+          'A product cannot be judged appropriate merely because it includes both the words “growth” and “protection.”',
+          'The explanation should make four points unmistakable: what loss the insurer absorbs, what loss the customer retains, how much potential growth the customer is surrendering, and when and how the customer can withdraw the money. It should also be clear whether lifetime income is included, optional or absent.',
+          'If those answers cannot be explained in plain language, the product is not ready to be recommended to that client.'
+        ]
+      },
+      {
+        heading: 'When an annuity earns its place',
+        paragraphs: [
+          'The argument for annuities is strongest when they solve a defined retirement problem.',
+          'A retiree may reasonably exchange some liquidity and growth potential for dependable income. An annuity can help cover essential expenses, reduce the financial consequences of living longer than expected or make it easier to spend from the remaining portfolio with confidence.',
+          'But an annuity should not be treated as a universal improvement over an investment account.',
+          'Some buyers need liquidity more than income protection. Others already receive substantial guaranteed income from pensions or Social Security. Product costs, surrender periods, insurer financial strength, tax treatment and beneficiary objectives can also change the analysis.',
+          'The category matters less than the job assigned to it.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'Annuities are not inherently good or bad. They are exchanges.',
+          'The buyer gives up something, such as liquidity, upside, simplicity or immediate control, to receive something else, such as income, tax deferral or protection from a defined risk.',
+          'The quality of that exchange depends on whether it is understood and whether it addresses a genuine need.',
+          'RILA growth is not evidence that consumers suddenly want more risk. It suggests that they want a more tolerable version of market risk.',
+          'That is an important distinction. The industry should not blur it by allowing limited protection to sound like a complete guarantee.',
+          'The $107 billion sales figure is therefore both a success and a warning. Insurers have developed products that speak directly to retirement anxiety. They must now demonstrate that sales practices, disclosures and product design can keep pace with the complexity being placed in consumers’ hands.'
+        ]
+      },
+      {
+        heading: 'What comes next?',
+        paragraphs: [
+          'RILAs are likely to claim a larger role in retirement portfolios.',
+          'Product options will expand, more advisors will gain access to them and competition may produce new combinations of buffers, floors, crediting periods and income features.',
+          'That growth could be healthy if it gives retirees more precise ways to manage risk. It could become problematic if comparisons become harder or buyers focus on the protected portion while overlooking their remaining exposure.',
+          'The next phase of the annuity market will not be decided only by sales. It will be decided by whether consumers can answer one simple question: what exactly am I protected from, and what can I still lose?',
+          'That should be the test of every retirement guarantee.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For consumers, the difference between complete and limited protection can materially affect retirement savings.',
+          'For advisors, growing product choice increases the obligation to compare alternatives, document the client’s needs and explain trade-offs without relying on optimistic illustrations.',
+          'For insurers and regulators, sustained RILA growth makes disclosure, supervision and post-sale monitoring increasingly important.',
+          'A product designed to reduce fear should not depend on confusion to make the sale.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'RILA growth shows that retirement security demand is increasingly tied to products that offer limited protection rather than complete guarantees.',
+    llqpAngle:
+      'Learners should distinguish fixed annuities, variable annuities and RILAs, and understand how suitability depends on retained risk, liquidity, income needs and disclosure.'
+  },
+  {
     id: 'md-2026-06-17-policyme-unified-application',
     slug: 'policyme-unified-application-product-matching',
     title: 'PolicyMe Wants to Choose the Life Insurance Product for You. Is That Progress?',
@@ -70,7 +257,7 @@ export const newsItems: NewsItem[] = [
     publishedAt: '2026-06-17',
     publishedAtLabel: 'June 17, 2026',
     readingTime: '6 min read',
-    featured: true,
+    featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Product Trends',
     secondaryCategory: 'Technology & Risk',
