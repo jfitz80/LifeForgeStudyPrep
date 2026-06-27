@@ -4,6 +4,7 @@ export type MarketDeskCategory =
   | 'Product Trends'
   | 'Advisor Practice'
   | 'Annuities & Retirement Income'
+  | 'Life Insurance & Consumer Protection'
   | 'Retirement Income'
   | 'Underwriting'
   | 'Technology & Risk'
@@ -63,6 +64,186 @@ export const marketDeskDisclaimer =
 
 export const newsItems: NewsItem[] = [
   {
+    id: 'md-2026-06-26-life-insurance-sales-gofundme-gap',
+    slug: 'life-insurance-sales-gofundme-protection-gap',
+    title: 'Life Insurance Sales Are Rising. Why Are Families Still Turning to GoFundMe?',
+    summary:
+      'A growing market does not necessarily mean the protection gap is closing.',
+    publishedAt: '2026-06-26',
+    publishedAtLabel: 'June 26, 2026',
+    readingTime: '7 minutes',
+    featured: true,
+    source: 'LifeForge Market Desk',
+    tag: 'Life Insurance & Consumer Protection',
+    secondaryCategory: 'Advisor Practice',
+    auditStatus: 'Current',
+    sourceStatus: 'verified',
+    sourceName:
+      'ThinkAdvisor individual life sales and GoFundMe commentary, LIMRA June 2026 market context, and NAIC life insurance consumer guidance',
+    sourceDate: 'June 2026',
+    seoTitle: 'Life Insurance Sales Are Rising. Why Is GoFundMe Still the Backup Plan? | LifeForgePrep',
+    metaDescription:
+      'U.S. life insurance sales increased in early 2026, yet families still turn to crowdfunding after a death. Market Desk examines the gap between selling policies and delivering protection.',
+    openGraphTitle: 'Life Insurance Sales Are Rising. Why Are Families Still Turning to GoFundMe?',
+    openGraphDescription:
+      'A growing life insurance market does not necessarily mean the protection gap is closing. Market Desk looks at sales, crowdfunding and the difference between policy activity and family protection.',
+    relatedTopics: [
+      'life insurance',
+      'protection gap',
+      'GoFundMe',
+      'final expenses',
+      'beneficiaries',
+      'term insurance',
+      'claims',
+      'consumer protection',
+      'advisor practice'
+    ],
+    tags: [
+      'life insurance',
+      'protection gap',
+      'GoFundMe',
+      'final expenses',
+      'beneficiaries',
+      'term insurance',
+      'claims',
+      'consumer protection',
+      'advisor practice'
+    ],
+    relatedSlugs: [
+      'policyme-unified-application-product-matching',
+      'what-new-advisors-should-understand-about-consumer-trust',
+      'compliance-insurance-value-proposition'
+    ],
+    sources: [
+      {
+        name: 'ThinkAdvisor — 5 Insurers That Sold the Most Individual Life in Q1 (June 15, 2026)',
+        url: 'https://www.thinkadvisor.com/2026/06/15/5-top-q1-individual-life-issuers/'
+      },
+      {
+        name: 'ThinkAdvisor — GoFundMe Should Be a Fallback Plan, Not Plan A (June 15, 2026)',
+        url: 'https://www.thinkadvisor.com/2026/06/15/gofundme-should-be-a-fallback-plan-not-plan-a/'
+      },
+      {
+        name: 'LIMRA — Insights & Trends: June 2026',
+        url: 'https://www.limra.com/en/trending-topics/publications/marketfacts/2026/insights--trends-june-2026/'
+      },
+      {
+        name: 'NAIC — Life Insurance',
+        url: 'https://content.naic.org/insurance-topics/life-insurance'
+      }
+    ],
+    whatHappened:
+      'U.S. individual life insurance sales began 2026 with momentum, while online fundraisers continue to appear after unexpected deaths. The contrast raises a practical question: whether rising sales are translating into adequate, maintained and accessible family protection.',
+    marketDeskView:
+      'Rising sales are good news, but they should not be mistaken for proof that the protection problem has been solved. Crowdfunding exposes where coverage was absent, insufficient, inaccessible or never discussed.',
+    whyAdvisorsShouldCare:
+      'The opportunity is larger than making a sale. Clear needs analysis, realistic affordability conversations, ongoing reviews and claim-ready policy information can determine whether coverage is present when a family needs it.',
+    learnerConnection:
+      'This topic connects to life insurance needs analysis, term insurance, beneficiary designations, policy lapse, workplace coverage limits, claims, persistency and consumer protection.',
+    keyPoints: [
+      'Rising premium or policy sales show business activity, but not necessarily whether exposed households have enough protection.',
+      'Crowdfunding is emergency generosity, not a substitute for planned life insurance coverage.',
+      'Coverage only works if it remains appropriate, in force and discoverable when a death occurs.',
+      'The claim experience is part of the life insurance product because it is where the promise becomes visible.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'U.S. individual life insurance sales began 2026 with momentum. Insurers tracked by Wink generated approximately $2.9 billion in first-quarter sales, an increase of 8.2% from the same period a year earlier.',
+          'That should be encouraging. More policies sold should mean more families protected.',
+          'Yet when a parent, spouse or young adult dies unexpectedly, another form of financial protection frequently appears first: the online fundraiser.',
+          'The campaign usually tells a familiar story. A death occurred without warning. Funeral expenses arrived immediately. Income stopped. Relatives and friends were asked to help the family pay for burial costs, travel, rent or time away from work.',
+          'There is nothing wrong with communities helping one another. Crowdfunding can provide urgently needed support. But it raises an uncomfortable question for the life insurance industry: if sales are rising, why do so many families still need to pass the hat after a death?',
+          'The answer is not that life insurance has failed. It is that selling more insurance and creating adequate financial protection are not the same achievement.'
+        ]
+      },
+      {
+        heading: 'The sales number tells only part of the story',
+        paragraphs: [
+          'Industry sales are generally measured through premiums, policy counts or other production figures. Those measures show business activity. They do not reveal whether coverage reached the households most exposed to financial disruption.',
+          'A larger premium total can be produced by affluent households buying larger permanent policies, business owners funding succession plans or existing policyholders adding coverage. All can represent legitimate needs. None necessarily means that a lower-income family now has enough money to manage an unexpected death.',
+          'The protection gap is not simply the number of people without a policy. It also includes people who own less coverage than their family would need, rely only on workplace insurance that may end with employment, bought coverage years ago and never updated it, allowed a policy to lapse, cannot access policy information when a death occurs, assume an application or employer benefit created coverage when it did not, or have a policy that covers funeral expenses but not the loss of income that follows.',
+          'That distinction matters. A household can technically be insured and still be financially exposed.'
+        ]
+      },
+      {
+        heading: 'Why crowdfunding feels easier',
+        paragraphs: [
+          'Life insurance and crowdfunding solve different problems.',
+          'Life insurance requires planning before the loss. Someone must recognize the risk, apply, answer underwriting questions, choose an amount, name a beneficiary and keep the policy in force.',
+          'Crowdfunding begins after the loss. It can be created quickly, shared through social networks and understood immediately. There are no projections or policy illustrations. The request is visible and emotionally direct: this family needs help now.',
+          'That simplicity is powerful, but it comes with uncertainty. A campaign has no guaranteed funding amount. Its success can depend on the family’s network, public attention and willingness to share private details. Contributions may help with immediate expenses without replacing years of lost income.',
+          'Crowdfunding is therefore best understood as emergency generosity, not a substitute for planned protection. The industry should still pay attention to why it often feels more accessible.'
+        ]
+      },
+      {
+        heading: 'The real competition is inaction',
+        paragraphs: [
+          'Life insurers sometimes describe the protection gap as a consumer awareness problem. That is partly true. People underestimate funeral expenses, overestimate the cost of coverage or postpone conversations about death.',
+          'But awareness alone is an incomplete explanation.',
+          'Many consumers know life insurance exists. They may still delay because the decision feels complicated, uncomfortable or easy to get wrong. They encounter unfamiliar product categories, lengthy illustrations, medical questions and uncertainty about how much coverage is enough.',
+          'Others do not trust that a claim will be simple. They worry about exclusions, underwriting decisions or whether their family will know how to find the policy.',
+          'The industry’s real competitor is rarely another insurer. It is avoidance.',
+          'A consumer who cannot confidently answer three basic questions is likely to postpone the purchase: what financial problem would my death create, how much coverage would address that problem, and what will this protection cost and what could cause it to end?',
+          'Making those answers easier may do more to close the protection gap than adding another product variation.'
+        ]
+      },
+      {
+        heading: 'Coverage must survive real life',
+        paragraphs: [
+          'Buying a policy is only the beginning. Protection has value only if it remains appropriate, in force and discoverable.',
+          'Household needs change. Mortgages grow or shrink. Children are born. Relationships change. Income increases. A business is started. An employer benefit disappears after a job change.',
+          'A policy purchased ten years ago may still be active while no longer matching the family’s exposure. A beneficiary designation may be outdated. A spouse may not know which insurer issued the contract or where the records are stored.',
+          'This is where advisors and insurers can provide value after the sale.',
+          'Regular reviews should examine whether the coverage amount remains adequate, whether beneficiary designations reflect current intentions, whether premiums remain affordable, whether workplace coverage is being mistaken for permanent personal coverage, whether family members know that the policy exists, and whether contact and payment information is current.',
+          'Persistency should not be viewed only as an insurer retention measure. It is a consumer-protection outcome. A lapsed policy cannot protect a family, regardless of how successful the original sale appeared.'
+        ]
+      },
+      {
+        heading: 'The claim experience is part of the product',
+        paragraphs: [
+          'Life insurance is often sold through a promise about the future. The claim is where that promise becomes visible.',
+          'Families dealing with a death should not have to navigate unnecessary uncertainty about whom to contact, what documents are required or how long the process may take. Insurers must verify claims and comply with legal requirements, but they can still communicate clearly and compassionately.',
+          'The experience also begins before a claim. Policyowners should receive understandable information about beneficiaries, contestability, exclusions, premium obligations and how survivors can locate the policy.',
+          'A fast application is helpful. A smooth claim is essential.',
+          'If the industry wants consumers to view life insurance as more dependable than crowdfunding, dependability must be demonstrated throughout the policy’s life.'
+        ]
+      },
+      {
+        heading: 'Market Desk view',
+        paragraphs: [
+          'Rising sales are good news, but they should not be mistaken for proof that the protection problem has been solved.',
+          'The purpose of life insurance is not to produce a policy count. It is to place reliable money in the hands of the right people when a death creates a financial loss.',
+          'Crowdfunding exposes the distance between those two outcomes. It shows where protection was absent, insufficient, inaccessible or never discussed.',
+          'The industry should not criticize families for fundraising. It should treat each campaign as a reminder that the need for protection was real, immediate and understandable. The challenge is making life insurance feel equally relevant before the loss occurs.',
+          'That requires simpler conversations, clearer products, better follow-up and a claim experience worthy of a long-term promise.'
+        ]
+      },
+      {
+        heading: 'What better protection looks like',
+        paragraphs: [
+          'Closing the gap does not mean every household needs a large or complicated permanent policy.',
+          'For many families, appropriately sized term insurance may address the largest temporary risks at a manageable cost. Others may need permanent coverage for estate needs, final expenses, business planning or lifelong dependants. Workplace coverage can form part of the solution when its limits and portability are understood.',
+          'The correct product depends on the need. The principle does not: coverage should be understandable, affordable, maintained and sufficient for the financial loss it is intended to address.',
+          'The strongest measure of industry progress will not be how much premium was sold during a quarter. It will be how many families can grieve without simultaneously having to launch a public appeal for money.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For consumers, owning some insurance is not the same as having enough protection. Coverage should be reviewed when income, debt, dependants or employment changes.',
+          'For advisors, the opportunity is larger than making a sale. Clear needs analysis, realistic affordability discussions and ongoing service can determine whether a policy is still present when it matters.',
+          'For insurers, application speed should be matched by policy clarity, persistency support and humane claims administration.',
+          'Life insurance cannot prevent loss. Its value is giving a family one less crisis to manage afterward.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'Rising life insurance sales do not automatically prove that families have adequate, maintained and accessible protection when a death occurs.',
+    llqpAngle:
+      'Learners should connect this topic to needs analysis, term coverage, beneficiary designations, policy lapse, workplace insurance, claims and consumer protection.'
+  },
+  {
     id: 'md-2026-06-21-fastest-growing-annuities-risk',
     slug: 'fastest-growing-annuities-taking-more-risk',
     title: 'Americans Want Guarantees. Why Are the Fastest-Growing Annuities Taking On More Risk?',
@@ -71,7 +252,7 @@ export const newsItems: NewsItem[] = [
     publishedAt: '2026-06-21',
     publishedAtLabel: 'June 21, 2026',
     readingTime: '7 minutes',
-    featured: true,
+    featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Annuities & Retirement Income',
     secondaryCategory: 'Product Trends',
