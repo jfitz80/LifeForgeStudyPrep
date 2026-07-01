@@ -1,6 +1,7 @@
 export type MarketDeskCategory =
   | 'Market Watch'
   | 'Regulation & Compliance'
+  | 'Regulation & Risk'
   | 'Product Trends'
   | 'Advisor Practice'
   | 'Annuities & Retirement Income'
@@ -8,6 +9,7 @@ export type MarketDeskCategory =
   | 'Retirement Income'
   | 'Underwriting'
   | 'Technology & Risk'
+  | 'Insurance Operations'
   | 'Professional Practice'
   | 'Exam Preparation'
   | 'Carrier Moves'
@@ -64,6 +66,198 @@ export const marketDeskDisclaimer =
 
 export const newsItems: NewsItem[] = [
   {
+    id: 'md-2026-06-30-cyberattack-insurance-risk-scores',
+    slug: 'cyberattack-insurance-risk-scores-private-credit',
+    title: 'A Cyberattack Hit Insurance Risk Scores. The Bigger Question Is What Those Scores Are Hiding',
+    summary:
+      'A cyberattack affecting insurance investment-risk data has raised a larger question for the life-insurance market: how much do policyholders, regulators and advisors really know about the private assets backing long-term promises?',
+    publishedAt: '2026-06-30',
+    publishedAtLabel: 'June 30, 2026',
+    readingTime: '7 min read',
+    featured: true,
+    source: 'LifeForge Market Desk',
+    tag: 'Regulation & Risk',
+    secondaryCategory: 'Insurance Operations',
+    auditStatus: 'Needs source verification',
+    sourceStatus: 'needs verification',
+    sourceName:
+      'Financial Times and Wall Street Journal reporting verified; Reuters source title retained without URL pending manual verification',
+    sourceDate: 'June 2026',
+    seoTitle: 'Insurance Risk Scores, Private Credit and the NAIC Cyberattack | LifeForgePrep',
+    metaDescription:
+      'A cyberattack affecting insurance investment-risk data raises a bigger question for life insurers: how transparent are the private assets backing long-term policyholder promises?',
+    openGraphTitle: 'A Cyberattack Hit Insurance Risk Scores. The Bigger Question Is What Those Scores Are Hiding',
+    openGraphDescription:
+      'Life insurers rely on investment risk scores to support capital decisions. A cyberattack has exposed deeper questions about private credit, ratings and policyholder trust.',
+    relatedTopics: [
+      'life insurance',
+      'insurer investments',
+      'private credit',
+      'NAIC',
+      'regulation',
+      'capital requirements',
+      'credit ratings',
+      'policyholder protection',
+      'insurance operations',
+      'market conduct'
+    ],
+    tags: [
+      'life insurance',
+      'insurer investments',
+      'private credit',
+      'NAIC',
+      'regulation',
+      'capital requirements',
+      'credit ratings',
+      'policyholder protection',
+      'insurance operations',
+      'market conduct'
+    ],
+    relatedSlugs: [
+      'annuity-boom-capital-story',
+      'private-capital-moving-toward-life-insurance',
+      'ai-underwriting-faster-application-trust-problem'
+    ],
+    sources: [
+      {
+        name: 'Financial Times — US insurance rulemaker suspends investment risk designations after cyber attack (June 27, 2026)',
+        url: 'https://www.ft.com/content/1b397558-117e-463b-914d-9a62e4484605'
+      },
+      {
+        name: 'Wall Street Journal — Life Insurers Aren’t Just Investors in Private Credit. They’re Major Lenders, Too. (June 24, 2026)',
+        url: 'https://www.wsj.com/finance/investing/life-insurers-arent-just-investors-in-private-credit-theyre-major-lenders-too-c64ea527'
+      },
+      {
+        name: 'Financial Times — US insurance rulemaker probes credit risks tied to data centres (June 2026)',
+        url: 'https://www.ft.com/content/539bd3f8-96b2-4116-b4e4-19a3eaac88e3'
+      },
+      {
+        name: 'Reuters — Insurers need private credit, regulation is welcome, Ares CEO says (June 10, 2026)'
+      }
+    ],
+    whatHappened:
+      'Reporting said the NAIC suspended assigning investment risk designations after a cyber incident affected data shared by several major credit rating agencies. Those designations help determine how much capital insurers must hold against assets they own.',
+    marketDeskView:
+      'The cyberattack is the headline, but the deeper issue is transparency. Life insurers can use private credit responsibly, but policyholder trust depends on the quality of the risk scores, ratings and capital rules behind the scenes.',
+    whyAdvisorsShouldCare:
+      'Advisors do not need to explain private-credit ratings in detail, but they should understand why insurer strength, claims-paying ability and the quality of guarantees matter when discussing life insurance and annuities.',
+    learnerConnection:
+      'This topic connects to insurer financial strength, capital requirements, reserves, private credit, credit ratings, regulation, policyholder protection and insurance operations.',
+    keyPoints: [
+      'Investment risk designations help determine how much capital insurers must hold against assets.',
+      'Life insurers can use private credit responsibly, but private assets can be harder to value, trade and compare.',
+      'Policyholders rely on regulatory, rating, audit, governance and capital systems they rarely see.',
+      'The cyber incident is a warning light for the infrastructure used to classify insurer investment risk.'
+    ],
+    bodySections: [
+      {
+        paragraphs: [
+          'A cyberattack on insurance regulatory infrastructure is not the kind of story that usually reaches ordinary policyholders.',
+          'But this one should matter.',
+          'In late June, reporting said the National Association of Insurance Commissioners suspended assigning investment risk designations after a cyber incident affected data shared by several major credit rating agencies. Those designations are not just back-office labels. They help determine how much capital insurers must hold against the assets they own.',
+          'For life insurers, that matters because the promise made to policyholders is long term. A life insurance company may collect premiums today and pay claims decades later. The strength of that promise depends not only on product design, underwriting and reserves, but also on the assets held behind the promise.',
+          'The immediate story is cyber risk. The bigger story is confidence in the system used to classify insurer investment risk.'
+        ]
+      },
+      {
+        heading: 'Why risk designations matter',
+        paragraphs: [
+          'Life insurers invest premiums so they can meet future obligations. Their portfolios often include bonds, mortgages, structured assets and increasingly private-credit investments.',
+          'Regulators do not treat every asset the same way. Safer assets generally require less capital support. Riskier assets generally require more.',
+          'That makes investment risk designations important. A lower-risk classification can reduce the amount of capital an insurer must hold. A higher-risk classification can increase it.',
+          'In simple terms, the label attached to an asset affects how much financial cushion stands behind policyholder promises.',
+          'That does not mean insurers are doing something wrong. Insurers need to invest, and private markets can provide returns that help support guarantees, annuity payouts and long-term liabilities.',
+          'But the system depends on trust. Regulators must trust the data. Insurers must trust the designations. Policyholders must trust that the company’s financial strength is not being supported by overly generous risk labels.',
+          'A cyberattack against that system therefore raises a question beyond data security: how resilient is the infrastructure that helps decide what counts as safe?'
+        ]
+      },
+      {
+        heading: 'The private-credit backdrop',
+        paragraphs: [
+          'This story did not happen in a vacuum.',
+          'Life insurers have become increasingly important buyers of private credit. Private-credit assets can offer attractive yields, especially when insurers need long-duration assets to support long-duration liabilities.',
+          'That can make economic sense. A life insurer is not like a bank with depositors demanding money tomorrow morning. Many life and annuity liabilities are long term. In theory, that allows insurers to hold less-liquid assets if those assets are matched carefully against future obligations.',
+          'But private credit also creates challenges.',
+          'These assets can be harder to value, harder to trade and harder for outsiders to compare. Unlike public bonds, private investments may rely on less visible information and ratings that are not always broadly available.',
+          'Recent reporting has also raised another concern: some life insurers may have overlapping exposure to private-credit funds by both investing in them and lending to them.',
+          'That kind of structure may improve returns in good conditions. It may also make risk harder to see in stressed conditions.',
+          'The concern is not simply “private credit is bad.” That would be too simplistic. The concern is whether the industry’s risk-measurement tools are keeping pace with the complexity of the assets now being held.'
+        ]
+      },
+      {
+        heading: 'What policyholders usually do not see',
+        paragraphs: [
+          'Most policyholders do not choose a life insurer by reviewing asset schedules or capital charges.',
+          'They look at price, product features, advisor recommendations, insurer reputation and sometimes financial strength ratings.',
+          'That is understandable. A consumer buying term life insurance or an annuity is not expected to perform institutional credit analysis.',
+          'But this is exactly why the regulatory system matters.',
+          'Policyholders rely on layers of protection they rarely see: insurer capital requirements, reserve rules, investment classifications, financial strength ratings, regulatory examinations, audit and reporting systems, internal risk management and governance controls.',
+          'When those systems work, consumers do not need to understand every investment behind their policy. When those systems are questioned, trust becomes more fragile.',
+          'The NAIC risk-designation story is therefore not just a cyber event. It is a reminder that insurance promises depend on invisible infrastructure.'
+        ]
+      },
+      {
+        heading: 'The ratings question',
+        paragraphs: [
+          'Credit ratings are useful because they simplify risk.',
+          'They allow regulators, insurers and investors to compare different assets more efficiently. Without ratings and risk designations, the system would be slower and more expensive to administer.',
+          'But simplification creates its own risk.',
+          'If a complex private asset receives a rating that makes it appear safer than it really is, the insurer may hold less capital than the true risk requires. If that happens across many assets or many insurers, the issue can become more than a single-company problem.',
+          'This is why private ratings and private-credit valuations have attracted more regulatory scrutiny.',
+          'The issue is not whether every rating is wrong. The issue is whether the rating process is transparent, consistent and resistant to pressure.',
+          'When an insurer holds assets that are difficult to trade and difficult to value, the quality of the risk label becomes more important, not less.'
+        ]
+      },
+      {
+        heading: 'Where advisors fit in',
+        paragraphs: [
+          'Most advisors are not expected to explain private-credit ratings to clients.',
+          'But advisors do have a role in helping clients understand insurer strength and product guarantees.',
+          'A guarantee is only as strong as the institution behind it.',
+          'That does not mean clients should avoid life insurance or annuities. It means advisors should avoid treating all guarantees as interchangeable.',
+          'For example, when discussing an annuity, an advisor should be able to explain the insurer issuing the contract, the nature of the guarantee, whether the guarantee depends on the insurer’s claims-paying ability, liquidity limits and surrender charges, how the product fits the client’s retirement objective and why insurer strength matters.',
+          'The investment portfolio behind the insurer may be invisible to the client, but the client still depends on it.'
+        ]
+      },
+      {
+        heading: 'What this means for the market',
+        paragraphs: [
+          'In Market Desk’s view, the next phase of life-insurance oversight will focus less on whether insurers hold private assets and more on whether those assets are understood clearly enough.',
+          'Private credit is not going away.',
+          'Life insurers need investment returns. Asset managers want long-term capital. Retirees want annuity guarantees. Policyholders want financially stable insurers. Those forces all support continued involvement in private markets.',
+          'But the bargain requires transparency.',
+          'Regulators will likely push for better visibility into private ratings, valuation methods, affiliated assets, overlapping exposures and stress scenarios. Insurers will need to show that private assets are not simply being used to improve yield while minimizing capital charges.',
+          'The best insurers will be able to say: we know what we own, we know how it behaves under stress, and we hold enough capital for the risk. The weakest answer would be: the rating says it is safe.'
+        ]
+      },
+      {
+        heading: 'The cyberattack is the warning light',
+        paragraphs: [
+          'The cyberattack matters because it disrupted a system that supports regulatory confidence.',
+          'But the warning light was already flashing.',
+          'Private-credit growth, insurer-affiliated asset managers, private letter ratings and complex structured investments have all made insurer balance sheets harder for non-specialists to read.',
+          'A cyber incident did not create those issues. It exposed how important the infrastructure around them has become.',
+          'If the risk-designation process pauses, breaks or loses credibility, then regulators and insurers have to confront a basic question: who verifies the risk behind the promise?',
+          'For a life insurer, that question is not academic. It sits behind every policy illustration, every annuity guarantee, every claim payment and every promise that a benefit will be there when a family needs it.'
+        ]
+      },
+      {
+        heading: 'Why it matters',
+        paragraphs: [
+          'For policyholders, this story is a reminder that the strength of a life insurance promise depends on more than premiums and product features.',
+          'For advisors, it reinforces the importance of insurer selection, product explanation and avoiding casual language around guarantees.',
+          'For insurers, it highlights the need for strong cybersecurity, investment governance, asset transparency and capital discipline.',
+          'For regulators, it shows that oversight infrastructure must be as resilient as the companies it supervises.',
+          'The market does not need to reject private credit. But it does need to prove that the risks are being measured honestly. That is the real story behind the cyberattack.'
+        ]
+      }
+    ],
+    whatItMeans:
+      'The cyberattack exposed how much policyholder confidence depends on investment-risk designations, ratings, capital rules and regulatory infrastructure that most consumers never see.',
+    llqpAngle:
+      'Learners should connect this story to insurer financial strength, reserves, capital requirements, credit risk, annuity guarantees, regulation and policyholder protection.'
+  },
+  {
     id: 'md-2026-06-26-life-insurance-sales-gofundme-gap',
     slug: 'life-insurance-sales-gofundme-protection-gap',
     title: 'Life Insurance Sales Are Rising. Why Are Families Still Turning to GoFundMe?',
@@ -72,7 +266,7 @@ export const newsItems: NewsItem[] = [
     publishedAt: '2026-06-26',
     publishedAtLabel: 'June 26, 2026',
     readingTime: '7 minutes',
-    featured: true,
+    featured: false,
     source: 'LifeForge Market Desk',
     tag: 'Life Insurance & Consumer Protection',
     secondaryCategory: 'Advisor Practice',
