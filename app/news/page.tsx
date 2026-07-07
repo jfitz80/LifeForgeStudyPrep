@@ -17,6 +17,7 @@ const categories: CategoryFilter[] = [
   "Annuities & Retirement Income",
   "Life Insurance & Consumer Protection",
   "Retirement Income",
+  "Retirement Risk",
   "Underwriting",
   "Technology & Risk",
   "Insurance Operations",
