@@ -1,15 +1,22 @@
 "use client";
 
+import "@/data/news-commission-article";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import { getSortedNewsItems, marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
 
-type CategoryFilter = "All" | MarketDeskCategory;
+type CategoryFilter = "All" | MarketDeskCategory | "Market Conduct";
+
+type NewsCardTitle = {
+  title: string;
+  cardTitle?: string;
+};
 
 const categories: CategoryFilter[] = [
   "All",
   "Market Watch",
+  "Market Conduct",
   "Regulation & Compliance",
   "Regulation & Risk",
   "Product Trends",
@@ -46,6 +53,10 @@ const s: Record<string, CSSProperties> = {
   categoryButton: { border: "1px solid #cbd5e1", borderRadius: 999, background: "#fff", padding: "9px 16px", cursor: "pointer", color: "#334155" },
   disclaimer: { marginTop: 28, borderTop: "1px solid #e2e8f0", color: "#64748b", fontSize: 13, lineHeight: 1.7, paddingTop: 18 }
 };
+
+function getNewsCardTitle(item: NewsCardTitle) {
+  return item.cardTitle ?? item.title;
+}
 
 export default function NewsPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>("All");
@@ -103,7 +114,7 @@ export default function NewsPage() {
               {lead.readingTime ? <span style={{ color: "#64748b", fontSize: 13 }}>{lead.readingTime}</span> : null}
             </div>
             <h2 style={{ maxWidth: 820, margin: "16px 0 0", fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.05 }}>
-              {lead.title}
+              {getNewsCardTitle(lead)}
             </h2>
             <p style={{ ...s.muted, maxWidth: 780 }}>{lead.summary}</p>
             <div style={{ marginTop: 18, borderLeft: "4px solid #0f766e", paddingLeft: 16 }}>
@@ -125,7 +136,7 @@ export default function NewsPage() {
                 {item.updatedAtLabel ? <span style={{ color: "#64748b", fontSize: 13 }}>Updated {item.updatedAtLabel}</span> : null}
                 {item.readingTime ? <span style={{ color: "#64748b", fontSize: 13 }}>{item.readingTime}</span> : null}
               </div>
-              <h3 style={{ marginTop: 14, fontSize: 22, lineHeight: 1.2 }}>{item.title}</h3>
+              <h3 style={{ marginTop: 14, fontSize: 22, lineHeight: 1.2 }}>{getNewsCardTitle(item)}</h3>
               <p style={s.muted}>{item.summary}</p>
               <div style={{ marginTop: 14, borderRadius: 10, background: "#f8fafc", padding: 14 }}>
                 <p style={{ ...s.eyebrow, margin: 0 }}>Market Desk view</p>
