@@ -1,3 +1,4 @@
+import '@/data/news-commission-article';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -129,6 +130,15 @@ function buildConsumerTakeaway(category: NewsArticleView['category'], whatItMean
     default:
       return whatItMeans;
   }
+}
+
+function getSectionId(heading?: string) {
+  if (heading === 'My view' || heading === 'Market Desk View') return 'market-desk-view';
+  return undefined;
+}
+
+function getSectionClassName(heading?: string) {
+  return getSectionId(heading) ? 'rounded-xl border border-[#CFEAE4] bg-[#F1FBF8] p-5' : '';
 }
 
 function fromStatic(slug: string): ArticleView | null {
@@ -313,8 +323,8 @@ export default async function NewsArticlePage({ params }: Props) {
               {item.bodySections.map((section, index) => (
                 <div
                   key={`${section.heading ?? 'intro'}-${index}`}
-                  id={section.heading === 'My view' ? 'market-desk-view' : undefined}
-                  className={section.heading === 'My view' ? 'rounded-xl border border-[#CFEAE4] bg-[#F1FBF8] p-5' : ''}
+                  id={getSectionId(section.heading)}
+                  className={getSectionClassName(section.heading)}
                 >
                   {section.heading ? (
                     <h2 className="text-2xl font-bold tracking-tight text-[#1F2A44]">{section.heading}</h2>
