@@ -1,6 +1,7 @@
 "use client";
 
 import "@/data/news-commission-article";
+import "@/data/news-private-credit-liquidity-risk";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
