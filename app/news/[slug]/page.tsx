@@ -1,5 +1,6 @@
 import '@/data/news-commission-article';
 import '@/data/news-private-credit-liquidity-risk';
+import '@/data/news-asset-ratings-guarantees';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
