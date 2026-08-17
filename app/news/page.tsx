@@ -3,12 +3,13 @@
 import "@/data/news-commission-article";
 import "@/data/news-private-credit-liquidity-risk";
 import "@/data/news-asset-ratings-guarantees";
+import "@/data/news-genetic-testing-underwriting";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import { getSortedNewsItems, marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
 
-type CategoryFilter = "All" | MarketDeskCategory | "Market Conduct";
+type CategoryFilter = "All" | MarketDeskCategory | "Market Conduct" | "Underwriting & Risk" | "Privacy & Consumer Protection";
 
 type NewsCardTitle = {
   title: string;
@@ -19,6 +20,8 @@ const categories: CategoryFilter[] = [
   "All",
   "Market Watch",
   "Market Conduct",
+  "Underwriting & Risk",
+  "Privacy & Consumer Protection",
   "Regulation & Compliance",
   "Regulation & Risk",
   "Product Trends",
