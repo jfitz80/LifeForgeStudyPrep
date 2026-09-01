@@ -5,12 +5,13 @@ import "@/data/news-private-credit-liquidity-risk";
 import "@/data/news-asset-ratings-guarantees";
 import "@/data/news-genetic-testing-underwriting";
 import "@/data/news-instant-decision-underwriting";
+import "@/data/news-life-sales-understanding";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import { getSortedNewsItems, marketDeskDisclaimer, newsItems, type MarketDeskCategory } from "@/data/news";
 
-type CategoryFilter = "All" | MarketDeskCategory | "Market Conduct" | "Underwriting & Risk" | "Privacy & Consumer Protection" | "Consumer Protection";
+type CategoryFilter = "All" | MarketDeskCategory | "Market Conduct" | "Life Insurance Market" | "Underwriting & Risk" | "Privacy & Consumer Protection" | "Consumer Protection";
 
 type NewsCardTitle = {
   title: string;
@@ -21,6 +22,7 @@ const categories: CategoryFilter[] = [
   "All",
   "Market Watch",
   "Market Conduct",
+  "Life Insurance Market",
   "Underwriting & Risk",
   "Privacy & Consumer Protection",
   "Consumer Protection",
