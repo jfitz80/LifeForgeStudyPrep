@@ -7,6 +7,7 @@ import "@/data/news-genetic-testing-underwriting";
 import "@/data/news-instant-decision-underwriting";
 import "@/data/news-life-sales-understanding";
 import "@/data/news-liam-protection-gap";
+import "@/data/news-lincoln-communication-gap";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
