@@ -8,6 +8,7 @@ import '@/data/news-liam-protection-gap';
 import '@/data/news-lincoln-communication-gap';
 import '@/data/news-baldwin-ai-distribution';
 import '@/data/news-canadian-life-insurance-gap';
+import '@/data/news-ontario-advisor-title-enforcement';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
